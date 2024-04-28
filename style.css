@@ -1,0 +1,280 @@
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+.d-none {
+    display: none;
+}
+
+.wholeJoinContainer {
+    display: flex;
+    flex-direction: row-reverse;
+
+}
+
+.sideBarContainer {
+    height: 100vh;
+    width: 18vw;
+    background-color: rgb(42, 54, 71);
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sideBarLogoContainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 35vh;
+    width: 100%;
+    padding-left: 5vw;
+}
+
+.logoImg {
+    height: 122px;
+    width: 100px;
+}
+
+.sideBarChooseSectionContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    height: 40vh;
+    gap: 12px;
+}
+
+.summaryContainer {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+}
+
+.summaryContainer:hover {
+    background-color: rgb(41, 171, 226, 0.1);
+    transition: all 0.2s ease;
+}
+
+.sideBarImgContainer {
+    max-height: 30px;
+    max-width: 30px;
+    padding-left: 5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sideBarImg {}
+
+.openedDarkBackground {
+    background-color: rgb(9, 25, 49);
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+}
+
+.openedDarkBackground:hover {
+    cursor: default;
+}
+
+.addTaskContainer {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+}
+
+.addTaskContainer:hover {
+    background-color: rgb(41, 171, 226, 0.1);
+    transition: all 0.2s ease;
+}
+
+.boardContainer {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+}
+
+.boardContainer:hover {
+    background-color: rgb(41, 171, 226, 0.1);
+    transition: all 0.2s ease;
+}
+
+.contactsContainer {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+}
+
+.contactsContainer:hover {
+    background-color: rgb(41, 171, 226, 0.1);
+    transition: all 0.2s ease;
+}
+
+.privacyPolicyAndLegalNoticeContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 10px;
+    align-items: flex-start;
+    height: 25vh;
+    padding-bottom: 40px;
+}
+
+.openedPrivacyPolicyOrLegalNotice {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 30px;
+    background-color: rgb(9, 25, 49);
+}
+
+.openedPrivacyPolicyOrLegalNotice:hover {
+    cursor: default;
+}
+
+.privacyPolicyContainer {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 30px;
+}
+
+.privacyPolicyContainer:hover {
+    scale: 1.05;
+    color: rgb(41, 171, 226);
+}
+
+.privacyPolicyText {
+    padding-left: 5vw;
+}
+
+.legalNoticeContainer {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    width: 100%;
+    height: 30px;
+}
+
+.legalNoticeContainer:hover {
+    scale: 1.05;
+    color: rgb(41, 171, 226);
+}
+
+.legalNoticeText {
+    padding-left: 5vw;
+}
+
+.headerAndOpenedContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 82vw;
+}
+
+header {
+    height: 12vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    box-shadow: 0px 2px 2px 2px rgb(0, 0, 0, 0.1);
+}
+
+.headline {
+    font-size: 15px;
+    width: 20px;
+    padding-left: 8vw;
+}
+
+.helpAndUserContainer {
+    display: flex;
+    justify-content: space-evenly;
+    width: 10vw;
+    padding-right: 2vw;
+    align-items: center;
+}
+
+.helpIcon {
+    height: 20px;
+    border-radius: 30px;
+}
+
+.helpIcon:hover {
+    cursor: pointer;
+    scale: 1.05;
+    background-color: rgba(0, 0, 0, 0.08);
+}
+
+.initials {
+    display: flex;
+    border-radius: 30px;
+    height: 40px;
+    width: 40px;
+    border: 2px solid black;
+    justify-content: center;
+    align-items: center;
+    color: rgb(41, 171, 226);
+    font-weight: bold;
+}
+
+.initials:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.08);
+}
+
+.privacyPolicyOpenedContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-top: 10vh;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.privacyPolicyHeadlineAndArrowContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    height: 10vh;
+}
+
+.privacyPolicyHeadline {
+    font-size: 3em;
+}
+
+.arrowLeftImg {
+    height: 32px;
+    width: 32px;
+}
+
+.arrowLeftImg:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.06);
+    border-radius: 20px;
+    scale: 1.08;
+}
+
+.privacyPolicyTextContainer {
+    width: 80%;
+}
