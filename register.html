@@ -4,22 +4,17 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Join Login</title>
+    <title>Join Register</title>
     <script src="script.js"></script>
-    <script src="storage.js"></script>
     <script src="register.js"></script>
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="assets/img/logo.png" type="image/x-icon" />
   </head>
-  <body onload="init()">
-
-    <form onsubmit="register(); return false;">
-      <input required type="email" id="email">
-      <input required type="password" id="password">
-      <button id="registerBtn">Registrieren</button>
+  <body>
+    <form onsubmit="addUser(); return false;">
+        <input type="email" required id="email"/>
+        <input type="password" required id="password"/>
+        <button>Registrieren</button>
     </form>
-  
-    <script src="js/storage.js"></script>
-    <script src="js/register.js"></script>
   </body>
 </html>

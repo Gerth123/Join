@@ -8,6 +8,14 @@ a {
     color: white;
 }
 
+input {
+    border: unset;
+}
+
+button {
+    border: unset;
+}
+
 .d-none {
     display: none;
 }
@@ -73,7 +81,9 @@ a {
     align-items: center;
 }
 
-.sideBarImg {}
+.sideBarImg {
+    height: auto;
+}
 
 .openedDarkBackground {
     background-color: rgb(9, 25, 49);
