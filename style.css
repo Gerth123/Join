@@ -65,6 +65,7 @@ button {
     align-items: center;
     width: 100%;
     height: 40px;
+    color: rgb(205,205,205);
 }
 
 .summaryContainer:hover {
@@ -104,6 +105,7 @@ button {
     align-items: center;
     width: 100%;
     height: 40px;
+    color: rgb(205,205,205);
 }
 
 .addTaskContainer:hover {
@@ -117,6 +119,7 @@ button {
     align-items: center;
     width: 100%;
     height: 40px;
+    color: rgb(205,205,205);
 }
 
 .boardContainer:hover {
@@ -130,6 +133,7 @@ button {
     align-items: center;
     width: 100%;
     height: 40px;
+    color: rgb(205,205,205);
 }
 
 .contactsContainer:hover {
@@ -168,10 +172,19 @@ button {
 
 .privacyPolicyContainer:hover {
     scale: 1.05;
-    color: rgb(41, 171, 226);
+    color: rgb(41, 171, 226) !important;
 }
 
 .privacyPolicyText {
+    padding-left: 5vw;
+    color: rgb(205,205,205);
+}
+
+.privacyPolicyText:hover {
+    color: rgb(41, 171, 226);
+}
+
+.privacyPolicyTextOpened {
     padding-left: 5vw;
 }
 
@@ -189,6 +202,15 @@ button {
 }
 
 .legalNoticeText {
+    padding-left: 5vw;
+    color: rgb(205,205,205);
+}
+
+.legalNoticeText:hover {
+    color: rgb(41, 171, 226);
+}
+
+.legalNoticeTextOpened {
     padding-left: 5vw;
 }
 
@@ -253,7 +275,6 @@ header {
 
 .privacyPolicyOpenedContainer {
     display: flex;
-    justify-content: center;
     align-items: center;
     width: 100%;
     padding-top: 10vh;
