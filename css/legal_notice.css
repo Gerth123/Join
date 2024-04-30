@@ -1,0 +1,36 @@
+.legalNoticeOpenedContainer {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding-top: 10vh;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.legalNoticeHeadlineAndArrowContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    height: 10vh;
+}
+
+.legalNoticeHeadline {
+    font-size: 3em;
+}
+
+.arrowLeftImg {
+    height: 32px;
+    width: 32px;
+}
+
+.arrowLeftImg:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.06);
+    border-radius: 20px;
+    scale: 1.08;
+}
+
+.legalNoticeTextContainer {
+    width: 80%;
+}

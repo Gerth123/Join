@@ -23,7 +23,6 @@ button {
 .wholeJoinContainer {
     display: flex;
     flex-direction: row-reverse;
-
 }
 
 .sideBarContainer {
@@ -34,6 +33,8 @@ button {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    position: sticky;
+    top: 0;
 }
 
 .sideBarLogoContainer {
@@ -217,7 +218,6 @@ button {
 .headerAndOpenedContainer {
     display: flex;
     flex-direction: column;
-    height: 100vh;
     width: 82vw;
 }
 
@@ -271,41 +271,4 @@ header {
 .initials:hover {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.08);
-}
-
-.privacyPolicyOpenedContainer {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding-top: 10vh;
-    flex-direction: column;
-    overflow-y: auto;
-}
-
-.privacyPolicyHeadlineAndArrowContainer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 80%;
-    height: 10vh;
-}
-
-.privacyPolicyHeadline {
-    font-size: 3em;
-}
-
-.arrowLeftImg {
-    height: 32px;
-    width: 32px;
-}
-
-.arrowLeftImg:hover {
-    cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.06);
-    border-radius: 20px;
-    scale: 1.08;
-}
-
-.privacyPolicyTextContainer {
-    width: 80%;
 }
