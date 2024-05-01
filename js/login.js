@@ -8,4 +8,7 @@
 function init() {
         document.getElementById('logoContainerSlide').classList.remove('logoContainerSlide');
         document.getElementById('logoContainerSlide').classList.add('logoContainerSlideLoaded');
+        setTimeout(function() {
+                    document.getElementById('wholeLoginContainer').classList.remove('d-none');
+                }, 2400);
 }
