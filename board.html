@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join Board</title>
-    <script src="script.js"></script>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="css/board.css" />
     <link rel="icon" href="assets/img/logo.png" type="image/x-icon" />
@@ -34,26 +33,26 @@
                 <div class="board-header-search">
                   <input class="board-header-search-input" type="text" placeholder="Find Task" />
                   <div class="board-header-line"></div>
-                  <img class="board-header-search-img" src="/assets/icons/Board/search.svg" alt="" />
+                  <img class="board-header-search-img" src="/assets/icons/board/search.svg" alt="" />
                 </div>
                 <div class="board-header-add-btn">
                   Add task
-                  <img class="board-header-add-btn-img" src="/assets/icons/Board/plus_button_big_white.svg" alt="" />
+                  <img class="board-header-add-btn-img" src="/assets/icons/board/plus_button_big_white.svg" alt="" />
                 </div>
               </div>
             </div>
             <div class="board-header-nav">
               <div class="board-header-task">
                 <div class="board-text">To do</div>
-                <img class="board-add-btn" src="/assets/icons/Board/plus_button.svg" alt="" />
+                <img class="board-add-btn" src="/assets/icons/board/plus_button.svg" alt="" />
               </div>
               <div class="board-header-task">
                 <div class="board-text">In progress</div>
-                <img class="board-add-btn" src="/assets/icons/Board/plus_button.svg" alt="" />
+                <img class="board-add-btn" src="/assets/icons/board/plus_button.svg" alt="" />
               </div>
               <div class="board-header-task">
                 <div class="board-text">Await feedback</div>
-                <img class="board-add-btn" src="/assets/icons/Board/plus_button.svg" alt="" />
+                <img class="board-add-btn" src="/assets/icons/board/plus_button.svg" alt="" />
               </div>
               <div class="board-header-task">
                 <div class="board-text">Done</div>
@@ -62,7 +61,7 @@
           </section>
           <section class="board-card-section">
             <div class="board-card-content">
-              <div class="board-card">
+              <div id="board-card" class="board-card">
                 <div class="board-category">User Story</div>
                 <div class="board-title">Contactform & Print</div>
                 <div class="board-description">Build start page with recipe recommenation I would like to change this</div>
@@ -76,7 +75,7 @@
                     <div class="board-user">RB</div>
                   </div>
 
-                  <img src="/assets/icons/Board/priority_medium.svg" alt="" />
+                  <img src="/assets/icons/board/priority_medium.svg" alt="" />
                 </div>
               </div>
             </div>
@@ -92,7 +91,7 @@
                     <div class="board-user">RB</div>
                   </div>
 
-                  <img src="/assets/icons/Board/priority_medium.svg" alt="" />
+                  <img src="/assets/icons/board/priority_medium.svg" alt="" />
                 </div>
               </div>
               <div class="board-card">
@@ -106,7 +105,7 @@
                     <div class="board-user">RB</div>
                   </div>
 
-                  <img src="/assets/icons/Board/priority_medium.svg" alt="" />
+                  <img src="/assets/icons/board/priority_medium.svg" alt="" />
                 </div>
               </div>
             </div>
@@ -155,6 +154,35 @@
           <a href="legal_notice.html" class="legalNoticeContainer"><span class="legalNoticeText">Legal Notice</span></a>
         </div>
       </section>
+      <section id="full-size-container" class="full-size-container">
+        <div class="full-size-board">
+          <div class="full-size-header">
+            <img src="/assets/icons/board/fullsize/technical_task_big.svg" alt="" />
+            <div id="close-btn" class="close-btn"><img src="/assets/icons/board/close-button_big.svg" alt="" /></div>
+          </div>
+          <div class="full-size-title">Kochwelt Page & Recipe Recommender</div>
+          <div class="full-size-description">Build start page with recipe recommenation</div>
+          <div class="full-size-date">Due date: 10/15/2023</div>
+          <div class="full-size-priority">Priority:</div>
+          <div class="full-size-assign">
+            <div>Assigned To:</div>
+            <div class="full-size-assign-user">Hanbit Chang</div>
+          </div>
+
+          <div class="full-size-subtasks">
+            Subtasks
+            <div>Establish CSS Methodology</div>
+            <div>Setup Base Styles</div>
+          </div>
+          <div class="full-size-footer">
+            <img class="button full-size-button" src="/assets/icons/board/fullsize/delete-button.svg" alt="" />
+            <div class="full-size-line"></div>
+            <img class="button full-size-button" src="/assets/icons/board/fullsize/edit-button.svg" alt="" />
+          </div>
+        </div>
+      </section>
     </div>
+
+    <script src="/js/board.js"></script>
   </body>
 </html>

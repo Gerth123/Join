@@ -3,6 +3,10 @@
   background-color: #f6f7f8;
 }
 
+.wholeJoinContainer {
+  position: relative;
+}
+
 .board-header-section {
   position: relative;
   display: flex;
@@ -122,6 +126,7 @@ input:focus {
   border-radius: 24px;
   background-color: #ffffff;
   box-shadow: 0px 0px 10px 3px #00000014;
+  cursor: pointer;
 }
 
 .board-category {
@@ -221,4 +226,90 @@ progress[value]::-moz-progress-bar {
   color: #a8a8a8;
   background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='10' ry='10' stroke='%23A8A8A8FF' stroke-width='2' stroke-dasharray='1%2c 6' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
   border-radius: 10px;
+}
+
+.full-size-container {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #00000050;
+}
+
+.full-size-board {
+  width: 445px;
+  min-height: 620px;
+  padding: 48px 40px 48px 40px;
+  border-radius: 30px;
+  background-color: #fff;
+  box-shadow: 0px 0px 4px 0px #00000029;
+}
+
+.full-size-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.full-size-title {
+  margin-top: 24px;
+  font-size: 61px;
+  font-weight: bold;
+}
+
+.full-size-description {
+  margin-top: 24px;
+}
+
+.full-size-date {
+  margin-top: 24px;
+}
+
+.full-size-priority {
+  margin-top: 24px;
+}
+
+.full-size-assign {
+  margin-top: 24px;
+}
+
+.full-size-assign-user {
+  height: 56px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.full-size-subtasks {
+  margin-top: 24px;
+  height: 100px;
+}
+
+.full-size-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.full-size-button {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.full-size-line {
+  width: 1px;
+  height: 24px;
+  background-color: #d1d1d1;
+}
+
+.button {
+  cursor: pointer;
+}
+
+.close-btn {
+  cursor: pointer;
+}
+
+.d-none {
+  display: none;
 }
