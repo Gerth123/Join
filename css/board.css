@@ -240,7 +240,7 @@ progress[value]::-moz-progress-bar {
 
 .full-size-board {
   width: 445px;
-  min-height: 600px;
+  min-height: 620px;
   padding: 48px 40px 48px 40px;
   border-radius: 30px;
   background-color: #fff;
@@ -253,6 +253,7 @@ progress[value]::-moz-progress-bar {
 }
 
 .full-size-title {
+  margin-top: 24px;
   font-size: 61px;
   font-weight: bold;
 }
@@ -292,6 +293,13 @@ progress[value]::-moz-progress-bar {
 
 .full-size-button {
   margin-left: 8px;
+  margin-right: 8px;
+}
+
+.full-size-line {
+  width: 1px;
+  height: 24px;
+  background-color: #d1d1d1;
 }
 
 .button {
