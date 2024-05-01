@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join Board</title>
-    <script src="script.js"></script>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="css/board.css" />
     <link rel="icon" href="assets/img/logo.png" type="image/x-icon" />
@@ -62,7 +61,7 @@
           </section>
           <section class="board-card-section">
             <div class="board-card-content">
-              <div class="board-card">
+              <div id="board-card" class="board-card">
                 <div class="board-category">User Story</div>
                 <div class="board-title">Contactform & Print</div>
                 <div class="board-description">Build start page with recipe recommenation I would like to change this</div>
@@ -155,6 +154,14 @@
           <a href="legal_notice.html" class="legalNoticeContainer"><span class="legalNoticeText">Legal Notice</span></a>
         </div>
       </section>
+      <section id="full-size-container" class="full-size-container d-none">
+        <div class="full-size-board">
+          Hello
+          <div id="close-btn" class="close-btn"><img src="/assets/icons/Board/close-button_big.svg" alt="" /></div>
+        </div>
+      </section>
     </div>
+
+    <script src="/js/board.js"></script>
   </body>
 </html>
