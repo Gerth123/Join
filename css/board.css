@@ -240,11 +240,62 @@ progress[value]::-moz-progress-bar {
 
 .full-size-board {
   width: 445px;
-  height: 835px;
+  min-height: 600px;
   padding: 48px 40px 48px 40px;
   border-radius: 30px;
   background-color: #fff;
   box-shadow: 0px 0px 4px 0px #00000029;
+}
+
+.full-size-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.full-size-title {
+  font-size: 61px;
+  font-weight: bold;
+}
+
+.full-size-description {
+  margin-top: 24px;
+}
+
+.full-size-date {
+  margin-top: 24px;
+}
+
+.full-size-priority {
+  margin-top: 24px;
+}
+
+.full-size-assign {
+  margin-top: 24px;
+}
+
+.full-size-assign-user {
+  height: 56px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.full-size-subtasks {
+  margin-top: 24px;
+  height: 100px;
+}
+
+.full-size-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.full-size-button {
+  margin-left: 8px;
+}
+
+.button {
+  cursor: pointer;
 }
 
 .close-btn {
