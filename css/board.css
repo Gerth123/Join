@@ -1,0 +1,224 @@
+.headerAndOpenedContainer {
+  overflow-y: scroll;
+  background-color: #f6f7f8;
+}
+
+.board-header-section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 152px;
+  padding-top: 80px;
+  padding-left: 64px;
+}
+
+.board-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1056px;
+}
+
+.board-header-title {
+  font-size: 61px;
+  font-weight: bold;
+}
+
+.board-header-right {
+  display: flex;
+}
+
+.board-header-nav {
+  display: flex;
+  justify-content: space-between;
+  width: 1056px;
+}
+
+.board-header-task {
+  width: 244px;
+  height: 24px;
+  padding-left: 4px;
+  padding-right: 4px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 48px;
+  margin-bottom: 8px;
+}
+
+.board-header-add-btn {
+  width: 128px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 16px 8px 16px;
+  color: #fff;
+  font-size: 21px;
+  font-weight: bold;
+  background-color: #2a3647;
+  border-radius: 10px;
+}
+
+.board-header-add-btn-img {
+  padding-left: 4px;
+}
+
+.board-header-search {
+  width: 280px;
+  height: 30px;
+  display: flex;
+  padding: 8px 16px 8px 16px;
+  margin-right: 32px;
+  border-radius: 10px;
+  border: 1px solid #a8a8a8;
+  background-color: #ffffff;
+}
+
+.board-header-search-img {
+  width: 32px;
+  height: 32px;
+  margin-left: 16px;
+}
+
+input:focus {
+  outline: none;
+}
+
+.board-header-line {
+  width: 1px;
+  height: 31px;
+  background-color: #d1d1d1;
+}
+
+.board-header-search-input {
+  width: 100%;
+  font-size: 20px;
+}
+
+.board-text {
+  font-size: 20px;
+  color: #42526e;
+  font-weight: 700;
+}
+
+.board-card-section {
+  display: flex;
+  padding-left: 64px;
+}
+
+.board-card-content {
+  width: 252px;
+  margin-top: 8px;
+  margin-right: 16px;
+}
+
+.board-card {
+  width: 220px;
+  min-height: 145px;
+  padding: 16px;
+  margin-bottom: 16px;
+  border-radius: 24px;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 10px 3px #00000014;
+}
+
+.board-category {
+  width: max-content;
+  padding: 4px 16px 4px 16px;
+  margin-bottom: 24px;
+  background-color: blue;
+  color: #ffffff;
+  gap: 10px;
+  border-radius: 8px;
+}
+
+.board-title {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.board-description {
+  height: 37px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  color: #a8a8a8;
+}
+
+.board-progress-bar-container {
+  height: 16px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 24px;
+}
+
+label {
+  font-size: 12px;
+}
+
+progress[value] {
+  --color: #4589ff; /* the progress color */
+  --background: lightgrey; /* the background color */
+  border: none;
+  width: 128px;
+  height: 8px;
+  margin-right: 11px;
+  border-radius: 10em;
+  background: var(--background);
+}
+
+progress[value]::-webkit-progress-bar {
+  border-radius: 10em;
+  background: var(--background);
+}
+progress[value]::-webkit-progress-value {
+  border-radius: 10em;
+  background: var(--color);
+}
+progress[value]::-moz-progress-bar {
+  border-radius: 10em;
+  background: var(--color);
+}
+
+.board-user {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(26, 78, 78);
+  border-radius: 50%;
+  border: 2px solid #fff;
+  color: #fff;
+  font-size: 12px;
+}
+
+.board-bottom-container {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+
+.board-user-container {
+  display: flex;
+}
+
+.no-task {
+  width: 250px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+
+  background: #e7e7e7;
+  color: #a8a8a8;
+  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='10' ry='10' stroke='%23A8A8A8FF' stroke-width='2' stroke-dasharray='1%2c 6' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+  border-radius: 10px;
+}
