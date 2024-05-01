@@ -6,22 +6,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join Login</title>
     <script src="script.js"></script>
-    <link rel="stylesheet" href="style.css" />
+    <script src="js/login.js"></script>
+    <!-- <link rel="stylesheet" href="style.css" /> -->
     <link rel="stylesheet" href="css/login.css" />
     <link rel="icon" href="assets/img/logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="fonts/PTSans-Regular.ttf" />
     <link rel="stylesheet" href="fonts/PTSans-Bold.ttf" />
-    <link rel="stylesheet" href="fonts/PTSans-SemiBold.ttf" />
     <link rel="stylesheet" href="fonts/PTSans-Italic.ttf" />
   </head>
-  <body>
-    <form onsubmit="login(); return false;">
-      <input type="email" required id="email" />
-      <input type="password" required id="password" />
-      <button>Registrieren</button>
-    </form>
-
-    <div id="msgBox" class="d-none"></div>
-    //show only if it works
+  <body onload="init()">
+    <section class="logoContainerSlide" id="logoContainerSlide">
+      <img src="assets/img/logo.png" alt="Logo" class="logoContainerSlideImg" />
+    </section>
+    <section class="d-none wholeLoginContainer" id="wholeLoginContainer">
+      <div class="signUpContainer">
+        <p class="notJoinUserTxt">Not a Join user?</p>
+        <button class="signUpButton">Sign up</button>
+      </div>
+      <div class="loginContainer">
+        <h1>Log in</h1>
+        <div class="underline"></div>
+        <form onsubmit="login(); return false;" class="logInForm">
+          <div class="logInInputFields">
+            <input type="email" required id="email" placeholder="Email" class="logInInputEmail" />
+            <input type="password" required id="password" placeholder="Password" class="logInInputPassword" />
+          </div>
+          <div class="rememberMeContainer"><div class="checkbox-wrapper-19">
+            <input type="checkbox" id="cbtest-19" />
+            <label for="cbtest-19" class="check-box">
+          </div>Remember me</div>
+          <div class="logInButtons">
+            <button class="userLogInButton">Log in</button>
+            <button class="guestLogInButton">Guest Log in</button>
+          </div>
+        </form>
+        
+        <!-- <div id="msgBox" class="d-none"></div>
+        //show only if it works -->
+      </div>
+      <footer>
+          <a href="privacy_policy.html" class="privacyPolicyText">Privacy Policy</a>
+          <a href="legal_notice.html" class="legalNoticeText">Legal Notice</a>
+        </footer>
+    </section>
   </body>
 </html>
