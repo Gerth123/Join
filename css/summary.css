@@ -1,0 +1,42 @@
+.headingSection {
+  margin-top: 136px;
+  margin-left: 128px;
+  height: 73px;
+  width: 625px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.joinSuh1 {
+  font-size: 61px;
+  font-weight: 700;
+}
+
+.seperator {
+  background-color: #29abe2;
+  min-width: 3px;
+  height: 59px;
+  border-radius: 3px;
+}
+
+.h2KeyMet {
+  font-size: 27px;
+  color: #2a3647;
+  line-height: 32.4px;
+}
+
+.mainContainer {
+    width: 560px;
+    height: 562px;
+    margin-left: 150px;
+    gap: 28px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+}
+
+.container1 {
+    width: 560px;
+    height: 168px;
+}
