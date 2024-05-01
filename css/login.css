@@ -1,0 +1,45 @@
+body {
+    margin: 0;
+    overflow: hidden;
+}
+
+.d-none {
+    display: none;
+}
+
+.logoSlideAndSignUpContainer {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+
+.logoContainerSlide {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    top: 42%;
+    left: 44%;
+    overflow: hidden;
+}
+
+.logoContainerSlideImg {
+   height: 16vh;
+}
+
+.logoContainerSlideLoaded {
+    position: absolute;
+    animation: slide-out 3s ease-in-out; /* Animation hinzufügen */
+    overflow: hidden;
+}
+
+@keyframes slide-out {
+    0% {
+        top: 42%;
+        left: 44%;
+    }
+    100% {
+        top: 30px; /* Anpassen Sie die Top-Position entsprechend Ihrer Anforderungen */
+        left: 30px; /* Anpassen Sie die Left-Position entsprechend Ihrer Anforderungen */
+    }
+}

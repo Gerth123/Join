@@ -6,22 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join Login</title>
     <script src="script.js"></script>
-    <link rel="stylesheet" href="style.css" />
+    <script src="js/login.js"></script>
+    <!-- <link rel="stylesheet" href="style.css" /> -->
     <link rel="stylesheet" href="css/login.css" />
     <link rel="icon" href="assets/img/logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="fonts/PTSans-Regular.ttf" />
     <link rel="stylesheet" href="fonts/PTSans-Bold.ttf" />
-    <link rel="stylesheet" href="fonts/PTSans-SemiBold.ttf" />
     <link rel="stylesheet" href="fonts/PTSans-Italic.ttf" />
   </head>
-  <body>
-    <form onsubmit="login(); return false;">
+  <body onload="init()">
+    
+    
+    <section class="logoContainerSlide" id="logoContainerSlide">
+      <img src="assets/img/logo.png" alt="Logo" class="logoContainerSlideImg">
+    </section>
+    <section>
+
+    </section>
+    
+    <!-- <form onsubmit="login(); return false;">
       <input type="email" required id="email" />
       <input type="password" required id="password" />
       <button>Registrieren</button>
     </form>
 
     <div id="msgBox" class="d-none"></div>
-    //show only if it works
+    //show only if it works -->
   </body>
 </html>
