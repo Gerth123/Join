@@ -261,6 +261,23 @@ progress[value]::-moz-progress-bar {
   box-shadow: 0px 0px 4px 0px #00000029;
 }
 
+.full-size-add-board {
+  width: 890px;
+  min-height: 620px;
+
+  padding: 48px 40px 48px 40px;
+  border-radius: 30px;
+  background-color: #fff;
+  box-shadow: 0px 0px 4px 0px #00000029;
+}
+
+.full-size-add-form {
+  min-height: 550px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .full-size-header {
   display: flex;
   justify-content: space-between;
@@ -310,6 +327,12 @@ progress[value]::-moz-progress-bar {
   margin-right: 8px;
 }
 
+.full-size-add-task {
+  font-size: 61px;
+  font-weight: bold;
+  margin-bottom: 32px;
+}
+
 .full-size-line {
   width: 1px;
   height: 24px;
@@ -329,7 +352,7 @@ progress[value]::-moz-progress-bar {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 57px;
+  width: fit-content;
   height: 25px;
   padding: 16px;
   gap: 4px;
@@ -338,6 +361,22 @@ progress[value]::-moz-progress-bar {
   color: #fff;
   font-size: 21px;
   font-weight: bold;
+}
+
+.cancel-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  height: 25px;
+  padding: 16px;
+  margin-right: 32px;
+  gap: 4px;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #000000;
+  font-size: 21px;
+  border: 2px solid #29abe2;
 }
 
 .ok-button:hover {
@@ -355,4 +394,18 @@ progress[value]::-moz-progress-bar {
 
 .jc-fe {
   justify-content: flex-end;
+}
+
+.wd-45 {
+  width: 45%;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
 }
