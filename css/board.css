@@ -1,3 +1,21 @@
+label {
+  font-size: 12px;
+}
+
+.full-size-label {
+  font-size: 20px;
+}
+
+.full-size-input {
+  margin-top: 8px;
+  margin-bottom: 32px;
+  padding: 12px 21px 12px 21px;
+  border: 1px solid #d1d1d1;
+  border-radius: 10px;
+  font-size: 20px;
+  height: 24px;
+}
+
 .headerAndOpenedContainer {
   overflow-y: scroll;
   background-color: #f6f7f8;
@@ -161,10 +179,6 @@ input:focus {
   margin-top: 24px;
 }
 
-label {
-  font-size: 12px;
-}
-
 progress[value] {
   --color: #4589ff; /* the progress color */
   --background: lightgrey; /* the background color */
@@ -302,8 +316,33 @@ progress[value]::-moz-progress-bar {
   background-color: #d1d1d1;
 }
 
+.full-size-form {
+  display: flex;
+  flex-direction: column;
+}
+
 .button {
   cursor: pointer;
+}
+
+.ok-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 57px;
+  height: 25px;
+  padding: 16px;
+  gap: 4px;
+  border-radius: 10px;
+  background: #2a3647;
+  color: #fff;
+  font-size: 21px;
+  font-weight: bold;
+}
+
+.ok-button:hover {
+  background: #29abe2;
+  box-shadow: 0px 4px 4px 0px #00000040;
 }
 
 .close-btn {
@@ -312,4 +351,8 @@ progress[value]::-moz-progress-bar {
 
 .d-none {
   display: none;
+}
+
+.jc-fe {
+  justify-content: flex-end;
 }
