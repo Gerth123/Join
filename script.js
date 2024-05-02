@@ -1,26 +1,23 @@
+// let previousWindow = [];
+
+// function openNewTab(newUrl, previousUrl) {
+//     window.open(newUrl, '_blank');
+//     previousWindow.splice(0, 1);
+//     previousWindow.push(previousUrl);
+// }
+// function goBackToLastTab() {
+//     window.open('add_task.html');
+// }
+
 let previousWindow = null;
-        let newWindow = null;
 
-        // Funktion zum Öffnen eines neuen Tabs und Speichern der Referenz zum vorherigen Tab
-        function openNewTab(newUrl, previousUrl) {
-            // Schließen des vorherigen Tabs, falls noch geöffnet
-            if (previousWindow !== null && !previousWindow.closed) {
-                previousWindow.close();
-            }
-            // Öffnen des neuen Tabs
-            newWindow = window.open(newUrl, '_blank');
-            // Speichern des vorherigen Tabs
-            previousWindow = window.open(previousUrl, '_self');
-        }
+// Funktion zum Öffnen eines neuen Tabs und Speichern der Referenz zum vorherigen Tab
+function openNewTab(newUrl, previousUrl) {
+    previousWindow = previousUrl;
+    newWindow = window.open(newUrl, '_blank');
+}
 
-        // Funktion zum Schließen des neuen Tabs und Zurückkehren zum vorherigen Tab
-        function goBackToLastTab() {
-            // Schließen des neuen Fensters, falls noch geöffnet
-            if (newWindow !== null && !newWindow.closed) {
-                newWindow.close();
-            }
-            // Fokus auf das vorherige Fenster setzen
-            if (previousWindow !== null && !previousWindow.closed) {
-                previousWindow.focus();
-            }
-        }
+// Funktion zum Schließen des neuen Tabs und Zurückkehren zum vorherigen Tab
+function goBackToLastTab() {
+    window.location.href = previousWindow;
+}
