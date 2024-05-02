@@ -1,5 +1,5 @@
 .headingSection {
-  margin-top: 136px;
+  margin-top: 100px;
   margin-left: 128px;
   height: 73px;
   width: 625px;
@@ -24,64 +24,185 @@
   font-size: 27px;
   color: #2a3647;
   line-height: 32.4px;
+  font-weight: 400;
 }
 
 .mainContainer {
-    width: 560px;
-    height: 562px;
-    margin-left: 128px;
-    gap: 28px;
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    margin-top: 60px;
+  width: 560px;
+  height: 562px;
+  margin-left: 128px;
+  gap: 28px;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  margin-top: 60px;
 }
 
 .container1 {
-    width: 560px;
-    height: 168px;
-    display: flex;
-    justify-content: space-between;
-    gap: 32px;
+  width: 560px;
+  height: 168px;
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
 }
 
 .mainSection {
-    height: 100%;
-    background-color: #F6F7F8;
+  height: 100%;
+  background-color: #f6f7f8;
 }
 
 .toDo {
-    border-radius: 30px;
-    background-color: white;
-    width: 264px;
-    height: 168px;
-    box-shadow: 0px 0px 4px #0000001a;
+  border-radius: 30px;
+  background-color: white;
+  width: 264px;
+  height: 168px;
+  box-shadow: 0px 0px 4px #0000001a;
+  transition: transform 0.2s ease-in-out;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .toDo:hover {
-    cursor: pointer;
-    background-color: #2A3647;
+  cursor: pointer;
+  background-color: #2a3647;
+  transform: scale(1.1);
 }
 
 .done {
-    border-radius: 30px;
-    background-color: white;
-    width: 264px;
-    height: 168px;
-    box-shadow: 0px 0px 4px #0000001a;
+  border-radius: 30px;
+  background-color: white;
+  width: 264px;
+  height: 168px;
+  box-shadow: 0px 0px 4px #0000001a;
+  transition: transform 0.2s ease-in-out;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .done:hover {
-    cursor: pointer;
-    background-color: #2A3647;
+  cursor: pointer;
+  background-color: #2a3647;
+  transform: scale(1.1);
 }
 
 .text-ToDo {
-    font-size: 20px;
-    color: #2A3647;
+  font-size: 20px;
+  color: #2a3647;
+  text-align: center;
+  margin-top: 80px;
 }
 
 .text-done {
-    font-size: 20px;
-    color: #2A3647;
+  font-size: 20px;
+  color: #2a3647;
+  text-align: center;
+  margin-top: 80px;
+}
+
+.container2 {
+  height: 168px;
+  border-radius: 30px;
+  background-color: white;
+  box-shadow: 0px 0px 4px #0000001a;
+  transition: transform 0.2s ease-in-out;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 28px, 48px, 28px, 48px;
+}
+
+.container2:hover {
+  cursor: pointer;
+  background-color: #2a3647;
+  transform: scale(1.1);
+}
+
+.text-urgent {
+  color: #2a3647;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19.2px;
+  margin-top: 60px;
+}
+
+.line-urgent {
+  height: 102.02px;
+  border: 2px;
+  background-color: #d1d1d1;
+  width: 2px;
+}
+
+.urgent-date {
+  color: #2a3647;
+  font-weight: 700;
+  font-size: 21px;
+  line-height: 25.2px;
+}
+
+.text-urgent2 {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19.2px;
+  margin-top: 15px;
+}
+
+.Urgent-under {
+  display: flex;
+  flex-direction: column;
+}
+
+.task-container {
+  width: 560px;
+  height: 170px;
+  display: flex;
+  gap: 29px;
+}
+
+.tasks {
+  border-radius: 30px;
+  width: 168px;
+  height: 168px;
+  gap: 13px;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 4px #0000001a;
+  transition: transform 0.2s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tasks:hover {
+  cursor: pointer;
+  background-color: #2a3647;
+  transform: scale(1.1);
+}
+
+.text-task {
+  color: #2a3647;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  margin-top: 80px;
+}
+
+.toDo:hover .text-ToDo,
+.done:hover .text-done,
+.container2:hover .text-urgent,
+.tasks:hover .text-task {
+  color: white;
+}
+
+.container2:hover .urgent-date,
+.container2:hover .text-urgent2 {
+  color: white;
+}
+
+.toDo:hover .imgPen1 {
+  content: url("../assets/img/Frame 59 (1).svg");
+}
+
+.done:hover .img-chop1 {
+  content: url("../assets/img/Group 7 (1).svg");
 }
