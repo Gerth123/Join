@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="fonts/PTSans-Bold.ttf" />
     <link rel="stylesheet" href="fonts/PTSans-Italic.ttf" />
   </head>
-  <body>
+  <body onload="init()">
     <section class="logoContainer">
       <img src="assets/img/logo.svg" alt="Logo" class="logoImg" />
     </section>
@@ -27,22 +27,53 @@
           </div>
         </div>
         <form onsubmit="addUser(); return false;" class="signUpForm">
-          <div class="logInInputFields">
-            <input type="text" required id="name" placeholder="Name" class="logInInputEmail" />
-            <input type="email" required id="email" placeholder="Email" class="logInInputEmail" />
-            <input type="password" required id="password" placeholder="Password" class="logInInputEmail" />
-            <input type="password" required id="confirmPassword" placeholder="Confirm Password" class="logInInputEmail" />
+          <div class="signUpInputFields">
+            <div class="signUpFormInputAndImgContainer">
+              <input type="text" required id="name" placeholder="Name" class="signUpInputEmail" />
+              <img src="assets/img/person.svg" alt="User" />
+            </div>
+            <div class="signUpFormInputAndImgContainer">
+              <input type="email" required id="email" placeholder="Email" class="signUpInputEmail" />
+              <img src="assets/img/mail.svg" alt="Mail" />
+            </div>
+            <div class="signUpFormInputAndImgContainer">
+              <input type="password" required id="password1" placeholder="Password" class="signUpInputEmail" />
+              <img
+                src="assets/img/lock.svg"
+                alt="Password"
+                onmouseover="togglePasswordVisbility(1)"
+                onmouseout="togglePasswordVisbility(1)"
+                class="signUpFormImgPassword"
+                id="signUpFormImgPassword1"
+              />
+            </div>
+            <div class="signUpFormInputAndImgContainer">
+              <input type="password" required id="password2" placeholder="Confirm Password" class="signUpInputEmail" />
+              <img
+                src="assets/img/lock.svg"
+                alt="Password"
+                onmouseover="togglePasswordVisbility(2)"
+                onmouseout="togglePasswordVisbility(2)"
+                class="signUpFormImgPassword"
+                id="signUpFormImgPassword2"
+              />
+            </div>
           </div>
-          <div class="acceptPrivacyPolicyContainer"><div class="checkbox-wrapper-19">
-            <input type="checkbox" id="cbtest-19" />
-            <label for="cbtest-19" class="check-box">
-          </div>I accept the <a href="privacy_policy.html">Privacy Policy</a></div>
-          <button class="signUpButton">Log in</button>
+          <span class="d-none">Ups! your password don't match.</span>
+          <div class="acceptPrivacyPolicyContainer">
+            <div class="checkbox-wrapper-19">
+              <input type="checkbox" id="checkbox" required onclick="checkAcceptPrivacyPolicy()" />
+              <label for="checkbox" class="checkbox" id="checkboxLabel"></label>
+            </div>
+            I accept the <a href="privacy_policy.html">Privacy Policy</a>
+          </div>
+          <button class="signUpButtonFalse" id="signUpButton">Sign Up</button>
         </form>
+        <div class="msgBox d-none" id="msgBox"></div>
       </div>
       <footer>
-        <a href="privacy_policy.html" class="privacyPolicyText">Privacy Policy</a>
-        <a href="legal_notice.html" class="legalNoticeText">Legal Notice</a>
+        <a href="privacy_policy.html" class="privacyPolicyText" target="_blank">Privacy Policy</a>
+        <a href="legal_notice.html" class="legalNoticeText" target="_blank">Legal Notice</a>
       </footer>
     </section>
   </body>
