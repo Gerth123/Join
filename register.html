@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join Register</title>
     <script src="script.js"></script>
-    <script src="register.js"></script>
-    <link rel="stylesheet" href="style.css" />
+    <script src="js/register.js"></script>
     <link rel="stylesheet" href="css/register.css" />
     <link rel="icon" href="assets/img/logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="fonts/PTSans-Regular.ttf" />
@@ -15,10 +14,36 @@
     <link rel="stylesheet" href="fonts/PTSans-Italic.ttf" />
   </head>
   <body>
-    <form onsubmit="addUser(); return false;">
-      <input type="email" required id="email" />
-      <input type="password" required id="password" />
-      <button>Registrieren</button>
-    </form>
+    <section class="logoContainer">
+      <img src="assets/img/logo.svg" alt="Logo" class="logoImg" />
+    </section>
+    <section class="wholeSignUpContainer">
+      <div class="signUpContainer">
+        <div class="headlineAndArrowContainer">
+          <img class="arrowLeftImg" src="assets/img/arrowLeft.svg" onclick="location.href='login.html'" alt="Back" />
+          <div class="headlineAndUnderlineContainer">
+            <h1>Sign Up</h1>
+            <div class="underline"></div>
+          </div>
+        </div>
+        <form onsubmit="addUser(); return false;" class="signUpForm">
+          <div class="logInInputFields">
+            <input type="text" required id="name" placeholder="Name" class="logInInputEmail" />
+            <input type="email" required id="email" placeholder="Email" class="logInInputEmail" />
+            <input type="password" required id="password" placeholder="Password" class="logInInputEmail" />
+            <input type="password" required id="confirmPassword" placeholder="Confirm Password" class="logInInputEmail" />
+          </div>
+          <div class="acceptPrivacyPolicyContainer"><div class="checkbox-wrapper-19">
+            <input type="checkbox" id="cbtest-19" />
+            <label for="cbtest-19" class="check-box">
+          </div>I accept the <a href="privacy_policy.html">Privacy Policy</a></div>
+          <button class="signUpButton">Log in</button>
+        </form>
+      </div>
+      <footer>
+        <a href="privacy_policy.html" class="privacyPolicyText">Privacy Policy</a>
+        <a href="legal_notice.html" class="legalNoticeText">Legal Notice</a>
+      </footer>
+    </section>
   </body>
 </html>
