@@ -1,3 +1,21 @@
+label {
+  font-size: 12px;
+}
+
+.full-size-label {
+  font-size: 20px;
+}
+
+.full-size-input {
+  margin-top: 8px;
+  margin-bottom: 32px;
+  padding: 12px 21px 12px 21px;
+  border: 1px solid #d1d1d1;
+  border-radius: 10px;
+  font-size: 20px;
+  height: 24px;
+}
+
 .headerAndOpenedContainer {
   overflow-y: scroll;
   background-color: #f6f7f8;
@@ -159,10 +177,6 @@ input:focus {
   justify-content: flex-start;
   align-items: center;
   margin-top: 24px;
-}
-
-label {
-  font-size: 12px;
 }
 
 progress[value] {
@@ -337,14 +351,6 @@ progress[value]::-moz-progress-bar {
 
 .d-none {
   display: none;
-}
-
-input {
-  padding: 12px 21px 12px 21px;
-  border: 1px solid #d1d1d1;
-  border-radius: 10px;
-  font-size: 20px;
-  height: 24px;
 }
 
 .jc-fe {

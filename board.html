@@ -181,18 +181,24 @@
         </div>
         <div id="edit-board" class="full-size-board">
           <div class="full-size-header jc-fe">
-            <div id="close-btn" class="close-btn"><img src="/assets/icons/board/close-button_big.svg" alt="" /></div>
+            <div id="close-btn-edit" class="close-btn"><img src="/assets/icons/board/close-button_big.svg" alt="" /></div>
           </div>
           <form class="full-size-form" action="">
-            <label for="title">Title</label>
-            <input id="title" type="text" placeholder="Enter a title" />
-            <input type="text" placeholder="description" />
-            <input type="text" placeholder="date" />
-            <div>Priority</div>
-            <div>Assigned to</div>
-            <div>Subtasks</div>
-            <div class=""></div>
-            <div class="button ok-button">Ok <img src="/assets/icons/board/fullsize/check.svg" alt="" /></div>
+            <label class="full-size-label" for="title">Title</label>
+            <input class="full-size-input" id="title" type="text" placeholder="Enter a title" />
+            <label class="full-size-label" for="description">Description</label>
+            <input class="full-size-input" id="description" type="text" placeholder="Enter a description" />
+            <label class="full-size-label" for="date">Due date</label>
+            <input class="full-size-input" id="date" type="text" placeholder="Date" />
+            <label class="full-size-label" for="priority">Priority</label>
+            <input class="full-size-input" id="priority" type="text" placeholder="Priority" />
+            <label class="full-size-label" for="assigned">Assigned to</label>
+            <input class="full-size-input" id="assigned" type="text" placeholder="Assigned to" />
+            <label class="full-size-label" for="subtasks">Subtasks</label>
+            <input class="full-size-input" id="subtasks" type="text" placeholder="Add new subtask" />
+            <div class="full-size-footer">
+              <div class="button ok-button">Ok <img src="/assets/icons/board/fullsize/check.svg" alt="" /></div>
+            </div>
           </form>
         </div>
       </section>
