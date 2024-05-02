@@ -10,5 +10,6 @@ function init() {
         document.getElementById('logoContainerSlide').classList.add('logoContainerSlideLoaded');
         setTimeout(function() {
                     document.getElementById('wholeLoginContainer').classList.remove('d-none');
-                }, 2400);
+                    document.getElementById('logoContainerSlideImg').style.height = '12vh';
+                }, 2300);
 }

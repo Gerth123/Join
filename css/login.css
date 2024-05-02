@@ -2,7 +2,7 @@ body {
     margin: 0;
     overflow: hidden;
     font-family: 'PTSans', sans-serif;
-    background-color: rgb(246,247,248);
+    background-color: rgb(246, 247, 248);
 }
 
 button {
@@ -19,7 +19,7 @@ h1 {
     margin-block-end: 0em;
     display: flex;
     justify-content: center;
-    padding-bottom: 10px; 
+    padding-bottom: 10px;
 }
 
 p {
@@ -57,12 +57,24 @@ footer {
 }
 
 .logoContainerSlideImg {
-   height: 12vh;
+    height: 30vh;
+    animation: logoSlideOut 2.5s ease-in-out;
+}
+
+@keyframes logoSlideOut {
+    0% {
+        height: 30vh;
+    }
+
+    100% {
+        height: 12vh;
+    }
 }
 
 .logoContainerSlideLoaded {
     position: absolute;
-    animation: slide-out 2.5s ease-in-out; /* Animation hinzufügen */
+    animation: slide-out 2.5s ease-in-out;
+    /* Animation hinzufügen */
     overflow: hidden;
     top: 50px;
     left: 50px;
@@ -73,9 +85,10 @@ footer {
         top: 42%;
         left: 44%;
     }
+
     100% {
-        top: 50px; 
-        left: 50px; 
+        top: 50px;
+        left: 50px;
     }
 }
 
@@ -101,8 +114,8 @@ footer {
 }
 
 .signUpButton {
-    background-color: rgb(42,54,71);
-    color: rgb(255,255,255);
+    background-color: rgb(42, 54, 71);
+    color: rgb(255, 255, 255);
     border-radius: 5px;
     height: 40px;
     width: 91px;
@@ -110,7 +123,7 @@ footer {
 }
 
 .signUpButton:hover {
-    background-color: rgb(41,171,226);
+    background-color: rgb(41, 171, 226);
     box-shadow: 0px 2px 2px 2px rgb(0, 0, 0, 0.1);
 }
 
@@ -119,7 +132,7 @@ footer {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: rgb(255,255,255);
+    background-color: rgb(255, 255, 255);
     border-radius: 15px;
     height: 55vh;
     width: 35vw;
@@ -128,7 +141,8 @@ footer {
 }
 
 .underline {
-    border-top: 2.5px solid rgb(41,171,226); /* Farbe und Dicke des Unterstrichs anpassen */
+    border-top: 2.5px solid rgb(41, 171, 226);
+    /* Farbe und Dicke des Unterstrichs anpassen */
     width: 100px;
     height: 20px;
     display: flex;
@@ -139,7 +153,7 @@ footer {
 .logInForm {
     display: flex;
     flex-direction: column;
-    align-items:  center;
+    align-items: center;
     height: 30vh;
     gap: 20px;
 }
@@ -163,7 +177,7 @@ footer {
     align-items: center;
     height: 32px;
     border-radius: 5px;
-    border: 1px solid rgb(226,226,226);
+    border: 1px solid rgb(226, 226, 226);
     width: 300px;
 }
 
@@ -183,7 +197,7 @@ footer {
     align-items: center;
     height: 32px;
     border-radius: 5px;
-    border: 1px solid rgb(226,226,226);
+    border: 1px solid rgb(226, 226, 226);
 }
 
 .logInInputPassword:focus {
@@ -206,39 +220,42 @@ footer {
 }
 
 
-  .checkbox-wrapper-19 {
+.checkbox-wrapper-19 {
     box-sizing: border-box;
     --background-color: #fff;
     --checkbox-height: 15px;
-  }
+}
 
 
-  @keyframes dothabottomcheck-19 {
+@keyframes dothabottomcheck-19 {
     0% {
-      height: 0;
+        height: 0;
     }
+
     100% {
-      height: calc(var(--checkbox-height) / 2);
+        height: calc(var(--checkbox-height) / 2);
     }
-  }
+}
 
-  @keyframes dothatopcheck-19 {
+@keyframes dothatopcheck-19 {
     0% {
-      height: 0;
+        height: 0;
     }
+
     50% {
-      height: 0;
+        height: 0;
     }
+
     100% {
-      height: calc(var(--checkbox-height) * 0.95);
+        height: calc(var(--checkbox-height) * 0.95);
     }
-  }
+}
 
-  .checkbox-wrapper-19 input[type=checkbox] {
+.checkbox-wrapper-19 input[type=checkbox] {
     display: none;
-  }
+}
 
-  .checkbox-wrapper-19 .check-box {
+.checkbox-wrapper-19 .check-box {
     height: var(--checkbox-height);
     width: var(--checkbox-height);
     background-color: transparent;
@@ -249,10 +266,10 @@ footer {
     box-sizing: border-box;
     transition: border-color ease 0.2s;
     cursor: pointer;
-  }
+}
 
-  .checkbox-wrapper-19 .check-box::before,
-  .checkbox-wrapper-19 .check-box::after {
+.checkbox-wrapper-19 .check-box::before,
+.checkbox-wrapper-19 .check-box::after {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -267,35 +284,37 @@ footer {
     -webkit-transition: opacity ease 0.5;
     -moz-transition: opacity ease 0.5;
     transition: opacity ease 0.5;
-  }
+}
 
-  .checkbox-wrapper-19 .check-box::before {
+.checkbox-wrapper-19 .check-box::before {
     top: calc(var(--checkbox-height) * .75);
     left: calc(var(--checkbox-height) * .41);
     box-shadow: 0 0 0 calc(var(--checkbox-height) * .05) var(--background-color);
     transform: rotate(-145deg);
-  }
+}
 
-  .checkbox-wrapper-19 .check-box::after {
+.checkbox-wrapper-19 .check-box::after {
     top: calc(var(--checkbox-height) * .37);
     left: calc(var(--checkbox-height) * .05);
     transform: rotate(-45deg);
-  }
+}
 
-  .checkbox-wrapper-19 input[type=checkbox]:checked + .check-box,
-  .checkbox-wrapper-19 .check-box.checked {
+.checkbox-wrapper-19 input[type=checkbox]:checked+.check-box,
+.checkbox-wrapper-19 .check-box.checked {
     border-color: black;
-  }
-  .checkbox-wrapper-19 input[type=checkbox]:checked + .check-box::after,
-  .checkbox-wrapper-19 .check-box.checked::after {
+}
+
+.checkbox-wrapper-19 input[type=checkbox]:checked+.check-box::after,
+.checkbox-wrapper-19 .check-box.checked::after {
     height: calc(var(--checkbox-height) / 2);
     animation: dothabottomcheck-19 0.2s ease 0s forwards;
-  }
-  .checkbox-wrapper-19 input[type=checkbox]:checked + .check-box::before,
-  .checkbox-wrapper-19 .check-box.checked::before {
+}
+
+.checkbox-wrapper-19 input[type=checkbox]:checked+.check-box::before,
+.checkbox-wrapper-19 .check-box.checked::before {
     height: calc(var(--checkbox-height) * 1.1);
     animation: dothatopcheck-19 0.4s ease 0s forwards;
-  }
+}
 
 
 .logInButtons {
@@ -307,7 +326,7 @@ footer {
 }
 
 .userLogInButton {
-    background-color: rgb(42,54,71);
+    background-color: rgb(42, 54, 71);
     color: white;
     border-radius: 5px;
     height: 40px;
@@ -316,7 +335,7 @@ footer {
 }
 
 .userLogInButton:hover {
-    background-color: rgb(41,171,226);
+    background-color: rgb(41, 171, 226);
     box-shadow: 0px 3.5px 0px 0px rgb(0, 0, 0, 0.15);
 }
 
@@ -330,11 +349,12 @@ footer {
 }
 
 .guestLogInButton:hover {
-    border-color: rgb(41,171,226);
-    
-    color: rgb(41,171,226);
-    border: 2px solid rgb(41,171,226);
-    animation: moveButtonAnimation 0.1s ease 0.2s forwards; /* Animation mit Verzögerung von 1 Sekunde */
+    border-color: rgb(41, 171, 226);
+
+    color: rgb(41, 171, 226);
+    border: 2px solid rgb(41, 171, 226);
+    animation: moveButtonAnimation 0.1s ease 0.2s forwards;
+    /* Animation mit Verzögerung von 1 Sekunde */
 }
 
 
@@ -342,6 +362,7 @@ footer {
     from {
         transform: translateY(1px);
     }
+
     to {
         transform: translateY(-0.5px);
         box-shadow: 0px 3.5px 0px 0px rgb(0, 0, 0, 0.15);
@@ -363,5 +384,5 @@ footer {
 
 .privacyPolicyText:hover {
     color: rgb(41, 171, 226);
-    cursor: pointer;    
+    cursor: pointer;
 }
