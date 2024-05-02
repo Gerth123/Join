@@ -34,7 +34,7 @@
                   <div class="board-header-line"></div>
                   <img class="board-header-search-img" src="/assets/icons/board/search.svg" alt="" />
                 </div>
-                <div class="board-header-add-btn">
+                <div id="board-header-add-btn" class="button board-header-add-btn">
                   Add task
                   <img class="board-header-add-btn-img" src="/assets/icons/board/plus_button_big_white.svg" alt="" />
                 </div>
@@ -154,7 +154,7 @@
         </div>
       </section>
       <section id="full-size-container" class="full-size-container">
-        <div class="full-size-board d-none">
+        <div id="board" class="full-size-board d-none">
           <div class="full-size-header">
             <img src="/assets/icons/board/fullsize/technical_task_big.svg" alt="" />
             <div id="close-btn" class="close-btn"><img src="/assets/icons/board/close-button_big.svg" alt="" /></div>
@@ -167,7 +167,6 @@
             <div>Assigned To:</div>
             <div class="full-size-assign-user">Hanbit Chang</div>
           </div>
-
           <div class="full-size-subtasks">
             Subtasks
             <div>Establish CSS Methodology</div>
@@ -176,10 +175,10 @@
           <div class="full-size-footer">
             <img class="button full-size-button" src="/assets/icons/board/fullsize/delete-button.svg" alt="" />
             <div class="full-size-line"></div>
-            <img class="button full-size-button" src="/assets/icons/board/fullsize/edit-button.svg" alt="" />
+            <img id="edit-btn" class="button full-size-button" src="/assets/icons/board/fullsize/edit-button.svg" alt="" />
           </div>
         </div>
-        <div id="edit-board" class="full-size-board">
+        <div id="edit-board" class="full-size-board d-none">
           <div class="full-size-header jc-fe">
             <div id="close-btn-edit" class="close-btn"><img src="/assets/icons/board/close-button_big.svg" alt="" /></div>
           </div>
@@ -198,6 +197,37 @@
             <input class="full-size-input" id="subtasks" type="text" placeholder="Add new subtask" />
             <div class="full-size-footer">
               <div class="button ok-button">Ok <img src="/assets/icons/board/fullsize/check.svg" alt="" /></div>
+            </div>
+          </form>
+        </div>
+        <div id="add-board" class="full-size-add-board">
+          <div class="full-size-header">
+            <div class="full-size-add-task">Add Task</div>
+            <div id="close-btn-add" class="close-btn"><img src="/assets/icons/board/close-button_big.svg" alt="" /></div>
+          </div>
+          <form class="full-size-add-form" action="">
+            <div class="row">
+              <div class="column wd-45">
+                <label class="full-size-label" for="title">Title</label>
+                <input class="full-size-input" id="title" type="text" placeholder="Enter a title" />
+                <label class="full-size-label" for="description">Description</label>
+                <input class="full-size-input" id="description" type="text" placeholder="Enter a description" />
+                <label class="full-size-label" for="assigned">Assigned to</label>
+                <input class="full-size-input" id="assigned" type="text" placeholder="Assigned to" />
+              </div>
+              <div class="column wd-45">
+                <label class="full-size-label" for="date">Due date</label>
+                <input class="full-size-input" id="date" type="text" placeholder="Date" />
+                <label class="full-size-label" for="priority">Priority</label>
+                <input class="full-size-input" id="priority" type="text" placeholder="Priority" />
+
+                <label class="full-size-label" for="subtasks">Subtasks</label>
+                <input class="full-size-input" id="subtasks" type="text" placeholder="Add new subtask" />
+              </div>
+            </div>
+            <div class="full-size-footer">
+              <div class="button cancel-button">Cancel<img src="/assets/icons/board/fullsize/cancel_small.svg" alt="" /></div>
+              <div class="button ok-button">Create Task <img src="/assets/icons/board/fullsize/check.svg" alt="" /></div>
             </div>
           </form>
         </div>
