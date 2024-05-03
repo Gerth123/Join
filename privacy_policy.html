@@ -28,7 +28,7 @@
         <section class="privacyPolicyOpenedContainer">
           <div class="privacyPolicyHeadlineAndArrowContainer">
             <h1 class="privacyPolicyHeadline">Privacy Policy</h1>
-            <img class="arrowLeftImg" src="assets/img/arrowLeft.svg" alt="Back" />
+            <img class="arrowLeftImg" src="assets/img/arrowLeft.svg" alt="Back" onclick="goBackToLastTab()"/>
           </div>
           <div class="privacyPolicyTextContainer">
             <h2>Subtitle</h2>
@@ -85,10 +85,12 @@
           >
         </div>
         <div class="privacyPolicyAndLegalNoticeContainer">
-          <a href="privacy_policy.html" class="openedPrivacyPolicyOrLegalNotice"
-            ><span class="privacyPolicyTextOpened">Privacy Policy</span></a
-          >
-          <a href="legal_notice.html" class="legalNoticeContainer" target="_blank"><span class="legalNoticeText">Legal Notice</span></a>
+          <a href="#" class="openedPrivacyPolicyOrLegalNotice">
+            <span class="privacyPolicyTextOpened">Privacy Policy</span>
+          </a>
+          <a class="legalNoticeContainer" onclick="openNewTab('robin-gerth.developerakademie.net/Join/legal_notice.html')">
+            <span class="legalNoticeText">Legal Notice</span>
+          </a>
         </div>
       </section>
     </div>
