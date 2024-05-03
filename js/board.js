@@ -33,7 +33,10 @@ const emptyData = [
         category: "user story",
         title: "Contactform & Print",
         description: "Build start page with recipe recommenation I would like to change this",
-        assigned: { name: "Hanbit", lastName: "Chang" },
+        assigned: [
+          { name: "Hanbit", lastName: "Chang" },
+          { name: "Hanbit", lastName: "Chang" },
+        ],
         date: "12/3/1992",
         priority: "medium",
         subtasks: ["contact form"],
@@ -43,7 +46,10 @@ const emptyData = [
         category: "technical task",
         title: "Contactform & Print and other stuffs check how it is, how long does this keep going",
         description: "Build start page with recipe recommenation I would like to change this",
-        assigned: { name: "Robin", lastName: "Mark" },
+        assigned: [
+          { name: "Hanbit", lastName: "Chang" },
+          { name: "Robin", lastName: "Mark" },
+        ],
         date: "12/3/1992",
         priority: "low",
         subtasks: ["contact form"],
@@ -58,7 +64,7 @@ const emptyData = [
         category: "user story",
         title: "Hanbit chang is cool",
         description: "welcome",
-        assigned: { name: "Hanbit", lastName: "Chang" },
+        assigned: [],
         date: "12/3/1992",
         priority: "urgent",
         subtasks: ["contact form"],
@@ -121,8 +127,6 @@ function getBoardContents(contents, id) {
         <!-- <div onclick='deleteContent(${card["id"]})'>x</div> -->
         <div class="board-bottom-container">
           <div id="board-user" class="board-user-container">
-            <div class="board-user">HC</div>
-            <div class="board-user">RB</div>
           </div>
           <img id='board-priority' alt="">
         </div>
@@ -131,6 +135,7 @@ function getBoardContents(contents, id) {
     `;
     getCategory(card["category"], card["id"]);
     getPriority(card["priority"], card["id"]);
+    getAssigned(card["assigned"], card["id"]);
   });
 }
 
@@ -154,6 +159,23 @@ function getPriority(priority, id) {
   let content = document.getElementById(`${id}`);
   let boardPriority = content.querySelector("#board-priority");
   boardPriority.src = priorityIcons[priority] || "";
+}
+
+/**
+ * Get board assigned
+ * @param {Object} assigned - board assigned user
+ * @param {number} id - board id
+ */
+function getAssigned(assigned, id) {
+  let content = document.getElementById(`${id}`);
+  let boardUser = content.querySelector("#board-user");
+  assigned.forEach((user) => {
+    let name = Array.from(`${user["name"]}`)[0];
+    let lastName = Array.from(`${user["lastName"]}`)[0];
+    boardUser.innerHTML += /*html*/ `
+    <div class="board-user">${name}${lastName}</div>
+   `;
+  });
 }
 
 const boardCard = document.querySelectorAll(".board-card");

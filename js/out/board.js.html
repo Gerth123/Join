@@ -1,25 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
+<head>
+    <meta charset="utf-8">
     <title>JSDoc: Source: board.js</title>
 
-    <script src="scripts/prettify/prettify.js"></script>
-    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css" />
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css" />
-  </head>
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
 
-  <body>
-    <div id="main">
-      <h1 class="page-title">Source: board.js</h1>
+<body>
 
-      <section>
+<div id="main">
+
+    <h1 class="page-title">Source: board.js</h1>
+
+    
+
+
+
+    
+    <section>
         <article>
-          <pre class="prettyprint source linenums"><code>const addTaskBtn = document.getElementById("board-header-add-btn");
+            <pre class="prettyprint source linenums"><code>const addTaskBtn = document.getElementById("board-header-add-btn");
 const editBtn = document.getElementById("edit-btn");
 const fullsize = document.getElementById("full-size-container");
 const board = document.getElementById("board");
@@ -44,6 +51,160 @@ const title = [
     title: "Done",
   },
 ];
+
+const emptyData = [
+  {
+    id: 1,
+    items: [
+      {
+        id: 9237,
+        category: "user story",
+        title: "Contactform &amp; Print",
+        description: "Build start page with recipe recommenation I would like to change this",
+        assigned: [
+          { name: "Hanbit", lastName: "Chang" },
+          { name: "Hanbit", lastName: "Chang" },
+        ],
+        date: "12/3/1992",
+        priority: "medium",
+        subtasks: ["contact form"],
+      },
+      {
+        id: 7237,
+        category: "technical task",
+        title: "Contactform &amp; Print and other stuffs check how it is, how long does this keep going",
+        description: "Build start page with recipe recommenation I would like to change this",
+        assigned: [
+          { name: "Hanbit", lastName: "Chang" },
+          { name: "Robin", lastName: "Mark" },
+        ],
+        date: "12/3/1992",
+        priority: "low",
+        subtasks: ["contact form"],
+      },
+    ],
+  },
+  {
+    id: 2,
+    items: [
+      {
+        id: 19237,
+        category: "user story",
+        title: "Hanbit chang is cool",
+        description: "welcome",
+        assigned: [],
+        date: "12/3/1992",
+        priority: "urgent",
+        subtasks: ["contact form"],
+      },
+    ],
+  },
+  { id: 3, items: [] },
+  { id: 4, items: [] },
+];
+
+const categoryIcons = {
+  "user story": "/assets/icons/board/user_story.svg",
+  "technical task": "/assets/icons/board/technical_task.svg",
+};
+
+const priorityIcons = {
+  low: "/assets/icons/board/priority/low.svg",
+  medium: "/assets/icons/board/priority/medium.svg",
+  urgent: "/assets/icons/board/priority/urgent.svg",
+};
+
+///////////////////Render Boards//////////////////////
+/**
+ * On loading the site the function triggers
+ * @author Hanbit Chang
+ */
+async function init() {
+  await renderBoards();
+  save(emptyData);
+}
+
+async function renderBoards() {
+  let data = read();
+  const boardSection = document.getElementById("board-card-section");
+  for (let i = 0; i &lt; data.length; i++) {
+    const id = data[i]["id"];
+    boardSection.innerHTML += getBoardContainer(id);
+    // getTitle(title[i], id);
+    getBoardContents(data[i]["items"], id);
+  }
+}
+
+function getBoardContainer(id) {
+  return /*html*/ `
+    &lt;div id="${id}" class="board-card-content">
+      &lt;div id="dropzone" class="board-card-dropzone">&lt;/div>
+    &lt;/div>
+ `;
+}
+
+function getBoardContents(contents, id) {
+  let content = document.getElementById(`${id}`);
+  contents.forEach(function (card) {
+    content.innerHTML += /*html*/ `
+      &lt;div id='${card["id"]}' class="board-card" draggable="true">
+        &lt;img id="board-category" class="board-category">
+        &lt;div class="board-title">${card["title"]}&lt;/div>
+        &lt;div class="board-description">${card["description"]}&lt;/div> 
+        &lt;!-- &lt;div id='input-${card["id"]}' contenteditable class="kanban-item-input">${card["content"]}&lt;/div> -->
+        &lt;!-- &lt;div onclick='deleteContent(${card["id"]})'>x&lt;/div> -->
+        &lt;div class="board-bottom-container">
+          &lt;div id="board-user" class="board-user-container">
+          &lt;/div>
+          &lt;img id='board-priority' alt="">
+        &lt;/div>
+        &lt;div  id="dropzone" class="kanban-dropzone">&lt;/div>
+      &lt;/div>
+    `;
+    getCategory(card["category"], card["id"]);
+    getPriority(card["priority"], card["id"]);
+    getAssigned(card["assigned"], card["id"]);
+  });
+}
+
+/**
+ * Get board category
+ * @param {string} category - board category
+ * @param {number} id - board id
+ */
+function getCategory(category, id) {
+  let content = document.getElementById(`${id}`);
+  let boardCategory = content.querySelector("#board-category");
+  boardCategory.src = categoryIcons[category] || "";
+}
+
+/**
+ * Get board priority
+ * @param {string} priority - board priority
+ * @param {number} id - board id
+ */
+function getPriority(priority, id) {
+  let content = document.getElementById(`${id}`);
+  let boardPriority = content.querySelector("#board-priority");
+  boardPriority.src = priorityIcons[priority] || "";
+}
+
+/**
+ * Get board assigned
+ * @param {Object} assigned - board assigned user
+ * @param {number} id - board id
+ */
+function getAssigned(assigned, id) {
+  let content = document.getElementById(`${id}`);
+  let boardUser = content.querySelector("#board-user");
+  assigned.forEach((user) => {
+    let name = Array.from(`${user["name"]}`)[0];
+    let lastName = Array.from(`${user["lastName"]}`)[0];
+    boardUser.innerHTML += /*html*/ `
+    &lt;div class="board-user">${name}${lastName}&lt;/div>
+   `;
+  });
+}
 
 const boardCard = document.querySelectorAll(".board-card");
 boardCard.forEach((e) =>
@@ -78,36 +239,47 @@ editBtn.addEventListener("click", () => {
 ///////////////////Kanban APIs//////////////////////
 
 /**
- * This function saves the data in the server
- * @param {Object} data
+ *
+ */
+
+/**
+ * Saves the data in the server.
+ * @param {Object} data - saves the board data
  * @author Hanbit Chang
  */
 function save(data) {
   localStorage.setItem("board-data", JSON.stringify(data));
 }
+
+/**
+ * Reads the data in the server.
+ * @author Hanbit Chang
+ */
+function read() {
+  const json = localStorage.getItem("board-data");
+  if (!json) return emptyData;
+  return JSON.parse(json);
+}
 </code></pre>
         </article>
-      </section>
-    </div>
+    </section>
 
-    <nav>
-      <h2><a href="index.html">Home</a></h2>
-      <h3>Global</h3>
-      <ul>
-        <li><a href="global.html#save">save</a></li>
-      </ul>
-    </nav>
 
-    <br class="clear" />
 
-    <footer>
-      Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri May 03 2024 09:43:06 GMT+0200 (Central
-      European Summer Time)
-    </footer>
 
-    <script>
-      prettyPrint();
-    </script>
-    <script src="scripts/linenumber.js"></script>
-  </body>
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#getAssigned">getAssigned</a></li><li><a href="global.html#getCategory">getCategory</a></li><li><a href="global.html#getPriority">getPriority</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#read">read</a></li><li><a href="global.html#save">save</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri May 03 2024 14:11:46 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
 </html>
