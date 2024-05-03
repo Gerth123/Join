@@ -39,15 +39,20 @@ const emptyData = [
         ],
         date: "12/3/1992",
         priority: "medium",
-        subtasks: ["contact form"],
+        subtasks: ["contact form", "subtask two"],
       },
       {
         id: 7237,
         category: "technical task",
-        title: "Contactform & Print and other stuffs check how it is, how long does this keep going",
-        description: "Build start page with recipe recommenation I would like to change this",
+        title:
+          "Contactform & Print and other stuffs check how it is, how long does this keep going. Contactform & Print and other stuffs check how it is, how long does this keep going",
+        description:
+          "Build start page with recipe recommenation I would like to change this Contactform & Print and other stuffs check how it is, how long does this keep goingContactform & Print and other stuffs check how it is, how long does this keep going",
         assigned: [
           { name: "Hanbit", lastName: "Chang" },
+          { name: "Robin", lastName: "Mark" },
+          { name: "Robin", lastName: "Mark" },
+          { name: "Robin", lastName: "Mark" },
           { name: "Robin", lastName: "Mark" },
         ],
         date: "12/3/1992",
