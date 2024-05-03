@@ -81,6 +81,11 @@ const categoryIcons = {
   "technical task": "/assets/icons/board/technical_task.svg",
 };
 
+const categoryFullSizeIcons = {
+  "user story": "/assets/icons/board/fullsize/user_story_big.svg",
+  "technical task": "/assets/icons/board/fullsize/technical_task_big.svg",
+};
+
 const priorityIcons = {
   low: "/assets/icons/board/priority/low.svg",
   medium: "/assets/icons/board/priority/medium.svg",
@@ -137,11 +142,17 @@ function getFullSizeBoard(idNumber, contentId) {
   description.textContent = `${itemData["description"]}`;
   date.textContent = `${itemData["date"]}`;
   getFullSizePriority(itemData["priority"]);
+  getFullSizeCategory(itemData["category"]);
 }
 
 function getFullSizePriority(priority) {
   let fullSizePriority = document.querySelector(".full-size-priority-icon");
   fullSizePriority.src = priorityFullSizeIcons[priority] || "";
+}
+
+function getFullSizeCategory(category) {
+  let fullSizeCategory = document.querySelector("#full-size-category");
+  fullSizeCategory.src = categoryFullSizeIcons[category] || "";
 }
 
 function getItemById(id, contentId) {
