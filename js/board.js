@@ -1,9 +1,5 @@
 const addTaskBtn = document.getElementById("board-header-add-btn");
 const editBtn = document.getElementById("edit-btn");
-const fullsize = document.getElementById("full-size-container");
-const board = document.getElementById("board");
-const editBoard = document.getElementById("edit-board");
-const addBoard = document.getElementById("add-board");
 
 const title = [
   {
@@ -55,7 +51,7 @@ const emptyData = [
           { name: "Robin", lastName: "Mark" },
           { name: "Robin", lastName: "Mark" },
         ],
-        date: "12/3/1992",
+        date: "12/3/3992",
         priority: "low",
         subtasks: ["contact form"],
       },
@@ -70,7 +66,7 @@ const emptyData = [
         title: "Hanbit chang is cool",
         description: "welcome",
         assigned: [],
-        date: "12/3/1992",
+        date: "12/3/2092",
         priority: "urgent",
         subtasks: ["contact form"],
       },
@@ -91,6 +87,12 @@ const priorityIcons = {
   urgent: "/assets/icons/board/priority/urgent.svg",
 };
 
+const priorityFullSizeIcons = {
+  low: "/assets/icons/board/priority/low_box.svg",
+  medium: "/assets/icons/board/priority/medium_box.svg",
+  urgent: "/assets/icons/board/priority/urgent_box.svg",
+};
+
 ///////////////////Render Boards//////////////////////
 /**
  * On loading the site the function triggers
@@ -99,10 +101,57 @@ const priorityIcons = {
 async function init() {
   await renderBoards();
   save(emptyData);
+  getEventListeners();
+}
+
+function getEventListeners() {
+  const boardCard = document.querySelectorAll(".board-card");
+  const fullsize = document.getElementById("full-size-container");
+  const board = document.getElementById("board");
+  const editBoard = document.getElementById("edit-board");
+  const addBoard = document.getElementById("add-board");
+  boardCard.forEach((e) =>
+    e.addEventListener("click", () => {
+      fullsize.classList.remove("d-none");
+      board.classList.remove("d-none");
+      editBoard.classList.add("d-none");
+      addBoard.classList.add("d-none");
+      let id = e.id;
+      let contentId = e.parentNode.id;
+      getFullSizeBoard(id, contentId);
+    })
+  );
 }
 
 async function renderBoards() {
   let data = read();
+  getBoardSection(data);
+}
+
+function getFullSizeBoard(idNumber, contentId) {
+  let itemData = getItemById(idNumber, contentId);
+  let title = document.querySelector(".full-size-title");
+  let description = document.querySelector(".full-size-description");
+  let date = document.querySelector(".full-size-date");
+  title.textContent = `${itemData["title"]}`;
+  description.textContent = `${itemData["description"]}`;
+  date.textContent = `${itemData["date"]}`;
+  getFullSizePriority(itemData["priority"]);
+}
+
+function getFullSizePriority(priority) {
+  let fullSizePriority = document.querySelector(".full-size-priority-icon");
+  fullSizePriority.src = priorityFullSizeIcons[priority] || "";
+}
+
+function getItemById(id, contentId) {
+  let data = read();
+  const itemList = data.find((items) => items["id"] == contentId);
+  const item = itemList["items"].find((items) => items["id"] == id);
+  return item;
+}
+
+function getBoardSection(data) {
   const boardSection = document.getElementById("board-card-section");
   for (let i = 0; i < data.length; i++) {
     const id = data[i]["id"];
@@ -182,16 +231,6 @@ function getAssigned(assigned, id) {
    `;
   });
 }
-
-const boardCard = document.querySelectorAll(".board-card");
-boardCard.forEach((e) =>
-  e.addEventListener("click", () => {
-    fullsize.classList.remove("d-none");
-    board.classList.remove("d-none");
-    editBoard.classList.add("d-none");
-    addBoard.classList.add("d-none");
-  })
-);
 
 const closeBtn = document.querySelectorAll(".close-btn");
 closeBtn.forEach((e) =>
