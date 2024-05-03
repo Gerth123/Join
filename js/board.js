@@ -25,26 +25,105 @@ const title = [
 ];
 
 const emptyData = [
-  { id: 1, items: [] },
-  { id: 2, items: [] },
+  {
+    id: 1,
+    items: [
+      {
+        id: 9237,
+        category: "user story",
+        title: "Contactform & Print",
+        description: "Build start page with recipe recommenation I would like to change this",
+        assigned: "Hanbit Chang",
+        date: "12/3/1992",
+        priority: "medium",
+        subtasks: ["contact form"],
+      },
+      {
+        id: 7237,
+        category: "user story",
+        title: "Contactform & Print",
+        description: "Build start page with recipe recommenation I would like to change this",
+        assigned: "Hanbit Chang",
+        date: "12/3/1992",
+        priority: "medium",
+        subtasks: ["contact form"],
+      },
+    ],
+  },
+  {
+    id: 2,
+    items: [
+      {
+        id: 19237,
+        category: "user story",
+        title: "Hanbit chang is cool",
+        description: "welcome",
+        assigned: "Hanbit Chang",
+        date: "12/3/1992",
+        priority: "medium",
+        subtasks: ["contact form"],
+      },
+    ],
+  },
   { id: 3, items: [] },
   { id: 4, items: [] },
 ];
 
 ///////////////////Render Boards//////////////////////
+/**
+ * On loading the site the function triggers
+ * @author Hanbit Chang
+ */
 async function init() {
   await renderBoards();
+  save(emptyData);
 }
 
-async function renderKanban() {
+async function renderBoards() {
   let data = read();
-  let kanban = document.getElementById("kanban");
-  kanban.innerHTML = "";
-  for (let i = 0; i < title.length; i++) {
+  const boardSection = document.getElementById("board-card-section");
+  for (let i = 0; i < data.length; i++) {
     const id = data[i]["id"];
-    kanban.innerHTML += getKanbanContainer(id);
-    getTitle(title[i], id);
-    getContents(data[i]["items"], id);
+    boardSection.innerHTML += getBoardContainer(id);
+    // getTitle(title[i], id);
+    getBoardContents(data[i]["items"], id);
+  }
+}
+
+function getBoardContainer(id) {
+  return /*html*/ `
+    <div id="${id}" class="board-card-content">
+      <div id="dropzone" class="board-card-dropzone"></div>
+    </div>
+ `;
+}
+
+function getBoardContents(contents, id) {
+  let content = document.getElementById(`${id}`);
+  contents.forEach(function (card) {
+    content.innerHTML += /*html*/ `
+      <div id='${card["id"]}' class="board-card" draggable="true">
+        ${card["category"]}
+        <div id="board-category"></div>
+        <div class="board-title">${card["title"]}</div>
+        <div class="board-description">${card["description"]}</div> 
+        ${card["assigned"]}
+        ${card["date"]}
+        ${card["priority"]}
+        ${card["subtasks"]}
+        <!-- <div id='input-${card["id"]}' contenteditable class="kanban-item-input">${card["content"]}</div> -->
+        <!-- <div onclick='deleteContent(${card["id"]})'>x</div> -->
+        <div  id="dropzone" class="kanban-dropzone"></div>
+      </div>
+    `;
+    getBoardCategory(card["category"]);
+  });
+}
+
+function getBoardCategory(category) {
+  const boardCategory = document.getElementById("board-category");
+  if (category == "user story") {
+  } else if (category == "technical support") {
   }
 }
 
