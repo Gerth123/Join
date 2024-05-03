@@ -33,19 +33,19 @@ const emptyData = [
         category: "user story",
         title: "Contactform & Print",
         description: "Build start page with recipe recommenation I would like to change this",
-        assigned: "Hanbit Chang",
+        assigned: { name: "Hanbit", lastName: "Chang" },
         date: "12/3/1992",
         priority: "medium",
         subtasks: ["contact form"],
       },
       {
         id: 7237,
-        category: "user story",
-        title: "Contactform & Print",
+        category: "technical task",
+        title: "Contactform & Print and other stuffs check how it is, how long does this keep going",
         description: "Build start page with recipe recommenation I would like to change this",
-        assigned: "Hanbit Chang",
+        assigned: { name: "Robin", lastName: "Mark" },
         date: "12/3/1992",
-        priority: "medium",
+        priority: "low",
         subtasks: ["contact form"],
       },
     ],
@@ -58,9 +58,9 @@ const emptyData = [
         category: "user story",
         title: "Hanbit chang is cool",
         description: "welcome",
-        assigned: "Hanbit Chang",
+        assigned: { name: "Hanbit", lastName: "Chang" },
         date: "12/3/1992",
-        priority: "medium",
+        priority: "urgent",
         subtasks: ["contact form"],
       },
     ],
@@ -68,6 +68,17 @@ const emptyData = [
   { id: 3, items: [] },
   { id: 4, items: [] },
 ];
+
+const categoryIcons = {
+  "user story": "/assets/icons/board/user_story.svg",
+  "technical task": "/assets/icons/board/technical_task.svg",
+};
+
+const priorityIcons = {
+  low: "/assets/icons/board/priority/low.svg",
+  medium: "/assets/icons/board/priority/medium.svg",
+  urgent: "/assets/icons/board/priority/urgent.svg",
+};
 
 ///////////////////Render Boards//////////////////////
 /**
@@ -103,28 +114,46 @@ function getBoardContents(contents, id) {
   contents.forEach(function (card) {
     content.innerHTML += /*html*/ `
       <div id='${card["id"]}' class="board-card" draggable="true">
-        ${card["category"]}
-        <div id="board-category"></div>
+        <img id="board-category" class="board-category">
         <div class="board-title">${card["title"]}</div>
         <div class="board-description">${card["description"]}</div> 
-        ${card["assigned"]}
-        ${card["date"]}
-        ${card["priority"]}
-        ${card["subtasks"]}
         <!-- <div id='input-${card["id"]}' contenteditable class="kanban-item-input">${card["content"]}</div> -->
         <!-- <div onclick='deleteContent(${card["id"]})'>x</div> -->
+        <div class="board-bottom-container">
+          <div id="board-user" class="board-user-container">
+            <div class="board-user">HC</div>
+            <div class="board-user">RB</div>
+          </div>
+          <img id='board-priority' alt="">
+        </div>
         <div  id="dropzone" class="kanban-dropzone"></div>
       </div>
     `;
-    getBoardCategory(card["category"]);
+    getCategory(card["category"], card["id"]);
+    getPriority(card["priority"], card["id"]);
   });
 }
 
-function getBoardCategory(category) {
-  const boardCategory = document.getElementById("board-category");
-  if (category == "user story") {
-  } else if (category == "technical support") {
-  }
+/**
+ * Get board category
+ * @param {string} category - board category
+ * @param {number} id - board id
+ */
+function getCategory(category, id) {
+  let content = document.getElementById(`${id}`);
+  let boardCategory = content.querySelector("#board-category");
+  boardCategory.src = categoryIcons[category] || "";
+}
+
+/**
+ * Get board priority
+ * @param {string} priority - board priority
+ * @param {number} id - board id
+ */
+function getPriority(priority, id) {
+  let content = document.getElementById(`${id}`);
+  let boardPriority = content.querySelector("#board-priority");
+  boardPriority.src = priorityIcons[priority] || "";
 }
 
 const boardCard = document.querySelectorAll(".board-card");

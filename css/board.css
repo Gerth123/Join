@@ -148,13 +148,7 @@ input:focus {
 }
 
 .board-category {
-  width: max-content;
-  padding: 4px 16px 4px 16px;
   margin-bottom: 24px;
-  background-color: blue;
-  color: #ffffff;
-  gap: 10px;
-  border-radius: 8px;
 }
 
 .board-title {
