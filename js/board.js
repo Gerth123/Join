@@ -35,7 +35,10 @@ const emptyData = [
         ],
         date: "12/3/1992",
         priority: "medium",
-        subtasks: ["contact form", "subtask two"],
+        subtasks: [
+          { checked: false, task: "contact form" },
+          { checked: true, task: "Hello" },
+        ],
       },
       {
         id: 7237,
@@ -53,7 +56,10 @@ const emptyData = [
         ],
         date: "12/3/3992",
         priority: "low",
-        subtasks: ["contact form"],
+        subtasks: [
+          { checked: false, task: "this is checkbox" },
+          { checked: true, task: "checkbox" },
+        ],
       },
     ],
   },
@@ -68,7 +74,10 @@ const emptyData = [
         assigned: [],
         date: "12/3/2092",
         priority: "urgent",
-        subtasks: ["contact form"],
+        subtasks: [
+          { checked: false, task: "contact dfd form" },
+          { checked: false, task: "Hello" },
+        ],
       },
     ],
   },
@@ -175,8 +184,12 @@ function getFullSizeSubtask(subtasks) {
   for (let i = 0; i < subtasks.length; i++) {
     fullSizeSubtasks.innerHTML += /*html*/ `
     <input type="checkbox" id="subtask-${i}">
-    <label for="subtask-${i}">${subtasks[i]}</label>
+    <label for="subtask-${i}">${subtasks[i]["task"]}</label>
     `;
+    let check = document.getElementById(`subtask-${i}`);
+    if (subtasks[i]["checked"]) {
+      check.checked = true;
+    }
   }
 }
 
