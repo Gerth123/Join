@@ -3,35 +3,21 @@ async function getExampleData() {
   return await response.json();
 }
 
-const categoryIcons = {
-  "user story": "/assets/icons/board/user_story.svg",
-  "technical task": "/assets/icons/board/technical_task.svg",
-};
+async function getIcons() {
+  const response = await fetch("/assets/data/getIcons.json");
+  return await response.json();
+}
 
-const categoryFullSizeIcons = {
-  "user story": "/assets/icons/board/fullsize/user_story_big.svg",
-  "technical task": "/assets/icons/board/fullsize/technical_task_big.svg",
-};
-
-const priorityIcons = {
-  low: "/assets/icons/board/priority/low.svg",
-  medium: "/assets/icons/board/priority/medium.svg",
-  urgent: "/assets/icons/board/priority/urgent.svg",
-};
-
-const priorityFullSizeIcons = {
-  low: "/assets/icons/board/priority/low_box.svg",
-  medium: "/assets/icons/board/priority/medium_box.svg",
-  urgent: "/assets/icons/board/priority/urgent_box.svg",
-};
-
+let icons;
+let emptyData;
 ///////////////////Render Boards//////////////////////
 /**
  * On loading the site the function triggers
  * @author Hanbit Chang
  */
 async function init() {
-  const emptyData = await getExampleData();
+  emptyData = await getExampleData();
+  icons = await getIcons();
   await renderBoards();
   save(emptyData);
   getEventListeners();
@@ -101,12 +87,12 @@ function getFullSizeBoard(id, contentId) {
 
 function getFullSizePriority(priority) {
   let fullSizePriority = document.querySelector(".full-size-priority-icon");
-  fullSizePriority.src = priorityFullSizeIcons[priority] || "";
+  fullSizePriority.src = icons["priorityFullSizeIcons"][priority] || "";
 }
 
 function getFullSizeCategory(category) {
   let fullSizeCategory = document.querySelector("#full-size-category");
-  fullSizeCategory.src = categoryFullSizeIcons[category] || "";
+  fullSizeCategory.src = icons["categoryFullSizeIcons"][category] || "";
 }
 
 function getFullSizeAssigned(assigned) {
@@ -199,7 +185,7 @@ function getBoardContents(contents, id) {
 function getCategory(category, id) {
   let content = document.getElementById(`${id}`);
   let boardCategory = content.querySelector("#board-category");
-  boardCategory.src = categoryIcons[category] || "";
+  boardCategory.src = icons["categoryIcons"][category] || "";
 }
 
 /**
@@ -210,7 +196,7 @@ function getCategory(category, id) {
 function getPriority(priority, id) {
   let content = document.getElementById(`${id}`);
   let boardPriority = content.querySelector("#board-priority");
-  boardPriority.src = priorityIcons[priority] || "";
+  boardPriority.src = icons["priorityIcons"][priority] || "";
 }
 
 /**
