@@ -1,5 +1,7 @@
 let baseUrl = 'https://join-ca44d-default-rtdb.europe-west1.firebasedatabase.app/';
 
+
+
 async function loadData(path='') {
     let response = await fetch(baseUrl + path + '.json');
     return responseToJson = await response.json();
@@ -36,9 +38,9 @@ async function putData(path='', data={}) {
     return responseToJson = await response.json();
 }
 
-// function init() {
-//     putData('', {'name':'xy'});
-// }
+
+
+
 
 function openNewTab(newUrl) {
     newWindow = window.open(newUrl, '_blank');

@@ -8,10 +8,10 @@ let users = [
  * @author: Robin
  */
 
-async function init() {
-    loadUsers();
-    checkAcceptPrivacyPolicy();
-}
+// async function init() {
+//     loadUsers();
+//     checkAcceptPrivacyPolicy();
+// }
 
 /**
  * This function is used to toggle the visibility of the password input field.
@@ -79,21 +79,41 @@ function resetForm() {
     registerBtn.disabled = false;
 }
 
-function addUser() {
-    let email = document.getElementById('email');
-    let password = document.getElementById('password');
-    users.push({ email: email.value, password: password.value });
-    //Weiterleitung zu Login Seite & Nachricht anzeigen: "Registrierung erfolgreich"
-    window.location.href = 'login.html?msg=Registrierung erfolgreich';
+async function postData(path='', data={}) {
+    let response = await fetch(baseUrl + path + '.json', {
+        method: 'POST',
+        header: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+    return responseToJson = await response.json();
 }
 
-const UrlParams = new URLSearchParams(window.location.search);
-const msg = UrlParams.get('msg');
-if (msg) {
-    msgBox.classList.remove('d-none');
-    msgBox.innerHTML = msg;
-} else {
-    msgBox.classList.add('d-none');
+
+function addUser() {
+    let msgBox = document.getElementById('msgBox');
+    let name = document.getElementById('name');
+    let email = document.getElementById('email');
+    let password = document.getElementById('password1');
+    let confirmPassword = document.getElementById('password2');
+    if (password.value === confirmPassword.value) {
+        postData('contacts', { 'name': name.value, 'mail': email.value, 'password': password.value });
+        window.location.href = 'login.html?msg=Registrierung erfolgreich';
+    }else {
+        msgBox.classList.remove('d-none');
+    }
+    
+// const UrlParams = new URLSearchParams(window.location.search);
+// const msg = UrlParams.get('msg');
+// if (msg) {
+//     msgBox.classList.remove('d-none');
+//     msgBox.innerHTML = msg;
+// } else {
+//     msgBox.classList.add('d-none');
+// }    
+    //Weiterleitung zu Login Seite & Nachricht anzeigen: "Registrierung erfolgreich"
+   
 }
 
 function login() {

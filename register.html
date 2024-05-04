@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="fonts/PTSans-Bold.ttf" />
     <link rel="stylesheet" href="fonts/PTSans-Italic.ttf" />
   </head>
-  <body onload="init()">
+  <body>
     <section class="logoContainer">
       <img src="assets/img/logo.svg" alt="Logo" class="logoImg" />
     </section>
@@ -59,7 +59,7 @@
               />
             </div>
           </div>
-          <span class="d-none">Ups! your password don't match.</span>
+          <span class="d-none" id="msgBox">Ups! your password don't match.</span>
           <div class="acceptPrivacyPolicyContainer">
             <div class="checkbox-wrapper-19">
               <input type="checkbox" id="checkbox" required onclick="checkAcceptPrivacyPolicy()" />
