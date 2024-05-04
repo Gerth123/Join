@@ -144,6 +144,7 @@ function getFullSizeBoard(id, contentId) {
   getFullSizePriority(itemData["priority"]);
   getFullSizeCategory(itemData["category"]);
   getFullSizeAssigned(itemData["assigned"]);
+  getFullSizeSubtask(itemData["subtasks"]);
 }
 
 function getFullSizePriority(priority) {
@@ -166,6 +167,17 @@ function getFullSizeAssigned(assigned) {
       ${user["name"]} ${user["lastName"]}  
     </div>`;
   });
+}
+
+function getFullSizeSubtask(subtasks) {
+  let fullSizeSubtasks = document.getElementById("full-size-subtasks");
+
+  for (let i = 0; i < subtasks.length; i++) {
+    fullSizeSubtasks.innerHTML += /*html*/ `
+    <input type="checkbox" id="subtask-${i}">
+    <label for="subtask-${i}">${subtasks[i]}</label>
+    `;
+  }
 }
 
 function getItemById(id, contentId) {
