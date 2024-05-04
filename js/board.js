@@ -88,7 +88,7 @@ function getFullSizeBoard(id, contentId) {
   let itemData = getItemById(id, contentId);
   let title = document.querySelector(".full-size-title");
   let description = document.querySelector(".full-size-description");
-  let date = document.querySelector(".full-size-date");
+  let date = document.querySelector("#full-size-due-date");
   title.textContent = `${itemData["title"]}`;
   description.textContent = `${itemData["description"]}`;
   date.textContent = "";
@@ -191,20 +191,6 @@ function getBoardContents(contents, id) {
   });
 }
 
-function getProgressBar(subtasks, id) {
-  let content = document.getElementById(`${id}`);
-  let progressBar = content.querySelector("#progress-bar");
-  let progressBarLabel = content.querySelector('label[for="progress-bar"]');
-  let process = 0;
-  for (let i = 0; i < subtasks.length; i++) {
-    if (subtasks[i]["checked"] == true) {
-      process++;
-    }
-  }
-  progressBarLabel.textContent = `${process}/${subtasks.length} Subtasks`;
-  progressBar.value = +(process / subtasks.length) * 100;
-}
-
 /**
  * Get board category
  * @param {string} category - board category
@@ -244,26 +230,19 @@ function getAssigned(assigned, id) {
   });
 }
 
-const closeBtn = document.querySelectorAll(".close-btn");
-closeBtn.forEach((e) =>
-  e.addEventListener("click", () => {
-    fullsize.classList.add("d-none");
-  })
-);
-
-addTaskBtn.addEventListener("click", () => {
-  fullsize.classList.remove("d-none");
-  board.classList.add("d-none");
-  editBoard.classList.add("d-none");
-  addBoard.classList.remove("d-none");
-});
-
-editBtn.addEventListener("click", () => {
-  board.classList.add("d-none");
-  editBoard.classList.remove("d-none");
-  addBoard.classList.add("d-none");
-});
-
+function getProgressBar(subtasks, id) {
+  let content = document.getElementById(`${id}`);
+  let progressBar = content.querySelector("#progress-bar");
+  let progressBarLabel = content.querySelector('label[for="progress-bar"]');
+  let process = 0;
+  for (let i = 0; i < subtasks.length; i++) {
+    if (subtasks[i]["checked"] == true) {
+      process++;
+    }
+  }
+  progressBarLabel.textContent = `${process}/${subtasks.length} Subtasks`;
+  progressBar.value = +(process / subtasks.length) * 100;
+}
 ///////////////////Kanban APIs//////////////////////
 
 /**
