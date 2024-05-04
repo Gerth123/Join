@@ -135,6 +135,26 @@ function getEventListeners() {
       getFullSizeBoard(id, contentId);
     })
   );
+
+  const closeBtn = document.querySelectorAll(".close-btn");
+  closeBtn.forEach((e) =>
+    e.addEventListener("click", () => {
+      fullsize.classList.add("d-none");
+    })
+  );
+
+  addTaskBtn.addEventListener("click", () => {
+    fullsize.classList.remove("d-none");
+    board.classList.add("d-none");
+    editBoard.classList.add("d-none");
+    addBoard.classList.remove("d-none");
+  });
+
+  editBtn.addEventListener("click", () => {
+    board.classList.add("d-none");
+    editBoard.classList.remove("d-none");
+    addBoard.classList.add("d-none");
+  });
 }
 
 async function renderBoards() {
