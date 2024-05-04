@@ -133,8 +133,8 @@ async function renderBoards() {
   getBoardSection(data);
 }
 
-function getFullSizeBoard(idNumber, contentId) {
-  let itemData = getItemById(idNumber, contentId);
+function getFullSizeBoard(id, contentId) {
+  let itemData = getItemById(id, contentId);
   let title = document.querySelector(".full-size-title");
   let description = document.querySelector(".full-size-description");
   let date = document.querySelector(".full-size-date");
@@ -143,6 +143,7 @@ function getFullSizeBoard(idNumber, contentId) {
   date.textContent = `${itemData["date"]}`;
   getFullSizePriority(itemData["priority"]);
   getFullSizeCategory(itemData["category"]);
+  getFullSizeAssigned(itemData["assigned"]);
 }
 
 function getFullSizePriority(priority) {
@@ -153,6 +154,18 @@ function getFullSizePriority(priority) {
 function getFullSizeCategory(category) {
   let fullSizeCategory = document.querySelector("#full-size-category");
   fullSizeCategory.src = categoryFullSizeIcons[category] || "";
+}
+
+function getFullSizeAssigned(assigned) {
+  let fullSizeAssigned = document.querySelector(".full-size-assign");
+
+  assigned.forEach((user) => {
+    console.log(user);
+    fullSizeAssigned.innerHTML += /*html*/ `
+    <div class="full-size-assign-user">
+      ${user["name"]} ${user["lastName"]}  
+    </div>`;
+  });
 }
 
 function getItemById(id, contentId) {
