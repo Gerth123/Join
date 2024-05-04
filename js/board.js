@@ -24,14 +24,18 @@ async function init() {
 }
 
 function getEventListeners() {
-  const boardCard = document.querySelectorAll(".board-card");
   const fullsize = document.getElementById("full-size-container");
   const board = document.getElementById("board");
   const editBoard = document.getElementById("edit-board");
   const addBoard = document.getElementById("add-board");
-  const addTaskBtn = document.getElementById("board-header-add-btn");
-  const editBtn = document.getElementById("edit-btn");
+  onClickFullSizeBoard(fullsize, board, editBoard, addBoard);
+  onClickCloseFullSize(fullsize);
+  onClickAddTaskBoard(fullsize, board, editBoard, addBoard);
+  onClickEditBoard(board, editBoard, addBoard);
+}
 
+function onClickFullSizeBoard(fullsize, board, editBoard, addBoard) {
+  const boardCard = document.querySelectorAll(".board-card");
   boardCard.forEach((e) =>
     e.addEventListener("click", () => {
       fullsize.classList.remove("d-none");
@@ -43,21 +47,29 @@ function getEventListeners() {
       getFullSizeBoard(id, contentId);
     })
   );
+}
 
+function onClickCloseFullSize(fullsize) {
   const closeBtn = document.querySelectorAll(".close-btn");
   closeBtn.forEach((e) =>
     e.addEventListener("click", () => {
       fullsize.classList.add("d-none");
     })
   );
+}
 
+function onClickAddTaskBoard(fullsize, board, editBoard, addBoard) {
+  const addTaskBtn = document.getElementById("board-header-add-btn");
   addTaskBtn.addEventListener("click", () => {
     fullsize.classList.remove("d-none");
     board.classList.add("d-none");
     editBoard.classList.add("d-none");
     addBoard.classList.remove("d-none");
   });
+}
 
+function onClickEditBoard(board, editBoard, addBoard) {
+  const editBtn = document.getElementById("edit-btn");
   editBtn.addEventListener("click", () => {
     board.classList.add("d-none");
     editBoard.classList.remove("d-none");
@@ -66,7 +78,7 @@ function getEventListeners() {
 }
 
 async function renderBoards() {
-  let data = read();
+  const data = read();
   getBoardSection(data);
 }
 
@@ -86,17 +98,17 @@ function getFullSizeBoard(id, contentId) {
 }
 
 function getFullSizePriority(priority) {
-  let fullSizePriority = document.querySelector(".full-size-priority-icon");
+  const fullSizePriority = document.querySelector(".full-size-priority-icon");
   fullSizePriority.src = icons["priorityFullSizeIcons"][priority] || "";
 }
 
 function getFullSizeCategory(category) {
-  let fullSizeCategory = document.querySelector("#full-size-category");
+  const fullSizeCategory = document.querySelector("#full-size-category");
   fullSizeCategory.src = icons["categoryFullSizeIcons"][category] || "";
 }
 
 function getFullSizeAssigned(assigned) {
-  let fullSizeAssigned = document.querySelector("#full-size-assigned-users");
+  const fullSizeAssigned = document.querySelector("#full-size-assigned-users");
   fullSizeAssigned.innerHTML = "";
   assigned.forEach((user) => {
     fullSizeAssigned.innerHTML += /*html*/ `
@@ -107,7 +119,7 @@ function getFullSizeAssigned(assigned) {
 }
 
 function getFullSizeSubtask(subtasks) {
-  let fullSizeSubtasks = document.getElementById("full-size-subtasks-tasks");
+  const fullSizeSubtasks = document.getElementById("full-size-subtasks-tasks");
   fullSizeSubtasks.innerHTML = "";
   for (let i = 0; i < subtasks.length; i++) {
     fullSizeSubtasks.innerHTML += /*html*/ `
@@ -135,7 +147,6 @@ function getBoardSection(data) {
   for (let i = 0; i < data.length; i++) {
     const id = data[i]["id"];
     boardSection.innerHTML += getBoardContainer(id);
-    // getTitle(title[i], id);
     getBoardContents(data[i]["items"], id);
   }
 }
@@ -156,8 +167,6 @@ function getBoardContents(contents, id) {
         <img id="board-category" class="board-category">
         <div class="board-title">${card["title"]}</div>
         <div class="board-description">${card["description"]}</div> 
-        <!-- <div id='input-${card["id"]}' contenteditable class="kanban-item-input">${card["content"]}</div> -->
-        <!-- <div onclick='deleteContent(${card["id"]})'>x</div> -->
         <div class="board-progress-bar-container">
           <progress id="progress-bar" value="0" max="100"></progress>
           <label for="progress-bar"></label>
