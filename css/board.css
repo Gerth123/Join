@@ -338,6 +338,38 @@ progress[value]::-moz-progress-bar {
   flex-direction: column;
 }
 
+[type="checkbox"] {
+  display: none;
+}
+
+[type="checkbox"] + label {
+  position: relative;
+  padding-left: 30px;
+  cursor: pointer;
+  display: inline-block;
+  line-height: 25px;
+}
+
+[type="checkbox"] + label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 18px;
+  height: 18px;
+  background: url("/assets/icons/board/fullsize/checkbox.svg") no-repeat;
+}
+
+[type="checkbox"]:checked + label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 18px;
+  height: 18px;
+  background: url("/assets/icons/board/fullsize/checkbox_checked.svg") no-repeat;
+}
+
 .button {
   cursor: pointer;
 }
