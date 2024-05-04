@@ -1,89 +1,7 @@
-const addTaskBtn = document.getElementById("board-header-add-btn");
-const editBtn = document.getElementById("edit-btn");
-
-const title = [
-  {
-    id: 1,
-    title: "Not Started",
-  },
-  {
-    id: 2,
-    title: "In Progress",
-  },
-  {
-    id: 3,
-    title: "Await feedback",
-  },
-  {
-    id: 4,
-    title: "Done",
-  },
-];
-
-const emptyData = [
-  {
-    id: 1,
-    items: [
-      {
-        id: 9237,
-        category: "user story",
-        title: "Contactform & Print",
-        description: "Build start page with recipe recommenation I would like to change this",
-        assigned: [
-          { name: "Hanbit", lastName: "Chang" },
-          { name: "Hanbit", lastName: "Chang" },
-        ],
-        date: "12/3/1992",
-        priority: "medium",
-        subtasks: [
-          { checked: false, task: "contact form" },
-          { checked: true, task: "Hello" },
-        ],
-      },
-      {
-        id: 7237,
-        category: "technical task",
-        title:
-          "Contactform & Print and other stuffs check how it is, how long does this keep going. Contactform & Print and other stuffs check how it is, how long does this keep going",
-        description:
-          "Build start page with recipe recommenation I would like to change this Contactform & Print and other stuffs check how it is, how long does this keep goingContactform & Print and other stuffs check how it is, how long does this keep going",
-        assigned: [
-          { name: "Hanbit", lastName: "Chang" },
-          { name: "Robin", lastName: "Mark" },
-          { name: "Robin", lastName: "Mark" },
-          { name: "Robin", lastName: "Mark" },
-          { name: "Robin", lastName: "Mark" },
-        ],
-        date: "12/3/3992",
-        priority: "low",
-        subtasks: [
-          { checked: false, task: "this is checkbox" },
-          { checked: true, task: "checkbox" },
-        ],
-      },
-    ],
-  },
-  {
-    id: 2,
-    items: [
-      {
-        id: 19237,
-        category: "user story",
-        title: "Hanbit chang is cool",
-        description: "welcome",
-        assigned: [],
-        date: "12/3/2092",
-        priority: "urgent",
-        subtasks: [
-          { checked: false, task: "contact dfd form" },
-          { checked: false, task: "Hello" },
-        ],
-      },
-    ],
-  },
-  { id: 3, items: [] },
-  { id: 4, items: [] },
-];
+async function getExampleData() {
+  const response = await fetch("/assets/data/example.json");
+  return await response.json();
+}
 
 const categoryIcons = {
   "user story": "/assets/icons/board/user_story.svg",
@@ -113,6 +31,7 @@ const priorityFullSizeIcons = {
  * @author Hanbit Chang
  */
 async function init() {
+  const emptyData = await getExampleData();
   await renderBoards();
   save(emptyData);
   getEventListeners();
@@ -124,6 +43,9 @@ function getEventListeners() {
   const board = document.getElementById("board");
   const editBoard = document.getElementById("edit-board");
   const addBoard = document.getElementById("add-board");
+  const addTaskBtn = document.getElementById("board-header-add-btn");
+  const editBtn = document.getElementById("edit-btn");
+
   boardCard.forEach((e) =>
     e.addEventListener("click", () => {
       fullsize.classList.remove("d-none");
@@ -169,7 +91,8 @@ function getFullSizeBoard(id, contentId) {
   let date = document.querySelector(".full-size-date");
   title.textContent = `${itemData["title"]}`;
   description.textContent = `${itemData["description"]}`;
-  date.textContent = `${itemData["date"]}`;
+  date.textContent = "";
+  date.textContent += `${itemData["date"]}`;
   getFullSizePriority(itemData["priority"]);
   getFullSizeCategory(itemData["category"]);
   getFullSizeAssigned(itemData["assigned"]);
@@ -187,10 +110,9 @@ function getFullSizeCategory(category) {
 }
 
 function getFullSizeAssigned(assigned) {
-  let fullSizeAssigned = document.querySelector(".full-size-assign");
-
+  let fullSizeAssigned = document.querySelector("#full-size-assigned-users");
+  fullSizeAssigned.innerHTML = "";
   assigned.forEach((user) => {
-    console.log(user);
     fullSizeAssigned.innerHTML += /*html*/ `
     <div class="full-size-assign-user">
       ${user["name"]} ${user["lastName"]}  
@@ -199,13 +121,15 @@ function getFullSizeAssigned(assigned) {
 }
 
 function getFullSizeSubtask(subtasks) {
-  let fullSizeSubtasks = document.getElementById("full-size-subtasks");
-
+  let fullSizeSubtasks = document.getElementById("full-size-subtasks-tasks");
+  fullSizeSubtasks.innerHTML = "";
   for (let i = 0; i < subtasks.length; i++) {
     fullSizeSubtasks.innerHTML += /*html*/ `
     <input type="checkbox" id="subtask-${i}">
     <label for="subtask-${i}">${subtasks[i]["task"]}</label>
     `;
+  }
+  for (let i = 0; i < subtasks.length; i++) {
     let check = document.getElementById(`subtask-${i}`);
     if (subtasks[i]["checked"]) {
       check.checked = true;
@@ -248,6 +172,10 @@ function getBoardContents(contents, id) {
         <div class="board-description">${card["description"]}</div> 
         <!-- <div id='input-${card["id"]}' contenteditable class="kanban-item-input">${card["content"]}</div> -->
         <!-- <div onclick='deleteContent(${card["id"]})'>x</div> -->
+        <div class="board-progress-bar-container">
+          <progress id="progress-bar" value="0" max="100"></progress>
+          <label for="progress-bar"></label>
+        </div>
         <div class="board-bottom-container">
           <div id="board-user" class="board-user-container">
           </div>
@@ -259,7 +187,22 @@ function getBoardContents(contents, id) {
     getCategory(card["category"], card["id"]);
     getPriority(card["priority"], card["id"]);
     getAssigned(card["assigned"], card["id"]);
+    getProgressBar(card["subtasks"], card["id"]);
   });
+}
+
+function getProgressBar(subtasks, id) {
+  let content = document.getElementById(`${id}`);
+  let progressBar = content.querySelector("#progress-bar");
+  let progressBarLabel = content.querySelector('label[for="progress-bar"]');
+  let process = 0;
+  for (let i = 0; i < subtasks.length; i++) {
+    if (subtasks[i]["checked"] == true) {
+      process++;
+    }
+  }
+  progressBarLabel.textContent = `${process}/${subtasks.length} Subtasks`;
+  progressBar.value = +(process / subtasks.length) * 100;
 }
 
 /**
