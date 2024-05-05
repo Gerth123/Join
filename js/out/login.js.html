@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: login.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,51 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: login.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * This function is used to set a timeout and show the Login Container with changed CSS when the animation is finished.
+ * 
+ * @author: Robin
+ */
+function init() {
+        document.getElementById('logoContainerSlide').classList.remove('logoContainerSlide');
+        document.getElementById('logoContainerSlide').classList.add('logoContainerSlideLoaded');
+        setTimeout(function() {
+                    document.getElementById('wholeLoginContainer').classList.remove('d-none');
+                    document.getElementById('logoContainerSlideImg').style.height = '12vh';
+                }, 900);
+}
 
+/**
+ * This function is used to toggle the visibility of the password input field.
+ * 
+ * @author: Robin
+ */
 
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+function togglePasswordVisbility() {
+    let passwordInput = document.getElementById('password');
+    let passwordImg = document.getElementById('logInFormImgPassword');
+    if (passwordInput.type === 'password' &amp;&amp; passwordInput.value.length >= 1) {
+        passwordInput.type = 'text';
+        passwordImg.src = 'assets/img/unlock.png';
+        passwordImg.style.cursor = 'pointer';
+    } else {
+        passwordInput.type = 'password';
+        passwordImg.src = 'assets/img/lock.svg';
+        passwordImg.style.cursor = 'auto';
+    }
+}
+</code></pre>
+        </article>
+    </section>
 
 
 

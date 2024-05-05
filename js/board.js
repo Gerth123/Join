@@ -1,8 +1,16 @@
+/**
+ * Gets example data from local
+ * @returns example data
+ */
 async function getExampleData() {
   const response = await fetch("/assets/data/example.json");
   return await response.json();
 }
 
+/**
+ * Gets icons
+ * @returns icon data
+ */
 async function getIcons() {
   const response = await fetch("/assets/data/getIcons.json");
   return await response.json();
@@ -12,8 +20,7 @@ let icons;
 let emptyData;
 ///////////////////Render Boards//////////////////////
 /**
- * On loading the site the function triggers
- * @author Hanbit Chang
+ * On loading it inits the elements
  */
 async function init() {
   emptyData = await getExampleData();
@@ -23,6 +30,9 @@ async function init() {
   getEventListeners();
 }
 
+/**
+ * EventListeners
+ */
 function getEventListeners() {
   const fullsize = document.getElementById("full-size-container");
   const board = document.getElementById("board");
@@ -34,6 +44,13 @@ function getEventListeners() {
   onClickEditBoard(board, editBoard, addBoard);
 }
 
+/**
+ * Onclick gets the full-size board
+ * @param {Element} fullsize
+ * @param {Element} board
+ * @param {Element} editBoard
+ * @param {Element} addBoard
+ */
 function onClickFullSizeBoard(fullsize, board, editBoard, addBoard) {
   const boardCard = document.querySelectorAll(".board-card");
   boardCard.forEach((e) =>
@@ -49,6 +66,10 @@ function onClickFullSizeBoard(fullsize, board, editBoard, addBoard) {
   );
 }
 
+/**
+ * Onclick closes the full-size
+ * @param {Element} fullsize
+ */
 function onClickCloseFullSize(fullsize) {
   const closeBtn = document.querySelectorAll(".close-btn");
   closeBtn.forEach((e) =>
@@ -58,6 +79,13 @@ function onClickCloseFullSize(fullsize) {
   );
 }
 
+/**
+ * Onclick gets add-task board
+ * @param {Element} fullsize
+ * @param {Element} board
+ * @param {Element} editBoard
+ * @param {Element} addBoard
+ */
 function onClickAddTaskBoard(fullsize, board, editBoard, addBoard) {
   const addTaskBtn = document.getElementById("board-header-add-btn");
   addTaskBtn.addEventListener("click", () => {
@@ -68,6 +96,12 @@ function onClickAddTaskBoard(fullsize, board, editBoard, addBoard) {
   });
 }
 
+/**
+ * Onclick gets edit board
+ * @param {Element} board
+ * @param {Element} editBoard
+ * @param {Element} addBoard
+ */
 function onClickEditBoard(board, editBoard, addBoard) {
   const editBtn = document.getElementById("edit-btn");
   editBtn.addEventListener("click", () => {
@@ -77,11 +111,19 @@ function onClickEditBoard(board, editBoard, addBoard) {
   });
 }
 
+/**
+ * Renders the board
+ */
 async function renderBoards() {
   const data = read();
   getBoardSection(data);
 }
 
+/**
+ * Gets the full size board
+ * @param {number} id
+ * @param {number} contentId
+ */
 function getFullSizeBoard(id, contentId) {
   let itemData = getItemById(id, contentId);
   let title = document.querySelector(".full-size-title");
@@ -97,16 +139,28 @@ function getFullSizeBoard(id, contentId) {
   getFullSizeSubtask(itemData["subtasks"]);
 }
 
+/**
+ * Gets the full size priority
+ * @param {Object} priority
+ */
 function getFullSizePriority(priority) {
   const fullSizePriority = document.querySelector(".full-size-priority-icon");
   fullSizePriority.src = icons["priorityFullSizeIcons"][priority] || "";
 }
 
+/**
+ * Gets the full size category
+ * @param {Object} category
+ */
 function getFullSizeCategory(category) {
   const fullSizeCategory = document.querySelector("#full-size-category");
   fullSizeCategory.src = icons["categoryFullSizeIcons"][category] || "";
 }
 
+/**
+ * Gets the full size assigned
+ * @param {Object} assigned
+ */
 function getFullSizeAssigned(assigned) {
   const fullSizeAssigned = document.querySelector("#full-size-assigned-users");
   fullSizeAssigned.innerHTML = "";
@@ -121,6 +175,10 @@ function getFullSizeAssigned(assigned) {
   });
 }
 
+/**
+ * Gets the full size subtasks
+ * @param {Object} subtasks
+ */
 function getFullSizeSubtask(subtasks) {
   const fullSizeSubtasks = document.getElementById("full-size-subtasks-tasks");
   fullSizeSubtasks.innerHTML = "";
@@ -138,6 +196,12 @@ function getFullSizeSubtask(subtasks) {
   }
 }
 
+/**
+ * Gets the item by id
+ * @param {number} id
+ * @param {number} contentId
+ * @returns item data
+ */
 function getItemById(id, contentId) {
   let data = read();
   const itemList = data.find((items) => items["id"] == contentId);
@@ -145,6 +209,10 @@ function getItemById(id, contentId) {
   return item;
 }
 
+/**
+ * Gets the board
+ * @param {Object} data
+ */
 function getBoardSection(data) {
   const boardSection = document.getElementById("board-card-section");
   for (let i = 0; i < data.length; i++) {
@@ -154,6 +222,11 @@ function getBoardSection(data) {
   }
 }
 
+/**
+ * Gets the board container
+ * @param {number} id
+ * @returns html code
+ */
 function getBoardContainer(id) {
   return /*html*/ ` 
     <div id="${id}" class="board-card-content">
@@ -161,6 +234,11 @@ function getBoardContainer(id) {
     </div>`;
 }
 
+/**
+ * Gets the board contents
+ * @param {Object} contents
+ * @param {number} id
+ */
 function getBoardContents(contents, id) {
   let content = document.getElementById(`${id}`);
   contents.forEach(function (card) {
@@ -226,6 +304,11 @@ function getAssigned(assigned, id) {
   });
 }
 
+/**
+ * Gets the progress bar
+ * @param {Object} subtasks
+ * @param {number} id
+ */
 function getProgressBar(subtasks, id) {
   let content = document.getElementById(`${id}`);
   let progressBar = content.querySelector("#progress-bar");
@@ -242,13 +325,8 @@ function getProgressBar(subtasks, id) {
 ///////////////////Kanban APIs//////////////////////
 
 /**
- *
- */
-
-/**
  * Saves the data in the server.
  * @param {Object} data - saves the board data
- * @author Hanbit Chang
  */
 function save(data) {
   localStorage.setItem("board-data", JSON.stringify(data));
@@ -256,7 +334,6 @@ function save(data) {
 
 /**
  * Reads the data in the server.
- * @author Hanbit Chang
  */
 function read() {
   const json = localStorage.getItem("board-data");
