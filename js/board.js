@@ -84,28 +84,36 @@ function getBoardContainer(id) {
 function getBoardContents(contents, id) {
   let content = document.getElementById(`${id}`);
   contents.forEach(function (card) {
-    content.innerHTML += /*html*/ `
-      <div id='${card["id"]}' class="board-card" draggable="true">
-        <img id="board-category" class="board-category">
-        <div class="board-title">${card["title"]}</div>
-        <div class="board-description">${card["description"]}</div> 
-        <div class="board-progress-bar-container">
-          <progress id="progress-bar" value="0" max="100"></progress>
-          <label for="progress-bar"></label>
-        </div>
-        <div class="board-bottom-container">
-          <div id="board-users" class="board-user-container">
-          </div>
-          <img id='board-priority' alt="">
-        </div>
-        <div  id="dropzone" class="kanban-dropzone"></div>
-      </div>
-    `;
+    content.innerHTML += getBoardCard(card);
     getCategory(card["category"], card["id"]);
     getPriority(card["priority"], card["id"]);
     getAssigned(card["assigned"], card["id"]);
     getProgressBar(card["subtasks"], card["id"]);
   });
+}
+
+/**
+ * Gets the board card
+ * @param {Object} card
+ * @returns html code
+ */
+function getBoardCard(card) {
+  return /*html*/ `
+  <div id='${card["id"]}' class="board-card" draggable="true">
+    <img id="board-category" class="board-category">
+    <div class="board-title">${card["title"]}</div>
+    <div class="board-description">${card["description"]}</div> 
+    <div class="board-progress-bar-container">
+      <progress id="progress-bar" value="0" max="100"></progress>
+      <label for="progress-bar"></label>
+    </div>
+    <div class="board-bottom-container">
+      <div id="board-users" class="board-user-container">
+      </div>
+      <img id='board-priority' alt="">
+    </div>
+    <div  id="dropzone" class="kanban-dropzone"></div>
+  </div> `;
 }
 
 /**
