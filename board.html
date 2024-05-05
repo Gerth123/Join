@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="fonts/PTSans-Bold.ttf" />
     <link rel="stylesheet" href="fonts/PTSans-Italic.ttf" />
   </head>
-  <body>
+  <body onload="init()">
     <div class="wholeJoinContainer">
       <section class="headerAndOpenedContainer">
         <header>
@@ -43,23 +43,23 @@
             <div class="board-header-nav">
               <div class="board-header-task">
                 <div class="board-text">To do</div>
-                <img class="board-add-btn" src="/assets/icons/board/plus_button.svg" alt="" />
+                <img class="board-add-btn button" src="/assets/icons/board/plus_button.svg" alt="" />
               </div>
               <div class="board-header-task">
                 <div class="board-text">In progress</div>
-                <img class="board-add-btn" src="/assets/icons/board/plus_button.svg" alt="" />
+                <img class="board-add-btn button"" src="/assets/icons/board/plus_button.svg" alt="" />
               </div>
               <div class="board-header-task">
                 <div class="board-text">Await feedback</div>
-                <img class="board-add-btn" src="/assets/icons/board/plus_button.svg" alt="" />
+                <img class="board-add-btn button"" src="/assets/icons/board/plus_button.svg" alt="" />
               </div>
               <div class="board-header-task">
                 <div class="board-text">Done</div>
               </div>
             </div>
           </section>
-          <section class="board-card-section">
-            <div class="board-card-content">
+          <section id="board-card-section" class="board-card-section">
+            <!-- <div class="board-card-content">
               <div id="board-card" class="board-card">
                 <div class="board-category">User Story</div>
                 <div class="board-title">Contactform & Print</div>
@@ -74,7 +74,7 @@
                     <div class="board-user">RB</div>
                   </div>
 
-                  <img src="/assets/icons/board/priority_medium.svg" alt="" />
+                  <img src="/assets/icons/board/priority/priority_medium.svg" alt="" />
                 </div>
               </div>
             </div>
@@ -90,7 +90,7 @@
                     <div class="board-user">RB</div>
                   </div>
 
-                  <img src="/assets/icons/board/priority_medium.svg" alt="" />
+                  <img src="/assets/icons/board/priority/priority_medium.svg" alt="" />
                 </div>
               </div>
               <div class="board-card">
@@ -104,7 +104,7 @@
                     <div class="board-user">RB</div>
                   </div>
 
-                  <img src="/assets/icons/board/priority_medium.svg" alt="" />
+                  <img src="/assets/icons/board/priority/priority_medium.svg" alt="" />
                 </div>
               </div>
             </div>
@@ -113,7 +113,7 @@
             </div>
             <div class="board-card-content">
               <div class="no-task">No tasks To do</div>
-            </div>
+            </div> -->
           </section>
         </section>
         <footer class="d-none"></footer>
@@ -131,7 +131,6 @@
           </a>
           <a href="add_task.html" class="addTaskContainer">
             <div class="sideBarImgContainer">
-
               <img src="assets/img/addTaskIcon.svg" alt="Add Task Icon" class="sideBarImage" />
             </div>
             <span>Add Task</span>
@@ -158,24 +157,30 @@
           </a>
         </div>
       </section>
-      <section id="full-size-container" class="full-size-container d-none">
+      <div id="full-size-container" class="full-size-container d-none">
         <div id="board" class="full-size-board d-none">
           <div class="full-size-header">
-            <img src="/assets/icons/board/fullsize/technical_task_big.svg" alt="" />
+            <img id="full-size-category" src="/assets/icons/board/fullsize/technical_task_big.svg" alt="" />
             <div id="close-btn" class="close-btn"><img src="/assets/icons/board/close-button_big.svg" alt="" /></div>
           </div>
-          <div class="full-size-title">Kochwelt Page & Recipe Recommender</div>
-          <div class="full-size-description">Build start page with recipe recommenation</div>
-          <div class="full-size-date">Due date: 10/15/2023</div>
-          <div class="full-size-priority">Priority:</div>
+          <div class="full-size-title"></div>
+          <div class="full-size-description"></div>
+          <div class="full-size-date">
+            <div>Due date:</div>
+            <div id="full-size-due-date"></div>
+          </div>
+          <div class="full-size-priority">
+            <div>Priority:</div>
+            <img class="full-size-priority-icon" src="" alt="" />
+          </div>
+
           <div class="full-size-assign">
             <div>Assigned To:</div>
-            <div class="full-size-assign-user">Hanbit Chang</div>
+            <div id="full-size-assigned-users"></div>
           </div>
-          <div class="full-size-subtasks">
-            Subtasks
-            <div>Establish CSS Methodology</div>
-            <div>Setup Base Styles</div>
+          <div id="full-size-subtasks" class="full-size-subtasks">
+            <div>Subtasks</div>
+            <div id="full-size-subtasks-tasks"></div>
           </div>
           <div class="full-size-footer">
             <img class="button full-size-button" src="/assets/icons/board/fullsize/delete-button.svg" alt="" />
@@ -236,9 +241,11 @@
             </div>
           </form>
         </div>
-      </section>
+      </div>
     </div>
-
+    <script src="/js/board_eventlisteners.js"></script>
+    <script src="/js/board_API.js"></script>
+    <script src="/js/board_fullsize.js"></script>
     <script src="/js/board.js"></script>
   </body>
 </html>

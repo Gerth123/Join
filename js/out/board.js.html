@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: board.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: board.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Gets example data from local
+ * @returns example data
+ */
+async function getExampleData() {
+  const response = await fetch("/assets/data/example.json");
+  return await response.json();
+}
+
+/**
+ * Gets icons
+ * @returns icon data
+ */
+async function getIcons() {
+  const response = await fetch("/assets/data/getIcons.json");
+  return await response.json();
+}
+
+let icons;
+let emptyData;
+///////////////////Render Boards//////////////////////
+/**
+ * On loading it inits the elements
+ * @author Hanbit Chang
+ */
+async function init() {
+  emptyData = await getExampleData();
+  icons = await getIcons();
+  await renderBoards();
+  save(emptyData);
+  getEventListeners();
+}
+
+/**
+ * EventListeners
+ */
+function getEventListeners() {
+  const fullsize = document.getElementById("full-size-container");
+  const board = document.getElementById("board");
+  const editBoard = document.getElementById("edit-board");
+  const addBoard = document.getElementById("add-board");
+  onClickFullSizeBoard(fullsize, board, editBoard, addBoard);
+  onClickCloseFullSize(fullsize);
+  onClickAddTaskBoard(fullsize, board, editBoard, addBoard);
+  onClickEditBoard(board, editBoard, addBoard);
+}
+
+/**
+ * Onclick gets the full-size board
+ * @param {Element} fullsize
+ * @param {Element} board
+ * @param {Element} editBoard
+ * @param {Element} addBoard
+ */
+function onClickFullSizeBoard(fullsize, board, editBoard, addBoard) {
+  const boardCard = document.querySelectorAll(".board-card");
+  boardCard.forEach((e) =>
+    e.addEventListener("click", () => {
+      fullsize.classList.remove("d-none");
+      board.classList.remove("d-none");
+      editBoard.classList.add("d-none");
+      addBoard.classList.add("d-none");
+      let id = e.id;
+      let contentId = e.parentNode.id;
+      getFullSizeBoard(id, contentId);
+    })
+  );
+}
+
+/**
+ * Onclick closes the full-size
+ * @param {Element} fullsize
+ */
+function onClickCloseFullSize(fullsize) {
+  const closeBtn = document.querySelectorAll(".close-btn");
+  closeBtn.forEach((e) =>
+    e.addEventListener("click", () => {
+      fullsize.classList.add("d-none");
+    })
+  );
+}
+
+/**
+ * Onclick gets add-task board
+ * @param {Element} fullsize
+ * @param {Element} board
+ * @param {Element} editBoard
+ * @param {Element} addBoard
+ */
+function onClickAddTaskBoard(fullsize, board, editBoard, addBoard) {
+  const addTaskBtn = document.getElementById("board-header-add-btn");
+  addTaskBtn.addEventListener("click", () => {
+    fullsize.classList.remove("d-none");
+    board.classList.add("d-none");
+    editBoard.classList.add("d-none");
+    addBoard.classList.remove("d-none");
+  });
+}
+
+/**
+ * Onclick gets edit board
+ * @param {Element} board
+ * @param {Element} editBoard
+ * @param {Element} addBoard
+ */
+function onClickEditBoard(board, editBoard, addBoard) {
+  const editBtn = document.getElementById("edit-btn");
+  editBtn.addEventListener("click", () => {
+    board.classList.add("d-none");
+    editBoard.classList.remove("d-none");
+    addBoard.classList.add("d-none");
+  });
+}
+
+/**
+ * Renders the board
+ */
+async function renderBoards() {
+  const data = read();
+  getBoardSection(data);
+}
+
+/**
+ * Gets the full size board
+ * @param {number} id
+ * @param {number} contentId
+ */
+function getFullSizeBoard(id, contentId) {
+  let itemData = getItemById(id, contentId);
+  let title = document.querySelector(".full-size-title");
+  let description = document.querySelector(".full-size-description");
+  let date = document.querySelector("#full-size-due-date");
+  title.textContent = `${itemData["title"]}`;
+  description.textContent = `${itemData["description"]}`;
+  date.textContent = "";
+  date.textContent += `${itemData["date"]}`;
+  getFullSizePriority(itemData["priority"]);
+  getFullSizeCategory(itemData["category"]);
+  getFullSizeAssigned(itemData["assigned"]);
+  getFullSizeSubtask(itemData["subtasks"]);
+}
+
+/**
+ * Gets the full size priority
+ * @param {Object} priority
+ */
+function getFullSizePriority(priority) {
+  const fullSizePriority = document.querySelector(".full-size-priority-icon");
+  fullSizePriority.src = icons["priorityFullSizeIcons"][priority] || "";
+}
+
+/**
+ * Gets the full size category
+ * @param {Object} category
+ */
+function getFullSizeCategory(category) {
+  const fullSizeCategory = document.querySelector("#full-size-category");
+  fullSizeCategory.src = icons["categoryFullSizeIcons"][category] || "";
+}
+
+/**
+ * Gets the full size assigned
+ * @param {Object} assigned
+ */
+function getFullSizeAssigned(assigned) {
+  const fullSizeAssigned = document.querySelector("#full-size-assigned-users");
+  fullSizeAssigned.innerHTML = "";
+  assigned.forEach((user) => {
+    let name = Array.from(`${user["name"]}`)[0];
+    let lastName = Array.from(`${user["lastName"]}`)[0];
+    fullSizeAssigned.innerHTML += /*html*/ `
+    &lt;div class="full-size-assign-user">
+    &lt;div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}${lastName}&lt;/div>
+      ${user["name"]} ${user["lastName"]}  
+    &lt;/div>`;
+  });
+}
+
+/**
+ * Gets the full size subtasks
+ * @param {Object} subtasks
+ */
+function getFullSizeSubtask(subtasks) {
+  const fullSizeSubtasks = document.getElementById("full-size-subtasks-tasks");
+  fullSizeSubtasks.innerHTML = "";
+  for (let i = 0; i &lt; subtasks.length; i++) {
+    fullSizeSubtasks.innerHTML += /*html*/ `
+    &lt;input type="checkbox" id="subtask-${i}">
+    &lt;label for="subtask-${i}">${subtasks[i]["task"]}&lt;/label>
+    `;
+  }
+  for (let i = 0; i &lt; subtasks.length; i++) {
+    let check = document.getElementById(`subtask-${i}`);
+    if (subtasks[i]["checked"]) {
+      check.checked = true;
+    }
+  }
+}
+
+/**
+ * Gets the item by id
+ * @param {number} id
+ * @param {number} contentId
+ * @returns item data
+ */
+function getItemById(id, contentId) {
+  let data = read();
+  const itemList = data.find((items) => items["id"] == contentId);
+  const item = itemList["items"].find((items) => items["id"] == id);
+  return item;
+}
+
+/**
+ * Gets the board
+ * @param {Object} data
+ */
+function getBoardSection(data) {
+  const boardSection = document.getElementById("board-card-section");
+  for (let i = 0; i &lt; data.length; i++) {
+    const id = data[i]["id"];
+    boardSection.innerHTML += getBoardContainer(id);
+    getBoardContents(data[i]["items"], id);
+  }
+}
+
+/**
+ * Gets the board container
+ * @param {number} id
+ * @returns html code
+ */
+function getBoardContainer(id) {
+  return /*html*/ ` 
+    &lt;div id="${id}" class="board-card-content">
+      &lt;div id="dropzone" class="board-card-dropzone">&lt;/div>
+    &lt;/div>`;
+}
+
+/**
+ * Gets the board contents
+ * @param {Object} contents
+ * @param {number} id
+ */
+function getBoardContents(contents, id) {
+  let content = document.getElementById(`${id}`);
+  contents.forEach(function (card) {
+    content.innerHTML += /*html*/ `
+      &lt;div id='${card["id"]}' class="board-card" draggable="true">
+        &lt;img id="board-category" class="board-category">
+        &lt;div class="board-title">${card["title"]}&lt;/div>
+        &lt;div class="board-description">${card["description"]}&lt;/div> 
+        &lt;div class="board-progress-bar-container">
+          &lt;progress id="progress-bar" value="0" max="100">&lt;/progress>
+          &lt;label for="progress-bar">&lt;/label>
+        &lt;/div>
+        &lt;div class="board-bottom-container">
+          &lt;div id="board-users" class="board-user-container">
+          &lt;/div>
+          &lt;img id='board-priority' alt="">
+        &lt;/div>
+        &lt;div  id="dropzone" class="kanban-dropzone">&lt;/div>
+      &lt;/div>
+    `;
+    getCategory(card["category"], card["id"]);
+    getPriority(card["priority"], card["id"]);
+    getAssigned(card["assigned"], card["id"]);
+    getProgressBar(card["subtasks"], card["id"]);
+  });
+}
+
+/**
+ * Get board category
+ * @param {string} category - board category
+ * @param {number} id - board id
+ */
+function getCategory(category, id) {
+  let content = document.getElementById(`${id}`);
+  let boardCategory = content.querySelector("#board-category");
+  boardCategory.src = icons["categoryIcons"][category] || "";
+}
+
+/**
+ * Get board priority
+ * @param {string} priority - board priority
+ * @param {number} id - board id
+ */
+function getPriority(priority, id) {
+  let content = document.getElementById(`${id}`);
+  let boardPriority = content.querySelector("#board-priority");
+  boardPriority.src = icons["priorityIcons"][priority] || "";
+}
+
+/**
+ * Get board assigned
+ * @param {Object} assigned - board assigned user
+ * @param {number} id - board id
+ */
+function getAssigned(assigned, id) {
+  let content = document.getElementById(`${id}`);
+  let boardUser = content.querySelector("#board-users");
+  assigned.forEach((user) => {
+    let name = Array.from(`${user["name"]}`)[0];
+    let lastName = Array.from(`${user["lastName"]}`)[0];
+    boardUser.innerHTML += /*html*/ `
+    &lt;div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}${lastName}&lt;/div>`;
+  });
+}
+
+/**
+ * Gets the progress bar
+ * @param {Object} subtasks
+ * @param {number} id
+ */
+function getProgressBar(subtasks, id) {
+  let content = document.getElementById(`${id}`);
+  let progressBar = content.querySelector("#progress-bar");
+  let progressBarLabel = content.querySelector('label[for="progress-bar"]');
+  let process = 0;
+  for (let i = 0; i &lt; subtasks.length; i++) {
+    if (subtasks[i]["checked"] == true) {
+      process++;
+    }
+  }
+  progressBarLabel.textContent = `${process}/${subtasks.length} Subtasks`;
+  progressBar.value = +(process / subtasks.length) * 100;
+}
+///////////////////Kanban APIs//////////////////////
+
+/**
+ * Saves the data in the server.
+ * @param {Object} data - saves the board data
+ * @author Hanbit Chang
+ */
+function save(data) {
+  localStorage.setItem("board-data", JSON.stringify(data));
+}
+
+/**
+ * Reads the data in the server.
+ * @author Hanbit Chang
+ */
+function read() {
+  const json = localStorage.getItem("board-data");
+  if (!json) return emptyData;
+  return JSON.parse(json);
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#checkAcceptPrivacyPolicy">checkAcceptPrivacyPolicy</a></li><li><a href="global.html#getAssigned">getAssigned</a></li><li><a href="global.html#getBoardContainer">getBoardContainer</a></li><li><a href="global.html#getBoardContents">getBoardContents</a></li><li><a href="global.html#getBoardSection">getBoardSection</a></li><li><a href="global.html#getCategory">getCategory</a></li><li><a href="global.html#getEventListeners">getEventListeners</a></li><li><a href="global.html#getExampleData">getExampleData</a></li><li><a href="global.html#getFullSizeAssigned">getFullSizeAssigned</a></li><li><a href="global.html#getFullSizeBoard">getFullSizeBoard</a></li><li><a href="global.html#getFullSizeCategory">getFullSizeCategory</a></li><li><a href="global.html#getFullSizePriority">getFullSizePriority</a></li><li><a href="global.html#getFullSizeSubtask">getFullSizeSubtask</a></li><li><a href="global.html#getIcons">getIcons</a></li><li><a href="global.html#getItemById">getItemById</a></li><li><a href="global.html#getPriority">getPriority</a></li><li><a href="global.html#getProgressBar">getProgressBar</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#onClickAddTaskBoard">onClickAddTaskBoard</a></li><li><a href="global.html#onClickCloseFullSize">onClickCloseFullSize</a></li><li><a href="global.html#onClickEditBoard">onClickEditBoard</a></li><li><a href="global.html#onClickFullSizeBoard">onClickFullSizeBoard</a></li><li><a href="global.html#read">read</a></li><li><a href="global.html#renderBoards">renderBoards</a></li><li><a href="global.html#save">save</a></li><li><a href="global.html#togglePasswordVisbility">togglePasswordVisbility</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun May 05 2024 09:15:32 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
