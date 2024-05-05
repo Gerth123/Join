@@ -111,8 +111,11 @@ function getFullSizeAssigned(assigned) {
   const fullSizeAssigned = document.querySelector("#full-size-assigned-users");
   fullSizeAssigned.innerHTML = "";
   assigned.forEach((user) => {
+    let name = Array.from(`${user["name"]}`)[0];
+    let lastName = Array.from(`${user["lastName"]}`)[0];
     fullSizeAssigned.innerHTML += /*html*/ `
     <div class="full-size-assign-user">
+    <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}${lastName}</div>
       ${user["name"]} ${user["lastName"]}  
     </div>`;
   });
@@ -152,11 +155,10 @@ function getBoardSection(data) {
 }
 
 function getBoardContainer(id) {
-  return /*html*/ `
+  return /*html*/ ` 
     <div id="${id}" class="board-card-content">
       <div id="dropzone" class="board-card-dropzone"></div>
-    </div>
- `;
+    </div>`;
 }
 
 function getBoardContents(contents, id) {
@@ -172,7 +174,7 @@ function getBoardContents(contents, id) {
           <label for="progress-bar"></label>
         </div>
         <div class="board-bottom-container">
-          <div id="board-user" class="board-user-container">
+          <div id="board-users" class="board-user-container">
           </div>
           <img id='board-priority' alt="">
         </div>
@@ -215,13 +217,12 @@ function getPriority(priority, id) {
  */
 function getAssigned(assigned, id) {
   let content = document.getElementById(`${id}`);
-  let boardUser = content.querySelector("#board-user");
+  let boardUser = content.querySelector("#board-users");
   assigned.forEach((user) => {
     let name = Array.from(`${user["name"]}`)[0];
     let lastName = Array.from(`${user["lastName"]}`)[0];
     boardUser.innerHTML += /*html*/ `
-    <div class="board-user">${name}${lastName}</div>
-   `;
+    <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}${lastName}</div>`;
   });
 }
 

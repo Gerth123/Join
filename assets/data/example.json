@@ -8,8 +8,8 @@
         "title": "Contactform & Print",
         "description": "Build start page with recipe recommendation. I would like to change this.",
         "assigned": [
-          { "name": "Hanbit", "lastName": "Chang" },
-          { "name": "Hanbit", "lastName": "Chang" }
+          { "color": "#FF7A00", "name": "Hanbit", "lastName": "Chang" },
+          { "color": "#0038FF", "name": "Hanbit", "lastName": "Chang" }
         ],
         "date": "12/3/1992",
         "priority": "medium",
@@ -24,9 +24,9 @@
         "title": "Contactform & Print and other stuffs check how it is, how long does this keep going. Contactform & Print and other stuffs check how it is, how long does this keep going",
         "description": "Build start page with recipe recommendation. I would like to change this. Contactform & Print and other stuffs check how it is, how long does this keep goingContactform & Print and other stuffs check how it is, how long does this keep going",
         "assigned": [
-          { "name": "Hanbit", "lastName": "Chang" },
-          { "name": "Robin", "lastName": "Mark" },
-          { "name": "Robin", "lastName": "Mark" }
+          { "color": "#C3FF2B", "name": "Hanbit", "lastName": "Chang" },
+          { "color": "#C3FF2B", "name": "Robin", "lastName": "Mark" },
+          { "color": "#C3FF2B", "name": "Robin", "lastName": "Mark" }
         ],
         "date": "12/3/3992",
         "priority": "low",
