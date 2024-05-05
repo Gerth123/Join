@@ -332,3 +332,24 @@ footer {
     text-decoration: none;
     scale: 1.05;
 }
+
+.msgBoxSignedUpContainer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: rgb(245, 245, 245);
+}
+
+.msgBoxSignedUp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 312px;
+    height: 74px;
+    border-radius: 20px;
+    background-color: rgb(42, 54, 71);
+    color: white;
+    margin-top: 10vh;
+}
