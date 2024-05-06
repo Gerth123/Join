@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join Summary</title>
     <script src="script.js"></script>
+    <script src="js/summary.js"></script>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="css/summary.css" />
     <link rel="icon" href="assets/img/logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="fonts/PTSans-Regular.ttf" />
     <link rel="stylesheet" href="fonts/PTSans-Bold.ttf" />
-    <link rel="stylesheet" href="fonts/PTSans-SemiBold.ttf" />
     <link rel="stylesheet" href="fonts/PTSans-Italic.ttf" />
   </head>
   <body>
@@ -26,8 +26,7 @@
             <span class="initials">RG</span>
           </div>
         </header>
-        <section class="addTaskOpenedContainer"></section>
-        <footer class="d-none"></footer>
+
         <div class="mainSection">
           <div class="headingSection">
             <h1 class="joinSuh1">Join 360</h1>
@@ -36,10 +35,58 @@
           </div>
           <div class="mainContainer">
             <div class="container1">
-              <div class="toDo"></div>
+              <a href="board.html" class="to-do-left">
+                <div class="toDo">
+                  <img class="imgPen1" src="assets/img/Frame 59.svg" />
+                  <div class="text-ToDo">To-do</div>
+                </div>
+              </a>
+              <a href="board.html" class="to-do-right">
+                <div class="done">
+                  <img class="img-chop1" src="assets/img/Group 7.svg" />
+                  <div class="text-done">Done</div>
+                </div>
+              </a>
+            </div>
+            <a href="board.html" class="Urgent-under">
+              <div class="container2">
+                <img class="imgUrgent" src="assets/img/frame23.svg" />
+                <div class="text-urgent">Urgent</div>
+                <div class="line-urgent"></div>
+                <div class="urgent-date">
+                  May 2, 2024
+                  <div class="text-urgent2">Upcoming Deadline</div>
+                </div>
+              </div>
+            </a>
+            <div class="task-container">
+              <a href="board.html" class="task">
+                <div class="tasks">
+                  <div class="text-task">Tasks in Board</div>
+                </div>
+              </a>
+              <a href="board.html" class="task">
+                <div class="tasks">
+                  <div class="text-task">
+                    Tasks In<br />
+                    Progress
+                  </div>
+                </div>
+              </a>
+              <a href="board.html" class="task">
+                <div class="tasks">
+                  <div class="text-task">
+                    Awaiting<br />
+                    Feedback
+                  </div>
+                </div>
+              </a>
             </div>
           </div>
+          <div id="greetingText"></div>
         </div>
+
+        <footer class="d-none"></footer>
       </section>
       <section class="sideBarContainer">
         <div class="sideBarLogoContainer">
