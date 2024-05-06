@@ -108,7 +108,6 @@ let testTasks = [
  * 
  * @author: Robin
  */
-
 function checkAcceptPrivacyPolicy() {
     let checkbox = document.getElementById('checkbox');
     let buttonId = document.getElementById('signUpButton');
@@ -132,17 +131,6 @@ async function loadUsers() {
     } catch (e) {
         console.error('Loading error:', e);
     }
-}
-
-async function postData(path = '', data = {}) {
-    let response = await fetch(baseUrl + path + '.json', {
-        method: 'POST',
-        header: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    });
-    return responseToJson = await response.json();
 }
 
 
