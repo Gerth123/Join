@@ -131,6 +131,7 @@
           </a>
           <a href="add_task.html" class="addTaskContainer">
             <div class="sideBarImgContainer">
+
               <img src="assets/img/addTaskIcon.svg" alt="Add Task Icon" class="sideBarImage" />
             </div>
             <span>Add Task</span>
@@ -149,8 +150,12 @@
           </a>
         </div>
         <div class="privacyPolicyAndLegalNoticeContainer">
-          <a href="privacy_policy.html" class="privacyPolicyContainer"><span class="privacyPolicyText">Privacy Policy</span></a>
-          <a href="legal_notice.html" class="legalNoticeContainer"><span class="legalNoticeText">Legal Notice</span></a>
+          <a class="privacyPolicyContainer" onclick="openNewTab('privacy_policy.html')">
+            <span class="privacyPolicyText">Privacy Policy</span>
+          </a>
+          <a class="legalNoticeContainer" onclick="openNewTab('legal_notice.html')">
+            <span class="legalNoticeText">Legal Notice</span>
+          </a>
         </div>
       </section>
       <section id="full-size-container" class="full-size-container d-none">

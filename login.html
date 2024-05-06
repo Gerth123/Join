@@ -26,28 +26,44 @@
       <div class="loginContainer">
         <h1>Log in</h1>
         <div class="underline"></div>
-        <form onsubmit="login(); return false;" class="logInForm">
+        <form onsubmit="checkUser(); return false;" class="logInForm">
           <div class="logInInputFields">
-            <input type="email" required id="email" placeholder="Email" class="logInInputEmail" />
-            <input type="password" required id="password" placeholder="Password" class="logInInputPassword" />
+            <div class="logInFormInputAndImgContainer">
+              <input type="email" required id="email" placeholder="Email" class="logInInputEmail" />
+              <img src="assets/img/mail.svg" alt="Mail" />
+            </div>
+            <div class="logInFormInputAndImgContainer">
+              <input type="password" required id="password" placeholder="Password" class="logInInputPassword" />
+              <img
+                src="assets/img/lock.svg"
+                alt="Password"
+                class="logInFormImgPassword"
+                id="logInFormImgPassword"
+                onmouseover="togglePasswordVisbility()"
+                onmouseout="togglePasswordVisbility()"
+              />
+            </div>
           </div>
-          <div class="rememberMeContainer"><div class="checkbox-wrapper-19">
-            <input type="checkbox" id="cbtest-19" />
-            <label for="cbtest-19" class="check-box">
-          </div>Remember me</div>
+          <section class="rememberMeContainer">
+            <div class="checkbox-wrapper-19">
+              <input type="checkbox" id="checkbox" />
+              <label for="checkbox" class="checkbox" aria-required="true"></label>
+            </div>
+            <span>Remember me</span>
+          </section>
           <div class="logInButtons">
             <button class="userLogInButton">Log in</button>
             <button class="guestLogInButton">Guest Log in</button>
           </div>
         </form>
-        
-        <!-- <div id="msgBox" class="d-none"></div>
-        //show only if it works -->
       </div>
       <footer>
-          <a href="privacy_policy.html" class="privacyPolicyText">Privacy Policy</a>
-          <a href="legal_notice.html" class="legalNoticeText">Legal Notice</a>
-        </footer>
+        <a class="privacyPolicyText" onclick="openNewTab('only_privacy_policy.html')">Privacy Policy</a>
+        <a class="legalNoticeText" onclick="openNewTab('only_legal_notice.html')">Legal Notice</a>
+      </footer>
     </section>
+    <div id="msgBox" class="msgBoxContainer d-none">
+      <span class="msgBox" id="msgBoxText"></span>
+    </div>
   </body>
 </html>

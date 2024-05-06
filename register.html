@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join Register</title>
     <script src="script.js"></script>
+    <script src="js/arrays.js"></script>
     <script src="js/register.js"></script>
     <link rel="stylesheet" href="css/register.css" />
     <link rel="icon" href="assets/img/logo.png" type="image/x-icon" />
@@ -14,36 +15,64 @@
     <link rel="stylesheet" href="fonts/PTSans-Italic.ttf" />
   </head>
   <body>
-    <section class="logoContainer">
-      <img src="assets/img/logo.svg" alt="Logo" class="logoImg" />
-    </section>
-    <section class="wholeSignUpContainer">
-      <div class="signUpContainer">
-        <div class="headlineAndArrowContainer">
-          <img class="arrowLeftImg" src="assets/img/arrowLeft.svg" onclick="location.href='login.html'" alt="Back" />
-          <div class="headlineAndUnderlineContainer">
-            <h1>Sign Up</h1>
-            <div class="underline"></div>
+    <div id="registerContainer">
+      <section class="logoContainer">
+        <img src="assets/img/logo.svg" alt="Logo" class="logoImg" />
+      </section>
+      <section class="wholeSignUpContainer">
+        <div class="signUpContainer">
+          <div class="headlineAndArrowContainer">
+            <img class="arrowLeftImg" src="assets/img/arrowLeft.svg" onclick="location.href='login.html'" alt="Back" />
+            <div class="headlineAndUnderlineContainer">
+              <h1>Sign Up</h1>
+              <div class="underline"></div>
+            </div>
           </div>
+          <form
+            onsubmit="addUser(); return false;"
+            class="signUpForm"
+            onkeyup="checkAcceptPrivacyPolicy()"
+            onclick="checkAcceptPrivacyPolicy()"
+          >
+            <div class="signUpInputFields">
+              <div class="signUpFormInputAndImgContainer">
+                <input type="text" required id="name" placeholder="Name" class="signUpInputEmail" />
+                <img src="assets/img/person.svg" alt="User" />
+              </div>
+              <div class="signUpFormInputAndImgContainer">
+                <input type="email" required id="email" placeholder="Email" class="signUpInputEmail" />
+                <img src="assets/img/mail.svg" alt="Mail" />
+              </div>
+              <div class="signUpFormInputAndImgContainer">
+                <input type="new-password" required id="password1" placeholder="Password" class="signUpInputEmail" />
+                <img src="assets/img/lock.svg" alt="Password" class="signUpFormImgPassword" id="signUpFormImgPassword1" />
+              </div>
+              <div class="signUpFormInputAndImgContainer">
+                <input type="new-password" required id="password2" placeholder="Confirm Password" class="signUpInputEmail" />
+                <img src="assets/img/lock.svg" alt="Password" class="signUpFormImgPassword" id="signUpFormImgPassword2" />
+              </div>
+            </div>
+            <div class="acceptPrivacyPolicyContainer">
+              <div class="checkbox-wrapper-19">
+                <input type="checkbox" id="checkbox" required />
+                <label for="checkbox" class="checkbox" id="checkboxLabel"></label>
+              </div>
+              I accept the <a href="only_privacy_policy.html">Privacy Policy</a>
+            </div>
+            <button class="signUpButtonFalse" id="signUpButton">Sign Up</button>
+          </form>
         </div>
-        <form onsubmit="addUser(); return false;" class="signUpForm">
-          <div class="logInInputFields">
-            <input type="text" required id="name" placeholder="Name" class="logInInputEmail" />
-            <input type="email" required id="email" placeholder="Email" class="logInInputEmail" />
-            <input type="password" required id="password" placeholder="Password" class="logInInputEmail" />
-            <input type="password" required id="confirmPassword" placeholder="Confirm Password" class="logInInputEmail" />
-          </div>
-          <div class="acceptPrivacyPolicyContainer"><div class="checkbox-wrapper-19">
-            <input type="checkbox" id="cbtest-19" />
-            <label for="cbtest-19" class="check-box">
-          </div>I accept the <a href="privacy_policy.html">Privacy Policy</a></div>
-          <button class="signUpButton">Log in</button>
-        </form>
-      </div>
-      <footer>
-        <a href="privacy_policy.html" class="privacyPolicyText">Privacy Policy</a>
-        <a href="legal_notice.html" class="legalNoticeText">Legal Notice</a>
-      </footer>
-    </section>
+        <footer>
+          <a class="privacyPolicyText" onclick="openNewTab('only_privacy_policy.html')">Privacy Policy</a>
+          <a class="legalNoticeText" onclick="openNewTab('only_legal_notice.html')">Legal Notice</a>
+        </footer>
+      </section>
+    </div>
+    <div id="msgBoxSignedUp" class="msgBoxSignedUpContainer d-none">
+      <span class="msgBoxSignedUp">You signed up succesfully!</span>
+    </div>
+    <div id="msgBox" class="msgBoxContainer d-none">
+      <span class="msgBox" id="msgBoxText">Ups! your password don't match.</span>
+    </div>
   </body>
 </html>

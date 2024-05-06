@@ -22,6 +22,10 @@ a:hover {
     text-decoration: underline;
 }
 
+.d-none {
+    display: none !important;
+}
+
 .logoContainer {
     position: absolute;
     top: 40px;
@@ -38,6 +42,8 @@ a:hover {
     width: 100vw;
     align-items: center;
     flex-direction: column;
+    position: relative;
+    z-index: 1;
 }
 
 .signUpContainer {
@@ -47,11 +53,11 @@ a:hover {
     justify-content: center;
     background-color: rgb(255, 255, 255);
     border-radius: 15px;
-    height: 70vh;
-    width: 35vw;
+    height: 72vh;
+    width: 33vw;
     box-shadow: 0px 0px 5px 0px rgb(0, 0, 0, 0.1);
-    margin-top: 15vh;
-    margin-bottom: 5vh;
+    margin-top: 14vh;
+    margin-bottom: 4vh;
 }
 
 .headlineAndArrowContainer {
@@ -103,34 +109,46 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
 }
 
-.logInInputFields {
+.signUpInputFields {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 15px;
 }
 
-.logInInputEmail {
+.signUpInputEmail {
     background-color: white;
     background-image: url();
     background-size: 0px 0px;
     background-position: 0px 0px;
     background-repeat: no-repeat;
     padding-left: 10px;
+    padding-right: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 32px;
     border-radius: 5px;
     border: 1px solid rgb(226, 226, 226);
-    width: 300px;
+    width: 270px;
 }
 
-.logInInputEmail:focus {
+.signUpInputEmail:focus {
     outline: unset;
+}
+
+.signUpFormInputAndImgContainer {
+    display: flex;
+    align-items: center;
+}
+
+.signUpForm img {
+    height: 20px;
+    width: 20px;
+    margin-left: -5vh;
 }
 
 .acceptPrivacyPolicyContainer {
@@ -140,11 +158,11 @@ h1 {
     width: 100%;
     font-size: 0.7em;
     font-size: 0.8em;
-    gap: 3px;
+    gap: 4px;
     color: rgb(168, 168, 168);
 }
 
-.check-box:hover {
+.checkbox:hover {
     background-color: rgba(0, 0, 0, 0.08);
     cursor: pointer;
     box-shadow: 0px 1px 0px 0px rgb(0, 0, 0, 0.15);
@@ -155,6 +173,9 @@ h1 {
     box-sizing: border-box;
     --background-color: #fff;
     --checkbox-height: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 @keyframes dothabottomcheck-19 {
@@ -185,7 +206,7 @@ h1 {
     display: none;
 }
 
-.checkbox-wrapper-19 .check-box {
+.checkbox-wrapper-19 .checkbox {
     height: var(--checkbox-height);
     width: var(--checkbox-height);
     background-color: transparent;
@@ -198,8 +219,8 @@ h1 {
     cursor: pointer;
 }
 
-.checkbox-wrapper-19 .check-box::before,
-.checkbox-wrapper-19 .check-box::after {
+.checkbox-wrapper-19 .checkbox::before,
+.checkbox-wrapper-19 .checkbox::after {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -216,38 +237,46 @@ h1 {
     transition: opacity ease 0.5;
 }
 
-.checkbox-wrapper-19 .check-box::before {
+.checkbox-wrapper-19 .checkbox::before {
     top: calc(var(--checkbox-height) * .75);
     left: calc(var(--checkbox-height) * .41);
     box-shadow: 0 0 0 calc(var(--checkbox-height) * .05) var(--background-color);
     transform: rotate(-145deg);
 }
 
-.checkbox-wrapper-19 .check-box::after {
+.checkbox-wrapper-19 .checkbox::after {
     top: calc(var(--checkbox-height) * .37);
     left: calc(var(--checkbox-height) * .05);
     transform: rotate(-45deg);
 }
 
-.checkbox-wrapper-19 input[type=checkbox]:checked+.check-box,
-.checkbox-wrapper-19 .check-box.checked {
+.checkbox-wrapper-19 input[type=checkbox]:checked+.checkbox,
+.checkbox-wrapper-19 .checkbox.checked {
     border-color: black;
 }
 
-.checkbox-wrapper-19 input[type=checkbox]:checked+.check-box::after,
-.checkbox-wrapper-19 .check-box.checked::after {
+.checkbox-wrapper-19 input[type=checkbox]:checked+.checkbox::after,
+.checkbox-wrapper-19 .checkbox.checked::after {
     height: calc(var(--checkbox-height) / 2);
     animation: dothabottomcheck-19 0.2s ease 0s forwards;
 }
 
-.checkbox-wrapper-19 input[type=checkbox]:checked+.check-box::before,
-.checkbox-wrapper-19 .check-box.checked::before {
+.checkbox-wrapper-19 input[type=checkbox]:checked+.checkbox::before,
+.checkbox-wrapper-19 .checkbox.checked::before {
     height: calc(var(--checkbox-height) * 1.1);
     animation: dothatopcheck-19 0.4s ease 0s forwards;
 }
 
+.checkbox-wrapper-19:hover .checkbox {
+    background-color: rgba(204, 204, 204, 0.2);
+}
 
-.signUpButton {
+.checkbox:hover {
+    box-shadow: 0px 0px 2px 2px rgb(0, 0, 0, 0.15);
+}
+
+
+.signUpButtonTrue {
     background-color: rgb(42, 54, 71);
     color: white;
     border-radius: 5px;
@@ -256,10 +285,23 @@ h1 {
     font-weight: bold;
 }
 
-.signUpButton:hover {
+.signUpButtonTrue:hover {
     background-color: rgb(41, 171, 226);
     box-shadow: 0px 3.5px 0px 0px rgb(0, 0, 0, 0.1);
     transition-delay: 0.15s;
+}
+
+.signUpButtonFalse {
+    background-color: rgb(200, 200, 200);
+    color: white;
+    border-radius: 5px;
+    height: 40px;
+    width: 91px;
+    font-weight: bold;
+}
+
+.signUpButtonFalse:hover {
+    cursor: default;
 }
 
 footer {
@@ -269,7 +311,6 @@ footer {
     align-items: center;
     font-size: 0.8em;
     height: 10vh;
-    padding-top: 3px;
 }
 
 .legalNoticeText {
@@ -279,6 +320,8 @@ footer {
 .legalNoticeText:hover {
     color: rgb(41, 171, 226);
     cursor: pointer;
+    text-decoration: none;
+    scale: 1.05;
 }
 
 .privacyPolicyText {
@@ -288,4 +331,52 @@ footer {
 .privacyPolicyText:hover {
     color: rgb(41, 171, 226);
     cursor: pointer;
+    text-decoration: none;
+    scale: 1.05;
+}
+
+.msgBoxSignedUpContainer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: rgb(245, 245, 245);
+}
+
+.msgBoxSignedUp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 312px;
+    height: 74px;
+    border-radius: 20px;
+    background-color: rgb(42, 54, 71);
+    color: white;
+    margin-top: 10vh;
+}
+
+
+.msgBoxContainer {
+    position: absolute;
+    background-color: rgb(246, 247, 248, 0.45);
+    height: 100vh;
+    width: 100vw;
+    z-index: 999;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 27vh;
+}
+
+.msgBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    border-radius: 20px;
+    padding: 0 20px;
+    background-color: rgb(42, 54, 71);
+    color: white;
 }
