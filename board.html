@@ -7,6 +7,7 @@
     <title>Join Board</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="css/board.css" />
+    <link rel="stylesheet" href="css/board_priority.css" />
     <link rel="icon" href="assets/img/logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="fonts/PTSans-Regular.ttf" />
     <link rel="stylesheet" href="fonts/PTSans-Bold.ttf" />
@@ -157,7 +158,7 @@
           </a>
         </div>
       </section>
-      <div id="full-size-container" class="full-size-container d-none">
+      <div id="full-size-container" class="full-size-container">
         <div id="board" class="full-size-board d-none">
           <div class="full-size-header">
             <img id="full-size-category" src="/assets/icons/board/fullsize/technical_task_big.svg" alt="" />
@@ -188,7 +189,7 @@
             <img id="edit-btn" class="button full-size-button" src="/assets/icons/board/fullsize/edit-button.svg" alt="" />
           </div>
         </div>
-        <div id="edit-board" class="full-size-board d-none">
+        <div id="edit-board" class="full-size-board">
           <div class="full-size-header jc-fe">
             <div id="close-btn-edit" class="close-btn"><img src="/assets/icons/board/close-button_big.svg" alt="" /></div>
           </div>
@@ -199,18 +200,32 @@
             <input class="full-size-input" id="description" type="text" placeholder="Enter a description" />
             <label class="full-size-label" for="date">Due date</label>
             <input class="full-size-input" id="date" type="text" placeholder="Date" />
-            <label class="full-size-label" for="priority">Priority</label>
-            <input class="full-size-input" id="priority" type="text" placeholder="Priority" />
+            <div class="full-size-priority-container">
+              <div class="priority-button-container">
+                <input type="radio" id="radio-btn-3" name="radio-btns" />
+                <label for="radio-btn-3" class="btn3"></label>
+              </div>
+              <div class="priority-button-container">
+                <input type="radio" id="radio-btn-2" name="radio-btns" />
+                <label for="radio-btn-2" class="btn2"></label>
+              </div>
+
+              <div class="priority-button-container">
+                <input type="radio" id="radio-btn-1" name="radio-btns" />
+                <label for="radio-btn-1" class="btn1"></label>
+              </div>
+            </div>
             <label class="full-size-label" for="assigned">Assigned to</label>
             <input class="full-size-input" id="assigned" type="text" placeholder="Assigned to" />
             <label class="full-size-label" for="subtasks">Subtasks</label>
             <input class="full-size-input" id="subtasks" type="text" placeholder="Add new subtask" />
+            <ul id="subtasks-list"></ul>
             <div class="full-size-footer">
               <div class="button ok-button">Ok <img src="/assets/icons/board/fullsize/check.svg" alt="" /></div>
             </div>
           </form>
         </div>
-        <div id="add-board" class="full-size-add-board">
+        <div id="add-board" class="full-size-add-board d-none">
           <div class="full-size-header">
             <div class="full-size-add-task">Add Task</div>
             <div id="close-btn-add" class="close-btn"><img src="/assets/icons/board/close-button_big.svg" alt="" /></div>
@@ -246,6 +261,7 @@
     <script src="/js/board_eventlisteners.js"></script>
     <script src="/js/board_API.js"></script>
     <script src="/js/board_fullsize.js"></script>
+    <script src="/js/board_edit.js"></script>
     <script src="/js/board.js"></script>
   </body>
 </html>

@@ -1,3 +1,6 @@
+let id;
+let contentId;
+
 /**
  * EventListeners
  */
@@ -21,14 +24,14 @@ function getEventListeners() {
  */
 function onClickFullSizeBoard(fullsize, board, editBoard, addBoard) {
   const boardCard = document.querySelectorAll(".board-card");
-  boardCard.forEach((e) =>
-    e.addEventListener("click", () => {
+  boardCard.forEach((card) =>
+    card.addEventListener("click", () => {
       fullsize.classList.remove("d-none");
       board.classList.remove("d-none");
       editBoard.classList.add("d-none");
       addBoard.classList.add("d-none");
-      let id = e.id;
-      let contentId = e.parentNode.id;
+      id = card.id;
+      contentId = card.parentNode.id;
       getFullSizeBoard(id, contentId);
     })
   );
@@ -40,8 +43,8 @@ function onClickFullSizeBoard(fullsize, board, editBoard, addBoard) {
  */
 function onClickCloseFullSize(fullsize) {
   const closeBtn = document.querySelectorAll(".close-btn");
-  closeBtn.forEach((e) =>
-    e.addEventListener("click", () => {
+  closeBtn.forEach((btn) =>
+    btn.addEventListener("click", () => {
       fullsize.classList.add("d-none");
     })
   );
@@ -64,8 +67,8 @@ function onClickAddTaskBoard(fullsize, board, editBoard, addBoard) {
     addBoard.classList.remove("d-none");
   });
 
-  addTaskBtnSmall.forEach((e) => {
-    e.addEventListener("click", () => {
+  addTaskBtnSmall.forEach((task) => {
+    task.addEventListener("click", () => {
       fullsize.classList.remove("d-none");
       board.classList.add("d-none");
       editBoard.classList.add("d-none");
@@ -86,5 +89,6 @@ function onClickEditBoard(board, editBoard, addBoard) {
     board.classList.add("d-none");
     editBoard.classList.remove("d-none");
     addBoard.classList.add("d-none");
+    getEditBoard(id, contentId);
   });
 }
