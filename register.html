@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join Register</title>
     <script src="script.js"></script>
+    <script src="js/arrays.js"></script>
     <script src="js/register.js"></script>
     <link rel="stylesheet" href="css/register.css" />
     <link rel="icon" href="assets/img/logo.png" type="image/x-icon" />
@@ -51,8 +52,6 @@
                 <img src="assets/img/lock.svg" alt="Password" class="signUpFormImgPassword" id="signUpFormImgPassword2" />
               </div>
             </div>
-            <span class="d-none" id="msgBox">Ups! your password don't match.</span>
-
             <div class="acceptPrivacyPolicyContainer">
               <div class="checkbox-wrapper-19">
                 <input type="checkbox" id="checkbox" required />
@@ -62,7 +61,6 @@
             </div>
             <button class="signUpButtonFalse" id="signUpButton">Sign Up</button>
           </form>
-          <div class="msgBox d-none" id="msgBox"></div>
         </div>
         <footer>
           <a class="privacyPolicyText" onclick="openNewTab('robin-gerth.developerakademie.net/Join/privacy_policy.html')">Privacy Policy</a>
@@ -72,6 +70,9 @@
     </div>
     <div id="msgBoxSignedUp" class="msgBoxSignedUpContainer d-none">
       <span class="msgBoxSignedUp">You signed up succesfully!</span>
+    </div>
+    <div id="msgBox" class="msgBoxContainer d-none">
+      <span class="msgBox" id="msgBoxText">Ups! your password don't match.</span>
     </div>
   </body>
 </html>

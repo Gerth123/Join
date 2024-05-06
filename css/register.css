@@ -23,7 +23,7 @@ a:hover {
 }
 
 .d-none {
-    display: none;
+    display: none !important;
 }
 
 .logoContainer {
@@ -42,6 +42,8 @@ a:hover {
     width: 100vw;
     align-items: center;
     flex-direction: column;
+    position: relative;
+    z-index: 1;
 }
 
 .signUpContainer {
@@ -51,11 +53,11 @@ a:hover {
     justify-content: center;
     background-color: rgb(255, 255, 255);
     border-radius: 15px;
-    height: 70vh;
+    height: 72vh;
     width: 33vw;
     box-shadow: 0px 0px 5px 0px rgb(0, 0, 0, 0.1);
-    margin-top: 15vh;
-    margin-bottom: 5vh;
+    margin-top: 14vh;
+    margin-bottom: 4vh;
 }
 
 .headlineAndArrowContainer {
@@ -352,4 +354,29 @@ footer {
     background-color: rgb(42, 54, 71);
     color: white;
     margin-top: 10vh;
+}
+
+
+.msgBoxContainer {
+    position: absolute;
+    background-color: rgb(246, 247, 248, 0.45);
+    height: 100vh;
+    width: 100vw;
+    z-index: 999;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 27vh;
+}
+
+.msgBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    border-radius: 20px;
+    padding: 0 20px;
+    background-color: rgb(42, 54, 71);
+    color: white;
 }

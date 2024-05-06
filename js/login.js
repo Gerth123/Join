@@ -9,7 +9,7 @@ function init() {
         setTimeout(function() {
                     document.getElementById('wholeLoginContainer').classList.remove('d-none');
                     document.getElementById('logoContainerSlideImg').style.height = '12vh';
-                }, 900);
+                }, 950);
 }
 
 /**
