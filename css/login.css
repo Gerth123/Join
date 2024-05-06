@@ -269,7 +269,7 @@ footer {
     }
 
     100% {
-        height: calc(var(--checkbox-height) * 0.95);
+        height: calc(var(--checkbox-height) * 0.90);
     }
 }
 
@@ -306,7 +306,7 @@ footer {
 
 .checkbox-wrapper-19 .checkbox::before {
     top: calc(var(--checkbox-height) * .75);
-    left: calc(var(--checkbox-height) * .41);
+    left: calc(var(--checkbox-height) * .465);
     box-shadow: 0 0 0 calc(var(--checkbox-height) * .05) var(--background-color);
     transform: rotate(-145deg);
 }
