@@ -1,16 +1,63 @@
 let users = [
-    {'email': 'admin@test.de', 'password': 'admin'},
+    { 'email': 'admin@test.de', 'password': 'admin' },
 ];
 
+/**
+ * This function is used to render the page if the user refresh the page or switch from another HTML-page to this one.
+ * 
+ * @author: Robin
+ */
 
-async function init(){
+async function init() {
     loadUsers();
+    checkAcceptPrivacyPolicy();
 }
 
-async function loadUsers(){
+/**
+ * This function is used to toggle the visibility of the password input field.
+ * 
+ * @param {number} number - the number of the password input field and password img.
+ * 
+ * @author: Robin
+ */
+function togglePasswordVisbility(number) {
+    let passwordInput = document.getElementById('password' + number);
+    let passwordImg = document.getElementById('signUpFormImgPassword' + number);
+    if (passwordInput.type === 'password' && passwordInput.value.length >= 1) {
+        passwordInput.type = 'text';
+        passwordImg.src = 'assets/img/unlock.png';
+        passwordImg.style.cursor = 'pointer';
+    } else {
+        passwordInput.type = 'password';
+        passwordImg.src = 'assets/img/lock.svg';
+        passwordImg.style.cursor = 'auto';
+    }
+}
+
+/**
+ * This function is used to block and reactivate the button, if the user accepts the privacy policy.
+ * 
+ * @author: Robin
+ */
+
+function checkAcceptPrivacyPolicy() {
+    let checkbox = document.getElementById('checkbox');
+    let buttonId = document.getElementById('signUpButton');
+    if (checkbox.checked) {
+        buttonId.classList.remove('signUpButtonFalse');
+        buttonId.classList.add('signUpButtonTrue');
+    } else {
+        buttonId.classList.remove('signUpButtonTrue');
+        buttonId.classList.add('signUpButtonFalse');
+    }
+}
+
+
+
+async function loadUsers() {
     try {
         users = JSON.parse(await getItem('users'));
-    } catch(e){
+    } catch (e) {
         console.error('Loading error:', e);
     }
 }
@@ -35,14 +82,14 @@ function resetForm() {
 function addUser() {
     let email = document.getElementById('email');
     let password = document.getElementById('password');
-    users.push({email: email.value, password: password.value});
+    users.push({ email: email.value, password: password.value });
     //Weiterleitung zu Login Seite & Nachricht anzeigen: "Registrierung erfolgreich"
     window.location.href = 'login.html?msg=Registrierung erfolgreich';
 }
 
 const UrlParams = new URLSearchParams(window.location.search);
 const msg = UrlParams.get('msg');
-if(msg) {
+if (msg) {
     msgBox.classList.remove('d-none');
     msgBox.innerHTML = msg;
 } else {

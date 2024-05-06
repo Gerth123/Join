@@ -34,3 +34,15 @@
 .legalNoticeTextContainer {
     width: 80%;
 }
+
+.developerLink {
+    color: rgb(41, 171, 226);
+}
+
+.joinLink {
+    color: rgb(41, 171, 226);
+}
+
+.joinLink:hover {
+    cursor: default;
+}

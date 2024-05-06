@@ -58,7 +58,7 @@ footer {
 
 .logoContainerSlideImg {
     height: 30vh;
-    animation: logoSlideOut 2.5s ease-in-out;
+    animation: logoSlideOut 1s ease-in-out;
 }
 
 @keyframes logoSlideOut {
@@ -73,7 +73,7 @@ footer {
 
 .logoContainerSlideLoaded {
     position: absolute;
-    animation: slide-out 2.5s ease-in-out;
+    animation: slide-out 1s ease-in-out;
     /* Animation hinzufügen */
     overflow: hidden;
     top: 50px;
@@ -172,13 +172,14 @@ footer {
     background-position: 0px 0px;
     background-repeat: no-repeat;
     padding-left: 10px;
+    padding-right: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 32px;
     border-radius: 5px;
     border: 1px solid rgb(226, 226, 226);
-    width: 300px;
+    width: 270px;
 }
 
 .logInInputEmail:focus {
@@ -192,16 +193,33 @@ footer {
     background-position: 0px 0px;
     background-repeat: no-repeat;
     padding-left: 10px;
+    padding-right: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 32px;
     border-radius: 5px;
     border: 1px solid rgb(226, 226, 226);
+    width: 270px;
 }
 
 .logInInputPassword:focus {
     outline: unset;
+}
+
+.logInFormInputAndImgContainer {
+    display: flex;
+    align-items: center;
+}
+
+.logInForm img {
+    height: 20px;
+    width: 20px;
+    margin-left: -5vh;
+}
+
+.logInFormImgPassword:hover {
+    cursor: pointer;
 }
 
 .rememberMeContainer {
@@ -213,17 +231,21 @@ footer {
     gap: 5px;
 }
 
-.check-box:hover {
-    background-color: rgba(0, 0, 0, 0.08);
-    cursor: pointer;
-    box-shadow: 0px 1px 0px 0px rgb(0, 0, 0, 0.15);
+.checkbox:hover {
+    box-shadow: 0px 0px 2px 2px rgb(0, 0, 0, 0.15);
 }
 
+.checkbox-wrapper-19:hover .checkbox {
+    background-color: rgba(204, 204, 204, 0.2);
+}
 
 .checkbox-wrapper-19 {
     box-sizing: border-box;
     --background-color: #fff;
     --checkbox-height: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -255,7 +277,7 @@ footer {
     display: none;
 }
 
-.checkbox-wrapper-19 .check-box {
+.checkbox-wrapper-19 .checkbox {
     height: var(--checkbox-height);
     width: var(--checkbox-height);
     background-color: transparent;
@@ -268,10 +290,8 @@ footer {
     cursor: pointer;
 }
 
-.checkbox-wrapper-19 .check-box::before,
-.checkbox-wrapper-19 .check-box::after {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
+.checkbox-wrapper-19 .checkbox::before,
+.checkbox-wrapper-19 .checkbox::after {
     box-sizing: border-box;
     position: absolute;
     height: 0;
@@ -281,37 +301,35 @@ footer {
     transform-origin: left top;
     border-radius: 5px;
     content: " ";
-    -webkit-transition: opacity ease 0.5;
-    -moz-transition: opacity ease 0.5;
     transition: opacity ease 0.5;
 }
 
-.checkbox-wrapper-19 .check-box::before {
+.checkbox-wrapper-19 .checkbox::before {
     top: calc(var(--checkbox-height) * .75);
     left: calc(var(--checkbox-height) * .41);
     box-shadow: 0 0 0 calc(var(--checkbox-height) * .05) var(--background-color);
     transform: rotate(-145deg);
 }
 
-.checkbox-wrapper-19 .check-box::after {
+.checkbox-wrapper-19 .checkbox::after {
     top: calc(var(--checkbox-height) * .37);
     left: calc(var(--checkbox-height) * .05);
     transform: rotate(-45deg);
 }
 
-.checkbox-wrapper-19 input[type=checkbox]:checked+.check-box,
-.checkbox-wrapper-19 .check-box.checked {
+.checkbox-wrapper-19 input[type=checkbox]:checked+.checkbox,
+.checkbox-wrapper-19 .checkbox.checked {
     border-color: black;
 }
 
-.checkbox-wrapper-19 input[type=checkbox]:checked+.check-box::after,
-.checkbox-wrapper-19 .check-box.checked::after {
+.checkbox-wrapper-19 input[type=checkbox]:checked+.checkbox::after,
+.checkbox-wrapper-19 .checkbox.checked::after {
     height: calc(var(--checkbox-height) / 2);
     animation: dothabottomcheck-19 0.2s ease 0s forwards;
 }
 
-.checkbox-wrapper-19 input[type=checkbox]:checked+.check-box::before,
-.checkbox-wrapper-19 .check-box.checked::before {
+.checkbox-wrapper-19 input[type=checkbox]:checked+.checkbox::before,
+.checkbox-wrapper-19 .checkbox.checked::before {
     height: calc(var(--checkbox-height) * 1.1);
     animation: dothatopcheck-19 0.4s ease 0s forwards;
 }
