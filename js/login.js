@@ -50,28 +50,14 @@ async function checkUser() {
                 let msgBoxText = document.getElementById('msgBoxText');
                 if (JSON.stringify(mailToCheck) !== JSON.stringify(email.value)) {
                     msgBoxText.innerHTML = 'Mail not registered. Please sign up first!';
-
+                    console.log('Mail not registered. Please sign up first!');
                 } else {
                     msgBoxText.innerHTML = 'Wrong password. Please try again!';
                 } await setTimeout(function () {
                     msgBox.classList.add('d-none');
                 }, 1500);
+                console.log('Wrong password. Please try again!');
             }
         }
     };
-}
-
-
-
-
-function login() {
-    let email = document.getElementById('email');
-    let password = document.getElementById('password');
-    let user = users.find(user => user.email === email.value && user.password === password.value);
-    if (user) {
-        window.location.href = 'summary.html';
-    } else {
-        msgBox.classList.remove('d-none');
-        msgBox.innerHTML = 'Login fehlgeschlagen';
-    }
 }
