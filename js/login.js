@@ -45,13 +45,16 @@ async function checkUser() {
             if (JSON.stringify(mailToCheck) === JSON.stringify(email.value) && JSON.stringify(actualUsers[mailSearchIndex]['password']) === JSON.stringify(password.value)) {
                 window.location.href = 'summary.html?msg=Login erfolgreich';
             } else {
-                let msgBox = document.getElementById('msgBox');
-                msgBox.classList.remove('d-none');
-                let msgBoxText = document.getElementById('msgBoxText');
                 if (JSON.stringify(mailToCheck) !== JSON.stringify(email.value)) {
+                    let msgBox = document.getElementById('msgBox');
+                    msgBox.classList.remove('d-none');
+                    let msgBoxText = document.getElementById('msgBoxText');
                     msgBoxText.innerHTML = 'Mail not registered. Please sign up first!';
                     console.log('Mail not registered. Please sign up first!');
                 } else {
+                    let msgBox = document.getElementById('msgBox');
+                    msgBox.classList.remove('d-none');
+                    let msgBoxText = document.getElementById('msgBoxText');
                     msgBoxText.innerHTML = 'Wrong password. Please try again!';
                 } await setTimeout(function () {
                     msgBox.classList.add('d-none');
