@@ -13,6 +13,7 @@ function getEventListeners() {
   onClickCloseFullSize(fullsize);
   onClickAddTaskBoard(fullsize, board, editBoard, addBoard);
   onClickEditBoard(board, editBoard, addBoard);
+  onClickEditSubtasks();
 }
 
 /**
@@ -90,5 +91,46 @@ function onClickEditBoard(board, editBoard, addBoard) {
     editBoard.classList.remove("d-none");
     addBoard.classList.add("d-none");
     getEditBoard(id, contentId);
+  });
+}
+
+function onClickEditSubtasks() {
+  const subtaskAddBtn = document.getElementById("subtasks-add");
+  const subtaskContainer = document.getElementById("subtasks-btn-container");
+  const subtaskDelBtn = document.getElementById("subtasks-del");
+  const subtaskCheckBtn = document.getElementById("subtasks-check");
+  const subtaskInput = document.getElementById("subtasks");
+  const list = document.getElementById("subtasks-list");
+  subtaskAddBtn.addEventListener("click", () => {
+    subtaskAddBtn.classList.add("d-none");
+    subtaskContainer.classList.remove("d-none");
+  });
+
+  subtaskDelBtn.addEventListener("click", () => {
+    subtaskInput.value = "";
+  });
+
+  subtaskCheckBtn.addEventListener("click", () => {
+    list.innerHTML += /*html*/ `
+    <li class="subtasks-li-container">
+      <div class="subtasks-li">
+        ${subtaskInput.value}
+        <div class="row">
+          <img id="subtasks-edit" class="subtasks-btn-none" src="/assets/icons/board/edit/edit_button.svg" alt="">
+          <img id="subtasks-trash" class="subtasks-btn-none" src="/assets/icons/board/edit/trash_button.svg" alt="">
+        </div>
+      </div>
+    </li>
+    `;
+    subtaskInput.value = "";
+    subtaskContainer.classList.add("d-none");
+    subtaskAddBtn.classList.remove("d-none");
+  });
+
+  const subtaskTrash = document.querySelectorAll("#subtasks-trash");
+  subtaskTrash.forEach((trash) => {
+    trash.addEventListener("click", () => {
+      console.log(trash);
+    });
   });
 }

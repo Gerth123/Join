@@ -35,7 +35,15 @@ function getEditSubtasks(subtasks) {
   list.innerHTML = "";
   subtasks.forEach((task) => {
     list.innerHTML += /*html*/ `
-    <li>${task["task"]}</li>
+    <li class="subtasks-li-container">
+      <div class="subtasks-li">
+        ${task["task"]}
+        <div class="row">
+          <img id="subtasks-edit" class="subtasks-btn-none" src="/assets/icons/board/edit/edit_button.svg" alt="">
+          <img id="subtasks-trash" class="subtasks-btn-none" src="/assets/icons/board/edit/trash.button.svg" alt="">
+        </div>
+      </div>
+    </li>
     `;
   });
 }
