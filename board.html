@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="css/board.css" />
     <link rel="stylesheet" href="css/board_priority.css" />
+    <link rel="stylesheet" href="css/board_edit.css" />
     <link rel="icon" href="assets/img/logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="fonts/PTSans-Regular.ttf" />
     <link rel="stylesheet" href="fonts/PTSans-Bold.ttf" />
@@ -150,10 +151,10 @@
           </a>
         </div>
         <div class="privacyPolicyAndLegalNoticeContainer">
-          <a class="privacyPolicyContainer" onclick="openNewTab('privacy_policy.html')">
+          <a class="privacyPolicyContainer" onclick="openNewTab('robin-gerth.developerakademie.net/Join/privacy_policy.html')">
             <span class="privacyPolicyText">Privacy Policy</span>
           </a>
-          <a class="legalNoticeContainer" onclick="openNewTab('legal_notice.html')">
+          <a class="legalNoticeContainer" onclick="openNewTab('robin-gerth.developerakademie.net/Join/legal_notice.html')">
             <span class="legalNoticeText">Legal Notice</span>
           </a>
         </div>
@@ -209,7 +210,6 @@
                 <input type="radio" id="radio-btn-2" name="radio-btns" />
                 <label for="radio-btn-2" class="btn2"></label>
               </div>
-
               <div class="priority-button-container">
                 <input type="radio" id="radio-btn-1" name="radio-btns" />
                 <label for="radio-btn-1" class="btn1"></label>
@@ -218,7 +218,18 @@
             <label class="full-size-label" for="assigned">Assigned to</label>
             <input class="full-size-input" id="assigned" type="text" placeholder="Assigned to" />
             <label class="full-size-label" for="subtasks">Subtasks</label>
-            <input class="full-size-input" id="subtasks" type="text" placeholder="Add new subtask" />
+            <div class="full-size-input-container">
+              <form action="">
+                <input required class="subtasks-input" id="subtasks" type="text" placeholder="Add new subtask" />
+                <img class="subtasks-btn" id="subtasks-add" src="./assets/icons/board/edit/add_button.svg" alt="" />
+                <div class="subtasks-btn-container d-none" id="subtasks-btn-container">
+                  <img class="subtasks-btn" id="subtasks-del" src="./assets/icons/board/edit/x_button.svg" alt="" />
+                  <div class="subtasks-line"></div>
+                  <img class="subtasks-btn" id="subtasks-check" src="./assets/icons/board/edit/check_button.svg" alt="" />
+                </div>
+              </form>
+            </div>
+
             <ul id="subtasks-list"></ul>
             <div class="full-size-footer">
               <div class="button ok-button">Ok <img src="/assets/icons/board/fullsize/check.svg" alt="" /></div>
@@ -245,7 +256,6 @@
                 <input class="full-size-input" id="date" type="text" placeholder="Date" />
                 <label class="full-size-label" for="priority">Priority</label>
                 <input class="full-size-input" id="priority" type="text" placeholder="Priority" />
-
                 <label class="full-size-label" for="subtasks">Subtasks</label>
                 <input class="full-size-input" id="subtasks" type="text" placeholder="Add new subtask" />
               </div>
