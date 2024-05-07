@@ -1,0 +1,202 @@
+.openContactsContainer {
+  width: 456px;
+  height: 928px;
+  background-color: white;
+  box-shadow: 4px 0px 6px 0px #00000014;
+}
+
+.addContact {
+  width: 456px;
+  height: 101px;
+}
+
+.addContactButton {
+  width: 352px;
+  height: 56px;
+  margin-top: 22.5px;
+  border: 1px solid #2a3647;
+  margin-left: 52px;
+  border-radius: 10px;
+  background-color: #2a3647;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 21px;
+  line-height: 25.2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.addContactButton:hover {
+  background-color: #29abe2;
+  cursor: pointer;
+  box-shadow: 0px 3px 3px 1px rgba(122, 122, 122, 0.5);
+}
+
+.imgaddcontact {
+  width: 32px;
+  height: 32px;
+}
+
+.contacts {
+  width: 100%;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.229);
+}
+
+.mainSectionOverlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 592px;
+  width: 1212px;
+  display: flex;
+}
+
+.overlay-contentright {
+  background-color: white;
+  border-radius: 0px 30px 30px 0px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  height: 592px;
+  width: 745px;
+}
+
+.contentleft {
+  width: 467px;
+  height: 594px;
+  background-color: #2a3647;
+  border-radius: 30px 0 0 30px;
+}
+
+.logoAddContact {
+  width: 55.6px;
+  height: 66.48px;
+  margin-bottom: -50px;
+}
+
+.P1overlay {
+  font-weight: 700;
+  font-size: 61px;
+  line-height: 73.2px;
+  color: #ffffff;
+  width: 366px;
+  height: 73px;
+}
+
+.P2overlay {
+  color: #ffffff;
+  width: 371px;
+  height: 32px;
+  font-weight: 400;
+  font-size: 27px;
+  line-height: 32.4px;
+  margin-top: -60px;
+}
+
+.contentleft2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  background-color: #2a3647;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  height: 100%;
+  max-width: 467px;
+  padding: 66px 48px;
+  gap: 12px;
+}
+
+.divider-vertical {
+  border-radius: 3px;
+  min-height: 3px;
+  width: 90px;
+  align-self: self-start;
+  background-color: #29abe2;
+}
+
+.overlay-contentright {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 72px;
+  flex: 1;
+  padding-right: 48px;
+  padding-left: 16px;
+}
+
+.imgcloseOverlay {
+  cursor: pointer;
+  position: absolute;
+  top: 48px;
+  right: 48px;
+  cursor: pointer;
+  border-radius: 100px;
+}
+
+.imgcloseOverlay:hover {
+  background-color: rgb(238, 238, 238);
+}
+
+.inputSection {
+  gap: 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+#contactName {
+  width: 422px;
+  height: 50px;
+  border-radius: 10px;
+  border: 1px solid #d1d1d1;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  color: #000000;
+}
+
+#contactEmail {
+  width: 422px;
+  height: 50px;
+  border-radius: 10px;
+  border: 1px solid #d1d1d1;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  color: #000000;
+}
+
+#contactPhone {
+  width: 422px;
+  height: 50px;
+  border-radius: 10px;
+  border: 1px solid #d1d1d1;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  color: #000000;
+}
+
+.overlayButtons {
+  width: 364px;
+  height: 57px;
+}
+
+.clearButton {
+  border: 1px solid #2a3647;
+  border-radius: 10px;
+  width: 110px;
+  height: 56px;
+}

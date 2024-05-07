@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join Contacts</title>
     <script src="script.js"></script>
+    <script src="js/contacts.js"></script>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="css/contacts.css" />
     <link rel="icon" href="assets/img/logo.png" type="image/x-icon" />
@@ -25,7 +26,15 @@
             <span class="initials">RG</span>
           </div>
         </header>
-        <section class="openContactsContainer"></section>
+        <section class="openContactsContainer">
+          <div class="addContact">
+            <button class="addContactButton">Add new contact
+              <img class="imgaddcontact" src="assets/img/person_add.svg">
+            </button>
+          </div>
+          <div class="contacts">
+          </div>
+        </section>
         <footer class="d-none"></footer>
       </section>
       <section class="sideBarContainer">
@@ -59,14 +68,43 @@
           >
         </div>
         <div class="privacyPolicyAndLegalNoticeContainer">
-          <a class="privacyPolicyContainer" onclick="openNewTab('robin-gerth.developerakademie.net/Join/privacy_policy.html')">
+          <a class="privacyPolicyContainer" onclick="openNewTab('privacy_policy.html')">
             <span class="privacyPolicyText">Privacy Policy</span>
           </a>
-          <a class="legalNoticeContainer" onclick="openNewTab('robin-gerth.developerakademie.net/Join/legal_notice.html')">
+          <a class="legalNoticeContainer" onclick="openNewTab('legal_notice.html')">
             <span class="legalNoticeText">Legal Notice</span>
           </a>
         </div>
       </section>
     </div>
+    <div class="overlay" id="overlay">
+      <div class="mainSectionOverlay">
+        <div class="contentleft">
+          <div class="contentleft2">
+            <img class="logoAddContact" src="assets/img/Capa 2.svg">
+            <div class="overlayText">
+            <p class="P1overlay">Add contact</p>
+            <p class="P2overlay">Tasks are better with a team!</p>
+            <div class="divider-vertical"></div>
+            </div>
+          </div>
+        </div>
+        <div class="overlay-contentright">
+          <img class="imgcloseOverlay" src="assets/img/Close.svg">
+          <img src="assets/img/Group 13.svg"> 
+          <form class="inputSection">
+            <input required id="contactName" placeholder="Name">
+            <input required id="contactEmail" placeholder="Email" pattern=".*@.*\..*" title="An @ is required">
+            <input required id="contactPhone" placeholder="Phone" pattern="\d*" title="Only numbers allowed">
+            <div class="overlayButtons">
+              <div class="clearButton">Clear 
+                <img class="imgClear" src="assets/img/Close.svg">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
   </body>
 </html>
