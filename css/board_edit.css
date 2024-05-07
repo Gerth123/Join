@@ -31,10 +31,16 @@
 }
 
 .subtasks-li-container {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 
 .subtasks-li-container:hover .subtasks-btn-none {
+  display: block;
+}
+
+.subtasks-li-container:hover .subtasks-line-none {
   display: block;
 }
 
@@ -52,6 +58,13 @@
   width: 1px;
   height: 24px;
   background: #a8a8a8;
+}
+
+.subtasks-line-none {
+  width: 1px;
+  height: 24px;
+  background: #a8a8a8;
+  display: none;
 }
 
 .d-none {

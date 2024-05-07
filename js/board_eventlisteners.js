@@ -13,7 +13,6 @@ function getEventListeners() {
   onClickCloseFullSize(fullsize);
   onClickAddTaskBoard(fullsize, board, editBoard, addBoard);
   onClickEditBoard(board, editBoard, addBoard);
-  onClickEditSubtasks();
 }
 
 /**
@@ -91,6 +90,7 @@ function onClickEditBoard(board, editBoard, addBoard) {
     editBoard.classList.remove("d-none");
     addBoard.classList.add("d-none");
     getEditBoard(id, contentId);
+    onClickEditSubtasks();
   });
 }
 
@@ -101,6 +101,7 @@ function onClickEditSubtasks() {
   const subtaskCheckBtn = document.getElementById("subtasks-check");
   const subtaskInput = document.getElementById("subtasks");
   const list = document.getElementById("subtasks-list");
+  let i = 0;
   subtaskAddBtn.addEventListener("click", () => {
     subtaskAddBtn.classList.add("d-none");
     subtaskContainer.classList.remove("d-none");
@@ -113,24 +114,18 @@ function onClickEditSubtasks() {
   subtaskCheckBtn.addEventListener("click", () => {
     list.innerHTML += /*html*/ `
     <li class="subtasks-li-container">
-      <div class="subtasks-li">
+      <div class="subtasks-li" contenteditable=false>
         ${subtaskInput.value}
-        <div class="row">
-          <img id="subtasks-edit" class="subtasks-btn-none" src="/assets/icons/board/edit/edit_button.svg" alt="">
-          <img id="subtasks-trash" class="subtasks-btn-none" src="/assets/icons/board/edit/trash_button.svg" alt="">
+        <div class="row" id="subtask-first-btns">
+          <img class="subtasks-btn-none" id="subtasks-edit-new" src="/assets/icons/board/edit/edit_button.svg" alt="">
+          <div class="subtasks-line-none"></div>
+          <img class="subtasks-btn-none" id="subtasks-trash-new" src="/assets/icons/board/edit/trash_button.svg" alt="">
         </div>
       </div>
-    </li>
-    `;
+    </li>`;
     subtaskInput.value = "";
     subtaskContainer.classList.add("d-none");
     subtaskAddBtn.classList.remove("d-none");
-  });
-
-  const subtaskTrash = document.querySelectorAll("#subtasks-trash");
-  subtaskTrash.forEach((trash) => {
-    trash.addEventListener("click", () => {
-      console.log(trash);
-    });
+    i++;
   });
 }
