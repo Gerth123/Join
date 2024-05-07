@@ -24,7 +24,7 @@
   display: none;
 }
 
-.subtasks-li {
+.subtasks-li-text {
   display: flex;
   justify-content: space-between;
   height: 24px;

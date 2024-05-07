@@ -113,19 +113,78 @@ function onClickEditSubtasks() {
 
   subtaskCheckBtn.addEventListener("click", () => {
     list.innerHTML += /*html*/ `
-    <li class="subtasks-li-container">
-      <div class="subtasks-li" contenteditable=false>
-        ${subtaskInput.value}
-        <div class="row" id="subtask-first-btns">
-          <img class="subtasks-btn-none" id="subtasks-edit-new" src="/assets/icons/board/edit/edit_button.svg" alt="">
-          <div class="subtasks-line-none"></div>
-          <img class="subtasks-btn-none" id="subtasks-trash-new" src="/assets/icons/board/edit/trash_button.svg" alt="">
+    <li id="subtasks-li">
+      <div class="subtasks-li-container">
+        <div class="subtasks-li-text" contenteditable=false>
+          ${subtaskInput.value}
+          <div class="row" id="subtask-first-btns">
+            <img class="subtasks-btn-none" id="subtasks-edit" src="/assets/icons/board/edit/edit_button.svg" alt="">
+            <div class="subtasks-line-none"></div>
+            <img class="subtasks-btn-none" id="subtasks-trash" src="/assets/icons/board/edit/trash_button.svg" alt="">
+          </div>
+          <div class="row d-none" id="subtask-second-btns">
+            <img class="subtasks-btn-none" id="subtasks-trash" src="/assets/icons/board/edit/trash_button.svg" alt="">
+            <div class="subtasks-line-none"></div>
+            <img class="subtasks-btn-none" id="subtasks-checker" src="./assets/icons/board/edit/check_button.svg" alt="" />
+          </div> 
         </div>
       </div>
     </li>`;
     subtaskInput.value = "";
     subtaskContainer.classList.add("d-none");
     subtaskAddBtn.classList.remove("d-none");
-    i++;
+    getSubtasksEventListeners();
   });
 }
+
+// function getNewSubTasksEventListeners() {
+//   let trashes = document.querySelectorAll("#subtasks-trash-new");
+//   console.log(trashes);
+//   trashes.forEach((trash) => {
+//     trash.addEventListener("click", () => {
+//       let parentLi = trash.closest(".subtasks-li-container");
+//       if (parentLi) {
+//         parentLi.remove();
+//       }
+//     });
+//   });
+// }
+
+// function getSubtasksEventListeners() {
+//   let trashes = document.querySelectorAll("#subtasks-trash");
+//   trashes.forEach((trash) => {
+//     trash.addEventListener("click", () => {
+//       let parentLi = trash.closest(".subtasks-li-container");
+//       if (parentLi) {
+//         parentLi.remove();
+//       }
+//     });
+//   });
+
+//   let edits = document.querySelectorAll("#subtasks-edit");
+//   console.log(edits);
+//   edits.forEach((edit) => {
+//     edit.addEventListener("click", () => {
+//       let parentContent = edit.closest(".subtasks-li-container");
+//       let subtaskElement = parentContent.querySelector(".subtasks-li-text");
+//       let subtaskFirstBtns = parentContent.querySelector("#subtask-first-btns");
+//       let subtaskSecondBtns = parentContent.querySelector("#subtask-second-btns");
+//       subtaskFirstBtns.classList.add("d-none");
+//       subtaskSecondBtns.classList.remove("d-none");
+//       subtaskElement.contentEditable = true;
+//     });
+//   });
+
+//   let checkers = document.querySelectorAll("#subtasks-checker");
+//   checkers.forEach((checker) => {
+//     checker.addEventListener("click", () => {
+//       let parentContent = checker.closest(".subtasks-li-container");
+//       let subtaskElement = parentContent.querySelector(".subtasks-li-text");
+//       let subtaskFirstBtns = parentContent.querySelector("#subtask-first-btns");
+//       let subtaskSecondBtns = parentContent.querySelector("#subtask-second-btns");
+//       subtaskFirstBtns.classList.remove("d-none");
+//       subtaskSecondBtns.classList.add("d-none");
+//       subtaskElement.contentEditable = false;
+//     });
+//   });
+// }
