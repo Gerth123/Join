@@ -9,7 +9,9 @@ function getEditBoard(id, contentId) {
   date.value = `${itemData["date"]}`;
   getEditPriority(itemData["priority"]);
   getEditSubtasks(itemData["subtasks"]);
+
   getSubtasksEventListeners();
+  getEditDate(itemData["date"]);
 }
 
 function getEditPriority(priority) {
@@ -104,4 +106,11 @@ function getSubtasksEventListeners() {
       subtaskElement.contentEditable = false;
     });
   });
+}
+
+function getEditDate(date) {
+  let dateData = document.getElementById("date");
+  dateData.min = new Date().toISOString().split("T")[0];
+  dateData.value = date;
+  console.log("this is date", dateData.value);
 }
