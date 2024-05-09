@@ -101,7 +101,6 @@ function onClickEditSubtasks() {
   const subtaskCheckBtn = document.getElementById("subtasks-check");
   const subtaskInput = document.getElementById("subtasks");
   const list = document.getElementById("subtasks-list");
-  let i = 0;
   subtaskAddBtn.addEventListener("click", () => {
     subtaskAddBtn.classList.add("d-none");
     subtaskContainer.classList.remove("d-none");
@@ -188,3 +187,60 @@ function onClickEditSubtasks() {
 //     });
 //   });
 // }
+
+function saveEditData() {
+  console.log(id);
+  console.log(contentId);
+  let data = read();
+  changeItem(data, id);
+}
+
+function changeItem(data, targetId) {
+  // console.log(data);
+  let title = document.getElementById("title");
+  let description = document.getElementById("description");
+  let date = document.getElementById("date");
+  let category = document.getElementById("category");
+  let subtasks = document.querySelectorAll(".subtasks-li-text");
+  console.log("subtasks", subtasks.innerHTML);
+  for (const listItem of data) {
+    // console.log(listItem);
+    if (listItem.id == 1) {
+      for (let item of listItem.items) {
+        // console.log(item);
+        // console.log("targetId", targetId);
+        if (item.id == targetId) {
+          // console.log(targetId);
+          item.category = category.value;
+          item.title = title.value;
+          item.description = description.value;
+          item.date = date.value;
+          item.priority = getPriorityValue();
+
+          // Return a copy of the modified data
+        }
+        save(data);
+      }
+    }
+  }
+  console.log(data);
+
+  // init();
+  // return false;
+}
+
+function getPriorityValue() {
+  let priority3 = document.getElementById("radio-btn-3");
+  let priority2 = document.getElementById("radio-btn-2");
+  let priority1 = document.getElementById("radio-btn-1");
+  console.log(priority3.checked);
+  console.log(priority2.checked);
+  console.log(priority1.checked);
+  if (priority3.checked) {
+    return "urgent";
+  } else if (priority2.checked) {
+    return "medium";
+  } else if (priority1.checked) {
+    return "low";
+  }
+}

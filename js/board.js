@@ -26,7 +26,7 @@ async function init() {
   emptyData = await getExampleData();
   icons = await getIcons();
   await renderBoards();
-  save(emptyData);
+  // save(emptyData);
   getEventListeners();
 }
 

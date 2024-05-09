@@ -159,7 +159,7 @@
           </a>
         </div>
       </section>
-      <div id="full-size-container" class="full-size-container">
+      <div id="full-size-container" class="full-size-container d-none">
         <div id="board" class="full-size-board d-none">
           <div class="full-size-header">
             <img id="full-size-category" src="/assets/icons/board/fullsize/technical_task_big.svg" alt="" />
@@ -185,16 +185,17 @@
             <div id="full-size-subtasks-tasks"></div>
           </div>
           <div class="full-size-footer">
+            return false
             <img class="button full-size-button" src="/assets/icons/board/fullsize/delete-button.svg" alt="" />
             <div class="full-size-line"></div>
             <img id="edit-btn" class="button full-size-button" src="/assets/icons/board/fullsize/edit-button.svg" alt="" />
           </div>
         </div>
-        <div id="edit-board" class="full-size-board">
+        <div id="edit-board" class="full-size-board d-none">
           <div class="full-size-header jc-fe">
             <div id="close-btn-edit" class="close-btn"><img src="/assets/icons/board/close-button_big.svg" alt="" /></div>
           </div>
-          <form class="full-size-form" action="">
+          <form class="full-size-form" action="" onsubmit="saveEditData(); return false">
             <label class="full-size-label" for="title">Title</label>
             <input class="full-size-input" id="title" type="text" placeholder="Enter a title" />
             <label class="full-size-label" for="description">Description</label>
@@ -215,24 +216,46 @@
                 <label for="radio-btn-1" class="btn1"></label>
               </div>
             </div>
-            <label class="full-size-label" for="assigned">Assigned to</label>
-            <input class="full-size-input" id="assigned" type="text" placeholder="Assigned to" />
+            <!-- <label class="full-size-label" for="assigned">Assigned to</label> -->
+            <!-- <input class="full-size-input" id="assigned" type="text" placeholder="Assigned to" /> -->
+            <div id="assigned" class="multipleSelection">
+              <div class="selectBox" onclick="showCheckboxes()">
+                <select>
+                  <option>Select options</option>
+                </select>
+                <div class="overSelect"></div>
+              </div>
+              <div id="checkBoxes">
+                <input type="checkbox" id="first" />
+                <label for="first"> checkBox1 </label>
+                <input type="checkbox" id="second" />
+                <label for="second"> checkBox2 </label>
+                <input type="checkbox" id="third" />
+                <label for="third"> checkBox3 </label>
+                <input type="checkbox" id="fourth" />
+                <label for="fourth"> checkBox4 </label>
+              </div>
+            </div>
+            <label class="full-size-label" for="category">Category</label>
+            <select name="" id="category">
+              <option value="" selected disabled hidden>Select task category</option>
+              <option value="user story">user story</option>
+              <option value="technical task">technical task</option>
+            </select>
             <label class="full-size-label" for="subtasks">Subtasks</label>
             <div class="full-size-input-container">
-              <form action="">
-                <input required class="subtasks-input" id="subtasks" type="text" placeholder="Add new subtask" />
-                <img class="subtasks-btn" id="subtasks-add" src="./assets/icons/board/edit/add_button.svg" alt="" />
-                <div class="subtasks-btn-container d-none" id="subtasks-btn-container">
-                  <img class="subtasks-btn" id="subtasks-del" src="./assets/icons/board/edit/x_button.svg" alt="" />
-                  <div class="subtasks-line"></div>
-                  <img class="subtasks-btn" id="subtasks-check" src="./assets/icons/board/edit/check_button.svg" alt="" />
-                </div>
-              </form>
+              <input class="subtasks-input" id="subtasks" type="text" placeholder="Add new subtask" />
+              <img class="subtasks-btn" id="subtasks-add" src="./assets/icons/board/edit/add_button.svg" alt="" />
+              <div class="subtasks-btn-container d-none" id="subtasks-btn-container">
+                <img class="subtasks-btn" id="subtasks-del" src="./assets/icons/board/edit/x_button.svg" alt="" />
+                <div class="subtasks-line"></div>
+                <img class="subtasks-btn" id="subtasks-check" src="./assets/icons/board/edit/check_button.svg" alt="" />
+              </div>
             </div>
 
             <ul id="subtasks-list"></ul>
             <div class="full-size-footer">
-              <div class="button ok-button">Ok <img src="/assets/icons/board/fullsize/check.svg" alt="" /></div>
+              <button type="submit" class="button ok-button">Ok <img src="/assets/icons/board/fullsize/check.svg" alt="" /></button>
             </div>
           </form>
         </div>
@@ -248,8 +271,8 @@
                 <input class="full-size-input" id="title" type="text" placeholder="Enter a title" />
                 <label class="full-size-label" for="description">Description</label>
                 <input class="full-size-input" id="description" type="text" placeholder="Enter a description" />
-                <label class="full-size-label" for="assigned">Assigned to</label>
-                <input class="full-size-input" id="assigned" type="text" placeholder="Assigned to" />
+                <!-- <label class="full-size-label" for="assigned">Assigned to</label>
+                <input class="full-size-input" id="assigned" type="text" placeholder="Assigned to" /> -->
               </div>
               <div class="column wd-45">
                 <label class="full-size-label" for="date">Due date</label>
