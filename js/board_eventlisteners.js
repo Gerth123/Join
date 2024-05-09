@@ -227,7 +227,6 @@ function changeItem(data, targetId) {
   let title = document.getElementById("title");
   let description = document.getElementById("description");
   let date = document.getElementById("date");
-  let category = document.getElementById("category");
   let subtasks = document.querySelectorAll(".subtasks-li-text");
   subtasks.forEach((subtask) => {
     console.log(subtask.innerHTML);
@@ -241,12 +240,12 @@ function changeItem(data, targetId) {
         // console.log("targetId", targetId);
         if (item.id == targetId) {
           // console.log(targetId);
-          item.category = "user story";
+          item.category = editCategory(item.category);
           item.title = title.value;
           item.description = description.value;
           item.date = date.value;
-          item.priority = getPriorityValue();
-          item.subtasks = getSubTasksValue(item.subtasks);
+          item.priority = editPriorityValue();
+          item.subtasks = editSubTasksValue(item.subtasks);
           // Return a copy of the modified data
         }
         save(data);
@@ -259,13 +258,25 @@ function changeItem(data, targetId) {
   // return false;
 }
 
-function getPriorityValue() {
+function editCategory(category) {
+  let newCategory = document.getElementById("category");
+  console.log("newCategory", newCategory.value);
+  console.log("Category", category);
+  if (newCategory.value == "") {
+    console.log("newCategory", newCategory.value);
+    return category;
+  } else {
+    return newCategory.value;
+  }
+}
+
+function editPriorityValue() {
   let priority3 = document.getElementById("radio-btn-3");
   let priority2 = document.getElementById("radio-btn-2");
   let priority1 = document.getElementById("radio-btn-1");
-  console.log(priority3.checked);
-  console.log(priority2.checked);
-  console.log(priority1.checked);
+  // console.log(priority3.checked);
+  // console.log(priority2.checked);
+  // console.log(priority1.checked);
   if (priority3.checked) {
     return "urgent";
   } else if (priority2.checked) {
@@ -275,7 +286,7 @@ function getPriorityValue() {
   }
 }
 
-function getSubTasksValue(subtasks) {
+function editSubTasksValue(subtasks) {
   let newSubtasks = document.querySelectorAll(".subtasks-li-text");
   if (subtasks.length < newSubtasks.length) {
     for (let i = subtasks.length - 1; i < newSubtasks.length; i++) {
@@ -284,7 +295,7 @@ function getSubTasksValue(subtasks) {
   } else if (subtasks.length > newSubtasks.length) {
     let temp = [];
     newSubtasks.forEach((task) => {
-      console.log("this is textContent", task.textContent);
+      // console.log("this is textContent", task.textContent);
       temp.push({ checked: false, task: task.textContent });
     });
     console.log("this is temp", temp);
