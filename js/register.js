@@ -2,91 +2,157 @@ let testContacts = [
     {
         'name': 'Anton Mayer',
         'mail': 'antom@gmail.com',
-        'phone': '+491234567890'
+        'phone': '+491234567890',
+        'color': generateRandomColor()
     },
     {
         'name': 'Hans Mueller',
         'mail': 'hans@gmail.com',
-        'phone': '+491234567890'
+        'phone': '+491234567890',
+        'color': generateRandomColor()
     },
     {
         'name': 'Benedikt Ziegler',
         'mail': 'benedikt@gmail.com',
-        'phone': '+491234567890'
+        'phone': '+491234567890',
+        'color': generateRandomColor()
     },
     {
         'name': 'David Eisenberg',
         'mail': 'davidberg@gmail.com',
-        'phone': '+491234567890'
+        'phone': '+491234567890',
+        'color': generateRandomColor()
     },
     {
         'name': 'Eva Fischer',
         'mail': 'eva@gmail.com',
-        'phone': '+491234567890'
+        'phone': '+491234567890',
+        'color': generateRandomColor()
     },
     {
         'name': 'Emmanuel Mauer',
         'mail': 'emmanuelma@gmail.com',
-        'phone': '+491234567890'
+        'phone': '+491234567890',
+        'color': generateRandomColor()
     },
     {
         'name': 'Marcel Bauer',
         'mail': 'bauer@gmail.com',
-        'phone': '+491234567890'
+        'phone': '+491234567890',
+        'color': generateRandomColor()
     },
     {
         'name': 'Tatjana Wolf',
         'mail': 'wolf@gmail.com',
-        'phone': '+491234567890'
+        'phone': '+491234567890',
+        'color': generateRandomColor()
     },
     {
         'name': 'Klaus Werner',
         'mail': 'klausw@gmail.com',
-        'phone': '+491234567890'
+        'phone': '+491234567890',
+        'color': generateRandomColor()
     },
     {
         'name': 'Peter Hahn',
         'mail': 'peterhahn@gmail.com',
-        'phone': '+491234567890'
-    }]
+        'phone': '+491234567890',
+        'color': generateRandomColor()
+    }
+];
 
 let testTasks = [
     {
-        'type': 'User Story',
-        'task': 'Kochwelt Page & Recipe Recommender',
-        'description': 'Build start page with recipe recommendation.',
-        'Due Date': '10/05/2025',
-        'priority': 'Medium',
-        'assignedTo': ['Emmanuel Mauer', 'Marcel Bauer', 'Anton Mayer'],
-        'Subtasks': ['Implement Recipe Recommendation', 'Start Page Layout']
+        'id': 1,
+        'items': [
+            {
+                'id': '7955',
+                'category': 'User Story',
+                'title': 'Kochwelt Page & Recipe Recommender',
+                'description': 'Build start page with recipe recommendation.',
+                'assigned': [
+                    { 'color': '', 'name': 'Emmanuel', 'lastName': 'Mauer' },
+                    { 'color': '', 'name': 'Marcel', 'lastName': 'Bauer' },
+                    { 'color': '', 'name': 'Tatjana', 'lastName': 'Wolf' }
+                ],
+                'date': '10/05/2025',
+                'priority': 'medium',
+                'subtasks': [
+                    { 'checked': false, 'task': 'Implement Recipe Recommendation' },
+                    { 'checked': true, 'task': 'Start Page Layout' }
+                ]
+            },
+            {
+                'id': '2453',
+                'category': 'Technical Task',
+                'title': 'HTML Base Template Creation',
+                'description': 'Create reusable HTML base templates...',
+                'assigned': [
+                    { 'color': '', 'name': 'David', 'lastName': 'Eisenberg' },
+                    { 'color': '', 'name': 'Benedikt', 'lastName': 'Ziegler' },
+                    { 'color': '', 'name': 'Anton', 'lastName': 'Mayer' }
+                ],
+                'date': '10/05/2025',
+                'priority': 'low',
+                'subtasks': [
+                    { 'checked': false, 'task': 'Implement Recipe Recommendation' },
+                    { 'checked': true, 'task': 'Start Page Layout' }
+                ]
+            },
+            {
+                'id': '0945',
+                'category': 'User Story',
+                'title': 'Daily Kochwelt Recipe',
+                'description': 'Implement daily recipe and portion calculator...',
+                'assigned': [
+                    { 'color': '', 'name': 'Emmanuel', 'lastName': 'Mauer' },
+                    { 'color': '', 'name': 'Anton', 'lastName': 'Mayer' },
+                    { 'color': '', 'name': 'Tatjana', 'lastName': 'Wolf' }
+                ],
+                'date': '10/05/2025',
+                'priority': 'medium',
+                'subtasks': [
+                    { 'checked': false, 'task': 'Implement Recipe Recommendation' },
+                    { 'checked': true, 'task': 'Start Page Layout' }
+                ]
+            },
+        ]
     },
     {
-        'type': 'Technical Task',
-        'task': 'HTML Base Template Creation',
-        'description': 'Create reusable HTML base templates...',
-        'Due Date': '10/05/2025',
-        'priority': 'Low',
-        'assignedTo': ['David Eisenberg', 'Benedikt Ziegler', 'Anton Mayer'],
-        'Subtasks': ['Implement Recipe Recommendation', 'Start Page Layout']
+        'id': 2,
+        'items': [
+            {
+                'id': '7489',
+                'category': 'Technical Task',
+                'title': 'CSS Architecture Planning',
+                'description': 'Define CSS naming conventions and structure...',
+                'assigned': [
+                    { 'color': '', 'name': 'Stefan', 'lastName': 'Meier' },
+                    { 'color': '', 'name': 'Benedikt', 'lastName': 'Ziegler' }
+                ],
+                'date': '10/05/2025',
+                'priority': 'urgent',
+                'subtasks': [
+                    { 'checked': false, 'task': 'Implement Recipe Recommendation' },
+                    { 'checked': true, 'task': 'Start Page Layout' }
+                ]
+            }
+        ]
     },
     {
-        'type': 'User Story',
-        'task': 'Daily Kochwelt Recipe',
-        'description': 'Implement daily recipe and portion calculator...',
-        'Due Date': '10/05/2025',
-        'priority': 'Medium',
-        'assignedTo': ['Emmanuel Mauer', 'Anton Mayer', 'Tatjana Wolf'],
-        'Subtasks': ['Implement Recipe Recommendation', 'Start Page Layout']
+        'id': 3,
+        'items': [
+
+        ]
     },
     {
-        'type': 'Technical Task',
-        'task': 'CSS Architecture Planning',
-        'description': 'Define CSS naming conventions and structure...',
-        'Due Date': '10/05/2025',
-        'priority': 'High',
-        'assignedTo': ['Stefan Meier', 'Benedikt Ziegler'],
-        'Subtasks': ['Implement Recipe Recommendation', 'Start Page Layout']
+        'id': 4,
+        'items': [
+
+        ]
+
     },
+
 ]
 
 
@@ -124,18 +190,24 @@ function checkAcceptPrivacyPolicy() {
     }
 }
 
-
-async function loadUsers() {
-    try {
-        users = JSON.parse(await getItem('users'));
-    } catch (e) {
-        console.error('Loading error:', e);
+/**
+ * This function generates a random color and returns it.
+ * 
+ * @author: Robin
+ */
+function generateRandomColor() {
+    var letters = "0123456789ABCDEF";
+    var color = "#";
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
     }
+    return color;
 }
 
 
+//Math.floor(Math.random() * 10000);
+
 async function addUser() {
-    // debugger;
     let msgBox = document.getElementById('msgBox');
     let name = document.getElementById('name');
     let email = document.getElementById('email');
@@ -144,11 +216,9 @@ async function addUser() {
     let newArray = [{ 'mail': email.value, 'name': name.value, 'password': password.value, 'contacts': testContacts, 'tasks': testTasks }];
     let actualUsers = await loadData('users');
     let actualisedUsers = [...newArray, ...actualUsers];
-
-    if (actualUsers.value === '') {
+    if (actualUsers.length === 0) {
         actualisedUsers = [...newArray];
     };
-
     for (let mailSearchIndex = 0; mailSearchIndex < actualUsers.length; mailSearchIndex++) {
         if (actualUsers[mailSearchIndex] === null) {
             continue;
@@ -167,7 +237,6 @@ async function addUser() {
     };
     await putNewUser(password, confirmPassword, msgBox, actualisedUsers);
 }
-
 
 async function putNewUser(password, confirmPassword, msgBox, actualisedUsers) {
     if (password.value === confirmPassword.value) {
