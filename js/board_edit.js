@@ -40,9 +40,7 @@ function getEditSubtasks(subtasks) {
     list.innerHTML += /*html*/ `
     <li id="subtasks-li">
       <div class="subtasks-li-container">
-        <div class="subtasks-li-text" contenteditable=false>
-          ${subtasks[i]["task"]}
-        </div>
+        <p class="subtasks-li-text" contenteditable=false>${subtasks[i]["task"]}</p>
         <div class="row" id="subtask-first-btns">
           <img class="subtasks-btn-none" id="subtasks-edit" src="/assets/icons/board/edit/edit_button.svg" alt="">
           <div class="subtasks-line-none"></div>
