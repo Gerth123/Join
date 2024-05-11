@@ -26,7 +26,7 @@
       <div class="loginContainer">
         <h1>Log in</h1>
         <div class="underline"></div>
-        <form onsubmit="login(); return false;" class="logInForm">
+        <form onsubmit="checkUser(); return false;" class="logInForm">
           <div class="logInInputFields">
             <div class="logInFormInputAndImgContainer">
               <input type="email" required id="email" placeholder="Email" class="logInInputEmail" />
@@ -58,9 +58,12 @@
         </form>
       </div>
       <footer>
-        <a class="privacyPolicyText" onclick="openNewTab('robin-gerth.developerakademie.net/Join/privacy_policy.html')">Privacy Policy</a>
-        <a class="legalNoticeText" onclick="openNewTab('robin-gerth.developerakademie.net/Join/legal_notice.html')">Legal Notice</a>
+        <a class="privacyPolicyText" onclick="openNewTab('only_privacy_policy.html')">Privacy Policy</a>
+        <a class="legalNoticeText" onclick="openNewTab('only_legal_notice.html')">Legal Notice</a>
       </footer>
     </section>
+    <div id="msgBox" class="msgBoxContainer d-none">
+      <span class="msgBox" id="msgBoxText"></span>
+    </div>
   </body>
 </html>

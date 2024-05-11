@@ -20,15 +20,11 @@
           <div class="headlineContainer">
             <span class="headline">Kanban Project Management Tool</span>
           </div>
-          <div class="helpAndUserContainer">
-            <img src="assets/img/help.svg" alt="Help" class="helpIcon" />
-            <span class="initials">RG</span>
-          </div>
         </header>
         <section class="privacyPolicyOpenedContainer">
           <div class="privacyPolicyHeadlineAndArrowContainer">
             <h1 class="privacyPolicyHeadline">Privacy Policy</h1>
-            <img class="arrowLeftImg" src="assets/img/arrowLeft.svg" alt="Back" onclick="goBackToLastTab()"/>
+            <img class="arrowLeftImg" src="assets/img/arrowLeft.svg" alt="Back" onclick="goBackToLastTab()" />
           </div>
           <div class="privacyPolicyTextContainer">
             <h2>Subtitle</h2>
@@ -58,37 +54,12 @@
         <div class="sideBarLogoContainer">
           <img class="logoImg" src="assets/img/logoWhite.svg" alt="Join logo" />
         </div>
-        <div class="sideBarChooseSectionContainer">
-          <a href="summary.html" class="summaryContainer"
-            ><div class="sideBarImgContainer">
-              <img src="assets/img/summaryIcon.svg" alt="Summary Icon" class="sideBarImage" />
-            </div>
-            <span>Summary</span></a
-          >
-          <a href="add_task.html" class="addTaskContainer"
-            ><div class="sideBarImgContainer">
-              <img src="assets/img/addTaskIcon.svg" alt="Add Task Icon" class="sideBarImage" />
-            </div>
-            <span>Add Task</span></a
-          >
-          <a href="board.html" class="boardContainer"
-            ><div class="sideBarImgContainer">
-              <img src="assets/img/boardIcon.svg" alt="Board Icon" class="sideBarImage" />
-            </div>
-            <span>Board</span></a
-          >
-          <a href="contacts.html" class="contactsContainer"
-            ><div class="sideBarImgContainer">
-              <img src="assets/img/contactsIcon.svg" alt="Assets Icon" class="sideBarImage" />
-            </div>
-            <span>Contacts</span></a
-          >
-        </div>
+        <div class="sideBarChooseSectionContainer"></div>
         <div class="privacyPolicyAndLegalNoticeContainer">
           <a href="#" class="openedPrivacyPolicyOrLegalNotice">
             <span class="privacyPolicyTextOpened">Privacy Policy</span>
           </a>
-          <a class="legalNoticeContainer" href="legal_notice.html">
+          <a class="legalNoticeContainer" onclick="openNewTab('only_legal_notice.html')">
             <span class="legalNoticeText">Legal Notice</span>
           </a>
         </div>
