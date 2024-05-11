@@ -236,19 +236,25 @@
               </div>
             </div>
             <label class="full-size-label" for="category">Category</label>
-            <select name="" required id="category">
+            <select name="" id="category">
               <option value="" selected disabled hidden>Select task category</option>
               <option value="user story">user story</option>
               <option value="technical task">technical task</option>
             </select>
             <label class="full-size-label" for="subtasks">Subtasks</label>
             <div class="full-size-input-container">
-              <input class="subtasks-input" id="subtasks" type="text" placeholder="Add new subtask" />
+              <input class="subtasks-input" id="subtasks-input" type="text" placeholder="Add new subtask" />
               <img class="subtasks-btn" id="subtasks-add" src="./assets/icons/board/edit/add_button.svg" alt="" />
               <div class="subtasks-btn-container d-none" id="subtasks-btn-container">
                 <img class="subtasks-btn" id="subtasks-del" src="./assets/icons/board/edit/x_button.svg" alt="" />
                 <div class="subtasks-line"></div>
-                <img class="subtasks-btn" id="subtasks-check" src="./assets/icons/board/edit/check_button.svg" alt="" />
+                <img
+                  class="subtasks-btn"
+                  onclick="checkSubtasks()"
+                  id="subtasks-check"
+                  src="./assets/icons/board/edit/check_button.svg"
+                  alt=""
+                />
               </div>
             </div>
 

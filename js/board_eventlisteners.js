@@ -45,8 +45,10 @@ function onClickCloseFullSize(fullsize) {
   const closeBtn = document.querySelectorAll(".close-btn");
   closeBtn.forEach((btn) =>
     btn.addEventListener("click", () => {
+      console.log("closeBtn", closeBtn);
       fullsize.classList.add("d-none");
       let itemData = getItemById(id, contentId);
+      console.log("itemData", itemData);
       let subtasks = itemData["subtasks"];
       for (let i = 0; i < subtasks.length; i++) {
         let check = document.getElementById(`subtask-${i}`);
@@ -55,8 +57,8 @@ function onClickCloseFullSize(fullsize) {
         } else {
           subtasks[i]["checked"] = false;
         }
-        console.log("subtasks", subtasks);
       }
+      console.log("subtasks", subtasks);
 
       let data = read();
       for (let column of data) {
@@ -125,10 +127,10 @@ function onClickEditSubtasks() {
   const subtaskAddBtn = document.getElementById("subtasks-add");
   const subtaskContainer = document.getElementById("subtasks-btn-container");
   const subtaskDelBtn = document.getElementById("subtasks-del");
-  const subtaskCheckBtn = document.getElementById("subtasks-check");
-  const subtaskInput = document.getElementById("subtasks");
-
+  // const subtaskCheckBtn = document.getElementById("subtasks-check");
+  const subtaskInput = document.getElementById("subtasks-input");
   const list = document.getElementById("subtasks-list");
+
   subtaskAddBtn.addEventListener("click", () => {
     subtaskAddBtn.classList.add("d-none");
     subtaskContainer.classList.remove("d-none");
@@ -138,9 +140,38 @@ function onClickEditSubtasks() {
     subtaskInput.value = "";
   });
 
-  subtaskCheckBtn.addEventListener("click", () => {
-    console.log("subtaskInput", subtaskInput.value);
-    list.innerHTML += /*html*/ `
+  // subtaskCheckBtn.addEventListener("click", (event) => {
+  //   event.preventDefault();
+  //   console.log("subtaskInput value", subtaskInput.value);
+  //   list.innerHTML += /*html*/ `
+  //   <li id="subtasks-li">
+  //     <div class="subtasks-li-container">
+  //       <p class="subtasks-li-text" contenteditable=false>${subtaskInput.value}</p>
+  //       <div class="row" id="subtask-first-btns">
+  //         <img class="subtasks-btn-none" id="subtasks-edit" src="/assets/icons/board/edit/edit_button.svg" alt="">
+  //         <div class="subtasks-line-none"></div>
+  //         <img class="subtasks-btn-none" id="subtasks-trash" src="/assets/icons/board/edit/trash_button.svg" alt="">
+  //       </div>
+  //       <div class="row d-none" id="subtask-second-btns">
+  //         <img class="subtasks-btn-none" id="subtasks-trash" src="/assets/icons/board/edit/trash_button.svg" alt="">
+  //         <div class="subtasks-line-none"></div>
+  //         <img class="subtasks-btn-none" id="subtasks-checker" src="./assets/icons/board/edit/check_button.svg" alt="" />
+  //       </div>
+  //     </div>
+  //   </li>`;
+  //   subtaskInput.value = "";
+  //   subtaskContainer.classList.add("d-none");
+  //   subtaskAddBtn.classList.remove("d-none");
+  //   getSubtasksEventListeners();
+  // });
+}
+
+function checkSubtasks() {
+  const list = document.getElementById("subtasks-list");
+  const subtaskInput = document.getElementById("subtasks-input");
+  const subtaskAddBtn = document.getElementById("subtasks-add");
+  const subtaskContainer = document.getElementById("subtasks-btn-container");
+  list.innerHTML += /*html*/ `
     <li id="subtasks-li">
       <div class="subtasks-li-container">
         <p class="subtasks-li-text" contenteditable=false>${subtaskInput.value}</p>
@@ -156,11 +187,10 @@ function onClickEditSubtasks() {
         </div> 
       </div>
     </li>`;
-    subtaskInput.value = "";
-    subtaskContainer.classList.add("d-none");
-    subtaskAddBtn.classList.remove("d-none");
-    getSubtasksEventListeners();
-  });
+  subtaskInput.value = "";
+  subtaskContainer.classList.add("d-none");
+  subtaskAddBtn.classList.remove("d-none");
+  getSubtasksEventListeners();
 }
 
 // function getNewSubTasksEventListeners() {
@@ -216,25 +246,25 @@ function onClickEditSubtasks() {
 // }
 
 function saveEditData() {
-  console.log(id);
-  console.log(contentId);
+  // console.log(id);
+  // console.log(contentId);
   let data = read();
-  changeItem(data, id);
+  changeItem(data, id, contentId);
 }
 
-function changeItem(data, targetId) {
+function changeItem(data, targetId, contentId) {
   // console.log(data);
   let title = document.getElementById("title");
   let description = document.getElementById("description");
   let date = document.getElementById("date");
   let subtasks = document.querySelectorAll(".subtasks-li-text");
-  subtasks.forEach((subtask) => {
-    console.log(subtask.innerHTML);
-  });
+  // subtasks.forEach((subtask) => {
+  //   console.log(subtask.innerHTML);
+  // });
 
   for (const listItem of data) {
     // console.log(listItem);
-    if (listItem.id == 1) {
+    if (listItem.id == contentId) {
       for (let item of listItem.items) {
         // console.log(item);
         // console.log("targetId", targetId);
@@ -260,10 +290,10 @@ function changeItem(data, targetId) {
 
 function editCategory(category) {
   let newCategory = document.getElementById("category");
-  console.log("newCategory", newCategory.value);
-  console.log("Category", category);
+  // console.log("newCategory", newCategory.value);
+  // console.log("Category", category);
   if (newCategory.value == "") {
-    console.log("newCategory", newCategory.value);
+    // console.log("newCategory", newCategory.value);
     return category;
   } else {
     return newCategory.value;
@@ -289,18 +319,18 @@ function editPriorityValue() {
 function editSubTasksValue(subtasks) {
   let newSubtasks = document.querySelectorAll(".subtasks-li-text");
   if (subtasks.length < newSubtasks.length) {
-    for (let i = subtasks.length - 1; i < newSubtasks.length; i++) {
+    for (let i = subtasks.length; i < newSubtasks.length; i++) {
       subtasks.push({ checked: false, task: newSubtasks[i].innerHTML });
     }
-  } else if (subtasks.length > newSubtasks.length) {
+  } else if (subtasks.length >= newSubtasks.length) {
     let temp = [];
     newSubtasks.forEach((task) => {
       // console.log("this is textContent", task.textContent);
       temp.push({ checked: false, task: task.textContent });
     });
-    console.log("this is temp", temp);
+    // console.log("this is temp", temp);
     let updatedSubtask = (updatedTemp = updateChecked(temp.slice(), subtasks));
-    console.log(updatedSubtask);
+    // console.log(updatedSubtask);
     subtasks = updatedSubtask;
   }
 
