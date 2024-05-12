@@ -57,16 +57,6 @@ function getEditSubtasks(subtasks) {
   }
 }
 
-// function deleteSubtask(i) {
-//   let del = document.getElementById(`subtasks-trash-${i}`);
-//   console.log(del);
-// }
-
-// function editSubtask(i) {
-//   let edit = document.getElementById(`subtasks-edit-${i}`);
-//   console.log(edit);
-// }
-
 function getSubtasksEventListeners() {
   let trashes = document.querySelectorAll("#subtasks-trash");
   trashes.forEach((trash) => {
