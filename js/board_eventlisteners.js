@@ -42,10 +42,8 @@ function onClickFullSizeBoard(fullsize, board, editBoard, addBoard) {
  * @param {Element} fullsize
  */
 function onClickCloseFullSize(fullsize) {
-  const closeBtn = document.querySelectorAll(".close-btn");
-  closeBtn.forEach((btn) =>
-    btn.addEventListener("click", () => {
-      console.log("closeBtn", closeBtn);
+  document.addEventListener("click", (e) => {
+    if (e.target.matches("#close-btn-img")) {
       fullsize.classList.add("d-none");
       let itemData = getItemById(id, contentId);
       console.log("itemData", itemData);
@@ -74,9 +72,46 @@ function onClickCloseFullSize(fullsize) {
 
       console.log("data", data);
       save(data);
-      init();
-    })
-  );
+      // init();
+      location.reload();
+    }
+  });
+
+  // let closeBtn = document.querySelectorAll(".close-btn");
+  // closeBtn.forEach((btn) =>
+  //   btn.addEventListener("click", () => {
+  //     console.log("closeBtn", closeBtn);
+  //     fullsize.classList.add("d-none");
+  //     let itemData = getItemById(id, contentId);
+  //     console.log("itemData", itemData);
+  //     let subtasks = itemData["subtasks"];
+  //     for (let i = 0; i < subtasks.length; i++) {
+  //       let check = document.getElementById(`subtask-${i}`);
+  //       if (check.checked) {
+  //         subtasks[i]["checked"] = true;
+  //       } else {
+  //         subtasks[i]["checked"] = false;
+  //       }
+  //     }
+  //     console.log("subtasks", subtasks);
+
+  //     let data = read();
+  //     for (let column of data) {
+  //       if (column.id == contentId) {
+  //         for (let item of column.items) {
+  //           if (item.id == id) {
+  //             item["subtasks"] = subtasks;
+  //             console.log("items", item["subtasks"]);
+  //           }
+  //         }
+  //       }
+  //     }
+
+  //     console.log("data", data);
+  //     save(data);
+  //     location.reload();
+  //   })
+  // );
 }
 
 /**
