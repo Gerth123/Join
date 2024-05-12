@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: board_fullsize.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,94 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: board_fullsize.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Gets the full size board
+ * @param {number} id
+ * @param {number} contentId
+ */
+function getFullSizeBoard(id, contentId) {
+  let itemData = getItemById(id, contentId);
+  let title = document.querySelector(".full-size-title");
+  let description = document.querySelector(".full-size-description");
+  let date = document.querySelector("#full-size-due-date");
+  title.textContent = `${itemData["title"]}`;
+  description.textContent = `${itemData["description"]}`;
+  date.textContent = "";
+  date.textContent += `${itemData["date"]}`;
+  getFullSizePriority(itemData["priority"]);
+  getFullSizeCategory(itemData["category"]);
+  getFullSizeAssigned(itemData["assigned"]);
+  getFullSizeSubtask(itemData["subtasks"]);
+}
 
+/**
+ * Gets the full size priority
+ * @param {Object} priority
+ */
+function getFullSizePriority(priority) {
+  const fullSizePriority = document.querySelector(".full-size-priority-icon");
+  fullSizePriority.src = icons["priorityFullSizeIcons"][priority] || "";
+}
 
-    <h3> </h3>
+/**
+ * Gets the full size category
+ * @param {Object} category
+ */
+function getFullSizeCategory(category) {
+  const fullSizeCategory = document.querySelector("#full-size-category");
+  fullSizeCategory.src = icons["categoryFullSizeIcons"][category] || "";
+}
 
+/**
+ * Gets the full size assigned
+ * @param {Object} assigned
+ */
+function getFullSizeAssigned(assigned) {
+  const fullSizeAssigned = document.querySelector("#full-size-assigned-users");
+  fullSizeAssigned.innerHTML = "";
+  assigned.forEach((user) => {
+    let name = Array.from(`${user["name"]}`)[0];
+    let lastName = Array.from(`${user["lastName"]}`)[0];
+    fullSizeAssigned.innerHTML += /*html*/ `
+    &lt;div class="full-size-assign-user">
+    &lt;div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}${lastName}&lt;/div>
+      ${user["name"]} ${user["lastName"]}  
+    &lt;/div>`;
+  });
+}
 
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+/**
+ * Gets the full size subtasks
+ * @param {Object} subtasks
+ */
+function getFullSizeSubtask(subtasks) {
+  const fullSizeSubtasks = document.getElementById("full-size-subtasks-tasks");
+  fullSizeSubtasks.innerHTML = "";
+  for (let i = 0; i &lt; subtasks.length; i++) {
+    fullSizeSubtasks.innerHTML += /*html*/ `
+    &lt;input type="checkbox" id="subtask-${i}">
+    &lt;label for="subtask-${i}">${subtasks[i]["task"]}&lt;/label>
+    `;
+  }
+  for (let i = 0; i &lt; subtasks.length; i++) {
+    let check = document.getElementById(`subtask-${i}`);
+    if (subtasks[i]["checked"]) {
+      check.checked = true;
+    }
+  }
+}
+</code></pre>
+        </article>
+    </section>
 
 
 
