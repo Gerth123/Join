@@ -11,7 +11,7 @@
           { "color": "#FF7A00", "name": "Hanbit", "lastName": "Chang" },
           { "color": "#0038FF", "name": "Hanbit", "lastName": "Chang" }
         ],
-        "date": "12/3/1992",
+        "date": "2024-06-12",
         "priority": "medium",
         "subtasks": [
           { "checked": false, "task": "contact form" },
@@ -28,7 +28,7 @@
           { "color": "#C3FF2B", "name": "Robin", "lastName": "Mark" },
           { "color": "#C3FF2B", "name": "Robin", "lastName": "Mark" }
         ],
-        "date": "12/3/3992",
+        "date": "2024-06-23",
         "priority": "low",
         "subtasks": [
           { "checked": true, "task": "this is checkbox" },
@@ -47,7 +47,7 @@
         "title": "Hanbit chang is cool",
         "description": "welcome",
         "assigned": [],
-        "date": "12/3/2092",
+        "date": "2024-06-31",
         "priority": "urgent",
         "subtasks": [
           { "checked": false, "task": "contact dfd form" },

@@ -26,7 +26,7 @@ async function init() {
   emptyData = await getExampleData();
   icons = await getIcons();
   await renderBoards();
-  save(emptyData);
+  // save(emptyData);
   getEventListeners();
 }
 
@@ -57,6 +57,7 @@ function getItemById(id, contentId) {
  */
 function getBoardSection(data) {
   const boardSection = document.getElementById("board-card-section");
+  boardSection.innerHTML = "";
   for (let i = 0; i < data.length; i++) {
     const id = data[i]["id"];
     boardSection.innerHTML += getBoardContainer(id);
