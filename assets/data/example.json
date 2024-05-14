@@ -13,10 +13,7 @@
         ],
         "date": "2024-06-12",
         "priority": "medium",
-        "subtasks": [
-          { "checked": false, "task": "contact form" },
-          { "checked": true, "task": "Hello" }
-        ]
+        "subtasks": []
       },
       {
         "id": 7237,
