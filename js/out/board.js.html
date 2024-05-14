@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: board.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: board.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Gets example data from local
+ * @returns example data
+ */
+async function getExampleData() {
+  const response = await fetch("/assets/data/example.json");
+  return await response.json();
+}
+
+/**
+ * Gets icons
+ * @returns icon data
+ */
+async function getIcons() {
+  const response = await fetch("/assets/data/getIcons.json");
+  return await response.json();
+}
+
+let icons;
+let emptyData;
+///////////////////Render Boards//////////////////////
+/**
+ * On loading it inits the elements
+ */
+async function init() {
+  emptyData = await getExampleData();
+  icons = await getIcons();
+  await renderBoards();
+  // save(emptyData);
+  getEventListeners();
+}
+
+/**
+ * Renders the board
+ */
+async function renderBoards() {
+  const data = read();
+  getBoardSection(data);
+}
+
+/**
+ * Gets the item by id
+ * @param {number} id
+ * @param {number} contentId
+ * @returns item data
+ */
+function getItemById(id, contentId) {
+  let data = read();
+  const itemList = data.find((items) => items["id"] == contentId);
+  const item = itemList["items"].find((items) => items["id"] == id);
+  return item;
+}
+
+/**
+ * Gets the board
+ * @param {Object} data
+ */
+function getBoardSection(data) {
+  const boardSection = document.getElementById("board-card-section");
+  boardSection.innerHTML = "";
+  for (let i = 0; i &lt; data.length; i++) {
+    const id = data[i]["id"];
+    boardSection.innerHTML += getBoardContainer(id);
+    getBoardContents(data[i]["items"], id);
+  }
+}
+
+/**
+ * Gets the board container
+ * @param {number} id
+ * @returns html code
+ */
+function getBoardContainer(id) {
+  return /*html*/ ` 
+    &lt;div id="${id}" class="board-card-content">
+      &lt;div id="dropzone" class="board-card-dropzone">&lt;/div>
+    &lt;/div>`;
+}
+
+/**
+ * Gets the board contents
+ * @param {Object} contents
+ * @param {number} id
+ */
+function getBoardContents(contents, id) {
+  let content = document.getElementById(`${id}`);
+  contents.forEach(function (card) {
+    content.innerHTML += getBoardCard(card);
+    getCategory(card["category"], card["id"]);
+    getPriority(card["priority"], card["id"]);
+    getAssigned(card["assigned"], card["id"]);
+    getProgressBar(card["subtasks"], card["id"]);
+  });
+}
+
+/**
+ * Gets the board card
+ * @param {Object} card
+ * @returns html code
+ */
+function getBoardCard(card) {
+  return /*html*/ `
+  &lt;div id='${card["id"]}' class="board-card" draggable="true">
+    &lt;img id="board-category" class="board-category">
+    &lt;div class="board-title">${card["title"]}&lt;/div>
+    &lt;div class="board-description">${card["description"]}&lt;/div> 
+    &lt;div class="board-progress-bar-container">
+      &lt;progress id="progress-bar" value="0" max="100">&lt;/progress>
+      &lt;label for="progress-bar">&lt;/label>
+    &lt;/div>
+    &lt;div class="board-bottom-container">
+      &lt;div id="board-users" class="board-user-container">
+      &lt;/div>
+      &lt;img id='board-priority' alt="">
+    &lt;/div>
+    &lt;div  id="dropzone" class="kanban-dropzone">&lt;/div>
+  &lt;/div> `;
+}
+
+/**
+ * Get board category
+ * @param {string} category - board category
+ * @param {number} id - board id
+ */
+function getCategory(category, id) {
+  let content = document.getElementById(`${id}`);
+  let boardCategory = content.querySelector("#board-category");
+  boardCategory.src = icons["categoryIcons"][category] || "";
+}
+
+/**
+ * Get board priority
+ * @param {string} priority - board priority
+ * @param {number} id - board id
+ */
+function getPriority(priority, id) {
+  let content = document.getElementById(`${id}`);
+  let boardPriority = content.querySelector("#board-priority");
+  boardPriority.src = icons["priorityIcons"][priority] || "";
+}
+
+/**
+ * Get board assigned
+ * @param {Object} assigned - board assigned user
+ * @param {number} id - board id
+ */
+function getAssigned(assigned, id) {
+  let content = document.getElementById(`${id}`);
+  let boardUser = content.querySelector("#board-users");
+  assigned.forEach((user) => {
+    let name = Array.from(`${user["name"]}`)[0];
+    let lastName = Array.from(`${user["lastName"]}`)[0];
+    boardUser.innerHTML += /*html*/ `
+    &lt;div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}${lastName}&lt;/div>`;
+  });
+}
+
+/**
+ * Gets the progress bar
+ * @param {Object} subtasks
+ * @param {number} id
+ */
+function getProgressBar(subtasks, id) {
+  let content = document.getElementById(`${id}`);
+  let progressBar = content.querySelector("#progress-bar");
+  let progressBarLabel = content.querySelector('label[for="progress-bar"]');
+  let process = 0;
+  for (let i = 0; i &lt; subtasks.length; i++) {
+    if (subtasks[i]["checked"] == true) {
+      process++;
+    }
+  }
+  progressBarLabel.textContent = `${process}/${subtasks.length} Subtasks`;
+  progressBar.value = +(process / subtasks.length) * 100;
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#checkAcceptPrivacyPolicy">checkAcceptPrivacyPolicy</a></li><li><a href="global.html#checkSubtasks">checkSubtasks</a></li><li><a href="global.html#editCategory">editCategory</a></li><li><a href="global.html#editPriorityValue">editPriorityValue</a></li><li><a href="global.html#editSubTasksValue">editSubTasksValue</a></li><li><a href="global.html#generateRandomColor">generateRandomColor</a></li><li><a href="global.html#getAssigned">getAssigned</a></li><li><a href="global.html#getBoardCard">getBoardCard</a></li><li><a href="global.html#getBoardContainer">getBoardContainer</a></li><li><a href="global.html#getBoardContents">getBoardContents</a></li><li><a href="global.html#getBoardSection">getBoardSection</a></li><li><a href="global.html#getCategory">getCategory</a></li><li><a href="global.html#getEventListeners">getEventListeners</a></li><li><a href="global.html#getExampleData">getExampleData</a></li><li><a href="global.html#getFullSizeAssigned">getFullSizeAssigned</a></li><li><a href="global.html#getFullSizeBoard">getFullSizeBoard</a></li><li><a href="global.html#getFullSizeCategory">getFullSizeCategory</a></li><li><a href="global.html#getFullSizePriority">getFullSizePriority</a></li><li><a href="global.html#getFullSizeSubtask">getFullSizeSubtask</a></li><li><a href="global.html#getIcons">getIcons</a></li><li><a href="global.html#getItemById">getItemById</a></li><li><a href="global.html#getPriority">getPriority</a></li><li><a href="global.html#getProgressBar">getProgressBar</a></li><li><a href="global.html#getSubtaskListHTML">getSubtaskListHTML</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#onClickAddTaskBoard">onClickAddTaskBoard</a></li><li><a href="global.html#onClickCloseFullSize">onClickCloseFullSize</a></li><li><a href="global.html#onClickEditBoard">onClickEditBoard</a></li><li><a href="global.html#onClickEditSubtasks">onClickEditSubtasks</a></li><li><a href="global.html#onClickFullSizeBoard">onClickFullSizeBoard</a></li><li><a href="global.html#read">read</a></li><li><a href="global.html#renderBoards">renderBoards</a></li><li><a href="global.html#save">save</a></li><li><a href="global.html#saveEditData">saveEditData</a></li><li><a href="global.html#togglePasswordVisbility">togglePasswordVisbility</a></li><li><a href="global.html#updateChecked">updateChecked</a></li><li><a href="global.html#updateSubtaskCheck">updateSubtaskCheck</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun May 12 2024 12:00:49 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: login.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: login.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * This function is used to set a timeout and show the Login Container with changed CSS when the animation is finished.
+ * 
+ * @author: Robin
+ */
+function init() {
+    document.getElementById('logoContainerSlide').classList.remove('logoContainerSlide');
+    document.getElementById('logoContainerSlide').classList.add('logoContainerSlideLoaded');
+    setTimeout(function () {
+        document.getElementById('wholeLoginContainer').classList.remove('d-none');
+        document.getElementById('logoContainerSlideImg').style.height = '12vh';
+    }, 850);
+}
+
+/**
+ * This function is used to toggle the visibility of the password input field.
+ * 
+ * @author: Robin
+ */
+function togglePasswordVisbility() {
+    let passwordInput = document.getElementById('password');
+    let passwordImg = document.getElementById('logInFormImgPassword');
+    if (passwordInput.type === 'password' &amp;&amp; passwordInput.value.length >= 1) {
+        passwordInput.type = 'text';
+        passwordImg.src = 'assets/img/unlock.png';
+        passwordImg.style.cursor = 'pointer';
+    } else {
+        passwordInput.type = 'password';
+        passwordImg.src = 'assets/img/lock.svg';
+        passwordImg.style.cursor = 'auto';
+    }
+}
+
+
+async function checkUser() {
+    let email = document.getElementById('email');
+    let password = document.getElementById('password');
+    let actualUsers = await loadData('users');
+
+    for (let mailSearchIndex = 0; mailSearchIndex &lt; actualUsers.length; mailSearchIndex++) {
+        if (actualUsers[mailSearchIndex] === null) {
+            continue;
+        } else {
+            let mailToCheck = actualUsers[mailSearchIndex]['mail'];
+            if (JSON.stringify(mailToCheck) === JSON.stringify(email.value) &amp;&amp; JSON.stringify(actualUsers[mailSearchIndex]['password']) === JSON.stringify(password.value)) {
+                window.location.href = 'summary.html?msg=Login erfolgreich';
+            } else {
+                if (JSON.stringify(mailToCheck) !== JSON.stringify(email.value)) {
+                    let msgBox = document.getElementById('msgBox');
+                    msgBox.classList.remove('d-none');
+                    let msgBoxText = document.getElementById('msgBoxText');
+                    msgBoxText.innerHTML = 'Mail not registered. Please sign up first!';
+                    console.log('Mail not registered. Please sign up first!');
+                } else {
+                    let msgBox = document.getElementById('msgBox');
+                    msgBox.classList.remove('d-none');
+                    let msgBoxText = document.getElementById('msgBoxText');
+                    msgBoxText.innerHTML = 'Wrong password. Please try again!';
+                } await setTimeout(function () {
+                    msgBox.classList.add('d-none');
+                }, 1500);
+                console.log('Wrong password. Please try again!');
+            }
+        }
+    };
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#checkAcceptPrivacyPolicy">checkAcceptPrivacyPolicy</a></li><li><a href="global.html#checkSubtasks">checkSubtasks</a></li><li><a href="global.html#editCategory">editCategory</a></li><li><a href="global.html#editPriorityValue">editPriorityValue</a></li><li><a href="global.html#editSubTasksValue">editSubTasksValue</a></li><li><a href="global.html#generateRandomColor">generateRandomColor</a></li><li><a href="global.html#getAssigned">getAssigned</a></li><li><a href="global.html#getBoardCard">getBoardCard</a></li><li><a href="global.html#getBoardContainer">getBoardContainer</a></li><li><a href="global.html#getBoardContents">getBoardContents</a></li><li><a href="global.html#getBoardSection">getBoardSection</a></li><li><a href="global.html#getCategory">getCategory</a></li><li><a href="global.html#getEventListeners">getEventListeners</a></li><li><a href="global.html#getExampleData">getExampleData</a></li><li><a href="global.html#getFullSizeAssigned">getFullSizeAssigned</a></li><li><a href="global.html#getFullSizeBoard">getFullSizeBoard</a></li><li><a href="global.html#getFullSizeCategory">getFullSizeCategory</a></li><li><a href="global.html#getFullSizePriority">getFullSizePriority</a></li><li><a href="global.html#getFullSizeSubtask">getFullSizeSubtask</a></li><li><a href="global.html#getIcons">getIcons</a></li><li><a href="global.html#getItemById">getItemById</a></li><li><a href="global.html#getPriority">getPriority</a></li><li><a href="global.html#getProgressBar">getProgressBar</a></li><li><a href="global.html#getSubtaskListHTML">getSubtaskListHTML</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#onClickAddTaskBoard">onClickAddTaskBoard</a></li><li><a href="global.html#onClickCloseFullSize">onClickCloseFullSize</a></li><li><a href="global.html#onClickEditBoard">onClickEditBoard</a></li><li><a href="global.html#onClickEditSubtasks">onClickEditSubtasks</a></li><li><a href="global.html#onClickFullSizeBoard">onClickFullSizeBoard</a></li><li><a href="global.html#read">read</a></li><li><a href="global.html#renderBoards">renderBoards</a></li><li><a href="global.html#save">save</a></li><li><a href="global.html#saveEditData">saveEditData</a></li><li><a href="global.html#togglePasswordVisbility">togglePasswordVisbility</a></li><li><a href="global.html#updateChecked">updateChecked</a></li><li><a href="global.html#updateSubtaskCheck">updateSubtaskCheck</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun May 12 2024 12:00:49 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
