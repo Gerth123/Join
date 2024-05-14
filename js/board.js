@@ -170,6 +170,11 @@ function getProgressBar(subtasks, id) {
       process++;
     }
   }
-  progressBarLabel.textContent = `${process}/${subtasks.length} Subtasks`;
-  progressBar.value = +(process / subtasks.length) * 100;
+  if (subtasks.length == 0) {
+    let container = progressBar.closest(".board-progress-bar-container");
+    container.classList.add("d-none");
+  } else {
+    progressBarLabel.textContent = `${process}/${subtasks.length} Subtasks`;
+    progressBar.value = +(process / subtasks.length) * 100;
+  }
 }

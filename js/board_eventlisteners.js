@@ -88,22 +88,28 @@ function updateSubtaskCheck(subtasks) {
  */
 function onClickAddTaskBoard(fullsize, board, editBoard, addBoard) {
   const addTaskBtn = document.getElementById("board-header-add-btn");
-  const addTaskBtnSmall = document.querySelectorAll(".board-add-btn");
   addTaskBtn.addEventListener("click", () => {
     fullsize.classList.remove("d-none");
     board.classList.add("d-none");
     editBoard.classList.add("d-none");
     addBoard.classList.remove("d-none");
+    contentId = 1;
+    onClickAddSubTasks();
   });
+}
 
-  addTaskBtnSmall.forEach((task) => {
-    task.addEventListener("click", () => {
-      fullsize.classList.remove("d-none");
-      board.classList.add("d-none");
-      editBoard.classList.add("d-none");
-      addBoard.classList.remove("d-none");
-    });
-  });
+function addTaskBtnSmall(contentIdAdd) {
+  const fullsize = document.getElementById("full-size-container");
+  const board = document.getElementById("board");
+  const editBoard = document.getElementById("edit-board");
+  const addBoard = document.getElementById("add-board");
+  console.log(contentIdAdd);
+  contentId = contentIdAdd;
+  fullsize.classList.remove("d-none");
+  board.classList.add("d-none");
+  editBoard.classList.add("d-none");
+  addBoard.classList.remove("d-none");
+  onClickAddSubTasks();
 }
 
 /**
@@ -142,10 +148,26 @@ function onClickEditSubtasks() {
   });
 }
 
+function onClickAddSubTasks() {
+  const subtaskAddBtn = document.getElementById("subtasks-add-addCard");
+  const subtaskContainer = document.getElementById("subtasks-btn-container-addCard");
+  const subtaskDelBtn = document.getElementById("subtasks-del-addCard");
+  const subtaskInput = document.getElementById("subtasks-input-addCard");
+
+  subtaskAddBtn.addEventListener("click", () => {
+    subtaskAddBtn.classList.add("d-none");
+    subtaskContainer.classList.remove("d-none");
+  });
+
+  subtaskDelBtn.addEventListener("click", () => {
+    subtaskInput.value = "";
+  });
+}
+
 /**
  * Checks the subtasks
  */
-function checkSubtasks() {
+function checkEditSubtasks() {
   const list = document.getElementById("subtasks-list");
   const subtaskInput = document.getElementById("subtasks-input");
   const subtaskAddBtn = document.getElementById("subtasks-add");
@@ -208,6 +230,34 @@ function saveEditData() {
 }
 
 /**
+ *
+ */
+function saveAddData() {
+  const title = document.getElementById("title-addCard");
+  const description = document.getElementById("description-addCard");
+  const date = document.getElementById("date-addCard");
+  console.log(date);
+  let data = read();
+  const content = data.find((content) => content.id == contentId);
+  const newId = Math.floor(Math.random() * 100000);
+  const obj = {
+    id: newId,
+    category: addCategory(),
+    title: title.value,
+    description: description.value,
+    assigned: [],
+    date: date.value,
+    priority: addPriorityValue(),
+    subtasks: [],
+  };
+  id = newId;
+
+  console.log(id, contentId);
+  content.items.push(obj);
+  save(data);
+}
+
+/**
  * Returns category in edit card
  * @param {string} category
  * @returns string
@@ -219,6 +269,11 @@ function editCategory(category) {
   } else {
     return newCategory.value;
   }
+}
+
+function addCategory() {
+  let newCategory = document.getElementById("category-addCard");
+  return newCategory.value;
 }
 
 /**
@@ -234,6 +289,19 @@ function editPriorityValue() {
   } else if (priority2.checked) {
     return "medium";
   } else if (priority1.checked) {
+    return "low";
+  }
+}
+
+function addPriorityValue() {
+  let priority6 = document.getElementById("radio-btn-6");
+  let priority5 = document.getElementById("radio-btn-5");
+  let priority4 = document.getElementById("radio-btn-4");
+  if (priority6.checked) {
+    return "urgent";
+  } else if (priority5.checked) {
+    return "medium";
+  } else if (priority4.checked) {
     return "low";
   }
 }
