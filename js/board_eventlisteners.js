@@ -148,22 +148,6 @@ function onClickEditSubtasks() {
   });
 }
 
-function onClickAddSubTasks() {
-  const subtaskAddBtn = document.getElementById("subtasks-add-addCard");
-  const subtaskContainer = document.getElementById("subtasks-btn-container-addCard");
-  const subtaskDelBtn = document.getElementById("subtasks-del-addCard");
-  const subtaskInput = document.getElementById("subtasks-input-addCard");
-
-  subtaskAddBtn.addEventListener("click", () => {
-    subtaskAddBtn.classList.add("d-none");
-    subtaskContainer.classList.remove("d-none");
-  });
-
-  subtaskDelBtn.addEventListener("click", () => {
-    subtaskInput.value = "";
-  });
-}
-
 /**
  * Checks the subtasks
  */
@@ -208,9 +192,9 @@ function getSubtaskListHTML(subtaskInputValue) {
  */
 function saveEditData() {
   let data = read();
-  let title = document.getElementById("title");
-  let description = document.getElementById("description");
-  let date = document.getElementById("date");
+  let title = document.getElementById("title-editCard");
+  let description = document.getElementById("description-editCard");
+  let date = document.getElementById("date-editCard");
 
   for (const listItem of data) {
     if (listItem.id == contentId) {
@@ -230,50 +214,17 @@ function saveEditData() {
 }
 
 /**
- *
- */
-function saveAddData() {
-  const title = document.getElementById("title-addCard");
-  const description = document.getElementById("description-addCard");
-  const date = document.getElementById("date-addCard");
-  console.log(date);
-  let data = read();
-  const content = data.find((content) => content.id == contentId);
-  const newId = Math.floor(Math.random() * 100000);
-  const obj = {
-    id: newId,
-    category: addCategory(),
-    title: title.value,
-    description: description.value,
-    assigned: [],
-    date: date.value,
-    priority: addPriorityValue(),
-    subtasks: [],
-  };
-  id = newId;
-
-  console.log(id, contentId);
-  content.items.push(obj);
-  save(data);
-}
-
-/**
  * Returns category in edit card
  * @param {string} category
  * @returns string
  */
 function editCategory(category) {
-  let newCategory = document.getElementById("category");
+  let newCategory = document.getElementById("category-editCard");
   if (newCategory.value == "") {
     return category;
   } else {
     return newCategory.value;
   }
-}
-
-function addCategory() {
-  let newCategory = document.getElementById("category-addCard");
-  return newCategory.value;
 }
 
 /**
@@ -289,19 +240,6 @@ function editPriorityValue() {
   } else if (priority2.checked) {
     return "medium";
   } else if (priority1.checked) {
-    return "low";
-  }
-}
-
-function addPriorityValue() {
-  let priority6 = document.getElementById("radio-btn-6");
-  let priority5 = document.getElementById("radio-btn-5");
-  let priority4 = document.getElementById("radio-btn-4");
-  if (priority6.checked) {
-    return "urgent";
-  } else if (priority5.checked) {
-    return "medium";
-  } else if (priority4.checked) {
     return "low";
   }
 }
@@ -340,4 +278,66 @@ function updateChecked(temp, Oldtask) {
     return matchingTask ? { ...item, checked: matchingTask.checked } : item;
   });
   return updatedTemp;
+}
+
+function onClickAddSubTasks() {
+  const subtaskAddBtn = document.getElementById("subtasks-add-addCard");
+  const subtaskContainer = document.getElementById("subtasks-btn-container-addCard");
+  const subtaskDelBtn = document.getElementById("subtasks-del-addCard");
+  const subtaskInput = document.getElementById("subtasks-input-addCard");
+
+  subtaskAddBtn.addEventListener("click", () => {
+    subtaskAddBtn.classList.add("d-none");
+    subtaskContainer.classList.remove("d-none");
+  });
+
+  subtaskDelBtn.addEventListener("click", () => {
+    subtaskInput.value = "";
+  });
+}
+
+/**
+ *
+ */
+function saveAddData() {
+  const title = document.getElementById("title-addCard");
+  const description = document.getElementById("description-addCard");
+  const date = document.getElementById("date-addCard");
+  console.log(date);
+  let data = read();
+  const content = data.find((content) => content.id == contentId);
+  const newId = Math.floor(Math.random() * 100000);
+  const obj = {
+    id: newId,
+    category: addCategory(),
+    title: title.value,
+    description: description.value,
+    assigned: [],
+    date: date.value,
+    priority: addPriorityValue(),
+    subtasks: [],
+  };
+  id = newId;
+
+  console.log(id, contentId);
+  content.items.push(obj);
+  save(data);
+}
+
+function addCategory() {
+  let newCategory = document.getElementById("category-addCard");
+  return newCategory.value;
+}
+
+function addPriorityValue() {
+  let priority6 = document.getElementById("radio-btn-6");
+  let priority5 = document.getElementById("radio-btn-5");
+  let priority4 = document.getElementById("radio-btn-4");
+  if (priority6.checked) {
+    return "urgent";
+  } else if (priority5.checked) {
+    return "medium";
+  } else if (priority4.checked) {
+    return "low";
+  }
 }
