@@ -1,9 +1,9 @@
 function getEditBoard(id, contentId) {
   console.log(id, contentId);
   let itemData = getItemById(id, contentId);
-  let title = document.querySelector("input[id=title]");
+  let title = document.querySelector("input[id=title-editCard]");
   title.value = `${itemData["title"]}`;
-  let description = document.querySelector("input[id=description]");
+  let description = document.querySelector("input[id=description-editCard]");
   description.value = `${itemData["description"]}`;
   let date = document.querySelector("input[id=date]");
   date.value = `${itemData["date"]}`;
