@@ -141,16 +141,11 @@ let testTasks = [
     },
     {
         'id': 3,
-        'items': [
-
-        ]
+        'items': '',
     },
     {
         'id': 4,
-        'items': [
-
-        ]
-
+        'items': '',
     },
 
 ]

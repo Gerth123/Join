@@ -31,36 +31,37 @@ function togglePasswordVisbility() {
     }
 }
 
-
 async function checkUser() {
-    let email = document.getElementById('email');
-    let password = document.getElementById('password');
+    let email = document.getElementById('email').value;
+    let password = document.getElementById('password').value;
     let actualUsers = await loadData('users');
+    let found = false;
 
     for (let mailSearchIndex = 0; mailSearchIndex < actualUsers.length; mailSearchIndex++) {
         if (actualUsers[mailSearchIndex] === null) {
             continue;
         } else {
             let mailToCheck = actualUsers[mailSearchIndex]['mail'];
-            if (JSON.stringify(mailToCheck) === JSON.stringify(email.value) && JSON.stringify(actualUsers[mailSearchIndex]['password']) === JSON.stringify(password.value)) {
-                window.location.href = 'summary.html?msg=Login erfolgreich';
-            } else {
-                if (JSON.stringify(mailToCheck) !== JSON.stringify(email.value)) {
-                    let msgBox = document.getElementById('msgBox');
-                    msgBox.classList.remove('d-none');
-                    let msgBoxText = document.getElementById('msgBoxText');
-                    msgBoxText.innerHTML = 'Mail not registered. Please sign up first!';
-                    console.log('Mail not registered. Please sign up first!');
-                } else {
-                    let msgBox = document.getElementById('msgBox');
-                    msgBox.classList.remove('d-none');
-                    let msgBoxText = document.getElementById('msgBoxText');
-                    msgBoxText.innerHTML = 'Wrong password. Please try again!';
-                } await setTimeout(function () {
-                    msgBox.classList.add('d-none');
-                }, 1500);
-                console.log('Wrong password. Please try again!');
+            if (JSON.stringify(mailToCheck) === JSON.stringify(email) && JSON.stringify(actualUsers[mailSearchIndex]['password']) === JSON.stringify(password)) {
+                actualUsersNumber = mailSearchIndex;
+                window.location.href = `summary.html?msg=Login erfolgreich, Gratuliere ${actualUsers[mailSearchIndex]['name']}&actualUsersNumber=${mailSearchIndex}`;
+                found = true;
+                break;
             }
         }
-    };
+    }
+
+    if (!found) {
+        let msgBox = document.getElementById('msgBox');
+        msgBox.classList.remove('d-none');
+        let msgBoxText = document.getElementById('msgBoxText');
+        if (actualUsers.some(user => JSON.stringify(user['mail']) === JSON.stringify(email))) {
+            msgBoxText.innerHTML = 'Wrong password. Please try again!';
+        } else {
+            msgBoxText.innerHTML = 'Mail not registered. Please sign up first!';
+        }
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        msgBox.classList.add('d-none');
+    }
 }
+
