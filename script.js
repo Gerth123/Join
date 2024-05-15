@@ -1,5 +1,6 @@
 let baseUrl = 'https://join-ca44d-default-rtdb.europe-west1.firebasedatabase.app/';
 
+let actualUsersNumber = '';
 
 
 async function loadData(path='') {
