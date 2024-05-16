@@ -328,6 +328,11 @@ progress[value]::-moz-progress-bar {
   height: 100px;
 }
 
+.full-size-subtask-li {
+  display: flex;
+  align-items: center;
+}
+
 .full-size-footer {
   display: flex;
   justify-content: flex-end;
