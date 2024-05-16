@@ -33,9 +33,40 @@ async function getEditAssigned() {
   /**todo */
   let response = await fetch("/assets/data/join-ca44d-default-rtdb-export.json");
   let dataString = await response.json();
+  let contactList = document.getElementById("assigned-list-items");
   let contacts = dataString["users"][0]["contacts"];
-  console.log(contacts);
-  contacts.forEach((contact) => {});
+  console.log(contactList);
+  contactList.innerHTML = "";
+  contacts.forEach((contact) => {
+    contactList.innerHTML += /*html*/ `
+      <li class="assigned-item">
+        <span class="item-text">${contact["name"]}</span>
+        <div class="check-img"></div>
+      </li>
+    `;
+  });
+
+  const selectBtn = document.querySelector(".select-btn");
+  const assignedItems = document.querySelectorAll(".assigned-item");
+
+  selectBtn.addEventListener("click", () => {
+    selectBtn.classList.toggle("open");
+  });
+
+  assignedItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      item.classList.toggle("checked");
+
+      let checked = document.querySelectorAll(".checked"),
+        btnText = document.querySelector(".btn-text");
+
+      if (checked && checked.length > 0) {
+        btnText.innerText = `${checked.length} Selected`;
+      } else {
+        btnText.innerText = "Select contacts to assign";
+      }
+    });
+  });
 }
 
 function getEditSubtasks(subtasks) {

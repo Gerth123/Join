@@ -208,6 +208,7 @@ progress[value]::-moz-progress-bar {
   border: 2px solid #fff;
   color: #fff;
   font-size: 12px;
+  margin-right: -8px;
 }
 
 .board-bottom-container {

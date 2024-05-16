@@ -39,11 +39,13 @@
 .assigned-list-items {
   position: relative;
   height: 200px;
-
+  margin-block-start: 0;
+  padding-inline-start: 0;
   background-color: #fff;
   display: none;
   overflow-y: scroll;
 }
+
 .select-btn.open ~ .assigned-list-items {
   display: block;
 }

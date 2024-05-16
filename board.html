@@ -166,7 +166,7 @@
             </div>
             <!-- <label class="full-size-label" for="assigned">Assigned to</label> -->
             <!-- <input class="full-size-input" id="assigned" type="text" placeholder="Assigned to" /> -->
-            <div id="assigned" class="multipleSelection">
+            <!-- <div id="assigned" class="multipleSelection">
               <div class="selectBox" onclick="showCheckboxes()">
                 <select>
                   <option>Select contacts to assign</option>
@@ -186,38 +186,13 @@
                 <label for="fourth"> checkBox4 </label>
                 <input type="checkbox" id="fourth" />
               </div>
-            </div>
+            </div> -->
             <div class="assigned-editCard">
               <div class="select-btn">
                 <span class="btn-text">Select contacts to assign</span>
                 <div class="arrow-down"></div>
               </div>
-              <ul class="assigned-list-items">
-                <li class="assigned-item">
-                  <span class="item-text">HTML & CSS</span>
-                  <div class="check-img"></div>
-                </li>
-                <li class="assigned-item">
-                  <span class="item-text">Bootstrap</span>
-                  <div class="check-img"></div>
-                </li>
-                <li class="assigned-item">
-                  <span class="item-text">JavaScript</span>
-                  <div class="check-img"></div>
-                </li>
-                <li class="assigned-item">
-                  <span class="item-text">Node.Js</span>
-                  <div class="check-img"></div>
-                </li>
-                <li class="assigned-item">
-                  <span class="item-text">React JS</span>
-                  <div class="check-img"></div>
-                </li>
-                <li class="assigned-item">
-                  <span class="item-text">Mango DB</span>
-                  <div class="check-img"></div>
-                </li>
-              </ul>
+              <ul id="assigned-list-items" class="assigned-list-items"></ul>
             </div>
             <label class="full-size-label" for="category-editCard">Category</label>
             <select name="" id="category-editCard">
