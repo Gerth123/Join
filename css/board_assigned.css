@@ -1,0 +1,91 @@
+.assigned-editCard {
+  position: relative;
+  max-width: 440px;
+  width: 100%;
+  margin: 80px auto 30px;
+}
+.select-btn {
+  display: flex;
+  height: 48px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-text {
+  font-size: 17px;
+  font-weight: 400;
+  color: #333;
+}
+
+.arrow-down {
+  width: 24px;
+  height: 24px;
+  background-image: url("/assets/icons/board/assigned/arrow_drop_down.svg");
+  background-size: cover;
+}
+
+.select-btn.open .arrow-down {
+  width: 24px;
+  height: 24px;
+  background-image: url("/assets/icons/board/assigned/arrow_drop_up.svg");
+  background-size: cover;
+}
+
+.assigned-list-items {
+  position: relative;
+  height: 200px;
+
+  background-color: #fff;
+  display: none;
+  overflow-y: scroll;
+}
+.select-btn.open ~ .assigned-list-items {
+  display: block;
+}
+
+.assigned-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+  height: 50px;
+  cursor: pointer;
+  transition: 0.3s;
+  padding: 0 15px;
+  border-radius: 8px;
+}
+.assigned-item:hover {
+  background-color: #e7edfe;
+}
+.item-text {
+  font-size: 16px;
+  font-weight: 400;
+  color: #333;
+}
+
+.check-img {
+  width: 24px;
+  height: 24px;
+  background-image: url("/assets/icons/board/assigned/checkBtn.svg");
+  background-size: cover;
+}
+
+.assigned-item.checked .check-img {
+  width: 24px;
+  height: 24px;
+  background-image: url("/assets/icons/board/assigned/checkedBtn.svg");
+  background-size: cover;
+}
+
+.assigned-item.checked {
+  background-color: #2a3647;
+}
+
+.assigned-item.checked .item-text {
+  color: #fff;
+}

@@ -1,15 +1,15 @@
-function getEditBoard(id, contentId) {
+async function getEditBoard(id, contentId) {
   console.log(id, contentId);
   let itemData = getItemById(id, contentId);
   let title = document.querySelector("input[id=title-editCard]");
   title.value = `${itemData["title"]}`;
   let description = document.querySelector("input[id=description-editCard]");
   description.value = `${itemData["description"]}`;
-  let date = document.querySelector("input[id=date]");
+  let date = document.querySelector("input[id=date-editCard]");
   date.value = `${itemData["date"]}`;
   getEditPriority(itemData["priority"]);
   getEditSubtasks(itemData["subtasks"]);
-
+  await getEditAssigned();
   getSubtasksEventListeners();
   getEditDate(itemData["date"]);
 }
@@ -29,8 +29,13 @@ function getEditPriority(priority) {
   }
 }
 
-function getEditAssigned() {
+async function getEditAssigned() {
   /**todo */
+  let response = await fetch("/assets/data/join-ca44d-default-rtdb-export.json");
+  let dataString = await response.json();
+  let contacts = dataString["users"][0]["contacts"];
+  console.log(contacts);
+  contacts.forEach((contact) => {});
 }
 
 function getEditSubtasks(subtasks) {
@@ -97,7 +102,7 @@ function getSubtasksEventListeners() {
 }
 
 function getEditDate(date) {
-  let dateData = document.getElementById("date");
+  let dateData = document.getElementById("date-editCard");
   dateData.min = new Date().toISOString().split("T")[0];
   dateData.value = date;
   console.log("this is date", dateData.value);

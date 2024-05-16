@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/board.css" />
     <link rel="stylesheet" href="css/board_priority.css" />
     <link rel="stylesheet" href="css/board_edit.css" />
+    <link rel="stylesheet" href="css/board_assigned.css" />
     <link rel="icon" href="assets/img/logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="fonts/PTSans-Regular.ttf" />
     <link rel="stylesheet" href="fonts/PTSans-Bold.ttf" />
@@ -60,63 +61,7 @@
               </div>
             </div>
           </section>
-          <section id="board-card-section" class="board-card-section">
-            <!-- <div class="board-card-content">
-              <div id="board-card" class="board-card">
-                <div class="board-category">User Story</div>
-                <div class="board-title">Contactform & Print</div>
-                <div class="board-description">Build start page with recipe recommenation I would like to change this</div>
-                <div class="board-progress-bar-container">
-                  <progress id="file" value="50" max="100">32%</progress>
-                  <label for="file">1/2 Subtasks</label>
-                </div>
-                <div class="board-bottom-container">
-                  <div class="board-user-container">
-                    <div class="board-user">HC</div>
-                    <div class="board-user">RB</div>
-                  </div>
-
-                  <img src="/assets/icons/board/priority/priority_medium.svg" alt="" />
-                </div>
-              </div>
-            </div>
-            <div class="board-card-content">
-              <div class="board-card">
-                <div class="board-category">User Story</div>
-                <div class="board-title">Contactform & Print</div>
-                <div class="board-description">Build start page with recipe recommenation I would like to change this</div>
-
-                <div class="board-bottom-container">
-                  <div class="board-user-container">
-                    <div class="board-user">HC</div>
-                    <div class="board-user">RB</div>
-                  </div>
-
-                  <img src="/assets/icons/board/priority/priority_medium.svg" alt="" />
-                </div>
-              </div>
-              <div class="board-card">
-                <div class="board-category">User Story</div>
-                <div class="board-title">Contactform & Print</div>
-                <div class="board-description">Build start page with recipe recommenation I would like to change this</div>
-
-                <div class="board-bottom-container">
-                  <div class="board-user-container">
-                    <div class="board-user">HC</div>
-                    <div class="board-user">RB</div>
-                  </div>
-
-                  <img src="/assets/icons/board/priority/priority_medium.svg" alt="" />
-                </div>
-              </div>
-            </div>
-            <div class="board-card-content">
-              <div class="no-task">No tasks To do</div>
-            </div>
-            <div class="board-card-content">
-              <div class="no-task">No tasks To do</div>
-            </div> -->
-          </section>
+          <section id="board-card-section" class="board-card-section"></section>
         </section>
         <footer class="d-none"></footer>
       </section>
@@ -224,20 +169,55 @@
             <div id="assigned" class="multipleSelection">
               <div class="selectBox" onclick="showCheckboxes()">
                 <select>
-                  <option>Select options</option>
+                  <option>Select contacts to assign</option>
                 </select>
                 <div class="overSelect"></div>
               </div>
               <div id="checkBoxes">
-                <input type="checkbox" id="first" />
-                <label for="first"> checkBox1 </label>
-                <input type="checkbox" id="second" />
+                <label for="first">
+                  checkBox1
+                  <input type="checkbox" id="first" />
+                </label>
+
                 <label for="second"> checkBox2 </label>
-                <input type="checkbox" id="third" />
+                <input type="checkbox" id="second" />
                 <label for="third"> checkBox3 </label>
-                <input type="checkbox" id="fourth" />
+                <input type="checkbox" id="third" />
                 <label for="fourth"> checkBox4 </label>
+                <input type="checkbox" id="fourth" />
               </div>
+            </div>
+            <div class="assigned-editCard">
+              <div class="select-btn">
+                <span class="btn-text">Select contacts to assign</span>
+                <div class="arrow-down"></div>
+              </div>
+              <ul class="assigned-list-items">
+                <li class="assigned-item">
+                  <span class="item-text">HTML & CSS</span>
+                  <div class="check-img"></div>
+                </li>
+                <li class="assigned-item">
+                  <span class="item-text">Bootstrap</span>
+                  <div class="check-img"></div>
+                </li>
+                <li class="assigned-item">
+                  <span class="item-text">JavaScript</span>
+                  <div class="check-img"></div>
+                </li>
+                <li class="assigned-item">
+                  <span class="item-text">Node.Js</span>
+                  <div class="check-img"></div>
+                </li>
+                <li class="assigned-item">
+                  <span class="item-text">React JS</span>
+                  <div class="check-img"></div>
+                </li>
+                <li class="assigned-item">
+                  <span class="item-text">Mango DB</span>
+                  <div class="check-img"></div>
+                </li>
+              </ul>
             </div>
             <label class="full-size-label" for="category-editCard">Category</label>
             <select name="" id="category-editCard">
@@ -338,6 +318,7 @@
     <script src="/js/board_eventlisteners.js"></script>
     <script src="/js/board_API.js"></script>
     <script src="/js/board_fullsize.js"></script>
+    <script src="/js/board_assigned.js"></script>
     <script src="/js/board_edit.js"></script>
     <script src="/js/board_add.js"></script>
     <script src="/js/board.js"></script>
