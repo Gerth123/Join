@@ -211,6 +211,10 @@ progress[value]::-moz-progress-bar {
   margin-right: -8px;
 }
 
+.board-username {
+  margin-left: 24px;
+}
+
 .board-bottom-container {
   display: flex;
   position: relative;
@@ -290,10 +294,22 @@ progress[value]::-moz-progress-bar {
 
 .full-size-date {
   margin-top: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.full-size-due-date {
+  margin-left: 25px;
 }
 
 .full-size-priority {
   margin-top: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.full-size-priority-icon {
+  margin-left: 22px;
 }
 
 .full-size-assign {

@@ -40,7 +40,10 @@ async function getEditAssigned() {
   contacts.forEach((contact) => {
     contactList.innerHTML += /*html*/ `
       <li class="assigned-item">
-        <span class="item-text">${contact["name"]}</span>
+        <div class="assigned-user">
+          <div id="board-user" class="board-user" style="background-color:${contact["color"]}">HC</div>
+          <span class="item-text">${contact["name"]}</span>
+        </div>
         <div class="check-img"></div>
       </li>
     `;
@@ -60,6 +63,7 @@ async function getEditAssigned() {
       let checked = document.querySelectorAll(".checked"),
         btnText = document.querySelector(".btn-text");
 
+      console.log(checked);
       if (checked && checked.length > 0) {
         btnText.innerText = `${checked.length} Selected`;
       } else {

@@ -68,6 +68,7 @@
   font-size: 16px;
   font-weight: 400;
   color: #333;
+  margin-left: 16px;
 }
 
 .check-img {
@@ -90,4 +91,9 @@
 
 .assigned-item.checked .item-text {
   color: #fff;
+}
+
+.assigned-user {
+  display: flex;
+  align-items: center;
 }
