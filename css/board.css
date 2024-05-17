@@ -81,6 +81,7 @@ label {
 
 .board-header-right {
   display: flex;
+  align-items: center;
 }
 
 .board-header-nav {
@@ -100,18 +101,27 @@ label {
   margin-bottom: 8px;
 }
 
-.board-header-add-btn {
-  width: 128px;
-  height: 32px;
+.add-btn-container {
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding: 8px 16px 8px 16px;
-  color: #fff;
-  font-size: 21px;
-  font-weight: bold;
-  background-color: #2a3647;
-  border-radius: 10px;
+  width: 170px;
+  height: 70px;
+}
+
+.board-header-add-btn {
+  width: 145px;
+  height: 52px;
+  background-image: url("/assets/icons/board/fullsize/add_task.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.board-header-add-btn:hover {
+  width: 170px;
+  height: 58px;
+  background-image: url("/assets/icons/board/fullsize/add_task_hover.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .board-header-add-btn-img {
@@ -455,7 +465,28 @@ progress[value]::-moz-progress-bar {
   background: #ffffff;
   color: #000000;
   font-size: 21px;
+  border: 1px solid #2a3647;
+}
+
+.cancel-button:hover {
   border: 2px solid #29abe2;
+  color: #29abe2;
+}
+
+.cancel-button-img {
+  width: 25px;
+  height: 25px;
+  background-image: url("/assets/icons/board/fullsize/cancel_small.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.cancel-button:hover .cancel-button-img {
+  width: 25px;
+  height: 25px;
+  background-image: url("/assets/icons/board/fullsize/cancel_small_hover.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .ok-button:hover {
