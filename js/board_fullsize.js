@@ -44,18 +44,20 @@ function getFullSizeCategory(category) {
 function getFullSizeAssigned(assigned) {
   const fullSizeAssigned = document.querySelector("#full-size-assigned-users");
   fullSizeAssigned.innerHTML = "";
-  assigned.forEach((user) => {
-    let name = Array.from(`${user["name"]}`)[0];
-    let lastName = Array.from(`${user["lastName"]}`)[0];
-    fullSizeAssigned.innerHTML += /*html*/ `
-    <li class="full-size-assign-user">
-    <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}${lastName}</div>
-    <div class="board-username">
-      ${user["name"]} ${user["lastName"]} 
-    </div>
-   
-    </li>`;
-  });
+  if (assigned != "") {
+    assigned.forEach((user) => {
+      let name = Array.from(`${user["name"]}`)[0];
+      let lastName = Array.from(`${user["lastName"]}`)[0];
+      fullSizeAssigned.innerHTML += /*html*/ `
+      <li class="full-size-assign-user">
+      <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}${lastName}</div>
+      <div class="board-username">
+        ${user["name"]} ${user["lastName"]} 
+      </div>
+     
+      </li>`;
+    });
+  }
 }
 
 /**

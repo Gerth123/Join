@@ -162,12 +162,14 @@ function getPriority(priority, id) {
 function getAssigned(assigned, id) {
   let content = document.getElementById(`${id}`);
   let boardUser = content.querySelector("#board-users");
-  assigned.forEach((user) => {
-    let name = Array.from(`${user["name"]}`)[0];
-    let lastName = Array.from(`${user["lastName"]}`)[0];
-    boardUser.innerHTML += /*html*/ `
-    <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}${lastName}</div>`;
-  });
+  if (assigned != "") {
+    assigned.forEach((user) => {
+      let name = Array.from(`${user["name"]}`)[0];
+      let lastName = Array.from(`${user["lastName"]}`)[0];
+      boardUser.innerHTML += /*html*/ `
+      <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}${lastName}</div>`;
+    });
+  }
 }
 
 /**

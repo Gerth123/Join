@@ -254,7 +254,10 @@ async function saveEditData() {
           item.priority = editPriorityValue();
           item.subtasks = editSubTasksValue(item.subtasks);
         }
-        save(data);
+        // console.log("saving data", data);
+        // save(data);
+        // console.log(`users/${actualUsersNumber}/tasks/`);
+        putData(`users/${actualUsersNumber}/tasks/`, data);
       }
     }
   }
@@ -366,16 +369,18 @@ async function saveAddData() {
     category: addCategory(),
     title: title.value,
     description: description.value,
-    assigned: [],
+    assigned: "",
     date: date.value,
     priority: addPriorityValue(),
-    subtasks: [],
+    subtasks: "",
   };
   id = newId;
 
-  console.log(id, contentId);
+  // console.log(id, contentId);
   content.items.push(obj);
-  save(data);
+  // save(data);
+  // console.log("saving", data);
+  putData(`users/${actualUsersNumber}/tasks/`, data);
 }
 
 function addCategory() {
