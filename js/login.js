@@ -10,10 +10,11 @@ function init() {
         document.getElementById('wholeLoginContainer').classList.remove('d-none');
         document.getElementById('logoContainerSlideImg').style.height = '12vh';
     }, 850);
+    loadUserData();
 }
 
 /**
- * This function is used to toggle the visibility of the password input field.
+ * This function is used to toggle the visibility of the password input field, if the mouse moves over the lock image.
  * 
  * @author: Robin
  */
@@ -31,12 +32,16 @@ function togglePasswordVisbility() {
     }
 }
 
+/**
+ * This function is used to check if the user exists and if the password is correct. If both conditions are correct, the user is logged in.
+ * 
+ * @author: Robin
+ */
 async function checkUser() {
     let email = document.getElementById('email').value;
     let password = document.getElementById('password').value;
     let actualUsers = await loadData('users');
     let found = false;
-
     for (let mailSearchIndex = 0; mailSearchIndex < actualUsers.length; mailSearchIndex++) {
         if (actualUsers[mailSearchIndex] === null) {
             continue;
@@ -50,7 +55,18 @@ async function checkUser() {
             }
         }
     }
+    userNotFound(found);
+    saveUserData(email, password);
+}
 
+/**
+ * This function is used to check if the user or the password is incorrect. If either one is incorrect, an error message is shown to explain, which one is wrong.
+ * 
+ * @param {boolean} found - A boolean value that is used to determine if the user was found.
+ * 
+ * @author: Robin
+ */
+async function userNotFound(found) {
     if (!found) {
         let msgBox = document.getElementById('msgBox');
         msgBox.classList.remove('d-none');
@@ -65,3 +81,40 @@ async function checkUser() {
     }
 }
 
+/**
+ * This function is used to save the user data in local storage, if the checkbox is checked.
+ * 
+ * @param {string} email - The email of the user.
+ * @param {string} password - The password of the user.
+ * 
+ * @author: Robin
+ */
+function saveUserData(email, password) {
+    let rememberMe = document.getElementById('checkbox').checked;
+    if (rememberMe) {
+        localStorage.setItem('email', email);
+        localStorage.setItem('password', password);
+    } else {
+        localStorage.removeItem('email');
+        localStorage.removeItem('password');
+    }
+}
+
+/**This function is used to load the user data from local storage, if the checkbox is checked and 
+ * clear the Input Fields if the checkbox is not checked if the checkbox is not checked.
+ * 
+ * @author: Robin
+ */
+function loadUserData() {
+    let storedEmail = localStorage.getItem('email');
+    let storedPassword = localStorage.getItem('password');
+    if (storedEmail && storedPassword) {
+        document.getElementById('email').value = storedEmail;
+        document.getElementById('password').value = storedPassword;
+        document.getElementById('checkbox').checked = true;
+    } else {
+        document.getElementById('email').value = '';
+        document.getElementById('password').value = '';
+        document.getElementById('checkbox').checked = false;
+    }
+}
