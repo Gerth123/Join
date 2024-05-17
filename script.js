@@ -51,3 +51,16 @@ function openNewTab(newUrl) {
 function goBackToLastTab() {
     window.close();
 }
+
+/**
+ * This function is used to change the HTML page and send the actual number of users to the new page.
+ * 
+ * @param {string} page - The new HTML page.
+ * 
+ * @author: Robin
+ */
+function changeHtmlPage(page) {
+    let urlParams = new URLSearchParams(window.location.search);
+    let actualUsersNumber = urlParams.get('actualUsersNumber');
+    window.location.href = page + `?msg=welcome&actualUsersNumber=${actualUsersNumber}`;
+}
