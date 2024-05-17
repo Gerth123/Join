@@ -49,7 +49,7 @@ async function checkUser() {
             let mailToCheck = actualUsers[mailSearchIndex]['mail'];
             if (JSON.stringify(mailToCheck) === JSON.stringify(email) && JSON.stringify(actualUsers[mailSearchIndex]['password']) === JSON.stringify(password)) {
                 actualUsersNumber = mailSearchIndex;
-                window.location.href = `summary.html?msg=Login erfolgreich, Gratuliere ${actualUsers[mailSearchIndex]['name']}&actualUsersNumber=${mailSearchIndex}`;
+                window.location.href = `summary.html?msg=Login erfolgreich&actualUsersNumber=${JSON.stringify(mailSearchIndex)}`; // `summary.html?msg=Login erfolgreich, actualUsersNumber=${mailSearchIndex}`;
                 found = true;
                 break;
             }
