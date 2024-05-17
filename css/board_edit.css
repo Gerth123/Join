@@ -30,6 +30,11 @@
   height: 24px;
 }
 
+p {
+  margin-block-start: 0;
+  margin-block-end: 1em;
+}
+
 .subtasks-li-container {
   display: flex;
   justify-content: space-between;
@@ -110,4 +115,12 @@ h1 {
   background-color: #4f615e;
   color: white;
   /* Added text color for better visibility */
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
+input[type="date"] {
+  /* padding: 12px ; */
 }

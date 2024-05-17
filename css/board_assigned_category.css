@@ -64,6 +64,7 @@ select {
   background-color: #fff;
   display: none;
   overflow-y: scroll;
+  z-index: 1;
 }
 
 .category-list-items {
@@ -108,6 +109,12 @@ select {
   font-weight: 400;
   color: #333;
   margin-left: 16px;
+}
+
+.item-text-category {
+  font-size: 16px;
+  font-weight: 400;
+  color: #333;
 }
 
 .check-img {
