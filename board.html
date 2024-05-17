@@ -115,20 +115,20 @@
           <div class="full-size-title"></div>
           <div class="full-size-description"></div>
           <div class="full-size-date">
-            <div>Due date:</div>
+            <div class="task-title">Due date:</div>
             <div class="full-size-due-date" id="full-size-due-date"></div>
           </div>
           <div class="full-size-priority">
-            <div>Priority:</div>
+            <div class="task-title">Priority:</div>
             <img class="full-size-priority-icon" src="" alt="" />
           </div>
 
           <div class="full-size-assign">
-            <div>Assigned To:</div>
+            <div class="task-title">Assigned To:</div>
             <ul id="full-size-assigned-users"></ul>
           </div>
           <div id="full-size-subtasks" class="full-size-subtasks">
-            <div>Subtasks</div>
+            <div class="task-title">Subtasks</div>
             <ul id="full-size-subtasks-tasks"></ul>
           </div>
           <div class="full-size-footer">
@@ -164,29 +164,7 @@
                 <label for="radio-btn-1" class="btn1"></label>
               </div>
             </div>
-            <!-- <label class="full-size-label" for="assigned">Assigned to</label> -->
-            <!-- <input class="full-size-input" id="assigned" type="text" placeholder="Assigned to" /> -->
-            <!-- <div id="assigned" class="multipleSelection">
-              <div class="selectBox" onclick="showCheckboxes()">
-                <select>
-                  <option>Select contacts to assign</option>
-                </select>
-                <div class="overSelect"></div>
-              </div>
-              <div id="checkBoxes">
-                <label for="first">
-                  checkBox1
-                  <input type="checkbox" id="first" />
-                </label>
-
-                <label for="second"> checkBox2 </label>
-                <input type="checkbox" id="second" />
-                <label for="third"> checkBox3 </label>
-                <input type="checkbox" id="third" />
-                <label for="fourth"> checkBox4 </label>
-                <input type="checkbox" id="fourth" />
-              </div>
-            </div> -->
+            <div class="full-size-label">Assigned to:</div>
             <div class="assigned-editCard">
               <div class="select-btn">
                 <span class="btn-text">Select contacts to assign</span>
@@ -195,7 +173,7 @@
               <ul id="assigned-list-items" class="assigned-list-items"></ul>
             </div>
             <label class="full-size-label" for="category-editCard">Category</label>
-            <select name="" id="category-editCard">
+            <select name="" id="category-editCard" class="category-editCard">
               <option value="" selected disabled hidden>Select task category</option>
               <option value="user story">user story</option>
               <option value="technical task">technical task</option>

@@ -13,6 +13,14 @@ function getEventListeners() {
   onClickCloseFullSize(fullsize);
   onClickAddTaskBoard(fullsize, board, editBoard, addBoard);
   onClickEditBoard(board, editBoard, addBoard);
+  onClickEditCategory();
+}
+
+function onClickEditCategory() {
+  {
+    const editCard = document.getElementById("category-editCard");
+    editCard.addEventListener("click", () => {});
+  }
 }
 
 /**

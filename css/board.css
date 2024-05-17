@@ -432,6 +432,10 @@ progress[value]::-moz-progress-bar {
   box-shadow: 0px 4px 4px 0px #00000040;
 }
 
+.task-title {
+  color: #42526e;
+}
+
 .close-btn {
   cursor: pointer;
 }
