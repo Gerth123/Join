@@ -6,7 +6,7 @@ async function getEditBoard(id, contentId) {
     });
   });
   console.log(id, contentId);
-  let itemData = getItemById(id, contentId);
+  let itemData = await getItemById(id, contentId);
   let title = document.querySelector("input[id=title-editCard]");
   title.value = `${itemData["title"]}`;
   let description = document.querySelector("input[id=description-editCard]");

@@ -34,7 +34,13 @@ async function init() {
  * Renders the board
  */
 async function renderBoards() {
-  const data = read();
+  let urlParams = new URLSearchParams(window.location.search);
+  let actualUsersNumber = urlParams.get("actualUsersNumber");
+  let fulldata = await loadData("users");
+  console.log("fulldata", fulldata[actualUsersNumber]["tasks"]);
+  const data = fulldata[actualUsersNumber]["tasks"];
+  // const data = read();
+
   getBoardSection(data);
 }
 
@@ -44,8 +50,13 @@ async function renderBoards() {
  * @param {number} contentId
  * @returns item data
  */
-function getItemById(id, contentId) {
-  let data = read();
+async function getItemById(id, contentId) {
+  let urlParams = new URLSearchParams(window.location.search);
+  let actualUsersNumber = urlParams.get("actualUsersNumber");
+  let fulldata = await loadData("users");
+  console.log("fulldata", fulldata[actualUsersNumber]["tasks"]);
+  const data = fulldata[actualUsersNumber]["tasks"];
+  // let data = read();
   const itemList = data.find((items) => items["id"] == contentId);
   const item = itemList["items"].find((items) => items["id"] == id);
   return item;
@@ -59,8 +70,10 @@ function getBoardSection(data) {
   const boardSection = document.getElementById("board-card-section");
   boardSection.innerHTML = "";
   for (let i = 0; i < data.length; i++) {
+    console.log("data id", data[i]["id"]);
     const id = data[i]["id"];
     boardSection.innerHTML += getBoardContainer(id);
+    console.log("data[items]", data[i]["items"] == "");
     getBoardContents(data[i]["items"], id);
   }
 }
@@ -84,13 +97,15 @@ function getBoardContainer(id) {
  */
 function getBoardContents(contents, id) {
   let content = document.getElementById(`${id}`);
-  contents.forEach(function (card) {
-    content.innerHTML += getBoardCard(card);
-    getCategory(card["category"], card["id"]);
-    getPriority(card["priority"], card["id"]);
-    getAssigned(card["assigned"], card["id"]);
-    getProgressBar(card["subtasks"], card["id"]);
-  });
+  if (contents != "") {
+    contents.forEach(function (card) {
+      content.innerHTML += getBoardCard(card);
+      getCategory(card["category"], card["id"]);
+      getPriority(card["priority"], card["id"]);
+      getAssigned(card["assigned"], card["id"]);
+      getProgressBar(card["subtasks"], card["id"]);
+    });
+  }
 }
 
 /**

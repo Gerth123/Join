@@ -73,10 +73,10 @@ function onClickFullSizeBoard(fullsize, board, editBoard, addBoard) {
  * @param {Element} fullsize
  */
 function onClickCloseFullSize(fullsize) {
-  document.addEventListener("click", (e) => {
+  document.addEventListener("click", async (e) => {
     if (e.target.matches("#close-btn-img")) {
       fullsize.classList.add("d-none");
-      let itemData = getItemById(id, contentId);
+      let itemData = await getItemById(id, contentId);
       let subtasks = itemData["subtasks"];
       for (let i = 0; i < subtasks.length; i++) {
         let check = document.getElementById(`subtask-${i}`);
@@ -96,8 +96,13 @@ function onClickCloseFullSize(fullsize) {
  * Update the subtasks check and reload
  * @param {Object} subtasks
  */
-function updateSubtaskCheck(subtasks) {
-  let data = read();
+async function updateSubtaskCheck(subtasks) {
+  let urlParams = new URLSearchParams(window.location.search);
+  let actualUsersNumber = urlParams.get("actualUsersNumber");
+  let fulldata = await loadData("users");
+  console.log("fulldata", fulldata[actualUsersNumber]["tasks"]);
+  const data = fulldata[actualUsersNumber]["tasks"];
+  // let data = read();
   for (let column of data) {
     if (column.id == contentId) {
       for (let item of column.items) {
@@ -227,8 +232,13 @@ function getSubtaskListHTML(subtaskInputValue) {
 /**
  *  save edit data
  */
-function saveEditData() {
-  let data = read();
+async function saveEditData() {
+  let urlParams = new URLSearchParams(window.location.search);
+  let actualUsersNumber = urlParams.get("actualUsersNumber");
+  let fulldata = await loadData("users");
+  console.log("fulldata", fulldata[actualUsersNumber]["tasks"]);
+  const data = fulldata[actualUsersNumber]["tasks"];
+  // let data = read();
   let title = document.getElementById("title-editCard");
   let description = document.getElementById("description-editCard");
   let date = document.getElementById("date-editCard");
@@ -338,12 +348,17 @@ function onClickAddSubTasks() {
 /**
  *
  */
-function saveAddData() {
+async function saveAddData() {
   const title = document.getElementById("title-addCard");
   const description = document.getElementById("description-addCard");
   const date = document.getElementById("date-addCard");
   console.log(date);
-  let data = read();
+  let urlParams = new URLSearchParams(window.location.search);
+  let actualUsersNumber = urlParams.get("actualUsersNumber");
+  let fulldata = await loadData("users");
+  console.log("fulldata", fulldata[actualUsersNumber]["tasks"]);
+  const data = fulldata[actualUsersNumber]["tasks"];
+  // let data = read();
   const content = data.find((content) => content.id == contentId);
   const newId = Math.floor(Math.random() * 100000);
   const obj = {
