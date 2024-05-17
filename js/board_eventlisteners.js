@@ -17,10 +17,17 @@ function getEventListeners() {
 }
 
 function onClickEditCategory() {
-  {
-    const editCard = document.getElementById("category-editCard");
-    editCard.addEventListener("click", () => {});
-  }
+  const categoryItems = document.querySelectorAll(".category-item");
+  categoryItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      const selectButton = document.querySelector(".category-editCard .select-btn");
+      const btnText = document.querySelector(".btn-text-category");
+      if (selectButton) {
+        selectButton.classList.remove("open");
+        btnText.textContent = item.textContent;
+      }
+    });
+  });
 }
 
 /**
@@ -227,11 +234,13 @@ function saveEditData() {
  * @returns string
  */
 function editCategory(category) {
-  let newCategory = document.getElementById("category-editCard");
-  if (newCategory.value == "") {
+  let newCategory = document.querySelector(".btn-text-category");
+  console.log(category);
+  const stripped = newCategory.textContent.replace(/\s+/g, " ").trim();
+  if (newCategory.textContent == "Select task category") {
     return category;
   } else {
-    return newCategory.value;
+    return stripped;
   }
 }
 

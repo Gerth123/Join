@@ -253,11 +253,12 @@ progress[value]::-moz-progress-bar {
 
 .full-size-board {
   width: 445px;
-  min-height: 620px;
+  height: 890px;
   padding: 48px 40px 48px 40px;
   border-radius: 30px;
   background-color: #fff;
   box-shadow: 0px 0px 4px 0px #00000029;
+  overflow-y: scroll;
 }
 
 .full-size-add-board {

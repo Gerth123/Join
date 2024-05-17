@@ -1,4 +1,5 @@
-.assigned-editCard {
+.assigned-editCard,
+.category-editCard {
   position: relative;
   margin-top: 8px;
   margin-bottom: 32px;
@@ -34,7 +35,8 @@ select {
   cursor: pointer;
 }
 
-.btn-text {
+.btn-text,
+.btn-text-category {
   font-size: 17px;
   font-weight: 400;
   color: #333;
@@ -64,11 +66,25 @@ select {
   overflow-y: scroll;
 }
 
+.category-list-items {
+  position: relative;
+  height: 100px;
+  margin-block-start: 0;
+  padding-inline-start: 0;
+  background-color: #fff;
+  display: none;
+}
+
 .select-btn.open ~ .assigned-list-items {
   display: block;
 }
 
-.assigned-item {
+.select-btn.open ~ .category-list-items {
+  display: block;
+}
+
+.assigned-item,
+.category-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -82,6 +98,11 @@ select {
 .assigned-item:hover {
   background-color: #e7edfe;
 }
+
+.category-item:hover {
+  background-color: #e7edfe;
+}
+
 .item-text {
   font-size: 16px;
   font-weight: 400;

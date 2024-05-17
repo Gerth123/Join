@@ -1,4 +1,10 @@
 async function getEditBoard(id, contentId) {
+  const selectBtns = document.querySelectorAll(".select-btn");
+  selectBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      btn.classList.toggle("open");
+    });
+  });
   console.log(id, contentId);
   let itemData = getItemById(id, contentId);
   let title = document.querySelector("input[id=title-editCard]");
@@ -49,12 +55,7 @@ async function getEditAssigned() {
     `;
   });
 
-  const selectBtn = document.querySelector(".select-btn");
   const assignedItems = document.querySelectorAll(".assigned-item");
-
-  selectBtn.addEventListener("click", () => {
-    selectBtn.classList.toggle("open");
-  });
 
   assignedItems.forEach((item) => {
     item.addEventListener("click", () => {
