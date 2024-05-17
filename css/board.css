@@ -104,12 +104,13 @@ label {
 .add-btn-container {
   display: flex;
   align-items: center;
+  justify-content: center;
   width: 170px;
-  height: 70px;
+  height: 60px;
 }
 
 .board-header-add-btn {
-  width: 145px;
+  width: 142px;
   height: 52px;
   background-image: url("/assets/icons/board/fullsize/add_task.svg");
   background-repeat: no-repeat;
@@ -117,11 +118,10 @@ label {
 }
 
 .board-header-add-btn:hover {
-  width: 170px;
-  height: 58px;
+  width: 150px;
+  height: 52px;
   background-image: url("/assets/icons/board/fullsize/add_task_hover.svg");
-  background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
 }
 
 .board-header-add-btn-img {
@@ -487,6 +487,18 @@ progress[value]::-moz-progress-bar {
   background-image: url("/assets/icons/board/fullsize/cancel_small_hover.svg");
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.board-add-btn {
+  width: 24px;
+  height: 24px;
+  background-image: url("/assets/icons/board/plus_button.svg");
+}
+
+.board-add-btn:hover {
+  width: 24px;
+  height: 24px;
+  background-image: url("/assets/icons/board/plus_button_hover.svg");
 }
 
 .ok-button:hover {
