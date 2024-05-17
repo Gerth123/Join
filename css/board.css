@@ -498,3 +498,9 @@ fieldset {
   margin: 0;
   border: none;
 }
+
+.add-line {
+  width: 1px;
+  height: 400px;
+  background-color: #d1d1d1;
+}

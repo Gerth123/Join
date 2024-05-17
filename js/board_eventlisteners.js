@@ -14,14 +14,30 @@ function getEventListeners() {
   onClickAddTaskBoard(fullsize, board, editBoard, addBoard);
   onClickEditBoard(board, editBoard, addBoard);
   onClickEditCategory();
+  onClickAddCategory();
 }
 
 function onClickEditCategory() {
   const categoryItems = document.querySelectorAll(".category-item");
   categoryItems.forEach((item) => {
     item.addEventListener("click", () => {
-      const selectButton = document.querySelector(".category-editCard .select-btn");
+      const selectButton = document.querySelector("#select-btn-editCard");
       const btnText = document.querySelector(".btn-text-category");
+      if (selectButton) {
+        selectButton.classList.remove("open");
+        btnText.textContent = item.textContent;
+      }
+    });
+  });
+}
+
+function onClickAddCategory() {
+  const categoryItems = document.querySelectorAll(".category-item");
+  categoryItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      const selectButton = document.querySelector("#select-btn-addCard");
+      const btnText = document.querySelector(".category-addCard .btn-text-category");
+      console.log(btnText);
       if (selectButton) {
         selectButton.classList.remove("open");
         btnText.textContent = item.textContent;
@@ -102,6 +118,12 @@ function updateSubtaskCheck(subtasks) {
  * @param {Element} addBoard
  */
 function onClickAddTaskBoard(fullsize, board, editBoard, addBoard) {
+  const selectBtns = document.querySelectorAll("#select-btn-addCard");
+  selectBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      btn.classList.toggle("open");
+    });
+  });
   const addTaskBtn = document.getElementById("board-header-add-btn");
   addTaskBtn.addEventListener("click", () => {
     fullsize.classList.remove("d-none");
@@ -342,8 +364,9 @@ function saveAddData() {
 }
 
 function addCategory() {
-  let newCategory = document.getElementById("category-addCard");
-  return newCategory.value;
+  let newCategory = document.querySelector(".btn-text-category");
+  const stripped = newCategory.textContent.replace(/\s+/g, " ").trim();
+  return stripped;
 }
 
 function addPriorityValue() {

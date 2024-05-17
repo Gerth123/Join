@@ -7,6 +7,12 @@
   font-size: 20px;
   height: 50px;
 }
+
+.category-addCard {
+  margin-top: 8px;
+  margin-bottom: 32px;
+}
+
 .select-btn {
   display: flex;
   height: 48px;
@@ -68,7 +74,8 @@ select {
 }
 
 .category-list-items {
-  position: relative;
+  position: absolute;
+  width: 400px;
   height: 100px;
   margin-block-start: 0;
   padding-inline-start: 0;

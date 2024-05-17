@@ -173,7 +173,7 @@
               </div>
               <div class="full-size-label">Assigned to</div>
               <div class="assigned-editCard">
-                <div class="select-btn">
+                <div id="select-btn-editCard" class="select-btn">
                   <span class="btn-text">Select contacts to assign</span>
                   <div class="arrow-down"></div>
                 </div>
@@ -181,7 +181,7 @@
               </div>
               <label class="full-size-label" for="category-editCard">Category</label>
               <div id="category-editCard" class="category-editCard">
-                <div class="select-btn">
+                <div id="select-btn-editCard" class="select-btn">
                   <span class="btn-text-category">Select task category</span>
                   <div class="arrow-down"></div>
                 </div>
@@ -234,6 +234,7 @@
                 <!-- <label class="full-size-label" for="assigned">Assigned to</label>
                 <input class="full-size-input" id="assigned" type="text" placeholder="Assigned to" /> -->
               </div>
+              <div class="add-line"></div>
               <div class="column wd-45">
                 <label class="full-size-label" for="date-addCard">Due date</label>
                 <input class="full-size-input" id="date-addCard" type="date" required />
@@ -252,11 +253,20 @@
                   </div>
                 </div>
                 <label class="full-size-label" for="category-addcard">Category</label>
-                <select name="" id="category-addCard" required>
-                  <option value="" selected disabled hidden>Select task category</option>
-                  <option value="user story">user story</option>
-                  <option value="technical task">technical task</option>
-                </select>
+                <div id="category-addCard" class="category-addCard">
+                  <div id="select-btn-addCard" class="select-btn">
+                    <span class="btn-text-category">Select task category</span>
+                    <div class="arrow-down"></div>
+                  </div>
+                  <ul class="category-list-items">
+                    <li class="category-item">
+                      <span class="item-text-category">user story</span>
+                    </li>
+                    <li class="category-item">
+                      <span class="item-text-category">technical task</span>
+                    </li>
+                  </ul>
+                </div>
                 <label class="full-size-label" for="subtasks">Subtasks</label>
                 <div class="full-size-input-container">
                   <input class="subtasks-input" id="subtasks-input-addCard" type="text" placeholder="Add new subtask" />

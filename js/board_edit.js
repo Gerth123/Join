@@ -1,5 +1,5 @@
 async function getEditBoard(id, contentId) {
-  const selectBtns = document.querySelectorAll(".select-btn");
+  const selectBtns = document.querySelectorAll("#select-btn-editCard");
   selectBtns.forEach((btn) => {
     btn.addEventListener("click", (e) => {
       btn.classList.toggle("open");
