@@ -383,6 +383,42 @@ progress[value]::-moz-progress-bar {
   margin-right: 8px;
 }
 
+.full-size-button-edit {
+  margin-left: 8px;
+  margin-right: 8px;
+  width: 63px;
+  height: 24px;
+  background-image: url("/assets/icons/board/fullsize/edit-button.svg");
+  background-size: cover;
+}
+
+.full-size-button-edit:hover {
+  margin-left: 8px;
+  margin-right: 8px;
+  width: 63px;
+  height: 24px;
+  background-image: url("/assets/icons/board/fullsize/edit-button-hover.svg");
+  background-size: cover;
+}
+
+.full-size-button-delete {
+  margin-left: 8px;
+  margin-right: 8px;
+  width: 81px;
+  height: 24px;
+  background-image: url("/assets/icons/board/fullsize/delete-button.svg");
+  background-size: cover;
+}
+
+.full-size-button-delete:hover {
+  margin-left: 8px;
+  margin-right: 8px;
+  width: 83px;
+  height: 24px;
+  background-image: url("/assets/icons/board/fullsize/delete-button-hover.svg");
+  background-size: cover;
+}
+
 .full-size-add-task {
   font-size: 61px;
   font-weight: bold;
