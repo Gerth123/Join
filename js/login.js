@@ -50,11 +50,12 @@ async function checkUser() {
             let mailToCheck = actualUsers[mailSearchIndex]['mail'];
             if (JSON.stringify(mailToCheck) === JSON.stringify(email)) {
                 actualMailSearchIndex = mailSearchIndex;
-                if (JSON.stringify(actualUsers[mailSearchIndex]['password']) === JSON.stringify(password)){
-                actualUsersNumber = mailSearchIndex;
-                window.location.href = `summary.html?msg=Login erfolgreich&actualUsersNumber=${JSON.stringify(mailSearchIndex)}`; // `summary.html?msg=Login erfolgreich, actualUsersNumber=${mailSearchIndex}`;
-                found = true;
-                break;}
+                if (JSON.stringify(actualUsers[mailSearchIndex]['password']) === JSON.stringify(password)) {
+                    actualUsersNumber = mailSearchIndex;
+                    window.location.href = `summary.html?msg=Login erfolgreich&actualUsersNumber=${JSON.stringify(mailSearchIndex)}`;
+                    found = true;
+                    break;
+                }
             }
         }
     }
@@ -119,5 +120,14 @@ function loadUserData() {
         document.getElementById('email').value = '';
         document.getElementById('password').value = '';
         document.getElementById('checkbox').checked = false;
+    }
+}
+
+async function guestLogIn() {
+    let users = await loadData('users');
+    for (let [index, user] of Object.entries(users)) {
+        if (user && user.mail === 'test@testmail.com') {
+            window.location.href = `summary.html?msg=Testlogin erfolgreich&actualUsersNumber=${index}`;
+        }    
     }
 }
