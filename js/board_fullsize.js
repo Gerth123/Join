@@ -5,7 +5,7 @@
  */
 async function getFullSizeBoard(id, contentId) {
   let itemData = await getItemById(id, contentId);
-  console.log("itemData", itemData);
+  // console.log("itemData", itemData);
   let title = document.querySelector(".full-size-title");
   let description = document.querySelector(".full-size-description");
   let date = document.querySelector("#full-size-due-date");

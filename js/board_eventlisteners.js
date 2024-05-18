@@ -76,6 +76,7 @@ function onClickCloseFullSize(fullsize) {
   document.addEventListener("click", async (e) => {
     if (e.target.matches("#close-btn-img")) {
       fullsize.classList.add("d-none");
+
       let itemData = await getItemById(id, contentId);
       let subtasks = itemData["subtasks"];
       for (let i = 0; i < subtasks.length; i++) {
@@ -87,8 +88,11 @@ function onClickCloseFullSize(fullsize) {
         }
       }
       await updateSubtaskCheck(subtasks);
-      // return false;
       location.reload();
+    }
+
+    if (e.target.matches("#close-btn-img-add")) {
+      fullsize.classList.add("d-none");
     }
   });
 }
@@ -113,8 +117,8 @@ async function updateSubtaskCheck(subtasks) {
       }
     }
   }
-  console.log("subtasks", subtasks);
-  console.log("data", data);
+  // console.log("subtasks", subtasks);
+  // console.log("data", data);
   //save(data)
   await putData(`users/${actualUsersNumber}/tasks/`, data);
 }
@@ -259,7 +263,7 @@ async function saveEditData() {
           item.subtasks = editSubTasksValue(item.subtasks);
         }
 
-        console.log("saving data", data);
+        // console.log("saving data", data);
         // save(data);
         // console.log(`users/${actualUsersNumber}/tasks/`);
         await putData(`users/${actualUsersNumber}/tasks/`, data);
@@ -323,7 +327,7 @@ function editSubTasksValue(subtasks) {
     let updatedSubtask = (updatedTemp = updateChecked(temp.slice(), subtasks));
     subtasks = updatedSubtask;
   }
-  console.log("subtasks", subtasks == "");
+  // console.log("subtasks", subtasks == "");
   if (subtasks == "") {
     return "";
   }

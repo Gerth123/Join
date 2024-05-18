@@ -5,7 +5,7 @@ async function getEditBoard(id, contentId) {
       btn.classList.toggle("open");
     });
   });
-  console.log(id, contentId);
+  // console.log(id, contentId);
   let itemData = await getItemById(id, contentId);
   let title = document.querySelector("input[id=title-editCard]");
   title.value = `${itemData["title"]}`;
@@ -41,7 +41,7 @@ async function getEditAssigned() {
   let dataString = await response.json();
   let contactList = document.getElementById("assigned-list-items");
   let contacts = dataString["users"][0]["contacts"];
-  console.log(contactList);
+  // console.log(contactList);
   contactList.innerHTML = "";
   contacts.forEach((contact) => {
     contactList.innerHTML += /*html*/ `
@@ -64,7 +64,7 @@ async function getEditAssigned() {
       let checked = document.querySelectorAll(".checked"),
         btnText = document.querySelector(".btn-text");
 
-      console.log(checked);
+      // console.log(checked);
       if (checked && checked.length > 0) {
         btnText.innerText = `${checked.length} Selected`;
       } else {
@@ -110,7 +110,7 @@ function getSubtasksEventListeners() {
   });
 
   let edits = document.querySelectorAll("#subtasks-edit");
-  console.log(edits);
+  // console.log(edits);
   edits.forEach((edit) => {
     edit.addEventListener("click", () => {
       let parentContent = edit.closest(".subtasks-li-container");
@@ -141,7 +141,7 @@ function getEditDate(date) {
   let dateData = document.getElementById("date-editCard");
   dateData.min = new Date().toISOString().split("T")[0];
   dateData.value = date;
-  console.log("this is date", dateData.value);
+  // console.log("this is date", dateData.value);
 }
 
 let show = true;
