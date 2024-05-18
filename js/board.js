@@ -37,7 +37,7 @@ async function renderBoards() {
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
   let fulldata = await loadData("users");
-  console.log("fulldata", fulldata[actualUsersNumber]["tasks"]);
+  // console.log("fulldata", fulldata[actualUsersNumber]["tasks"]);
   const data = fulldata[actualUsersNumber]["tasks"];
   // const data = read();
 
@@ -54,7 +54,7 @@ async function getItemById(id, contentId) {
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
   let fulldata = await loadData("users");
-  console.log("fulldata", fulldata[actualUsersNumber]["tasks"]);
+  // console.log("fulldata", fulldata[actualUsersNumber]["tasks"]);
   const data = fulldata[actualUsersNumber]["tasks"];
   // let data = read();
   const itemList = data.find((items) => items["id"] == contentId);
@@ -70,10 +70,10 @@ function getBoardSection(data) {
   const boardSection = document.getElementById("board-card-section");
   boardSection.innerHTML = "";
   for (let i = 0; i < data.length; i++) {
-    console.log("data id", data[i]["id"]);
+    // console.log("data id", data[i]["id"]);
     const id = data[i]["id"];
     boardSection.innerHTML += getBoardContainer(id);
-    console.log("data[items]", data[i]["items"] == "");
+    // console.log("data[items]", data[i]["items"] == "");
     getBoardContents(data[i]["items"], id);
   }
 }
@@ -182,6 +182,10 @@ function getProgressBar(subtasks, id) {
   let progressBar = content.querySelector("#progress-bar");
   let progressBarLabel = content.querySelector('label[for="progress-bar"]');
   let process = 0;
+  console.log("subtasks", subtasks == "");
+  if (subtasks == "") {
+    subtasks = [];
+  }
   for (let i = 0; i < subtasks.length; i++) {
     if (subtasks[i]["checked"] == true) {
       process++;

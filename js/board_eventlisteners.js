@@ -37,7 +37,7 @@ function onClickAddCategory() {
     item.addEventListener("click", () => {
       const selectButton = document.querySelector("#select-btn-addCard");
       const btnText = document.querySelector(".category-addCard .btn-text-category");
-      console.log(btnText);
+      // console.log(btnText);
       if (selectButton) {
         selectButton.classList.remove("open");
         btnText.textContent = item.textContent;
@@ -100,7 +100,7 @@ async function updateSubtaskCheck(subtasks) {
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
   let fulldata = await loadData("users");
-  console.log("fulldata", fulldata[actualUsersNumber]["tasks"]);
+  // console.log("fulldata", fulldata[actualUsersNumber]["tasks"]);
   const data = fulldata[actualUsersNumber]["tasks"];
   // let data = read();
   for (let column of data) {
@@ -112,7 +112,8 @@ async function updateSubtaskCheck(subtasks) {
       }
     }
   }
-  save(data);
+  //save(data)
+  putData(`users/${actualUsersNumber}/tasks/`, data);
 }
 
 /**
@@ -145,7 +146,7 @@ function addTaskBtnSmall(contentIdAdd) {
   const board = document.getElementById("board");
   const editBoard = document.getElementById("edit-board");
   const addBoard = document.getElementById("add-board");
-  console.log(contentIdAdd);
+  // console.log(contentIdAdd);
   contentId = contentIdAdd;
   fullsize.classList.remove("d-none");
   board.classList.add("d-none");
@@ -236,7 +237,7 @@ async function saveEditData() {
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
   let fulldata = await loadData("users");
-  console.log("fulldata", fulldata[actualUsersNumber]["tasks"]);
+  // console.log("fulldata", fulldata[actualUsersNumber]["tasks"]);
   const data = fulldata[actualUsersNumber]["tasks"];
   // let data = read();
   let title = document.getElementById("title-editCard");
@@ -254,7 +255,8 @@ async function saveEditData() {
           item.priority = editPriorityValue();
           item.subtasks = editSubTasksValue(item.subtasks);
         }
-        // console.log("saving data", data);
+
+        console.log("saving data", data);
         // save(data);
         // console.log(`users/${actualUsersNumber}/tasks/`);
         putData(`users/${actualUsersNumber}/tasks/`, data);
@@ -270,7 +272,7 @@ async function saveEditData() {
  */
 function editCategory(category) {
   let newCategory = document.querySelector(".btn-text-category");
-  console.log(category);
+  // console.log(category);
   const stripped = newCategory.textContent.replace(/\s+/g, " ").trim();
   if (newCategory.textContent == "Select task category") {
     return category;
@@ -303,6 +305,9 @@ function editPriorityValue() {
  */
 function editSubTasksValue(subtasks) {
   let newSubtasks = document.querySelectorAll(".subtasks-li-text");
+  if (subtasks == "") {
+    subtasks = [];
+  }
   if (subtasks.length < newSubtasks.length) {
     for (let i = subtasks.length; i < newSubtasks.length; i++) {
       subtasks.push({ checked: false, task: newSubtasks[i].innerHTML });
@@ -314,6 +319,10 @@ function editSubTasksValue(subtasks) {
     });
     let updatedSubtask = (updatedTemp = updateChecked(temp.slice(), subtasks));
     subtasks = updatedSubtask;
+  }
+  console.log("subtasks", subtasks == "");
+  if (subtasks == "") {
+    return "";
   }
   return subtasks;
 }
@@ -355,11 +364,11 @@ async function saveAddData() {
   const title = document.getElementById("title-addCard");
   const description = document.getElementById("description-addCard");
   const date = document.getElementById("date-addCard");
-  console.log(date);
+  // console.log(date);
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
   let fulldata = await loadData("users");
-  console.log("fulldata", fulldata[actualUsersNumber]["tasks"]);
+  // console.log("fulldata", fulldata[actualUsersNumber]["tasks"]);
   const data = fulldata[actualUsersNumber]["tasks"];
   // let data = read();
   const content = data.find((content) => content.id == contentId);
@@ -372,10 +381,12 @@ async function saveAddData() {
     assigned: "",
     date: date.value,
     priority: addPriorityValue(),
-    subtasks: "",
+    subtasks: await addSubTasks(),
   };
   id = newId;
-
+  if (content.items == "") {
+    content.items = [];
+  }
   // console.log(id, contentId);
   content.items.push(obj);
   // save(data);
@@ -400,4 +411,13 @@ function addPriorityValue() {
   } else if (priority4.checked) {
     return "low";
   }
+}
+
+function addSubTasks() {
+  let newSubtasks = document.querySelectorAll(".subtasks-li-text");
+  let temp = [];
+  newSubtasks.forEach((task) => {
+    temp.push({ checked: false, task: task.textContent });
+  });
+  return temp;
 }
