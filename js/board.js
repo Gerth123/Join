@@ -59,6 +59,7 @@ async function getItemById(id, contentId) {
   // let data = read();
   const itemList = data.find((items) => items["id"] == contentId);
   const item = itemList["items"].find((items) => items["id"] == id);
+  console.log("this it item", item);
   return item;
 }
 

@@ -86,7 +86,8 @@ function onClickCloseFullSize(fullsize) {
           subtasks[i]["checked"] = false;
         }
       }
-      updateSubtaskCheck(subtasks);
+      await updateSubtaskCheck(subtasks);
+      // return false;
       location.reload();
     }
   });
@@ -112,8 +113,10 @@ async function updateSubtaskCheck(subtasks) {
       }
     }
   }
+  console.log("subtasks", subtasks);
+  console.log("data", data);
   //save(data)
-  putData(`users/${actualUsersNumber}/tasks/`, data);
+  await putData(`users/${actualUsersNumber}/tasks/`, data);
 }
 
 /**
@@ -259,7 +262,7 @@ async function saveEditData() {
         console.log("saving data", data);
         // save(data);
         // console.log(`users/${actualUsersNumber}/tasks/`);
-        putData(`users/${actualUsersNumber}/tasks/`, data);
+        await putData(`users/${actualUsersNumber}/tasks/`, data);
       }
     }
   }
@@ -391,7 +394,7 @@ async function saveAddData() {
   content.items.push(obj);
   // save(data);
   // console.log("saving", data);
-  putData(`users/${actualUsersNumber}/tasks/`, data);
+  await putData(`users/${actualUsersNumber}/tasks/`, data);
 }
 
 function addCategory() {
