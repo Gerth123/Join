@@ -42,20 +42,23 @@ async function checkUser() {
     let password = document.getElementById('password').value;
     let actualUsers = await loadData('users');
     let found = false;
+    let actualMailSearchIndex;
     for (let mailSearchIndex = 0; mailSearchIndex < actualUsers.length; mailSearchIndex++) {
         if (actualUsers[mailSearchIndex] === null) {
             continue;
         } else {
             let mailToCheck = actualUsers[mailSearchIndex]['mail'];
-            if (JSON.stringify(mailToCheck) === JSON.stringify(email) && JSON.stringify(actualUsers[mailSearchIndex]['password']) === JSON.stringify(password)) {
+            if (JSON.stringify(mailToCheck) === JSON.stringify(email)) {
+                actualMailSearchIndex = mailSearchIndex;
+                if (JSON.stringify(actualUsers[mailSearchIndex]['password']) === JSON.stringify(password)){
                 actualUsersNumber = mailSearchIndex;
                 window.location.href = `summary.html?msg=Login erfolgreich&actualUsersNumber=${JSON.stringify(mailSearchIndex)}`; // `summary.html?msg=Login erfolgreich, actualUsersNumber=${mailSearchIndex}`;
                 found = true;
-                break;
+                break;}
             }
         }
     }
-    userNotFound(found);
+    userNotFound(found, actualUsers, actualMailSearchIndex, email);
     saveUserData(email, password);
 }
 
@@ -66,12 +69,12 @@ async function checkUser() {
  * 
  * @author: Robin
  */
-async function userNotFound(found) {
+async function userNotFound(found, actualUsers, actualMailSearchIndex, email) {
     if (!found) {
         let msgBox = document.getElementById('msgBox');
         msgBox.classList.remove('d-none');
         let msgBoxText = document.getElementById('msgBoxText');
-        if (actualUsers.some(user => JSON.stringify(user['mail']) === JSON.stringify(email))) {
+        if (JSON.stringify(actualUsers[actualMailSearchIndex]['mail']) === JSON.stringify(email)) {
             msgBoxText.innerHTML = 'Wrong password. Please try again!';
         } else {
             msgBoxText.innerHTML = 'Mail not registered. Please sign up first!';
