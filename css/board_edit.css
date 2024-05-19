@@ -124,3 +124,22 @@ h1 {
 input[type="date"] {
   /* padding: 12px ; */
 }
+
+.assigned-users-editCard {
+  display: flex;
+  align-items: center;
+}
+
+.board-user-editCard {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(26, 78, 78);
+  border-radius: 50%;
+  border: 2px solid #fff;
+  color: #fff;
+  font-size: 12px;
+  margin: 8px 4px 24px 4px;
+}

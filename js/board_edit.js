@@ -16,8 +16,39 @@ async function getEditBoard(id, contentId) {
   getEditPriority(itemData["priority"]);
   getEditSubtasks(itemData["subtasks"]);
   await getEditAssigned();
+  getEditAssignedUsers(itemData["assigned"]);
   getSubtasksEventListeners();
   getEditDate(itemData["date"]);
+}
+
+function getEditAssignedUsers(assignedUsers) {
+  let users = document.getElementById("assigned-users-editCard");
+  console.log("assignedUSers", assignedUsers);
+
+  if (assignedUsers != "") {
+    assignedUsers.forEach((assignedUser) => {
+      let name = Array.from(`${assignedUser["name"]}`)[0];
+      let lastName = Array.from(`${assignedUser["lastName"]}`)[0];
+      users.innerHTML += /*html*/ `
+          <div id="board-user" class="board-user-editCard" style="background-color:${assignedUser["color"]}">
+            ${name}${lastName}
+          </div>`;
+    });
+  }
+
+  // if (assigned != "") {
+  //   assigned.forEach((user) => {
+  //     let name = Array.from(`${user["name"]}`)[0];
+  //     let lastName = Array.from(`${user["lastName"]}`)[0];
+  //     fullSizeAssigned.innerHTML += /*html*/ `
+  //     <li class="full-size-assign-user">
+  //     <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}${lastName}</div>
+  //     <div class="board-username">
+  //       ${user["name"]} ${user["lastName"]}
+  //     </div>
+  //     </li>`;
+  //   });
+  // }
 }
 
 function getEditPriority(priority) {
@@ -39,9 +70,15 @@ async function getEditAssigned() {
   /**todo */
   let response = await fetch("/assets/data/join-ca44d-default-rtdb-export.json");
   let dataString = await response.json();
-  let contactList = document.getElementById("assigned-list-items");
-  let contacts = dataString["users"][0]["contacts"];
+  // let contacts = dataString["users"][0]["contacts"];
+
+  let urlParams = new URLSearchParams(window.location.search);
+  let actualUsersNumber = urlParams.get("actualUsersNumber");
+  let fulldata = await loadData("users");
+  // console.log("fulldata", fulldata[actualUsersNumber]["tasks"]);
+  let contacts = fulldata[actualUsersNumber]["contacts"];
   // console.log(contactList);
+  let contactList = document.getElementById("assigned-list-items");
   contactList.innerHTML = "";
   contacts.forEach((contact) => {
     contactList.innerHTML += /*html*/ `

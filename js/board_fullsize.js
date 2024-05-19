@@ -54,7 +54,6 @@ function getFullSizeAssigned(assigned) {
       <div class="board-username">
         ${user["name"]} ${user["lastName"]} 
       </div>
-     
       </li>`;
     });
   }
