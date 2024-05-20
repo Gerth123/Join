@@ -16,39 +16,8 @@ async function getEditBoard(id, contentId) {
   getEditPriority(itemData["priority"]);
   getEditSubtasks(itemData["subtasks"]);
   await getEditAssigned();
-  getEditAssignedUsers(itemData["assigned"]);
   getSubtasksEventListeners();
   getEditDate(itemData["date"]);
-}
-
-function getEditAssignedUsers(assignedUsers) {
-  let users = document.getElementById("assigned-users-editCard");
-  console.log("assignedUSers", assignedUsers);
-
-  if (assignedUsers != "") {
-    assignedUsers.forEach((assignedUser) => {
-      let name = Array.from(`${assignedUser["name"]}`)[0];
-      let lastName = Array.from(`${assignedUser["lastName"]}`)[0];
-      users.innerHTML += /*html*/ `
-          <div id="board-user" class="board-user-editCard" style="background-color:${assignedUser["color"]}">
-            ${name}${lastName}
-          </div>`;
-    });
-  }
-
-  // if (assigned != "") {
-  //   assigned.forEach((user) => {
-  //     let name = Array.from(`${user["name"]}`)[0];
-  //     let lastName = Array.from(`${user["lastName"]}`)[0];
-  //     fullSizeAssigned.innerHTML += /*html*/ `
-  //     <li class="full-size-assign-user">
-  //     <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}${lastName}</div>
-  //     <div class="board-username">
-  //       ${user["name"]} ${user["lastName"]}
-  //     </div>
-  //     </li>`;
-  //   });
-  // }
 }
 
 function getEditPriority(priority) {
@@ -81,10 +50,11 @@ async function getEditAssigned() {
   let contactList = document.getElementById("assigned-list-items");
   contactList.innerHTML = "";
   contacts.forEach((contact) => {
+    let name = getInitials(contact["name"]);
     contactList.innerHTML += /*html*/ `
       <li class="assigned-item">
         <div class="assigned-user">
-          <div id="board-user" class="board-user" style="background-color:${contact["color"]}">HC</div>
+          <div id="board-user" class="board-user" style="background-color:${contact["color"]}">${name}</div>
           <span class="item-text">${contact["name"]}</span>
         </div>
         <div class="check-img"></div>
@@ -98,17 +68,44 @@ async function getEditAssigned() {
     item.addEventListener("click", () => {
       item.classList.toggle("checked");
 
-      let checked = document.querySelectorAll(".checked"),
-        btnText = document.querySelector(".btn-text");
+      let checked = document.querySelectorAll(".checked");
+      let btnText = document.querySelector(".btn-text");
+      let checkedUsers = document.getElementById("assigned-users-editCard");
 
-      // console.log(checked);
       if (checked && checked.length > 0) {
+        //userNames get them to save in assigned to:
+        let userNames = document.querySelectorAll(".checked .item-text");
         btnText.innerText = `${checked.length} Selected`;
+        checkedUsers.innerHTML = "";
+        userNames.forEach((userName) => {
+          const personWithName = contacts.find((person) => person.name == userName.innerHTML);
+          if (personWithName) {
+            let name = getInitials(personWithName["name"]);
+            checkedUsers.innerHTML += /*html*/ `
+            <div class="assigned-user">
+              <div id="board-user" class="board-user-editCard" style="background-color: ${personWithName["color"]}">${name}</div>
+            </div>
+            `;
+          }
+        });
       } else {
         btnText.innerText = "Select contacts to assign";
+        checkedUsers.innerHTML = "";
       }
     });
   });
+}
+
+function getInitials(name) {
+  const words = name.split(" ");
+  let initials = "";
+
+  // Loop through each word
+  for (const word of words) {
+    initials += word[0].toUpperCase();
+  }
+
+  return initials;
 }
 
 function getEditSubtasks(subtasks) {
