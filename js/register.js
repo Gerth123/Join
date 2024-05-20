@@ -1,95 +1,3 @@
-let testContacts = [
-    {
-        'name': 'Anton Mayer',
-        'mail': 'antom@gmail.com',
-        'phone': '+491234567890'
-    },
-    {
-        'name': 'Hans Mueller',
-        'mail': 'hans@gmail.com',
-        'phone': '+491234567890'
-    },
-    {
-        'name': 'Benedikt Ziegler',
-        'mail': 'benedikt@gmail.com',
-        'phone': '+491234567890'
-    },
-    {
-        'name': 'David Eisenberg',
-        'mail': 'davidberg@gmail.com',
-        'phone': '+491234567890'
-    },
-    {
-        'name': 'Eva Fischer',
-        'mail': 'eva@gmail.com',
-        'phone': '+491234567890'
-    },
-    {
-        'name': 'Emmanuel Mauer',
-        'mail': 'emmanuelma@gmail.com',
-        'phone': '+491234567890'
-    },
-    {
-        'name': 'Marcel Bauer',
-        'mail': 'bauer@gmail.com',
-        'phone': '+491234567890'
-    },
-    {
-        'name': 'Tatjana Wolf',
-        'mail': 'wolf@gmail.com',
-        'phone': '+491234567890'
-    },
-    {
-        'name': 'Klaus Werner',
-        'mail': 'klausw@gmail.com',
-        'phone': '+491234567890'
-    },
-    {
-        'name': 'Peter Hahn',
-        'mail': 'peterhahn@gmail.com',
-        'phone': '+491234567890'
-    }]
-
-let testTasks = [
-    {
-        'type': 'User Story',
-        'task': 'Kochwelt Page & Recipe Recommender',
-        'description': 'Build start page with recipe recommendation.',
-        'Due Date': '10/05/2025',
-        'priority': 'Medium',
-        'assignedTo': ['Emmanuel Mauer', 'Marcel Bauer', 'Anton Mayer'],
-        'Subtasks': ['Implement Recipe Recommendation', 'Start Page Layout']
-    },
-    {
-        'type': 'Technical Task',
-        'task': 'HTML Base Template Creation',
-        'description': 'Create reusable HTML base templates...',
-        'Due Date': '10/05/2025',
-        'priority': 'Low',
-        'assignedTo': ['David Eisenberg', 'Benedikt Ziegler', 'Anton Mayer'],
-        'Subtasks': ['Implement Recipe Recommendation', 'Start Page Layout']
-    },
-    {
-        'type': 'User Story',
-        'task': 'Daily Kochwelt Recipe',
-        'description': 'Implement daily recipe and portion calculator...',
-        'Due Date': '10/05/2025',
-        'priority': 'Medium',
-        'assignedTo': ['Emmanuel Mauer', 'Anton Mayer', 'Tatjana Wolf'],
-        'Subtasks': ['Implement Recipe Recommendation', 'Start Page Layout']
-    },
-    {
-        'type': 'Technical Task',
-        'task': 'CSS Architecture Planning',
-        'description': 'Define CSS naming conventions and structure...',
-        'Due Date': '10/05/2025',
-        'priority': 'High',
-        'assignedTo': ['Stefan Meier', 'Benedikt Ziegler'],
-        'Subtasks': ['Implement Recipe Recommendation', 'Start Page Layout']
-    },
-]
-
-
 /**
  * This function is used to render the page if the user refresh the page or switch from another HTML-page to this one.
  * 
@@ -124,55 +32,97 @@ function checkAcceptPrivacyPolicy() {
     }
 }
 
-
-async function loadUsers() {
-    try {
-        users = JSON.parse(await getItem('users'));
-    } catch (e) {
-        console.error('Loading error:', e);
-    }
-}
-
-
+/**
+ * This function is used to add a new user to the database.
+ * 
+ * @author: Robin
+ */
 async function addUser() {
-    // debugger;
     let msgBox = document.getElementById('msgBox');
-    let name = document.getElementById('name');
-    let email = document.getElementById('email');
+    let name = document.getElementById('name').value;
+    let email = document.getElementById('email').value;
     let password = document.getElementById('password1');
     let confirmPassword = document.getElementById('password2');
-    let newArray = [{ 'mail': email.value, 'name': name.value, 'password': password.value, 'contacts': testContacts, 'tasks': testTasks }];
+    let newArray = { 'mail': email, 'name': name, 'password': password.value, 'contacts': testContacts, 'tasks': testTasks };
     let actualUsers = await loadData('users');
-    let actualisedUsers = [...newArray, ...actualUsers];
-
-    if (actualUsers.value === '') {
-        actualisedUsers = [...newArray];
-    };
-
-    for (let mailSearchIndex = 0; mailSearchIndex < actualUsers.length; mailSearchIndex++) {
-        if (actualUsers[mailSearchIndex] === null) {
-            continue;
-        } else {
-            let mailToCheck = actualUsers[mailSearchIndex]['mail'];
-            if (JSON.stringify(mailToCheck) === JSON.stringify(email.value)) {
-                let msgBoxText = document.getElementById('msgBoxText');
-                msgBoxText.innerHTML = 'User already exists. Please use another Mail-Adress!';
-                msgBox.classList.remove('d-none');
-                await setTimeout(function () {
-                    msgBox.classList.add('d-none');
-                }, 2000);
-                return;
-            }
-        }
-    };
-    await putNewUser(password, confirmPassword, msgBox, actualisedUsers);
+    let mailExists = await checkMail(msgBox, email, actualUsers);
+    if (mailExists) {
+        return;
+    }
+    let nameChecked = await checkName(msgBox, name);
+    if (!nameChecked) {
+        return;
+    }
+    await putNewUser(password, confirmPassword, msgBox, newArray);
 }
 
+/**
+ * This function checks if the user mail already exists in the database.
+ * 
+ * @param {Element} msgBox - The message box element to show if the mail already exists.
+ * @param {string} email - The email to check.
+ * @param {Array} actualUsers - The array of actual users.
+ * 
+ * @returns {boolean} - Returns true if the email exists, otherwise false.
+ * @author: Robin
+ */
+async function checkMail(msgBox, email, actualUsers) {
+    for (let key in actualUsers) {
+        let user = actualUsers[key];
+        if (user && user.mail === email) {
+            let msgBoxText = document.getElementById('msgBoxText');
+            msgBoxText.innerHTML = 'User already exists. Please use another Mail-Adress!';
+            msgBox.classList.remove('d-none');
+            await new Promise(resolve => setTimeout(() => {
+                msgBox.classList.add('d-none');
+                resolve();
+            }, 2000));
+            return true;
+        }
+    }
+    return false;    
+}
 
-async function putNewUser(password, confirmPassword, msgBox, actualisedUsers) {
+/**
+ * This function checks if the user name is valid.
+ * 
+ * @param {Element} msgBox - The message box element to show if the name is invalid.
+ * @param {string} fullName - The full name of the user.
+ * 
+ * @returns {boolean} - Returns true if the name is valid, otherwise false.
+ * @author: Robin
+ */
+async function checkName(msgBox, fullName) {
+    let nameParts = fullName.trim().split(' ');
+    if (nameParts.length !== 2) {
+        let msgBoxText = document.getElementById('msgBoxText');
+        msgBoxText.innerHTML = 'Please enter your full name.';
+        msgBox.classList.remove('d-none');
+        await new Promise(resolve => setTimeout(() => {
+            msgBox.classList.add('d-none');
+            resolve();
+        }, 2000));
+        return false;
+    }
+    return true;
+}
+
+/**
+ * This function checks if the user password and confirm password are the same and shows a message if they are not.
+ * If the password and confirm password are the same, the user is added to the database and gets to the summary page.
+ * 
+ * @param {Element} password - The password input element.
+ * @param {Element} confirmPassword - The confirm password input element.
+ * @param {Element} msgBox - The message box element to show if the passwords do not match.
+ * @param {Array} actualisedUsers - The array of actual users.
+ * 
+ * @author: Robin
+ */
+async function putNewUser(password, confirmPassword, msgBox, newArray) {
     if (password.value === confirmPassword.value) {
-        await putData('users', actualisedUsers);
+        await postData('users', newArray);
         document.getElementById('registerContainer').classList.add('d-none');
+        let msgBoxSignedUp = document.getElementById('msgBoxSignedUp');
         msgBoxSignedUp.classList.remove('d-none');
         setTimeout(function () {
             window.location.href = 'login.html?msg=Registrierung erfolgreich';
@@ -181,20 +131,9 @@ async function putNewUser(password, confirmPassword, msgBox, actualisedUsers) {
         let msgBoxText = document.getElementById('msgBoxText');
         msgBoxText.innerHTML = `Ups! your password don't match.`;
         msgBox.classList.remove('d-none');
-        await setTimeout(function () {
+        await new Promise(resolve => setTimeout(() => {
             msgBox.classList.add('d-none');
-        }, 2000);
-    }
-}
-
-function login() {
-    let email = document.getElementById('email');
-    let password = document.getElementById('password');
-    let user = users.find(user => user.email === email.value && user.password === password.value);
-    if (user) {
-        window.location.href = 'summary.html';
-    } else {
-        msgBox.classList.remove('d-none');
-        msgBox.innerHTML = 'Login fehlgeschlagen';
+            resolve();
+        }, 2000));
     }
 }

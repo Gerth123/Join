@@ -1,0 +1,113 @@
+.full-size-input-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+  margin-bottom: 32px;
+  padding: 12px 21px 12px 21px;
+  border: 1px solid #d1d1d1;
+  border-radius: 10px;
+  font-size: 20px;
+  height: 24px;
+}
+
+.subtasks-input {
+  font-size: 20px;
+}
+
+.subtasks-btn:hover {
+  border-radius: 50%;
+  background: #eeeeee;
+}
+
+.subtasks-btn-none {
+  display: none;
+}
+
+.subtasks-li-text {
+  display: flex;
+  justify-content: space-between;
+  height: 24px;
+}
+
+.subtasks-li-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.subtasks-li-container:hover .subtasks-btn-none {
+  display: block;
+}
+
+.subtasks-li-container:hover .subtasks-line-none {
+  display: block;
+}
+
+.subtasks-btn-none:hover {
+  border-radius: 50%;
+  background: #eeeeee;
+}
+
+.subtasks-btn-container {
+  display: flex;
+  align-items: center;
+}
+
+.subtasks-line {
+  width: 1px;
+  height: 24px;
+  background: #a8a8a8;
+}
+
+.subtasks-line-none {
+  width: 1px;
+  height: 24px;
+  background: #a8a8a8;
+  display: none;
+}
+
+.d-none {
+  display: none;
+}
+
+h1 {
+  color: green;
+}
+
+.multipleSelection {
+  width: 300px;
+  background-color: #bcc2c1;
+}
+
+.selectBox {
+  position: relative;
+}
+
+.selectBox select {
+  width: 100%;
+  font-weight: bold;
+}
+
+.overSelect {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+#checkBoxes {
+  display: none;
+  border: 1px #8df5e4 solid;
+}
+
+#checkBoxes label {
+  display: block;
+}
+
+#checkBoxes label:hover {
+  background-color: #4f615e;
+  color: white;
+  /* Added text color for better visibility */
+}

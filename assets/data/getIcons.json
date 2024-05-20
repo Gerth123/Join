@@ -1,0 +1,20 @@
+{
+  "categoryIcons": {
+    "user story": "/assets/icons/board/user_story.svg",
+    "technical task": "/assets/icons/board/technical_task.svg"
+  },
+  "categoryFullSizeIcons": {
+    "user story": "/assets/icons/board/fullsize/user_story_big.svg",
+    "technical task": "/assets/icons/board/fullsize/technical_task_big.svg"
+  },
+  "priorityIcons": {
+    "low": "/assets/icons/board/priority/low.svg",
+    "medium": "/assets/icons/board/priority/medium.svg",
+    "urgent": "/assets/icons/board/priority/urgent.svg"
+  },
+  "priorityFullSizeIcons": {
+    "low": "/assets/icons/board/priority/low_box.svg",
+    "medium": "/assets/icons/board/priority/medium_box.svg",
+    "urgent": "/assets/icons/board/priority/urgent_box.svg"
+  }
+}

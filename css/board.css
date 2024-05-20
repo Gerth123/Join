@@ -148,13 +148,7 @@ input:focus {
 }
 
 .board-category {
-  width: max-content;
-  padding: 4px 16px 4px 16px;
   margin-bottom: 24px;
-  background-color: blue;
-  color: #ffffff;
-  gap: 10px;
-  border-radius: 8px;
 }
 
 .board-title {
@@ -344,6 +338,38 @@ progress[value]::-moz-progress-bar {
   flex-direction: column;
 }
 
+[type="checkbox"] {
+  display: none;
+}
+
+[type="checkbox"] + label {
+  position: relative;
+  padding-left: 30px;
+  cursor: pointer;
+  display: inline-block;
+  line-height: 25px;
+}
+
+[type="checkbox"] + label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 18px;
+  height: 18px;
+  background: url("/assets/icons/board/fullsize/checkbox.svg") no-repeat;
+}
+
+[type="checkbox"]:checked + label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 18px;
+  height: 18px;
+  background: url("/assets/icons/board/fullsize/checkbox_checked.svg") no-repeat;
+}
+
 .button {
   cursor: pointer;
 }
@@ -408,4 +434,10 @@ progress[value]::-moz-progress-bar {
 .row {
   display: flex;
   justify-content: space-between;
+}
+
+fieldset {
+  padding: 0;
+  margin: 0;
+  border: none;
 }

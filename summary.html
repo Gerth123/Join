@@ -7,6 +7,7 @@
     <title>Join Summary</title>
     <script src="script.js"></script>
     <script src="js/summary.js"></script>
+    <script src="js/login.js"></script>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="css/summary.css" />
     <link rel="icon" href="assets/img/logo.png" type="image/x-icon" />
@@ -14,7 +15,7 @@
     <link rel="stylesheet" href="fonts/PTSans-Bold.ttf" />
     <link rel="stylesheet" href="fonts/PTSans-Italic.ttf" />
   </head>
-  <body>
+  <body onload="initSummary()">
     <div class="wholeJoinContainer">
       <section class="headerAndOpenedContainer">
         <header>
@@ -28,90 +29,107 @@
         </header>
 
         <div class="mainSection">
-          <div class="headingSection">
-            <h1 class="joinSuh1">Join 360</h1>
-            <div class="seperator"></div>
-            <h2 class="h2KeyMet">Key Metrics at a Glance</h2>
-          </div>
-          <div class="mainContainer">
-            <div class="container1">
-              <a href="board.html" class="to-do-left">
-                <div class="toDo">
-                  <img class="imgPen1" src="assets/img/Frame 59.svg" />
-                  <div class="text-ToDo">To-do</div>
-                </div>
-              </a>
-              <a href="board.html" class="to-do-right">
-                <div class="done">
-                  <img class="img-chop1" src="assets/img/Group 7.svg" />
-                  <div class="text-done">Done</div>
-                </div>
-              </a>
+          <div class="headingSectionAndMainContainer">
+            <div class="headingSection">
+              <h1 class="joinSuh1">Join 360</h1>
+              <div class="seperator"></div>
+              <h2 class="h2KeyMet">Key Metrics at a Glance</h2>
             </div>
-            <a href="board.html" class="Urgent-under">
-              <div class="container2">
-                <img class="imgUrgent" src="assets/img/frame23.svg" />
-                <div class="text-urgent">Urgent</div>
-                <div class="line-urgent"></div>
-                <div class="urgent-date">
-                  May 2, 2024
-                  <div class="text-urgent2">Upcoming Deadline</div>
-                </div>
+            <div class="mainContainer">
+              <div class="container1">
+                <a href="board.html" class="to-do-left">
+                  <div class="toDo">
+                    <img class="imgPen1" src="assets/img/Frame 59.svg" />
+                    <div class="number-and-text-ToDo">
+                      <div class="number-ToDo" id="tasksToDo"></div>
+                      <div class="text-ToDo">To-do</div>
+                    </div>
+                  </div>
+                </a>
+                <a href="board.html" class="to-do-right">
+                  <div class="done">
+                    <img class="img-chop1" src="assets/img/Group 7.svg" />
+                    <div class="number-and-text-done">
+                      <div class="number-done" id="tasksDone"></div>
+                      <div class="text-done">Done</div>
+                    </div>
+                  </div>
+                </a>
               </div>
-            </a>
-            <div class="task-container">
-              <a href="board.html" class="task">
-                <div class="tasks">
-                  <div class="text-task">Tasks in Board</div>
-                </div>
-              </a>
-              <a href="board.html" class="task">
-                <div class="tasks">
-                  <div class="text-task">
-                    Tasks In<br />
-                    Progress
+              <a onclick="changeHtmlPage('board.html')" class="Urgent-under">
+                <div class="container2">
+                  <div class="img-and-urgent-count-container">
+                    <img class="imgUrgent" src="assets/img/frame23.svg" />
+                    <div class="number-and-text-urgent-container">
+                      <div class="number-urgent" id="urgentTasks"></div>
+                      <div class="text-urgent">Urgent</div>
+                    </div>
+                  </div>
+                  <div class="line-urgent"></div>
+                  <div>
+                    <div class="urgent-date" id="urgentDate">May 2, 2024</div>
+                    <div class="text-urgent2">Upcoming Deadline</div>
                   </div>
                 </div>
               </a>
-              <a href="board.html" class="task">
-                <div class="tasks">
-                  <div class="text-task">
-                    Awaiting<br />
-                    Feedback
+              <div class="task-container">
+                <a onclick="changeHtmlPage('board.html')" class="task">
+                  <div class="tasks">
+                    <div class="number-task" id="tasksInBoard"></div>
+                    <div class="text-task">Tasks in Board</div>
                   </div>
-                </div>
-              </a>
+                </a>
+                <a onclick="changeHtmlPage('board.html')" class="task">
+                  <div class="tasks">
+                    <div class="number-task" id="tasksInProgress"></div>
+                    <div class="text-task">
+                      Tasks In<br />
+                      Progress
+                    </div>
+                  </div>
+                </a>
+                <a onclick="changeHtmlPage('board.html')" class="task">
+                  <div class="tasks">
+                    <div class="number-task" id="tasksAwaitingFeedback"></div>
+                    <div class="text-task">
+                      Awaiting<br />
+                      Feedback
+                    </div>
+                  </div>
+                </a>
+              </div>
             </div>
           </div>
-          <div id="greetingText"></div>
+          <div class="greetingContainer">
+            <div id="greetingText" class="greetingText"></div>
+            <span class="greetingName" id="greetingName">Max Mustermann</span>
+          </div>
         </div>
-
-        <footer class="d-none"></footer>
       </section>
       <section class="sideBarContainer">
         <div class="sideBarLogoContainer">
           <img class="logoImg" src="assets/img/logoWhite.svg" alt="Join logo" />
         </div>
         <div class="sideBarChooseSectionContainer">
-          <a href="summary.html" class="openedDarkBackground"
+          <a onclick="changeHtmlPage('summary.html')" class="openedDarkBackground"
             ><div class="sideBarImgContainer">
               <img src="assets/img/summaryIcon.svg" alt="Summary Icon" class="sideBarImage" />
             </div>
             <span>Summary</span>
           </a>
-          <a href="add_task.html" class="addTaskContainer"
+          <a onclick="changeHtmlPage('add_task.html')" class="addTaskContainer"
             ><div class="sideBarImgContainer">
               <img src="assets/img/addTaskIcon.svg" alt="Add Task Icon" class="sideBarImage" />
             </div>
             <span>Add Task</span>
           </a>
-          <a href="board.html" class="boardContainer"
+          <a onclick="changeHtmlPage('board.html')" class="boardContainer"
             ><div class="sideBarImgContainer">
               <img src="assets/img/boardIcon.svg" alt="Board Icon" class="sideBarImage" />
             </div>
             <span>Board</span>
           </a>
-          <a href="contacts.html" class="contactsContainer"
+          <a onclick="changeHtmlPage('contacts.html')" class="contactsContainer"
             ><div class="sideBarImgContainer">
               <img src="assets/img/contactsIcon.svg" alt="Assets Icon" class="sideBarImage" />
             </div>
@@ -119,10 +137,10 @@
           </a>
         </div>
         <div class="privacyPolicyAndLegalNoticeContainer">
-          <a class="privacyPolicyContainer" onclick="openNewTab('robin-gerth.developerakademie.net/Join/privacy_policy.html')">
+          <a class="privacyPolicyContainer" onclick="changeHtmlPage('privacy_policy.html')">
             <span class="privacyPolicyText">Privacy Policy</span>
           </a>
-          <a class="legalNoticeContainer" onclick="openNewTab('robin-gerth.developerakademie.net/Join/legal_notice.html')">
+          <a class="legalNoticeContainer" onclick="changeHtmlPage('legal_notice.html')">
             <span class="legalNoticeText">Legal Notice</span>
           </a>
         </div>
