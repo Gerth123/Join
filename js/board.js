@@ -28,6 +28,7 @@ async function init() {
   await renderBoards();
   // save(emptyData);
   getEventListeners();
+  getDropZones();
 }
 
 /**
@@ -89,7 +90,7 @@ function getBoardSection(data) {
 function getBoardContainer(id) {
   return /*html*/ ` 
     <div id="${id}" class="board-card-content">
-      <div id="dropzone" class="board-card-dropzone"></div>
+      <div id="dropzone" ondragover="allowDrop(event)" ondrop="doDrop(event)" class="board-card-dropzone"></div>
     </div>`;
 }
 
@@ -119,7 +120,7 @@ function getBoardContents(contents, id) {
  */
 function getBoardCard(card) {
   return /*html*/ `
-  <div id='${card["id"]}' class="board-card" draggable="true">
+  <div id='${card["id"]}' class="board-card" draggable="true" ondragstart='doSetData(event, ${card["id"]})'>
     <img id="board-category" class="board-category">
     <div class="board-title">${card["title"]}</div>
     <div class="board-description">${card["description"]}</div> 
@@ -132,8 +133,8 @@ function getBoardCard(card) {
       </div>
       <img id='board-priority' alt="">
     </div>
-    <div  id="dropzone" class="kanban-dropzone"></div>
-  </div> `;
+  </div> 
+  <div  id="dropzone" ondragover="allowDrop(event)" ondrop="doDrop(event)" class="board-card-dropzone"></div>`;
 }
 
 /**
