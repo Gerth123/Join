@@ -3,61 +3,71 @@ let testContacts = [
         'name': 'Anton Mayer',
         'mail': 'antom@gmail.com',
         'phone': '+491234567890',
-        'color': generateRandomColor()
+        'color': generateRandomColor(),
+        'assigned': false,
     },
     {
         'name': 'Hans Mueller',
         'mail': 'hans@gmail.com',
         'phone': '+491234567890',
-        'color': generateRandomColor()
+        'color': generateRandomColor(),
+        'assigned': false,
     },
     {
         'name': 'Benedikt Ziegler',
         'mail': 'benedikt@gmail.com',
         'phone': '+491234567890',
-        'color': generateRandomColor()
+        'color': generateRandomColor(),
+        'assigned': false,
     },
     {
         'name': 'David Eisenberg',
         'mail': 'davidberg@gmail.com',
         'phone': '+491234567890',
-        'color': generateRandomColor()
+        'color': generateRandomColor(),
+        'assigned': false,
     },
     {
         'name': 'Eva Fischer',
         'mail': 'eva@gmail.com',
         'phone': '+491234567890',
-        'color': generateRandomColor()
+        'color': generateRandomColor(),
+        'assigned': false,
     },
     {
         'name': 'Emmanuel Mauer',
         'mail': 'emmanuelma@gmail.com',
         'phone': '+491234567890',
-        'color': generateRandomColor()
+        'color': generateRandomColor(),
+        'assigned': false,
     },
     {
         'name': 'Marcel Bauer',
         'mail': 'bauer@gmail.com',
         'phone': '+491234567890',
-        'color': generateRandomColor()
+        'color': generateRandomColor(),
+        'assigned': false,
     },
     {
         'name': 'Tatjana Wolf',
         'mail': 'wolf@gmail.com',
         'phone': '+491234567890',
-        'color': generateRandomColor()
+        'color': generateRandomColor(),
+        'assigned': false,
     },
     {
         'name': 'Klaus Werner',
         'mail': 'klausw@gmail.com',
         'phone': '+491234567890',
-        'color': generateRandomColor()
+        'color': generateRandomColor(),
+        'assigned': false,
     },
     {
         'name': 'Peter Hahn',
         'mail': 'peterhahn@gmail.com',
         'phone': '+491234567890',
-        'color': generateRandomColor()
+        'color': generateRandomColor(),
+        'assigned': false,
     }
 ];
 

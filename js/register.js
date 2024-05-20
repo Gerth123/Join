@@ -43,12 +43,8 @@ async function addUser() {
     let email = document.getElementById('email').value;
     let password = document.getElementById('password1');
     let confirmPassword = document.getElementById('password2');
-    let newArray = [{ 'mail': email, 'name': name, 'password': password.value, 'contacts': testContacts, 'tasks': testTasks }];
+    let newArray = { 'mail': email, 'name': name, 'password': password.value, 'contacts': testContacts, 'tasks': testTasks };
     let actualUsers = await loadData('users');
-    let actualisedUsers = [...newArray, ...actualUsers];
-    if (actualUsers.length === 0) {
-        actualisedUsers = [...newArray];
-    }
     let mailExists = await checkMail(msgBox, email, actualUsers);
     if (mailExists) {
         return;
@@ -57,7 +53,7 @@ async function addUser() {
     if (!nameChecked) {
         return;
     }
-    await putNewUser(password, confirmPassword, msgBox, actualisedUsers);
+    await putNewUser(password, confirmPassword, msgBox, newArray);
 }
 
 /**
@@ -71,7 +67,8 @@ async function addUser() {
  * @author: Robin
  */
 async function checkMail(msgBox, email, actualUsers) {
-    for (let user of actualUsers) {
+    for (let key in actualUsers) {
+        let user = actualUsers[key];
         if (user && user.mail === email) {
             let msgBoxText = document.getElementById('msgBoxText');
             msgBoxText.innerHTML = 'User already exists. Please use another Mail-Adress!';
@@ -83,7 +80,7 @@ async function checkMail(msgBox, email, actualUsers) {
             return true;
         }
     }
-    return false;
+    return false;    
 }
 
 /**
@@ -121,9 +118,9 @@ async function checkName(msgBox, fullName) {
  * 
  * @author: Robin
  */
-async function putNewUser(password, confirmPassword, msgBox, actualisedUsers) {
+async function putNewUser(password, confirmPassword, msgBox, newArray) {
     if (password.value === confirmPassword.value) {
-        await putData('users', actualisedUsers);
+        await postData('users', newArray);
         document.getElementById('registerContainer').classList.add('d-none');
         let msgBoxSignedUp = document.getElementById('msgBoxSignedUp');
         msgBoxSignedUp.classList.remove('d-none');
