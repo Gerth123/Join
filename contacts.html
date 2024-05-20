@@ -7,6 +7,8 @@
     <title>Join Contacts</title>
     <script src="script.js"></script>
     <script src="js/contacts.js"></script>
+    <script src="js/initials.js"></script>
+    <script src="js/htmlcontacts.js"></script>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="css/contacts.css" />
     <link rel="icon" href="assets/img/logo.png" type="image/x-icon" />
@@ -23,19 +25,37 @@
           </div>
           <div class="helpAndUserContainer">
             <img src="assets/img/help.svg" alt="Help" class="helpIcon" />
-            <span class="initials">RG</span>
+            <div class="initials">RG</div>
+            <div class="menu" id="menu">
+              <a href="legal_notice.html">Legal Notice</a>
+              <a href="privacy_policy.html">Privacy Policy</a>
+              <a href="login.html">Log out</a>
+            </div>
           </div>
         </header>
-        <section class="openContactsContainer">
-          <div class="addContact">
-            <button class="addContactButton">Add new contact
-              <img class="imgaddcontact" src="assets/img/person_add.svg">
-            </button>
-          </div>
-          <div class="contacts">
-          </div>
-        </section>
-        <footer class="d-none"></footer>
+        <div class="mainContent">
+          <section class="openContactsContainer">
+            <div class="addContact">
+              <button class="addContactButton">
+                Add new contact
+                <img class="imgaddcontact" src="assets/img/person_add.svg" />
+              </button>
+            </div>
+            <div id="contacts" class="contacts">
+              <div id="contacts-container"></div>
+            </div>
+          </section>
+          <section class="contentright">
+            <div class="h1contact">
+              <div class="h1-div-contact">
+                <p class="P-contact">Contacts</p>
+                <div class="seperator"></div>
+                <p class="P-contact-right">Better with a team</p>
+              </div>
+            </div>
+            <div class="contactdetails-right"></div>
+          </section>
+        </div>
       </section>
       <section class="sideBarContainer">
         <div class="sideBarLogoContainer">
@@ -81,30 +101,34 @@
       <div class="mainSectionOverlay">
         <div class="contentleft">
           <div class="contentleft2">
-            <img class="logoAddContact" src="assets/img/Capa 2.svg">
+            <img class="logoAddContact" src="assets/img/Capa 2.svg" />
             <div class="overlayText">
-            <p class="P1overlay">Add contact</p>
-            <p class="P2overlay">Tasks are better with a team!</p>
-            <div class="divider-vertical"></div>
+              <p class="P1overlay">Add contact</p>
+              <p class="P2overlay">Tasks are better with a team!</p>
+              <div class="divider-vertical"></div>
             </div>
           </div>
         </div>
         <div class="overlay-contentright">
-          <img class="imgcloseOverlay" src="assets/img/Close.svg">
-          <img src="assets/img/Group 13.svg"> 
+          <img class="imgcloseOverlay" src="assets/img/Close.svg" />
+          <img src="assets/img/Group 13.svg" />
           <form class="inputSection">
-            <input required id="contactName" placeholder="Name">
-            <input required id="contactEmail" placeholder="Email" pattern=".*@.*\..*" title="An @ is required">
-            <input required id="contactPhone" placeholder="Phone" pattern="\d*" title="Only numbers allowed">
+            <input required id="contactName" placeholder="Name" />
+            <input required id="contactEmail" placeholder="Email" pattern=".*@.*\..*" title="An @ is required" />
+            <input required id="contactPhone" placeholder="Phone" pattern="\d*" title="Only numbers allowed" />
             <div class="overlayButtons">
-              <div class="clearButton">Clear 
-                <img class="imgClear" src="assets/img/Close.svg">
+              <div class="clearButton">
+                Cancel
+                <img class="imgClear" src="assets/img/Close.svg" />
               </div>
+              <button class="createButton">
+                Create contact
+                <img class="imgcheck" src="assets/img/check.svg" />
+              </button>
             </div>
           </form>
         </div>
       </div>
     </div>
-
   </body>
 </html>
