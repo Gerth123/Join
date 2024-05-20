@@ -6,7 +6,7 @@
  */
 async function initSummary() {
     let urlParams = new URLSearchParams(window.location.search);
-    let actualUsersNumber = parseInt(urlParams.get('actualUsersNumber'), 10);
+    let actualUsersNumber = urlParams.get('actualUsersNumber');
     let actualUsers = await loadData('users');
    fillDates(actualUsersNumber, actualUsers);
 }
