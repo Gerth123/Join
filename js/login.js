@@ -43,39 +43,37 @@ async function checkUser() {
     let actualUsers = await loadData('users');
     let found = false;
     let actualMailSearchIndex;
-    for (let mailSearchIndex = 0; mailSearchIndex < actualUsers.length; mailSearchIndex++) {
-        if (actualUsers[mailSearchIndex] === null) {
-            continue;
-        } else {
-            let mailToCheck = actualUsers[mailSearchIndex]['mail'];
-            if (JSON.stringify(mailToCheck) === JSON.stringify(email)) {
-                actualMailSearchIndex = mailSearchIndex;
-                if (JSON.stringify(actualUsers[mailSearchIndex]['password']) === JSON.stringify(password)) {
-                    actualUsersNumber = mailSearchIndex;
-                    window.location.href = `summary.html?msg=Login erfolgreich&actualUsersNumber=${JSON.stringify(mailSearchIndex)}`;
-                    found = true;
-                    break;
-                }
+    for (let mailSearchIndex in actualUsers) {
+        let user = actualUsers[mailSearchIndex];
+        if (user && user.mail === email) {
+            actualMailSearchIndex = mailSearchIndex;
+            if (user.password === password) {
+                window.location.href = `summary.html?msg=Login erfolgreich&actualUsersNumber=${mailSearchIndex}`;
+                found = true;
+                break;
             }
         }
     }
-    userNotFound(found, actualUsers, actualMailSearchIndex, email);
-    saveUserData(email, password);
+    await userNotFound(found, actualUsers, actualMailSearchIndex);
+    await saveUserData(email, password);
 }
 
 /**
  * This function is used to check if the user or the password is incorrect. If either one is incorrect, an error message is shown to explain, which one is wrong.
  * 
  * @param {boolean} found - A boolean value that is used to determine if the user was found.
+ * @param {object} actualUsers - An object that contains all the users.
+ * @param {number} actualMailSearchIndex - The index of the user that was found.
  * 
  * @author: Robin
  */
-async function userNotFound(found, actualUsers, actualMailSearchIndex, email) {
+async function userNotFound(found, actualUsers, actualMailSearchIndex) {
     if (!found) {
         let msgBox = document.getElementById('msgBox');
         msgBox.classList.remove('d-none');
         let msgBoxText = document.getElementById('msgBoxText');
-        if (JSON.stringify(actualUsers[actualMailSearchIndex]['mail']) === JSON.stringify(email)) {
+        console.log(actualUsers);	
+        if (actualMailSearchIndex !== undefined) {
             msgBoxText.innerHTML = 'Wrong password. Please try again!';
         } else {
             msgBoxText.innerHTML = 'Mail not registered. Please sign up first!';
@@ -104,7 +102,8 @@ function saveUserData(email, password) {
     }
 }
 
-/**This function is used to load the user data from local storage, if the checkbox is checked and 
+/**
+ * This function is used to load the user data from local storage, if the checkbox is checked and 
  * clear the Input Fields if the checkbox is not checked if the checkbox is not checked.
  * 
  * @author: Robin
@@ -123,6 +122,11 @@ function loadUserData() {
     }
 }
 
+/**
+ * This function is used to log in as a guest if the user is not registered.
+ * 
+ * @author: Robin
+ */
 async function guestLogIn() {
     let users = await loadData('users');
     for (let [index, user] of Object.entries(users)) {
