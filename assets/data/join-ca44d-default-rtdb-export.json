@@ -1,0 +1,884 @@
+{
+  "users": [
+    {
+      "contacts": [
+        {
+          "color": "#604725",
+          "mail": "antom@gmail.com",
+          "name": "Anton Mayer",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#F82A43",
+          "mail": "hans@gmail.com",
+          "name": "Hans Mueller",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#8ACF79",
+          "mail": "benedikt@gmail.com",
+          "name": "Benedikt Ziegler",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#F7F428",
+          "mail": "davidberg@gmail.com",
+          "name": "David Eisenberg",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#8AFA40",
+          "mail": "eva@gmail.com",
+          "name": "Eva Fischer",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#A37011",
+          "mail": "emmanuelma@gmail.com",
+          "name": "Emmanuel Mauer",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#736ABB",
+          "mail": "bauer@gmail.com",
+          "name": "Marcel Bauer",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#C54A49",
+          "mail": "wolf@gmail.com",
+          "name": "Tatjana Wolf",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#A252F3",
+          "mail": "klausw@gmail.com",
+          "name": "Klaus Werner",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#C44E8A",
+          "mail": "peterhahn@gmail.com",
+          "name": "Peter Hahn",
+          "phone": "+491234567890"
+        }
+      ],
+      "mail": "dfs@sdf",
+      "name": "Robin Gerth",
+      "password": "dfgdfg",
+      "tasks": [
+        {
+          "id": 1,
+          "items": [
+            {
+              "assigned": [
+                {
+                  "color": "",
+                  "lastName": "Mauer",
+                  "name": "Emmanuel"
+                },
+                {
+                  "color": "",
+                  "lastName": "Bauer",
+                  "name": "Marcel"
+                },
+                {
+                  "color": "",
+                  "lastName": "Wolf",
+                  "name": "Tatjana"
+                }
+              ],
+              "category": "User Story",
+              "date": "10/05/2025",
+              "description": "Build start page with recipe recommendation.",
+              "id": "7955",
+              "priority": "medium",
+              "subtasks": [
+                {
+                  "checked": false,
+                  "task": "Implement Recipe Recommendation"
+                },
+                {
+                  "checked": true,
+                  "task": "Start Page Layout"
+                }
+              ],
+              "title": "Kochwelt Page & Recipe Recommender"
+            },
+            {
+              "assigned": [
+                {
+                  "color": "",
+                  "lastName": "Eisenberg",
+                  "name": "David"
+                },
+                {
+                  "color": "",
+                  "lastName": "Ziegler",
+                  "name": "Benedikt"
+                },
+                {
+                  "color": "",
+                  "lastName": "Mayer",
+                  "name": "Anton"
+                }
+              ],
+              "category": "Technical Task",
+              "date": "10/05/2025",
+              "description": "Create reusable HTML base templates...",
+              "id": "2453",
+              "priority": "low",
+              "subtasks": [
+                {
+                  "checked": false,
+                  "task": "Implement Recipe Recommendation"
+                },
+                {
+                  "checked": true,
+                  "task": "Start Page Layout"
+                }
+              ],
+              "title": "HTML Base Template Creation"
+            },
+            {
+              "assigned": [
+                {
+                  "color": "",
+                  "lastName": "Mauer",
+                  "name": "Emmanuel"
+                },
+                {
+                  "color": "",
+                  "lastName": "Mayer",
+                  "name": "Anton"
+                },
+                {
+                  "color": "",
+                  "lastName": "Wolf",
+                  "name": "Tatjana"
+                }
+              ],
+              "category": "User Story",
+              "date": "10/05/2025",
+              "description": "Implement daily recipe and portion calculator...",
+              "id": "0945",
+              "priority": "medium",
+              "subtasks": [
+                {
+                  "checked": false,
+                  "task": "Implement Recipe Recommendation"
+                },
+                {
+                  "checked": true,
+                  "task": "Start Page Layout"
+                }
+              ],
+              "title": "Daily Kochwelt Recipe"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "items": [
+            {
+              "assigned": [
+                {
+                  "color": "",
+                  "lastName": "Meier",
+                  "name": "Stefan"
+                },
+                {
+                  "color": "",
+                  "lastName": "Ziegler",
+                  "name": "Benedikt"
+                }
+              ],
+              "category": "Technical Task",
+              "date": "10/05/2025",
+              "description": "Define CSS naming conventions and structure...",
+              "id": "7489",
+              "priority": "urgent",
+              "subtasks": [
+                {
+                  "checked": false,
+                  "task": "Implement Recipe Recommendation"
+                },
+                {
+                  "checked": true,
+                  "task": "Start Page Layout"
+                }
+              ],
+              "title": "CSS Architecture Planning"
+            }
+          ]
+        },
+        {
+          "id": 3
+        },
+        {
+          "id": 4
+        }
+      ]
+    },
+    {
+      "contacts": [
+        {
+          "color": "#0BFD99",
+          "mail": "antom@gmail.com",
+          "name": "Anton Mayer",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#5A4F9B",
+          "mail": "hans@gmail.com",
+          "name": "Hans Mueller",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#00E126",
+          "mail": "benedikt@gmail.com",
+          "name": "Benedikt Ziegler",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#2E7B9D",
+          "mail": "davidberg@gmail.com",
+          "name": "David Eisenberg",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#493269",
+          "mail": "eva@gmail.com",
+          "name": "Eva Fischer",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#692C30",
+          "mail": "emmanuelma@gmail.com",
+          "name": "Emmanuel Mauer",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#46CB5F",
+          "mail": "bauer@gmail.com",
+          "name": "Marcel Bauer",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#1810C5",
+          "mail": "wolf@gmail.com",
+          "name": "Tatjana Wolf",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#BD8F9E",
+          "mail": "klausw@gmail.com",
+          "name": "Klaus Werner",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#DB4D2E",
+          "mail": "peterhahn@gmail.com",
+          "name": "Peter Hahn",
+          "phone": "+491234567890"
+        }
+      ],
+      "mail": "robingert@gmail.com",
+      "name": "Robin",
+      "password": "dfgdfg",
+      "tasks": [
+        {
+          "id": 1,
+          "items": [
+            {
+              "assigned": [
+                {
+                  "color": "",
+                  "lastName": "Mauer",
+                  "name": "Emmanuel"
+                },
+                {
+                  "color": "",
+                  "lastName": "Bauer",
+                  "name": "Marcel"
+                },
+                {
+                  "color": "",
+                  "lastName": "Wolf",
+                  "name": "Tatjana"
+                }
+              ],
+              "category": "User Story",
+              "date": "10/05/2025",
+              "description": "Build start page with recipe recommendation.",
+              "id": "7955",
+              "priority": "medium",
+              "subtasks": [
+                {
+                  "checked": false,
+                  "task": "Implement Recipe Recommendation"
+                },
+                {
+                  "checked": true,
+                  "task": "Start Page Layout"
+                }
+              ],
+              "title": "Kochwelt Page & Recipe Recommender"
+            },
+            {
+              "assigned": [
+                {
+                  "color": "",
+                  "lastName": "Eisenberg",
+                  "name": "David"
+                },
+                {
+                  "color": "",
+                  "lastName": "Ziegler",
+                  "name": "Benedikt"
+                },
+                {
+                  "color": "",
+                  "lastName": "Mayer",
+                  "name": "Anton"
+                }
+              ],
+              "category": "Technical Task",
+              "date": "10/05/2025",
+              "description": "Create reusable HTML base templates...",
+              "id": "2453",
+              "priority": "low",
+              "subtasks": [
+                {
+                  "checked": false,
+                  "task": "Implement Recipe Recommendation"
+                },
+                {
+                  "checked": true,
+                  "task": "Start Page Layout"
+                }
+              ],
+              "title": "HTML Base Template Creation"
+            },
+            {
+              "assigned": [
+                {
+                  "color": "",
+                  "lastName": "Mauer",
+                  "name": "Emmanuel"
+                },
+                {
+                  "color": "",
+                  "lastName": "Mayer",
+                  "name": "Anton"
+                },
+                {
+                  "color": "",
+                  "lastName": "Wolf",
+                  "name": "Tatjana"
+                }
+              ],
+              "category": "User Story",
+              "date": "10/05/2025",
+              "description": "Implement daily recipe and portion calculator...",
+              "id": "0945",
+              "priority": "medium",
+              "subtasks": [
+                {
+                  "checked": false,
+                  "task": "Implement Recipe Recommendation"
+                },
+                {
+                  "checked": true,
+                  "task": "Start Page Layout"
+                }
+              ],
+              "title": "Daily Kochwelt Recipe"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "items": [
+            {
+              "assigned": [
+                {
+                  "color": "",
+                  "lastName": "Meier",
+                  "name": "Stefan"
+                },
+                {
+                  "color": "",
+                  "lastName": "Ziegler",
+                  "name": "Benedikt"
+                }
+              ],
+              "category": "Technical Task",
+              "date": "10/05/2025",
+              "description": "Define CSS naming conventions and structure...",
+              "id": "7489",
+              "priority": "urgent",
+              "subtasks": [
+                {
+                  "checked": false,
+                  "task": "Implement Recipe Recommendation"
+                },
+                {
+                  "checked": true,
+                  "task": "Start Page Layout"
+                }
+              ],
+              "title": "CSS Architecture Planning"
+            }
+          ]
+        },
+        {
+          "id": 3
+        },
+        {
+          "id": 4
+        }
+      ]
+    },
+    {
+      "contacts": [
+        {
+          "color": "#F3EDBD",
+          "mail": "antom@gmail.com",
+          "name": "Anton Mayer",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#FA5C4A",
+          "mail": "hans@gmail.com",
+          "name": "Hans Mueller",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#4E8D44",
+          "mail": "benedikt@gmail.com",
+          "name": "Benedikt Ziegler",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#5A0286",
+          "mail": "davidberg@gmail.com",
+          "name": "David Eisenberg",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#3D5A61",
+          "mail": "eva@gmail.com",
+          "name": "Eva Fischer",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#8A1FFB",
+          "mail": "emmanuelma@gmail.com",
+          "name": "Emmanuel Mauer",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#EA8E1E",
+          "mail": "bauer@gmail.com",
+          "name": "Marcel Bauer",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#8DAAA2",
+          "mail": "wolf@gmail.com",
+          "name": "Tatjana Wolf",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#038C18",
+          "mail": "klausw@gmail.com",
+          "name": "Klaus Werner",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#CAD16D",
+          "mail": "peterhahn@gmail.com",
+          "name": "Peter Hahn",
+          "phone": "+491234567890"
+        }
+      ],
+      "mail": "robingert11@web.de",
+      "name": "Robin",
+      "password": "dfgdfg",
+      "tasks": [
+        {
+          "id": 1,
+          "items": [
+            {
+              "assigned": [
+                {
+                  "color": "",
+                  "lastName": "Mauer",
+                  "name": "Emmanuel"
+                },
+                {
+                  "color": "",
+                  "lastName": "Bauer",
+                  "name": "Marcel"
+                },
+                {
+                  "color": "",
+                  "lastName": "Wolf",
+                  "name": "Tatjana"
+                }
+              ],
+              "category": "User Story",
+              "date": "10/05/2025",
+              "description": "Build start page with recipe recommendation.",
+              "id": "7955",
+              "priority": "medium",
+              "subtasks": [
+                {
+                  "checked": false,
+                  "task": "Implement Recipe Recommendation"
+                },
+                {
+                  "checked": true,
+                  "task": "Start Page Layout"
+                }
+              ],
+              "title": "Kochwelt Page & Recipe Recommender"
+            },
+            {
+              "assigned": [
+                {
+                  "color": "",
+                  "lastName": "Eisenberg",
+                  "name": "David"
+                },
+                {
+                  "color": "",
+                  "lastName": "Ziegler",
+                  "name": "Benedikt"
+                },
+                {
+                  "color": "",
+                  "lastName": "Mayer",
+                  "name": "Anton"
+                }
+              ],
+              "category": "Technical Task",
+              "date": "10/05/2025",
+              "description": "Create reusable HTML base templates...",
+              "id": "2453",
+              "priority": "low",
+              "subtasks": [
+                {
+                  "checked": false,
+                  "task": "Implement Recipe Recommendation"
+                },
+                {
+                  "checked": true,
+                  "task": "Start Page Layout"
+                }
+              ],
+              "title": "HTML Base Template Creation"
+            },
+            {
+              "assigned": [
+                {
+                  "color": "",
+                  "lastName": "Mauer",
+                  "name": "Emmanuel"
+                },
+                {
+                  "color": "",
+                  "lastName": "Mayer",
+                  "name": "Anton"
+                },
+                {
+                  "color": "",
+                  "lastName": "Wolf",
+                  "name": "Tatjana"
+                }
+              ],
+              "category": "User Story",
+              "date": "10/05/2025",
+              "description": "Implement daily recipe and portion calculator...",
+              "id": "0945",
+              "priority": "medium",
+              "subtasks": [
+                {
+                  "checked": false,
+                  "task": "Implement Recipe Recommendation"
+                },
+                {
+                  "checked": true,
+                  "task": "Start Page Layout"
+                }
+              ],
+              "title": "Daily Kochwelt Recipe"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "items": [
+            {
+              "assigned": [
+                {
+                  "color": "",
+                  "lastName": "Meier",
+                  "name": "Stefan"
+                },
+                {
+                  "color": "",
+                  "lastName": "Ziegler",
+                  "name": "Benedikt"
+                }
+              ],
+              "category": "Technical Task",
+              "date": "10/05/2025",
+              "description": "Define CSS naming conventions and structure...",
+              "id": "7489",
+              "priority": "urgent",
+              "subtasks": [
+                {
+                  "checked": false,
+                  "task": "Implement Recipe Recommendation"
+                },
+                {
+                  "checked": true,
+                  "task": "Start Page Layout"
+                }
+              ],
+              "title": "CSS Architecture Planning"
+            }
+          ]
+        },
+        {
+          "id": 3
+        },
+        {
+          "id": 4
+        }
+      ]
+    },
+    {
+      "contacts": [
+        {
+          "color": "#7A16B9",
+          "mail": "antom@gmail.com",
+          "name": "Anton Mayer",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#1231C1",
+          "mail": "hans@gmail.com",
+          "name": "Hans Mueller",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#B29A9A",
+          "mail": "benedikt@gmail.com",
+          "name": "Benedikt Ziegler",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#0FCA7B",
+          "mail": "davidberg@gmail.com",
+          "name": "David Eisenberg",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#D56869",
+          "mail": "eva@gmail.com",
+          "name": "Eva Fischer",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#04D2ED",
+          "mail": "emmanuelma@gmail.com",
+          "name": "Emmanuel Mauer",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#56381B",
+          "mail": "bauer@gmail.com",
+          "name": "Marcel Bauer",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#E2D2D1",
+          "mail": "wolf@gmail.com",
+          "name": "Tatjana Wolf",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#5CBA47",
+          "mail": "klausw@gmail.com",
+          "name": "Klaus Werner",
+          "phone": "+491234567890"
+        },
+        {
+          "color": "#D1519C",
+          "mail": "peterhahn@gmail.com",
+          "name": "Peter Hahn",
+          "phone": "+491234567890"
+        }
+      ],
+      "mail": "robingerth11@web.de",
+      "name": "Robin",
+      "password": "dfgdfg",
+      "tasks": [
+        {
+          "id": 1,
+          "items": [
+            {
+              "assigned": [
+                {
+                  "color": "",
+                  "lastName": "Mauer",
+                  "name": "Emmanuel"
+                },
+                {
+                  "color": "",
+                  "lastName": "Bauer",
+                  "name": "Marcel"
+                },
+                {
+                  "color": "",
+                  "lastName": "Wolf",
+                  "name": "Tatjana"
+                }
+              ],
+              "category": "User Story",
+              "date": "10/05/2025",
+              "description": "Build start page with recipe recommendation.",
+              "id": "7955",
+              "priority": "medium",
+              "subtasks": [
+                {
+                  "checked": false,
+                  "task": "Implement Recipe Recommendation"
+                },
+                {
+                  "checked": true,
+                  "task": "Start Page Layout"
+                }
+              ],
+              "title": "Kochwelt Page & Recipe Recommender"
+            },
+            {
+              "assigned": [
+                {
+                  "color": "",
+                  "lastName": "Eisenberg",
+                  "name": "David"
+                },
+                {
+                  "color": "",
+                  "lastName": "Ziegler",
+                  "name": "Benedikt"
+                },
+                {
+                  "color": "",
+                  "lastName": "Mayer",
+                  "name": "Anton"
+                }
+              ],
+              "category": "Technical Task",
+              "date": "10/05/2025",
+              "description": "Create reusable HTML base templates...",
+              "id": "2453",
+              "priority": "low",
+              "subtasks": [
+                {
+                  "checked": false,
+                  "task": "Implement Recipe Recommendation"
+                },
+                {
+                  "checked": true,
+                  "task": "Start Page Layout"
+                }
+              ],
+              "title": "HTML Base Template Creation"
+            },
+            {
+              "assigned": [
+                {
+                  "color": "",
+                  "lastName": "Mauer",
+                  "name": "Emmanuel"
+                },
+                {
+                  "color": "",
+                  "lastName": "Mayer",
+                  "name": "Anton"
+                },
+                {
+                  "color": "",
+                  "lastName": "Wolf",
+                  "name": "Tatjana"
+                }
+              ],
+              "category": "User Story",
+              "date": "10/05/2025",
+              "description": "Implement daily recipe and portion calculator...",
+              "id": "0945",
+              "priority": "medium",
+              "subtasks": [
+                {
+                  "checked": false,
+                  "task": "Implement Recipe Recommendation"
+                },
+                {
+                  "checked": true,
+                  "task": "Start Page Layout"
+                }
+              ],
+              "title": "Daily Kochwelt Recipe"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "items": [
+            {
+              "assigned": [
+                {
+                  "color": "",
+                  "lastName": "Meier",
+                  "name": "Stefan"
+                },
+                {
+                  "color": "",
+                  "lastName": "Ziegler",
+                  "name": "Benedikt"
+                }
+              ],
+              "category": "Technical Task",
+              "date": "10/05/2025",
+              "description": "Define CSS naming conventions and structure...",
+              "id": "7489",
+              "priority": "urgent",
+              "subtasks": [
+                {
+                  "checked": false,
+                  "task": "Implement Recipe Recommendation"
+                },
+                {
+                  "checked": true,
+                  "task": "Start Page Layout"
+                }
+              ],
+              "title": "CSS Architecture Planning"
+            }
+          ]
+        },
+        {
+          "id": 3
+        },
+        {
+          "id": 4
+        }
+      ]
+    }
+  ]
+}

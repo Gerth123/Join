@@ -1,0 +1,167 @@
+.category-editCard {
+  position: relative;
+  margin-top: 8px;
+  margin-bottom: 32px;
+  border-radius: 10px;
+  font-size: 20px;
+  height: 50px;
+}
+
+.assigned-editCard {
+  position: relative;
+  margin-top: 8px;
+  border-radius: 10px;
+  font-size: 20px;
+  height: 50px;
+}
+
+.category-addCard {
+  margin-top: 8px;
+  margin-bottom: 32px;
+}
+
+.assigned-addCard {
+  position: relative;
+  margin-top: 8px;
+  border-radius: 10px;
+  font-size: 20px;
+  height: 50px;
+}
+
+.select-btn {
+  display: flex;
+  height: 48px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #fff;
+  border: 1px solid #d1d1d1;
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: transparent;
+  background-image: url("/assets/icons/board/assigned/arrow_drop_down.svg");
+  background-repeat: no-repeat;
+  background-position-x: 96%;
+  background-position-y: 14px;
+  border: 1px solid #dfdfdf;
+  border-radius: 10px;
+  font-size: 16px;
+  padding: 1rem;
+  padding-right: 2rem;
+  cursor: pointer;
+}
+
+.btn-text,
+.btn-text-category {
+  font-size: 17px;
+  font-weight: 400;
+  color: #333;
+}
+
+.arrow-down {
+  width: 24px;
+  height: 24px;
+  background-image: url("/assets/icons/board/assigned/arrow_drop_down.svg");
+  background-size: cover;
+}
+
+.select-btn.open .arrow-down {
+  width: 24px;
+  height: 24px;
+  background-image: url("/assets/icons/board/assigned/arrow_drop_up.svg");
+  background-size: cover;
+}
+
+.assigned-list-items {
+  position: relative;
+  height: 200px;
+  margin-block-start: 0;
+  padding-inline-start: 0;
+  background-color: #fff;
+  display: none;
+  overflow-y: scroll;
+  z-index: 1;
+}
+
+.category-list-items {
+  position: absolute;
+  width: 400px;
+  height: 100px;
+  margin-block-start: 0;
+  padding-inline-start: 0;
+  background-color: #fff;
+  display: none;
+}
+
+.select-btn.open ~ .assigned-list-items {
+  display: block;
+}
+
+.select-btn.open ~ .category-list-items {
+  display: block;
+}
+
+.assigned-item,
+.category-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+  height: 50px;
+  cursor: pointer;
+  transition: 0.3s;
+  padding: 0 15px;
+  border-radius: 8px;
+}
+.assigned-item:hover {
+  background-color: #e7edfe;
+}
+
+.category-item:hover {
+  background-color: #e7edfe;
+}
+
+.item-text {
+  font-size: 16px;
+  font-weight: 400;
+  color: #333;
+  margin-left: 16px;
+}
+
+.item-text-category {
+  font-size: 16px;
+  font-weight: 400;
+  color: #333;
+}
+
+.check-img {
+  width: 24px;
+  height: 24px;
+  background-image: url("/assets/icons/board/assigned/checkBtn.svg");
+  background-size: cover;
+}
+
+.assigned-item.checked .check-img {
+  width: 24px;
+  height: 24px;
+  background-image: url("/assets/icons/board/assigned/checkedBtn.svg");
+  background-size: cover;
+}
+
+.assigned-item.checked {
+  background-color: #2a3647;
+}
+
+.assigned-item.checked .item-text {
+  color: #fff;
+}
+
+.assigned-user {
+  display: flex;
+  align-items: center;
+}
