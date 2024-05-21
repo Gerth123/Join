@@ -145,6 +145,7 @@ function onClickAddTaskBoard(fullsize, board, editBoard, addBoard) {
     addBoard.classList.remove("d-none");
     contentId = 1;
     onClickAddSubTasks();
+    getAddAssgined();
   });
 }
 
@@ -160,6 +161,76 @@ function addTaskBtnSmall(contentIdAdd) {
   editBoard.classList.add("d-none");
   addBoard.classList.remove("d-none");
   onClickAddSubTasks();
+  getAddAssgined();
+}
+
+async function getAddAssgined() {
+  let urlParams = new URLSearchParams(window.location.search);
+  let actualUsersNumber = urlParams.get("actualUsersNumber");
+  let fulldata = await loadData("users");
+
+  let contacts = fulldata[actualUsersNumber]["contacts"];
+  let data = fulldata[actualUsersNumber]["tasks"];
+
+  let assignedUsers = [];
+  for (let column of data) {
+    if (column.id == contentId) {
+      for (let item of column.items) {
+        if (item.id == id) {
+          for (i = 0; i < item["assigned"].length; i++) {
+            assignedUsers.push(item["assigned"][i]["name"]);
+          }
+        }
+      }
+    }
+  }
+  // console.log(contactList);
+  let contactList = document.getElementById("assigned-list-items-addCard");
+  contactList.innerHTML = "";
+  contacts.forEach((contact) => {
+    let name = getInitials(contact["name"]);
+    contactList.innerHTML += /*html*/ `
+        <li class="assigned-item ${getCheckedUsers(assignedUsers, contact["name"])}">
+          <div class="assigned-user">
+            <div id="board-user" class="board-user" style="background-color:${contact["color"]}">${name}</div>
+            <span class="item-text">${contact["name"]}</span>
+          </div>
+          <div class="check-img"></div>
+        </li>`;
+  });
+
+  const assignedItems = document.querySelectorAll(".assigned-item");
+  assignedItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      item.classList.toggle("checked");
+      checkedUsers(contacts);
+    });
+  });
+}
+
+function checkedUsers(contacts) {
+  const checked = document.querySelectorAll(".checked");
+  const btnText = document.querySelector(".btn-text-addCard");
+  const checkedUsers = document.getElementById("assigned-users-addCard");
+  const userNames = document.querySelectorAll(".checked .item-text");
+  if (checked && checked.length > 0) {
+    btnText.innerText = `${checked.length} Selected`;
+    checkedUsers.innerHTML = "";
+    userNames.forEach((userName) => {
+      const personWithName = contacts.find((person) => person.name == userName.innerHTML);
+      if (personWithName) {
+        let name = getInitials(personWithName["name"]);
+        checkedUsers.innerHTML += /*html*/ `
+        <div class="assigned-user">
+          <div id="board-user" class="board-user-editCard" style="background-color: ${personWithName["color"]}">${name}</div>
+        </div>
+        `;
+      }
+    });
+  } else {
+    btnText.innerText = "Select contacts to assign";
+    checkedUsers.innerHTML = "";
+  }
 }
 
 /**
@@ -406,7 +477,7 @@ async function saveAddData() {
     category: addCategory(),
     title: title.value,
     description: description.value,
-    assigned: "",
+    assigned: addAssignedValue(fulldata[actualUsersNumber]["contacts"]),
     date: date.value,
     priority: addPriorityValue(),
     subtasks: await addSubTasks(),
@@ -420,6 +491,26 @@ async function saveAddData() {
   // save(data);
   // console.log("saving", data);
   await putData(`users/${actualUsersNumber}/tasks/`, data);
+}
+
+function addAssignedValue(contacts) {
+  const assignedUsers = document.querySelectorAll(".checked .item-text");
+  let assigned = [];
+  assignedUsers.forEach((assignedUser) => {
+    for (const contact of contacts) {
+      if (contact.name == assignedUser.textContent) {
+        assigned.push({
+          color: contact["color"],
+          name: contact["name"],
+        });
+      }
+    }
+  });
+
+  if (assigned.length == 0) {
+    return "";
+  }
+  return assigned;
 }
 
 function addCategory() {
@@ -447,5 +538,9 @@ function addSubTasks() {
   newSubtasks.forEach((task) => {
     temp.push({ checked: false, task: task.textContent });
   });
+
+  if (temp.length == 0) {
+    return "";
+  }
   return temp;
 }

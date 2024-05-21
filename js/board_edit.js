@@ -44,11 +44,6 @@ function getCheckedUsers(assignedUsers, contactName) {
 }
 
 async function getEditAssigned() {
-  /**todo */
-  let response = await fetch("/assets/data/join-ca44d-default-rtdb-export.json");
-  let dataString = await response.json();
-  // let contacts = dataString["users"][0]["contacts"];
-
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
   let fulldata = await loadData("users");
