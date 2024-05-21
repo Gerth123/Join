@@ -35,6 +35,14 @@ function getEditPriority(priority) {
   }
 }
 
+function getCheckedUsers(assignedUsers, contactName) {
+  for (const userName of assignedUsers) {
+    if (userName == contactName) {
+      return "checked";
+    }
+  }
+}
+
 async function getEditAssigned() {
   /**todo */
   let response = await fetch("/assets/data/join-ca44d-default-rtdb-export.json");
@@ -46,54 +54,69 @@ async function getEditAssigned() {
   let fulldata = await loadData("users");
   // console.log("fulldata", fulldata[actualUsersNumber]["tasks"]);
   let contacts = fulldata[actualUsersNumber]["contacts"];
+  let data = fulldata[actualUsersNumber]["tasks"];
+
+  let assignedUsers = [];
+  for (let column of data) {
+    if (column.id == contentId) {
+      for (let item of column.items) {
+        if (item.id == id) {
+          for (i = 0; i < item["assigned"].length; i++) {
+            assignedUsers.push(item["assigned"][i]["name"]);
+          }
+        }
+      }
+    }
+  }
+
   // console.log(contactList);
   let contactList = document.getElementById("assigned-list-items");
   contactList.innerHTML = "";
   contacts.forEach((contact) => {
     let name = getInitials(contact["name"]);
     contactList.innerHTML += /*html*/ `
-      <li class="assigned-item">
+      <li class="assigned-item ${getCheckedUsers(assignedUsers, contact["name"])}">
         <div class="assigned-user">
           <div id="board-user" class="board-user" style="background-color:${contact["color"]}">${name}</div>
           <span class="item-text">${contact["name"]}</span>
         </div>
         <div class="check-img"></div>
-      </li>
-    `;
+      </li>`;
   });
 
   const assignedItems = document.querySelectorAll(".assigned-item");
-
   assignedItems.forEach((item) => {
+    checkUsers(contacts);
     item.addEventListener("click", () => {
       item.classList.toggle("checked");
-
-      let checked = document.querySelectorAll(".checked");
-      let btnText = document.querySelector(".btn-text");
-      let checkedUsers = document.getElementById("assigned-users-editCard");
-
-      if (checked && checked.length > 0) {
-        //userNames get them to save in assigned to:
-        let userNames = document.querySelectorAll(".checked .item-text");
-        btnText.innerText = `${checked.length} Selected`;
-        checkedUsers.innerHTML = "";
-        userNames.forEach((userName) => {
-          const personWithName = contacts.find((person) => person.name == userName.innerHTML);
-          if (personWithName) {
-            let name = getInitials(personWithName["name"]);
-            checkedUsers.innerHTML += /*html*/ `
-            <div class="assigned-user">
-              <div id="board-user" class="board-user-editCard" style="background-color: ${personWithName["color"]}">${name}</div>
-            </div>
-            `;
-          }
-        });
-      } else {
-        btnText.innerText = "Select contacts to assign";
-        checkedUsers.innerHTML = "";
-      }
+      checkUsers(contacts);
     });
   });
+}
+
+function checkUsers(contacts) {
+  const checked = document.querySelectorAll(".checked");
+  const btnText = document.querySelector(".btn-text");
+  const checkedUsers = document.getElementById("assigned-users-editCard");
+  const userNames = document.querySelectorAll(".checked .item-text");
+  if (checked && checked.length > 0) {
+    btnText.innerText = `${checked.length} Selected`;
+    checkedUsers.innerHTML = "";
+    userNames.forEach((userName) => {
+      const personWithName = contacts.find((person) => person.name == userName.innerHTML);
+      if (personWithName) {
+        let name = getInitials(personWithName["name"]);
+        checkedUsers.innerHTML += /*html*/ `
+        <div class="assigned-user">
+          <div id="board-user" class="board-user-editCard" style="background-color: ${personWithName["color"]}">${name}</div>
+        </div>
+        `;
+      }
+    });
+  } else {
+    btnText.innerText = "Select contacts to assign";
+    checkedUsers.innerHTML = "";
+  }
 }
 
 function getInitials(name) {

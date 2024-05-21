@@ -46,13 +46,12 @@ function getFullSizeAssigned(assigned) {
   fullSizeAssigned.innerHTML = "";
   if (assigned != "") {
     assigned.forEach((user) => {
-      let name = Array.from(`${user["name"]}`)[0];
-      let lastName = Array.from(`${user["lastName"]}`)[0];
+      let name = getInitials(user["name"]);
       fullSizeAssigned.innerHTML += /*html*/ `
       <li class="full-size-assign-user">
-      <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}${lastName}</div>
+      <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}</div>
       <div class="board-username">
-        ${user["name"]} ${user["lastName"]} 
+        ${user["name"]}
       </div>
       </li>`;
     });

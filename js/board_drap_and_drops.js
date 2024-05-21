@@ -1,5 +1,3 @@
-// let baseUrl = "https://join-ca44d-default-rtdb.europe-west1.firebasedatabase.app/";
-
 function allowDrop(ev) {
   ev.preventDefault();
 }

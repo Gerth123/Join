@@ -261,6 +261,7 @@ async function saveEditData() {
           item.date = date.value;
           item.priority = editPriorityValue();
           item.subtasks = editSubTasksValue(item.subtasks);
+          item.assigned = editAssignedValue(fulldata[actualUsersNumber]["contacts"]);
         }
 
         // console.log("saving data", data);
@@ -270,6 +271,26 @@ async function saveEditData() {
       }
     }
   }
+}
+
+function editAssignedValue(contacts) {
+  const assignedUsers = document.querySelectorAll(".checked .item-text");
+  let assigned = [];
+  assignedUsers.forEach((assignedUser) => {
+    for (const contact of contacts) {
+      if (contact.name == assignedUser.textContent) {
+        assigned.push({
+          color: contact["color"],
+          name: contact["name"],
+        });
+      }
+    }
+  });
+
+  if (assigned.length == 0) {
+    return "";
+  }
+  return assigned;
 }
 
 /**

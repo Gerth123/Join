@@ -36,7 +36,9 @@ async function init() {
  */
 async function renderBoards() {
   let urlParams = new URLSearchParams(window.location.search);
+
   let actualUsersNumber = urlParams.get("actualUsersNumber");
+  // console.log(actualUsersNumber);
   let fulldata = await loadData("users");
   // console.log("fulldata", fulldata[actualUsersNumber]["tasks"]);
   const data = fulldata[actualUsersNumber]["tasks"];
@@ -169,10 +171,11 @@ function getAssigned(assigned, id) {
   let boardUser = content.querySelector("#board-users");
   if (assigned != "") {
     assigned.forEach((user) => {
-      let name = Array.from(`${user["name"]}`)[0];
-      let lastName = Array.from(`${user["lastName"]}`)[0];
+      let name = getInitials(user["name"]);
+      // let name = Array.from(`${user["name"]}`)[0];
+      // let lastName = Array.from(`${user["lastName"]}`)[0];
       boardUser.innerHTML += /*html*/ `
-      <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}${lastName}</div>`;
+      <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}</div>`;
     });
   }
 }

@@ -69,6 +69,12 @@ let testContacts = [
     color: generateRandomColor(),
     assigned: false,
   },
+  {
+    name: "Stefan Meier",
+    mail: "stefanMeier@gmail.com",
+    phone: "+491213212390",
+    color: generateRandomColor(),
+  },
 ];
 
 let testTasks = [
@@ -81,9 +87,9 @@ let testTasks = [
         title: "Kochwelt Page & Recipe Recommender",
         description: "Build start page with recipe recommendation.",
         assigned: [
-          { color: "", name: "Emmanuel", lastName: "Mauer" },
-          { color: "", name: "Marcel", lastName: "Bauer" },
-          { color: "", name: "Tatjana", lastName: "Wolf" },
+          { color: "", name: "Emmanuel Mauer" },
+          { color: "", name: "Marcel Bauer" },
+          { color: "", name: "Tatjana Wolf" },
         ],
         date: "10/05/2025",
         priority: "medium",
@@ -98,9 +104,9 @@ let testTasks = [
         title: "HTML Base Template Creation",
         description: "Create reusable HTML base templates...",
         assigned: [
-          { color: "", name: "David", lastName: "Eisenberg" },
-          { color: "", name: "Benedikt", lastName: "Ziegler" },
-          { color: "", name: "Anton", lastName: "Mayer" },
+          { color: "", name: "David Eisenberg" },
+          { color: "", name: "Benedikt Ziegler" },
+          { color: "", name: "Anton Mayer" },
         ],
         date: "10/05/2025",
         priority: "low",
@@ -115,9 +121,9 @@ let testTasks = [
         title: "Daily Kochwelt Recipe",
         description: "Implement daily recipe and portion calculator...",
         assigned: [
-          { color: "", name: "Emmanuel", lastName: "Mauer" },
-          { color: "", name: "Anton", lastName: "Mayer" },
-          { color: "", name: "Tatjana", lastName: "Wolf" },
+          { color: "", name: "Emmanuel Mauer" },
+          { color: "", name: "Anton Mayer" },
+          { color: "", name: "Tatjana Wolf" },
         ],
         date: "10/05/2025",
         priority: "medium",
@@ -137,8 +143,8 @@ let testTasks = [
         title: "CSS Architecture Planning",
         description: "Define CSS naming conventions and structure...",
         assigned: [
-          { color: "", name: "Stefan", lastName: "Meier" },
-          { color: "", name: "Benedikt", lastName: "Ziegler" },
+          { color: "", name: "Stefan Meier" },
+          { color: "", name: "Benedikt Ziegler" },
         ],
         date: "10/05/2025",
         priority: "urgent",
