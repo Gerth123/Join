@@ -1,8 +1,8 @@
 async function getEditBoard(id, contentId) {
-  let itemData = await getItemById(id, contentId);
   const title = document.querySelector("input[id=title-editCard]");
   const description = document.querySelector("input[id=description-editCard]");
   const date = document.querySelector("input[id=date-editCard]");
+  let itemData = await getItemById(id, contentId);
   title.value = `${itemData["title"]}`;
   description.value = `${itemData["description"]}`;
   date.value = `${itemData["date"]}`;
@@ -56,7 +56,6 @@ async function getData(data) {
 async function getEditAssigned() {
   let contacts = await getData("contacts");
   let data = await getData("tasks");
-
   let assignedUsers = [];
   for (let column of data) {
     if (column.id == contentId) {
