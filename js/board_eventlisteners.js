@@ -328,6 +328,8 @@ async function saveEditData() {
       }
     }
   }
+  console.log("working");
+  location.reload();
 }
 
 function editAssignedValue(contacts) {
@@ -469,6 +471,7 @@ async function saveAddData() {
   }
   content.items.push(obj);
   await putData(`users/${actualUsersNumber}/tasks/`, data);
+  location.reload();
 }
 
 function addAssignedValue(contacts) {
