@@ -37,7 +37,6 @@ function onClickAddCategory() {
     item.addEventListener("click", () => {
       const selectButton = document.querySelector("#select-btn-addCard");
       const btnText = document.querySelector(".category-addCard .btn-text-category");
-      // console.log(btnText);
       if (selectButton) {
         selectButton.classList.remove("open");
         btnText.textContent = item.textContent;
@@ -105,9 +104,7 @@ async function updateSubtaskCheck(subtasks) {
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
   let fulldata = await loadData("users");
-  // console.log("fulldata", fulldata[actualUsersNumber]["tasks"]);
   const data = fulldata[actualUsersNumber]["tasks"];
-  // let data = read();
   for (let column of data) {
     if (column.id == contentId) {
       for (let item of column.items) {
@@ -117,9 +114,6 @@ async function updateSubtaskCheck(subtasks) {
       }
     }
   }
-  // console.log("subtasks", subtasks);
-  // console.log("data", data);
-  //save(data)
   await putData(`users/${actualUsersNumber}/tasks/`, data);
 }
 
@@ -154,7 +148,6 @@ function addTaskBtnSmall(contentIdAdd) {
   const board = document.getElementById("board");
   const editBoard = document.getElementById("edit-board");
   const addBoard = document.getElementById("add-board");
-  // console.log(contentIdAdd);
   contentId = contentIdAdd;
   fullsize.classList.remove("d-none");
   board.classList.add("d-none");
@@ -184,7 +177,6 @@ async function getAddAssgined() {
       }
     }
   }
-  // console.log(contactList);
   let contactList = document.getElementById("assigned-list-items-addCard");
   contactList.innerHTML = "";
   contacts.forEach((contact) => {
@@ -315,9 +307,7 @@ async function saveEditData() {
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
   let fulldata = await loadData("users");
-  // console.log("fulldata", fulldata[actualUsersNumber]["tasks"]);
   const data = fulldata[actualUsersNumber]["tasks"];
-  // let data = read();
   let title = document.getElementById("title-editCard");
   let description = document.getElementById("description-editCard");
   let date = document.getElementById("date-editCard");
@@ -334,10 +324,6 @@ async function saveEditData() {
           item.subtasks = editSubTasksValue(item.subtasks);
           item.assigned = editAssignedValue(fulldata[actualUsersNumber]["contacts"]);
         }
-
-        // console.log("saving data", data);
-        // save(data);
-        // console.log(`users/${actualUsersNumber}/tasks/`);
         await putData(`users/${actualUsersNumber}/tasks/`, data);
       }
     }
@@ -371,7 +357,6 @@ function editAssignedValue(contacts) {
  */
 function editCategory(category) {
   let newCategory = document.querySelector(".btn-text-category");
-  // console.log(category);
   const stripped = newCategory.textContent.replace(/\s+/g, " ").trim();
   if (newCategory.textContent == "Select task category") {
     return category;
@@ -419,7 +404,6 @@ function editSubTasksValue(subtasks) {
     let updatedSubtask = (updatedTemp = updateChecked(temp.slice(), subtasks));
     subtasks = updatedSubtask;
   }
-  // console.log("subtasks", subtasks == "");
   if (subtasks == "") {
     return "";
   }
@@ -463,13 +447,10 @@ async function saveAddData() {
   const title = document.getElementById("title-addCard");
   const description = document.getElementById("description-addCard");
   const date = document.getElementById("date-addCard");
-  // console.log(date);
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
   let fulldata = await loadData("users");
-  // console.log("fulldata", fulldata[actualUsersNumber]["tasks"]);
   const data = fulldata[actualUsersNumber]["tasks"];
-  // let data = read();
   const content = data.find((content) => content.id == contentId);
   const newId = Math.floor(Math.random() * 100000);
   const obj = {
@@ -486,10 +467,7 @@ async function saveAddData() {
   if (content.items == "") {
     content.items = [];
   }
-  // console.log(id, contentId);
   content.items.push(obj);
-  // save(data);
-  // console.log("saving", data);
   await putData(`users/${actualUsersNumber}/tasks/`, data);
 }
 
