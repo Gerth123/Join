@@ -79,7 +79,7 @@ function onClickCloseFullSize(fullsize) {
       let itemData = await getItemById(id, contentId);
       let subtasks = itemData["subtasks"];
       for (let i = 0; i < subtasks.length; i++) {
-        let check = document.getElementById(`subtask-${i}`);
+        const check = document.getElementById(`subtask-${i}`);
         if (check.checked) {
           subtasks[i]["checked"] = true;
         } else {
@@ -308,9 +308,9 @@ async function saveEditData() {
   let actualUsersNumber = urlParams.get("actualUsersNumber");
   let fulldata = await loadData("users");
   const data = fulldata[actualUsersNumber]["tasks"];
-  let title = document.getElementById("title-editCard");
-  let description = document.getElementById("description-editCard");
-  let date = document.getElementById("date-editCard");
+  const title = document.getElementById("title-editCard");
+  const description = document.getElementById("description-editCard");
+  const date = document.getElementById("date-editCard");
 
   for (const listItem of data) {
     if (listItem.id == contentId) {
@@ -357,7 +357,7 @@ function editAssignedValue(contacts) {
  * @returns string
  */
 function editCategory(category) {
-  let newCategory = document.querySelector(".btn-text-category");
+  const newCategory = document.querySelector(".btn-text-category");
   const stripped = newCategory.textContent.replace(/\s+/g, " ").trim();
   if (newCategory.textContent == "Select task category") {
     return category;
@@ -371,9 +371,9 @@ function editCategory(category) {
  * @returns string
  */
 function editPriorityValue() {
-  let priority3 = document.getElementById("radio-btn-3");
-  let priority2 = document.getElementById("radio-btn-2");
-  let priority1 = document.getElementById("radio-btn-1");
+  const priority3 = document.getElementById("radio-btn-3");
+  const priority2 = document.getElementById("radio-btn-2");
+  const priority1 = document.getElementById("radio-btn-1");
   if (priority3.checked) {
     return "urgent";
   } else if (priority2.checked) {
@@ -389,7 +389,7 @@ function editPriorityValue() {
  * @returns Object
  */
 function editSubTasksValue(subtasks) {
-  let newSubtasks = document.querySelectorAll(".subtasks-li-text");
+  const newSubtasks = document.querySelectorAll(".subtasks-li-text");
   if (subtasks == "") {
     subtasks = [];
   }

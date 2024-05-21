@@ -38,13 +38,13 @@ async function doDrop(e, target) {
 
   let task = e.target;
   task.classList.remove("board-card-dropzone--active");
-  let closestTask = task.closest(".board-card-content");
+  const closestTask = task.closest(".board-card-content");
   let closestDroppedContentID = closestTask.id;
   let contentId = Number(closestTask.id);
   let dropZonesInColumn = Array.from(closestTask.querySelectorAll(".board-card-dropzone"));
   let droppedIndex = dropZonesInColumn.indexOf(task);
   let itemId = Number(e.dataTransfer.getData("text/plain"));
-  let droppedItemElement = document.querySelector(`[id="${itemId}"]`);
+  const droppedItemElement = document.querySelector(`[id="${itemId}"]`);
   const insertAfter = task.parentElement.classList.contains("board-card") ? task.parentElement : task;
   if (droppedItemElement.contains(task)) {
     return;
@@ -68,7 +68,7 @@ async function updateItem(path = "", itemId, newProps) {
   let fulldata = await loadData("users");
   const data = fulldata[actualUsersNumber]["tasks"];
 
-  const [item, currentColumn] = (() => {
+  let [item, currentColumn] = (() => {
     for (const column of data) {
       if (column.items == "") {
         column.items = [];
@@ -82,7 +82,6 @@ async function updateItem(path = "", itemId, newProps) {
   })();
 
   item.content = newProps.content === undefined ? item.content : newProps.content;
-  // Update column and position
   if (newProps.contentId !== undefined && newProps.position !== undefined) {
     const targetColumn = data.find((column) => column.id == newProps.contentId);
     if (!targetColumn) throw new Error("Target column not found");
