@@ -69,9 +69,12 @@ async function getEditAssigned() {
       }
     }
   }
+  getEditContacts(assignedUsers, contacts);
+  toggleCheckUsers(contacts);
+}
 
-  // console.log(contactList);
-  let contactList = document.getElementById("assigned-list-items");
+function getEditContacts(assignedUsers, contacts) {
+  const contactList = document.getElementById("assigned-list-items");
   contactList.innerHTML = "";
   contacts.forEach((contact) => {
     let name = getInitials(contact["name"]);
@@ -84,7 +87,9 @@ async function getEditAssigned() {
         <div class="check-img"></div>
       </li>`;
   });
+}
 
+function toggleCheckUsers(contacts) {
   const assignedItems = document.querySelectorAll(".assigned-item");
   assignedItems.forEach((item) => {
     checkUsers(contacts);
@@ -107,11 +112,7 @@ function checkUsers(contacts) {
       const personWithName = contacts.find((person) => person.name == userName.innerHTML);
       if (personWithName) {
         let name = getInitials(personWithName["name"]);
-        checkedUsers.innerHTML += /*html*/ `
-        <div class="assigned-user">
-          <div id="board-user" class="board-user-editCard" style="background-color: ${personWithName["color"]}">${name}</div>
-        </div>
-        `;
+        checkedUsers.innerHTML += getEditAssignedUser(personWithName["color"], name);
       }
     });
   } else {
@@ -120,44 +121,53 @@ function checkUsers(contacts) {
   }
 }
 
+function getEditAssignedUser(color, name) {
+  return /*html*/ `
+  <div class="assigned-user">
+    <div id="board-user" class="board-user-editCard" style="background-color: ${color}">${name}</div>
+  </div>
+  `;
+}
+
 function getInitials(name) {
   const words = name.split(" ");
   let initials = "";
-
-  // Loop through each word
   for (const word of words) {
     initials += word[0].toUpperCase();
   }
-
   return initials;
 }
 
 function getEditSubtasks(subtasks) {
-  let list = document.getElementById("subtasks-list");
+  const list = document.getElementById("subtasks-list");
   list.innerHTML = "";
   for (let i = 0; i < subtasks.length; i++) {
-    list.innerHTML += /*html*/ `
-    <li id="subtasks-li">
-      <div class="subtasks-li-container">
-        <p class="subtasks-li-text" contenteditable=false>${subtasks[i]["task"]}</p>
-        <div class="row" id="subtask-first-btns">
-          <img class="subtasks-btn-none" id="subtasks-edit" src="/assets/icons/board/edit/edit_button.svg" alt="">
-          <div class="subtasks-line-none"></div>
-          <img class="subtasks-btn-none" id="subtasks-trash" src="/assets/icons/board/edit/trash_button.svg" alt="">  
-        </div>
-        <div class="row d-none" id="subtask-second-btns">
-          <img class="subtasks-btn-none" id="subtasks-trash" src="/assets/icons/board/edit/trash_button.svg" alt="">
-          <div class="subtasks-line-none"></div>
-          <img class="subtasks-btn-none" id="subtasks-checker" src="./assets/icons/board/edit/check_button.svg" alt="" />
-        </div>  
-      </div>
-    </li>
-    `;
+    list.innerHTML += getEditSubtasksList(subtasks[i]["task"]);
   }
 }
 
-function getSubtasksEventListeners() {
-  let trashes = document.querySelectorAll("#subtasks-trash");
+function getEditSubtasksList(task) {
+  return /*html*/ `
+  <li id="subtasks-li">
+    <div class="subtasks-li-container">
+      <p class="subtasks-li-text" contenteditable=false>${task}</p>
+      <div class="row" id="subtask-first-btns">
+        <img class="subtasks-btn-none" id="subtasks-edit" src="/assets/icons/board/edit/edit_button.svg" alt="">
+        <div class="subtasks-line-none"></div>
+        <img class="subtasks-btn-none" id="subtasks-trash" src="/assets/icons/board/edit/trash_button.svg" alt="">  
+      </div>
+      <div class="row d-none" id="subtask-second-btns">
+        <img class="subtasks-btn-none" id="subtasks-trash" src="/assets/icons/board/edit/trash_button.svg" alt="">
+        <div class="subtasks-line-none"></div>
+        <img class="subtasks-btn-none" id="subtasks-checker" src="./assets/icons/board/edit/check_button.svg" alt="" />
+      </div>  
+    </div>
+  </li>
+  `;
+}
+
+function onClickTrash() {
+  const trashes = document.querySelectorAll("#subtasks-trash");
   trashes.forEach((trash) => {
     trash.addEventListener("click", () => {
       let parentLi = trash.closest("#subtasks-li");
@@ -166,28 +176,31 @@ function getSubtasksEventListeners() {
       }
     });
   });
+}
 
-  let edits = document.querySelectorAll("#subtasks-edit");
-  // console.log(edits);
+function onClickEditing() {
+  const edits = document.querySelectorAll("#subtasks-edit");
   edits.forEach((edit) => {
     edit.addEventListener("click", () => {
-      let parentContent = edit.closest(".subtasks-li-container");
-      let subtaskElement = parentContent.querySelector(".subtasks-li-text");
-      let subtaskFirstBtns = parentContent.querySelector("#subtask-first-btns");
-      let subtaskSecondBtns = parentContent.querySelector("#subtask-second-btns");
+      const parentContent = edit.closest(".subtasks-li-container");
+      const subtaskElement = parentContent.querySelector(".subtasks-li-text");
+      const subtaskFirstBtns = parentContent.querySelector("#subtask-first-btns");
+      const subtaskSecondBtns = parentContent.querySelector("#subtask-second-btns");
       subtaskFirstBtns.classList.add("d-none");
       subtaskSecondBtns.classList.remove("d-none");
       subtaskElement.contentEditable = true;
     });
   });
+}
 
-  let checkers = document.querySelectorAll("#subtasks-checker");
+function onClickChecker() {
+  const checkers = document.querySelectorAll("#subtasks-checker");
   checkers.forEach((checker) => {
     checker.addEventListener("click", () => {
-      let parentContent = checker.closest(".subtasks-li-container");
-      let subtaskElement = parentContent.querySelector(".subtasks-li-text");
-      let subtaskFirstBtns = parentContent.querySelector("#subtask-first-btns");
-      let subtaskSecondBtns = parentContent.querySelector("#subtask-second-btns");
+      const parentContent = checker.closest(".subtasks-li-container");
+      const subtaskElement = parentContent.querySelector(".subtasks-li-text");
+      const subtaskFirstBtns = parentContent.querySelector("#subtask-first-btns");
+      const subtaskSecondBtns = parentContent.querySelector("#subtask-second-btns");
       subtaskFirstBtns.classList.remove("d-none");
       subtaskSecondBtns.classList.add("d-none");
       subtaskElement.contentEditable = false;
@@ -195,17 +208,22 @@ function getSubtasksEventListeners() {
   });
 }
 
+function getSubtasksEventListeners() {
+  onClickTrash();
+  onClickEditing();
+  onClickChecker();
+}
+
 function getEditDate(date) {
-  let dateData = document.getElementById("date-editCard");
+  const dateData = document.getElementById("date-editCard");
   dateData.min = new Date().toISOString().split("T")[0];
   dateData.value = date;
-  // console.log("this is date", dateData.value);
 }
 
 let show = true;
 
 function showCheckboxes() {
-  let checkboxes = document.getElementById("checkBoxes");
+  const checkboxes = document.getElementById("checkBoxes");
   if (show) {
     checkboxes.style.display = "block";
     show = false;
