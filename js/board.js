@@ -38,11 +38,8 @@ async function renderBoards() {
   let urlParams = new URLSearchParams(window.location.search);
 
   let actualUsersNumber = urlParams.get("actualUsersNumber");
-  // console.log(actualUsersNumber);
   let fulldata = await loadData("users");
-  // console.log("fulldata", fulldata[actualUsersNumber]["tasks"]);
   const data = fulldata[actualUsersNumber]["tasks"];
-  // const data = read();
 
   getBoardSection(data);
 }
@@ -57,12 +54,9 @@ async function getItemById(id, contentId) {
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
   let fulldata = await loadData("users");
-  // console.log("fulldata", fulldata[actualUsersNumber]["tasks"]);
   const data = fulldata[actualUsersNumber]["tasks"];
-  // let data = read();
   const itemList = data.find((items) => items["id"] == contentId);
   const item = itemList["items"].find((items) => items["id"] == id);
-  // console.log("this it item", item);
   return item;
 }
 
@@ -71,15 +65,11 @@ async function getItemById(id, contentId) {
  * @param {Object} data
  */
 function getBoardSection(data) {
-  // console.log(data[0]["items"]);
   const boardSection = document.getElementById("board-card-section");
   boardSection.innerHTML = "";
   for (let i = 0; i < data.length; i++) {
-    // console.log("data id", data[i]["id"]);
     const id = data[i]["id"];
     boardSection.innerHTML += getBoardContainer(id);
-    // console.log("data[items]", data[i]["items"] == "");
-    // console.log("data Items", data[i]["items"] == "");
     getBoardContents(data[i]["items"], id);
   }
 }
@@ -102,7 +92,6 @@ function getBoardContainer(id) {
  * @param {number} id
  */
 function getBoardContents(contents, id) {
-  // console.log("contents", contents);
   let content = document.getElementById(`${id}`);
   if (contents != "") {
     contents.forEach(function (card) {
@@ -190,7 +179,6 @@ function getProgressBar(subtasks, id) {
   let progressBar = content.querySelector("#progress-bar");
   let progressBarLabel = content.querySelector('label[for="progress-bar"]');
   let process = 0;
-  // console.log("subtasks", subtasks == "");
   if (subtasks == "") {
     subtasks = [];
   }

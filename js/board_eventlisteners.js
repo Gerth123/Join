@@ -328,7 +328,6 @@ async function saveEditData() {
       }
     }
   }
-  console.log("working");
   location.reload();
 }
 
