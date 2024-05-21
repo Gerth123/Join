@@ -1,23 +1,26 @@
 async function getEditBoard(id, contentId) {
+  let itemData = await getItemById(id, contentId);
+  const title = document.querySelector("input[id=title-editCard]");
+  const description = document.querySelector("input[id=description-editCard]");
+  const date = document.querySelector("input[id=date-editCard]");
+  title.value = `${itemData["title"]}`;
+  description.value = `${itemData["description"]}`;
+  date.value = `${itemData["date"]}`;
+  toggleSelectBtn();
+  getEditPriority(itemData["priority"]);
+  getEditSubtasks(itemData["subtasks"]);
+  await getEditAssigned();
+  getSubtasksEventListeners();
+  getEditDate(itemData["date"]);
+}
+
+function toggleSelectBtn() {
   const selectBtns = document.querySelectorAll("#select-btn-editCard");
   selectBtns.forEach((btn) => {
     btn.addEventListener("click", (e) => {
       btn.classList.toggle("open");
     });
   });
-  // console.log(id, contentId);
-  let itemData = await getItemById(id, contentId);
-  let title = document.querySelector("input[id=title-editCard]");
-  title.value = `${itemData["title"]}`;
-  let description = document.querySelector("input[id=description-editCard]");
-  description.value = `${itemData["description"]}`;
-  let date = document.querySelector("input[id=date-editCard]");
-  date.value = `${itemData["date"]}`;
-  getEditPriority(itemData["priority"]);
-  getEditSubtasks(itemData["subtasks"]);
-  await getEditAssigned();
-  getSubtasksEventListeners();
-  getEditDate(itemData["date"]);
 }
 
 function getEditPriority(priority) {
@@ -43,13 +46,16 @@ function getCheckedUsers(assignedUsers, contactName) {
   }
 }
 
-async function getEditAssigned() {
+async function getData(data) {
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
   let fulldata = await loadData("users");
-  // console.log("fulldata", fulldata[actualUsersNumber]["tasks"]);
-  let contacts = fulldata[actualUsersNumber]["contacts"];
-  let data = fulldata[actualUsersNumber]["tasks"];
+  return fulldata[actualUsersNumber][data];
+}
+
+async function getEditAssigned() {
+  let contacts = await getData("contacts");
+  let data = await getData("tasks");
 
   let assignedUsers = [];
   for (let column of data) {
