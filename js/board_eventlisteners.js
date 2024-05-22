@@ -17,6 +17,7 @@ function getEventListeners() {
   onClickAddCategory();
   deleteFullSizeBoard();
   cancelAddCard(fullsize);
+  searchCard();
 }
 
 function onClickEditCategory() {
@@ -541,5 +542,27 @@ function cancelAddCard(fullsize) {
   const cancel = document.querySelector(".cancel-button");
   cancel.addEventListener("click", () => {
     fullsize.classList.add("d-none");
+  });
+}
+
+async function searchCard() {
+  const search = document.getElementById("board-header-search-input");
+  const boardCards = document.querySelectorAll(".board-card");
+  let data = await getData("tasks");
+  search.addEventListener("keydown", async (e) => {
+    let serachValue = search.value.toLowerCase();
+    if (search.value.length > 1) {
+      boardCards.forEach((boardCard) => {
+        let title = boardCard.querySelector(".board-title");
+        let titleValue = title.innerHTML.toLowerCase();
+        if (!titleValue.includes(serachValue)) {
+          boardCard.classList.add("d-none");
+        }
+      });
+    } else {
+      boardCards.forEach((boardCard) => {
+        boardCard.classList.remove("d-none");
+      });
+    }
   });
 }
