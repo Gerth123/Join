@@ -15,6 +15,8 @@ function getEventListeners() {
   onClickEditBoard(board, editBoard, addBoard);
   onClickEditCategory();
   onClickAddCategory();
+  deleteFullSizeBoard();
+  cancelAddCard(fullsize);
 }
 
 function onClickEditCategory() {
@@ -514,4 +516,27 @@ function addSubTasks() {
 
   if (temp.length == 0) return "";
   return temp;
+}
+
+function deleteFullSizeBoard() {
+  document.addEventListener("click", async (e) => {
+    let data = await getData("tasks");
+    if (e.target.matches(".full-size-button-delete")) {
+      let urlParams = new URLSearchParams(window.location.search);
+      let actualUsersNumber = urlParams.get("actualUsersNumber");
+      for (let column of data) {
+        let item = column.items.find((item) => item.id == id);
+        if (item) column.items.splice(column.items.indexOf(item), 1);
+      }
+      await putData(`users/${actualUsersNumber}/tasks/`, data);
+      location.reload();
+    }
+  });
+}
+
+function cancelAddCard(fullsize) {
+  const cancel = document.querySelector(".cancel-button");
+  cancel.addEventListener("click", () => {
+    fullsize.classList.add("d-none");
+  });
 }
