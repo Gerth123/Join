@@ -168,9 +168,7 @@ function getProgressBar(subtasks, id) {
   let process = 0;
   // setFireBaseType(subtasks);
 
-  if (subtasks == "") {
-    subtasks = [];
-  }
+  if (subtasks == "") subtasks = [];
   for (let i = 0; i < subtasks.length; i++) {
     if (subtasks[i]["checked"] == true) {
       process++;

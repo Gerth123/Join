@@ -90,9 +90,7 @@ function onClickCloseFullSize(fullsize) {
       location.reload();
     }
 
-    if (e.target.matches("#close-btn-img-add")) {
-      fullsize.classList.add("d-none");
-    }
+    if (e.target.matches("#close-btn-img-add")) fullsize.classList.add("d-none");
   });
 }
 
@@ -161,7 +159,6 @@ async function getAddAssgined() {
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
   let fulldata = await loadData("users");
-
   let contacts = fulldata[actualUsersNumber]["contacts"];
   let data = fulldata[actualUsersNumber]["tasks"];
 
