@@ -168,6 +168,11 @@ async function getAddAssgined() {
 }
 
 function getAssignedUsersAddCard(assignedUsers, contacts) {
+  getAssignedItem(assignedUsers, contacts);
+  assignedItemEventListener(contacts);
+}
+
+function getAssignedItem(assignedUsers, contacts) {
   const contactList = document.getElementById("assigned-list-items-addCard");
   contactList.innerHTML = "";
   contacts.forEach((contact) => {
@@ -181,7 +186,9 @@ function getAssignedUsersAddCard(assignedUsers, contacts) {
         <div class="check-img"></div>
       </li>`;
   });
+}
 
+function assignedItemEventListener(contacts) {
   const assignedItems = document.querySelectorAll(".assigned-item");
   assignedItems.forEach((item) => {
     item.addEventListener("click", () => {
@@ -196,14 +203,13 @@ function checkedUsers(contacts) {
   const btnText = document.querySelector(".btn-text-addCard");
   const checkedUsers = document.getElementById("assigned-users-addCard");
   const userNames = document.querySelectorAll(".checked .item-text");
+
   if (checked && checked.length > 0) {
     btnText.innerText = `${checked.length} Selected`;
     checkedUsers.innerHTML = "";
     userNames.forEach((userName) => {
       const personWithName = contacts.find((person) => person.name == userName.innerHTML);
-      if (personWithName) {
-        checkedUsers.innerHTML += getAssignedUser(personWithName);
-      }
+      if (personWithName) checkedUsers.innerHTML += getAssignedUser(personWithName);
     });
   } else {
     btnText.innerText = "Select contacts to assign";
@@ -227,6 +233,7 @@ function getAssignedUser(personWithName) {
  */
 function onClickEditBoard(board, editBoard, addBoard) {
   const editBtn = document.getElementById("edit-btn");
+
   editBtn.addEventListener("click", () => {
     board.classList.add("d-none");
     editBoard.classList.remove("d-none");
@@ -263,6 +270,7 @@ function checkEditSubtasks() {
   const subtaskInput = document.getElementById("subtasks-input");
   const subtaskAddBtn = document.getElementById("subtasks-add");
   const subtaskContainer = document.getElementById("subtasks-btn-container");
+
   list.innerHTML += getSubtaskListHTML(subtaskInput.value);
   subtaskInput.value = "";
   subtaskContainer.classList.add("d-none");
@@ -458,7 +466,6 @@ function getAddObj(contacts) {
     priority: addPriorityValue(),
     subtasks: addSubTasks(),
   };
-
   return obj;
 }
 

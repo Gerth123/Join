@@ -55,6 +55,7 @@ async function getItemById(id, contentId) {
  */
 function getBoardSection(data) {
   const boardSection = document.getElementById("board-card-section");
+
   boardSection.innerHTML = "";
   for (let i = 0; i < data.length; i++) {
     const id = data[i]["id"];
@@ -82,6 +83,7 @@ function getBoardContainer(id) {
  */
 function getBoardContents(contents, id) {
   let content = document.getElementById(`${id}`);
+
   if (contents != "") {
     contents.forEach(function (card) {
       content.innerHTML += getBoardCard(card);
@@ -125,6 +127,7 @@ function getBoardCard(card) {
 function getCategory(category, id) {
   const content = document.getElementById(`${id}`);
   const boardCategory = content.querySelector("#board-category");
+
   boardCategory.src = icons["categoryIcons"][category] || "";
 }
 
@@ -136,6 +139,7 @@ function getCategory(category, id) {
 function getPriority(priority, id) {
   const content = document.getElementById(`${id}`);
   const boardPriority = content.querySelector("#board-priority");
+
   boardPriority.src = icons["priorityIcons"][priority] || "";
 }
 
@@ -147,6 +151,7 @@ function getPriority(priority, id) {
 function getAssigned(assigned, id) {
   const content = document.getElementById(`${id}`);
   const boardUser = content.querySelector("#board-users");
+
   if (assigned != "") {
     assigned.forEach((user) => {
       let name = getInitials(user["name"]);
@@ -166,7 +171,6 @@ function getProgressBar(subtasks, id) {
   const progressBar = content.querySelector("#progress-bar");
   const progressBarLabel = content.querySelector('label[for="progress-bar"]');
   let process = 0;
-  // setFireBaseType(subtasks);
 
   if (subtasks == "") subtasks = [];
   for (let i = 0; i < subtasks.length; i++) {

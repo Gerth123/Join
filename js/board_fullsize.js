@@ -48,10 +48,10 @@ function getFullSizeAssigned(assigned) {
       let name = getInitials(user["name"]);
       fullSizeAssigned.innerHTML += /*html*/ `
       <li class="full-size-assign-user">
-      <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}</div>
-      <div class="board-username">
-        ${user["name"]}
-      </div>
+        <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}</div>
+        <div class="board-username">
+          ${user["name"]}
+        </div>
       </li>`;
     });
   }
@@ -69,13 +69,10 @@ function getFullSizeSubtask(subtasks) {
     <li class="full-size-subtask-li">
       <input type="checkbox" id="subtask-${i}">
       <label for="subtask-${i}">${subtasks[i]["task"]}</label>
-    </li>
-    `;
+    </li>`;
   }
   for (let i = 0; i < subtasks.length; i++) {
     const check = document.getElementById(`subtask-${i}`);
-    if (subtasks[i]["checked"]) {
-      check.checked = true;
-    }
+    if (subtasks[i]["checked"]) check.checked = true;
   }
 }

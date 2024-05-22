@@ -6,6 +6,7 @@ function checkAddSubtasks() {
   const subtaskInput = document.getElementById("subtasks-input-addCard");
   const subtaskAddBtn = document.getElementById("subtasks-add-addCard");
   const subtaskContainer = document.getElementById("subtasks-btn-container-addCard");
+
   list.innerHTML += getAddSubtaskListHTML(subtaskInput.value);
   subtaskInput.value = "";
   subtaskContainer.classList.add("d-none");

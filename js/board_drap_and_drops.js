@@ -1,6 +1,7 @@
 function allowDrop(ev) {
   ev.preventDefault();
 }
+
 function getDropZones() {
   const draggables = document.querySelectorAll(".board-card-dropzone");
   draggables.forEach((task) => {
@@ -31,7 +32,6 @@ async function doDrop(e) {
   let actualUsersNumber = urlParams.get("actualUsersNumber");
   let draggableId = e.dataTransfer.getData("text/plain");
   let [closestClickedContentID, itemsIndex] = getClosestContent(draggableId);
-
   let task = e.target;
   task.classList.remove("board-card-dropzone--active");
   const closestTask = task.closest(".board-card-content");
