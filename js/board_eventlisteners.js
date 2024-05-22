@@ -531,7 +531,6 @@ function deleteFullSizeBoard() {
         if (item) column.items.splice(column.items.indexOf(item), 1);
         if (column.items.length == 0) column.items = "";
       }
-
       await putData(`users/${actualUsersNumber}/tasks/`, data);
       location.reload();
     }
@@ -545,11 +544,10 @@ function cancelAddCard(fullsize) {
   });
 }
 
-async function searchCard() {
+function searchCard() {
   const search = document.getElementById("board-header-search-input");
   const boardCards = document.querySelectorAll(".board-card");
-  let data = await getData("tasks");
-  search.addEventListener("keydown", async (e) => {
+  search.addEventListener("keydown", () => {
     let serachValue = search.value.toLowerCase();
     if (search.value.length > 1) {
       boardCards.forEach((boardCard) => {
