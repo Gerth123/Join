@@ -525,9 +525,12 @@ function deleteFullSizeBoard() {
       let urlParams = new URLSearchParams(window.location.search);
       let actualUsersNumber = urlParams.get("actualUsersNumber");
       for (let column of data) {
+        if (column.items == "") column.items = [];
         let item = column.items.find((item) => item.id == id);
         if (item) column.items.splice(column.items.indexOf(item), 1);
+        if (column.items.length == 0) column.items = "";
       }
+
       await putData(`users/${actualUsersNumber}/tasks/`, data);
       location.reload();
     }
