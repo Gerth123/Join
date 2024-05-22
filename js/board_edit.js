@@ -46,13 +46,6 @@ function getCheckedUsers(assignedUsers, contactName) {
   }
 }
 
-async function getData(data) {
-  let urlParams = new URLSearchParams(window.location.search);
-  let actualUsersNumber = urlParams.get("actualUsersNumber");
-  let fulldata = await loadData("users");
-  return fulldata[actualUsersNumber][data];
-}
-
 async function getEditAssigned() {
   let contacts = await getData("contacts");
   let data = await getData("tasks");
@@ -230,4 +223,11 @@ function showCheckboxes() {
     checkboxes.style.display = "none";
     show = true;
   }
+}
+
+async function getData(data) {
+  let urlParams = new URLSearchParams(window.location.search);
+  let actualUsersNumber = urlParams.get("actualUsersNumber");
+  let fulldata = await loadData("users");
+  return fulldata[actualUsersNumber][data];
 }

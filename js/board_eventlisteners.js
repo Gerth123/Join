@@ -75,21 +75,16 @@ function onClickCloseFullSize(fullsize) {
   document.addEventListener("click", async (e) => {
     if (e.target.matches("#close-btn-img")) {
       fullsize.classList.add("d-none");
-
       let itemData = await getItemById(id, contentId);
       let subtasks = itemData["subtasks"];
       for (let i = 0; i < subtasks.length; i++) {
         const check = document.getElementById(`subtask-${i}`);
-        if (check.checked) {
-          subtasks[i]["checked"] = true;
-        } else {
-          subtasks[i]["checked"] = false;
-        }
+        if (check.checked) subtasks[i]["checked"] = true;
+        if (!check.checked) subtasks[i]["checked"] = false;
       }
       await updateSubtaskCheck(subtasks);
       location.reload();
     }
-
     if (e.target.matches("#close-btn-img-add")) fullsize.classList.add("d-none");
   });
 }
@@ -101,8 +96,7 @@ function onClickCloseFullSize(fullsize) {
 async function updateSubtaskCheck(subtasks) {
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
-  let fulldata = await loadData("users");
-  const data = fulldata[actualUsersNumber]["tasks"];
+  let data = await getData("tasks");
   for (let column of data) {
     if (column.id == contentId) {
       for (let item of column.items) {
@@ -156,12 +150,8 @@ function addTaskBtnSmall(contentIdAdd) {
 }
 
 async function getAddAssgined() {
-  let urlParams = new URLSearchParams(window.location.search);
-  let actualUsersNumber = urlParams.get("actualUsersNumber");
-  let fulldata = await loadData("users");
-  let contacts = fulldata[actualUsersNumber]["contacts"];
-  let data = fulldata[actualUsersNumber]["tasks"];
-
+  let data = await getData("tasks");
+  let contacts = await getData("contacts");
   let assignedUsers = [];
   for (let column of data) {
     if (column.id == contentId) {
@@ -174,18 +164,22 @@ async function getAddAssgined() {
       }
     }
   }
-  let contactList = document.getElementById("assigned-list-items-addCard");
+  getAssignedUsersAddCard(assignedUsers, contacts);
+}
+
+function getAssignedUsersAddCard(assignedUsers, contacts) {
+  const contactList = document.getElementById("assigned-list-items-addCard");
   contactList.innerHTML = "";
   contacts.forEach((contact) => {
     let name = getInitials(contact["name"]);
     contactList.innerHTML += /*html*/ `
-        <li class="assigned-item ${getCheckedUsers(assignedUsers, contact["name"])}">
-          <div class="assigned-user">
-            <div id="board-user" class="board-user" style="background-color:${contact["color"]}">${name}</div>
-            <span class="item-text">${contact["name"]}</span>
-          </div>
-          <div class="check-img"></div>
-        </li>`;
+      <li class="assigned-item ${getCheckedUsers(assignedUsers, contact["name"])}">
+        <div class="assigned-user">
+          <div id="board-user" class="board-user" style="background-color:${contact["color"]}">${name}</div>
+          <span class="item-text">${contact["name"]}</span>
+        </div>
+        <div class="check-img"></div>
+      </li>`;
   });
 
   const assignedItems = document.querySelectorAll(".assigned-item");
@@ -208,18 +202,21 @@ function checkedUsers(contacts) {
     userNames.forEach((userName) => {
       const personWithName = contacts.find((person) => person.name == userName.innerHTML);
       if (personWithName) {
-        let name = getInitials(personWithName["name"]);
-        checkedUsers.innerHTML += /*html*/ `
-        <div class="assigned-user">
-          <div id="board-user" class="board-user-editCard" style="background-color: ${personWithName["color"]}">${name}</div>
-        </div>
-        `;
+        checkedUsers.innerHTML += getAssignedUser(personWithName);
       }
     });
   } else {
     btnText.innerText = "Select contacts to assign";
     checkedUsers.innerHTML = "";
   }
+}
+
+function getAssignedUser(personWithName) {
+  let name = getInitials(personWithName["name"]);
+  return /*html*/ `
+    <div class="assigned-user">
+      <div id="board-user" class="board-user-editCard" style="background-color: ${personWithName["color"]}">${name}</div>
+    </div> `;
 }
 
 /**
@@ -303,29 +300,33 @@ function getSubtaskListHTML(subtaskInputValue) {
 async function saveEditData() {
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
-  let fulldata = await loadData("users");
-  const data = fulldata[actualUsersNumber]["tasks"];
+  let data = await getData("tasks");
+  let contacts = await getData("contacts");
   const title = document.getElementById("title-editCard");
   const description = document.getElementById("description-editCard");
   const date = document.getElementById("date-editCard");
-
-  for (const listItem of data) {
+  for (let listItem of data) {
     if (listItem.id == contentId) {
       for (let item of listItem.items) {
-        if (item.id == id) {
-          item.category = editCategory(item.category);
-          item.title = title.value;
-          item.description = description.value;
-          item.date = date.value;
-          item.priority = editPriorityValue();
-          item.subtasks = editSubTasksValue(item.subtasks);
-          item.assigned = editAssignedValue(fulldata[actualUsersNumber]["contacts"]);
-        }
+        item = setEditItems(item, title, description, date, contacts);
         await putData(`users/${actualUsersNumber}/tasks/`, data);
       }
     }
   }
   location.reload();
+}
+
+function setEditItems(item, title, description, date, contacts) {
+  if (item.id == id) {
+    item.category = editCategory(item.category);
+    item.title = title.value;
+    item.description = description.value;
+    item.date = date.value;
+    item.priority = editPriorityValue();
+    item.subtasks = editSubTasksValue(item.subtasks);
+    item.assigned = editAssignedValue(contacts);
+  }
+  return item;
 }
 
 function editAssignedValue(contacts) {
@@ -341,10 +342,7 @@ function editAssignedValue(contacts) {
       }
     }
   });
-
-  if (assigned.length == 0) {
-    return "";
-  }
+  if (assigned.length == 0) return "";
   return assigned;
 }
 
@@ -356,11 +354,8 @@ function editAssignedValue(contacts) {
 function editCategory(category) {
   const newCategory = document.querySelector(".btn-text-category");
   const stripped = newCategory.textContent.replace(/\s+/g, " ").trim();
-  if (newCategory.textContent == "Select task category") {
-    return category;
-  } else {
-    return stripped;
-  }
+  if (newCategory.textContent == "Select task category") return category;
+  if (newCategory.textContent != "Select task category") return stripped;
 }
 
 /**
@@ -387,9 +382,7 @@ function editPriorityValue() {
  */
 function editSubTasksValue(subtasks) {
   const newSubtasks = document.querySelectorAll(".subtasks-li-text");
-  if (subtasks == "") {
-    subtasks = [];
-  }
+  if (subtasks == "") subtasks = [];
   if (subtasks.length < newSubtasks.length) {
     for (let i = subtasks.length; i < newSubtasks.length; i++) {
       subtasks.push({ checked: false, task: newSubtasks[i].innerHTML });
@@ -402,9 +395,7 @@ function editSubTasksValue(subtasks) {
     let updatedSubtask = (updatedTemp = updateChecked(temp.slice(), subtasks));
     subtasks = updatedSubtask;
   }
-  if (subtasks == "") {
-    return "";
-  }
+  if (subtasks == "") return "";
   return subtasks;
 }
 
@@ -427,12 +418,10 @@ function onClickAddSubTasks() {
   const subtaskContainer = document.getElementById("subtasks-btn-container-addCard");
   const subtaskDelBtn = document.getElementById("subtasks-del-addCard");
   const subtaskInput = document.getElementById("subtasks-input-addCard");
-
   subtaskAddBtn.addEventListener("click", () => {
     subtaskAddBtn.classList.add("d-none");
     subtaskContainer.classList.remove("d-none");
   });
-
   subtaskDelBtn.addEventListener("click", () => {
     subtaskInput.value = "";
   });
@@ -447,8 +436,7 @@ async function saveAddData() {
   const date = document.getElementById("date-addCard");
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
-  let fulldata = await loadData("users");
-  const data = fulldata[actualUsersNumber]["tasks"];
+  let data = await getData("tasks");
   const content = data.find((content) => content.id == contentId);
   const newId = Math.floor(Math.random() * 100000);
   const obj = {
