@@ -302,13 +302,10 @@ async function saveEditData() {
   let actualUsersNumber = urlParams.get("actualUsersNumber");
   let data = await getData("tasks");
   let contacts = await getData("contacts");
-  const title = document.getElementById("title-editCard");
-  const description = document.getElementById("description-editCard");
-  const date = document.getElementById("date-editCard");
   for (let listItem of data) {
     if (listItem.id == contentId) {
       for (let item of listItem.items) {
-        item = setEditItems(item, title, description, date, contacts);
+        item = setEditItems(item, contacts);
         await putData(`users/${actualUsersNumber}/tasks/`, data);
       }
     }
@@ -316,7 +313,10 @@ async function saveEditData() {
   location.reload();
 }
 
-function setEditItems(item, title, description, date, contacts) {
+function setEditItems(item, contacts) {
+  const title = document.getElementById("title-editCard");
+  const description = document.getElementById("description-editCard");
+  const date = document.getElementById("date-editCard");
   if (item.id == id) {
     item.category = editCategory(item.category);
     item.title = title.value;
@@ -431,38 +431,42 @@ function onClickAddSubTasks() {
  *
  */
 async function saveAddData() {
-  const title = document.getElementById("title-addCard");
-  const description = document.getElementById("description-addCard");
-  const date = document.getElementById("date-addCard");
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
   let data = await getData("tasks");
+  let contacts = await getData("contacts");
   const content = data.find((content) => content.id == contentId);
+  const obj = getAddObj(contacts);
+  if (content.items == "") content.items = [];
+  content.items.push(obj);
+  await putData(`users/${actualUsersNumber}/tasks/`, data);
+  location.reload();
+}
+
+function getAddObj(contacts) {
+  const title = document.getElementById("title-addCard");
+  const description = document.getElementById("description-addCard");
+  const date = document.getElementById("date-addCard");
   const newId = Math.floor(Math.random() * 100000);
   const obj = {
     id: newId,
     category: addCategory(),
     title: title.value,
     description: description.value,
-    assigned: addAssignedValue(fulldata[actualUsersNumber]["contacts"]),
+    assigned: addAssignedValue(contacts),
     date: date.value,
     priority: addPriorityValue(),
-    subtasks: await addSubTasks(),
+    subtasks: addSubTasks(),
   };
-  id = newId;
-  if (content.items == "") {
-    content.items = [];
-  }
-  content.items.push(obj);
-  await putData(`users/${actualUsersNumber}/tasks/`, data);
-  location.reload();
+
+  return obj;
 }
 
 function addAssignedValue(contacts) {
   const assignedUsers = document.querySelectorAll(".checked .item-text");
   let assigned = [];
   assignedUsers.forEach((assignedUser) => {
-    for (const contact of contacts) {
+    for (let contact of contacts) {
       if (contact.name == assignedUser.textContent) {
         assigned.push({
           color: contact["color"],
@@ -471,10 +475,7 @@ function addAssignedValue(contacts) {
       }
     }
   });
-
-  if (assigned.length == 0) {
-    return "";
-  }
+  if (assigned.length == 0) return "";
   return assigned;
 }
 
@@ -504,8 +505,6 @@ function addSubTasks() {
     temp.push({ checked: false, task: task.textContent });
   });
 
-  if (temp.length == 0) {
-    return "";
-  }
+  if (temp.length == 0) return "";
   return temp;
 }
