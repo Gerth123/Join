@@ -45,7 +45,7 @@ async function doDrop(e, target) {
   let droppedIndex = dropZonesInColumn.indexOf(task);
   let itemId = Number(e.dataTransfer.getData("text/plain"));
   const droppedItemElement = document.querySelector(`[id="${itemId}"]`);
-  const insertAfter = task.parentElement.classList.contains("board-card") ? task.parentElement : task;
+  let insertAfter = task.parentElement.classList.contains("board-card") ? task.parentElement : task;
   if (droppedItemElement.contains(task)) {
     return;
   }
@@ -63,17 +63,13 @@ async function doDrop(e, target) {
 }
 
 async function updateItem(path = "", itemId, newProps) {
-  let urlParams = new URLSearchParams(window.location.search);
-  let actualUsersNumber = urlParams.get("actualUsersNumber");
-  let fulldata = await loadData("users");
-  const data = fulldata[actualUsersNumber]["tasks"];
-
+  let data = await getData("tasks");
   let [item, currentColumn] = (() => {
-    for (const column of data) {
+    for (let column of data) {
       if (column.items == "") {
         column.items = [];
       }
-      const item = column.items.find((item) => item.id == itemId);
+      let item = column.items.find((item) => item.id == itemId);
       if (column.items.length == 0) {
         column.items = "";
       }
@@ -83,14 +79,15 @@ async function updateItem(path = "", itemId, newProps) {
 
   item.content = newProps.content === undefined ? item.content : newProps.content;
   if (newProps.contentId !== undefined && newProps.position !== undefined) {
-    const targetColumn = data.find((column) => column.id == newProps.contentId);
+    let targetColumn = data.find((column) => column.id == newProps.contentId);
     if (!targetColumn) throw new Error("Target column not found");
 
     if (currentColumn.items == "") {
       currentColumn.items = [];
     }
 
-    currentColumn.items.splice(currentColumn.items.indexOf(item), 1); //Delete the item from it's current column
+    currentColumn.items.splice(currentColumn.items.indexOf(item), 1);
+
     if (currentColumn.items.length == 0) {
       currentColumn.items = "";
     }
@@ -98,7 +95,9 @@ async function updateItem(path = "", itemId, newProps) {
     if (targetColumn.items == "") {
       targetColumn.items = [];
     }
-    targetColumn.items.splice(newProps.position, 0, item); // Move item into its new column and position
+
+    targetColumn.items.splice(newProps.position, 0, item);
+
     if (targetColumn.items.length == 0) {
       targetColumn.items = "";
     }

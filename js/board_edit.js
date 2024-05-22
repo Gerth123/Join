@@ -129,9 +129,9 @@ function getEditAssignedUser(color, name) {
 }
 
 function getInitials(name) {
-  const words = name.split(" ");
+  let words = name.split(" ");
   let initials = "";
-  for (const word of words) {
+  for (let word of words) {
     initials += word[0].toUpperCase();
   }
   return initials;

@@ -1,3 +1,5 @@
+let icons;
+
 /**
  * Gets example data from local
  * @returns example data
@@ -16,17 +18,12 @@ async function getIcons() {
   return await response.json();
 }
 
-let icons;
-let emptyData;
-///////////////////Render Boards//////////////////////
 /**
  * On loading it inits the elements
  */
 async function init() {
-  emptyData = await getExampleData();
   icons = await getIcons();
   await renderBoards();
-  // save(emptyData);
   getEventListeners();
   getDropZones();
 }
@@ -35,12 +32,7 @@ async function init() {
  * Renders the board
  */
 async function renderBoards() {
-  let urlParams = new URLSearchParams(window.location.search);
-
-  let actualUsersNumber = urlParams.get("actualUsersNumber");
-  let fulldata = await loadData("users");
-  const data = fulldata[actualUsersNumber]["tasks"];
-
+  let data = await getData("tasks");
   getBoardSection(data);
 }
 
@@ -51,12 +43,9 @@ async function renderBoards() {
  * @returns item data
  */
 async function getItemById(id, contentId) {
-  let urlParams = new URLSearchParams(window.location.search);
-  let actualUsersNumber = urlParams.get("actualUsersNumber");
-  let fulldata = await loadData("users");
-  const data = fulldata[actualUsersNumber]["tasks"];
-  const itemList = data.find((items) => items["id"] == contentId);
-  const item = itemList["items"].find((items) => items["id"] == id);
+  let data = await getData("tasks");
+  let itemList = data.find((items) => items["id"] == contentId);
+  let item = itemList["items"].find((items) => items["id"] == id);
   return item;
 }
 
@@ -134,8 +123,8 @@ function getBoardCard(card) {
  * @param {number} id - board id
  */
 function getCategory(category, id) {
-  let content = document.getElementById(`${id}`);
-  let boardCategory = content.querySelector("#board-category");
+  const content = document.getElementById(`${id}`);
+  const boardCategory = content.querySelector("#board-category");
   boardCategory.src = icons["categoryIcons"][category] || "";
 }
 
@@ -145,8 +134,8 @@ function getCategory(category, id) {
  * @param {number} id - board id
  */
 function getPriority(priority, id) {
-  let content = document.getElementById(`${id}`);
-  let boardPriority = content.querySelector("#board-priority");
+  const content = document.getElementById(`${id}`);
+  const boardPriority = content.querySelector("#board-priority");
   boardPriority.src = icons["priorityIcons"][priority] || "";
 }
 
@@ -156,13 +145,11 @@ function getPriority(priority, id) {
  * @param {number} id - board id
  */
 function getAssigned(assigned, id) {
-  let content = document.getElementById(`${id}`);
-  let boardUser = content.querySelector("#board-users");
+  const content = document.getElementById(`${id}`);
+  const boardUser = content.querySelector("#board-users");
   if (assigned != "") {
     assigned.forEach((user) => {
       let name = getInitials(user["name"]);
-      // let name = Array.from(`${user["name"]}`)[0];
-      // let lastName = Array.from(`${user["lastName"]}`)[0];
       boardUser.innerHTML += /*html*/ `
       <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}</div>`;
     });
@@ -175,10 +162,12 @@ function getAssigned(assigned, id) {
  * @param {number} id
  */
 function getProgressBar(subtasks, id) {
-  let content = document.getElementById(`${id}`);
-  let progressBar = content.querySelector("#progress-bar");
-  let progressBarLabel = content.querySelector('label[for="progress-bar"]');
+  const content = document.getElementById(`${id}`);
+  const progressBar = content.querySelector("#progress-bar");
+  const progressBarLabel = content.querySelector('label[for="progress-bar"]');
   let process = 0;
+  // setFireBaseType(subtasks);
+
   if (subtasks == "") {
     subtasks = [];
   }
@@ -188,7 +177,7 @@ function getProgressBar(subtasks, id) {
     }
   }
   if (subtasks.length == 0) {
-    let container = progressBar.closest(".board-progress-bar-container");
+    const container = progressBar.closest(".board-progress-bar-container");
     container.classList.add("d-none");
   } else {
     progressBarLabel.textContent = `${process}/${subtasks.length} Subtasks`;
