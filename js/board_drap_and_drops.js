@@ -8,6 +8,14 @@ function allowDrop(ev) {
   ev.preventDefault();
 }
 
+function allowContents(ev) {
+  ev.classList.add("d-none");
+}
+
+function allowContentsShow(ev) {
+  ev.classList.remove("d-none");
+}
+
 /**
  * Get DropZones
  *

@@ -583,3 +583,7 @@ fieldset {
   height: 400px;
   background-color: #d1d1d1;
 }
+
+.no-content-img {
+  width: 255px;
+}

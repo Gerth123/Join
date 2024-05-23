@@ -55,11 +55,16 @@ async function getItemById(id, contentId) {
  */
 function getBoardSection(data) {
   const boardSection = document.getElementById("board-card-section");
-
   boardSection.innerHTML = "";
   for (let i = 0; i < data.length; i++) {
     const id = data[i]["id"];
+    const items = data[i]["items"];
     boardSection.innerHTML += getBoardContainer(id);
+    if (items == "") {
+      let containerElement = document.getElementById(`${id}`);
+      let container = containerElement.querySelector("#no-content-img");
+      container.classList.remove("d-none");
+    }
     getBoardContents(data[i]["items"], id);
   }
 }
@@ -72,6 +77,7 @@ function getBoardSection(data) {
 function getBoardContainer(id) {
   return /*html*/ ` 
     <div id="${id}" class="board-card-content">
+      <img id="no-content-img" class="no-content-img d-none" src="/assets/icons/no-tasks-todo.svg">
       <div id="dropzone" ondragover="allowDrop(event)" ondrop="doDrop(event)" class="board-card-dropzone"></div>
     </div>`;
 }
