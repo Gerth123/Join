@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: board.js</title>
+    <title>JSDoc: Source: arrays.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: board.js</h1>
+    <h1 class="page-title">Source: arrays.js</h1>
 
     
 
@@ -26,193 +26,185 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>let icons;
+            <pre class="prettyprint source linenums"><code>let testContacts = [
+  {
+    name: "Anton Mayer",
+    mail: "antom@gmail.com",
+    phone: "+491234567890",
+    color: generateRandomColor(),
+    assigned: false,
+  },
+  {
+    name: "Hans Mueller",
+    mail: "hans@gmail.com",
+    phone: "+491234567890",
+    color: generateRandomColor(),
+    assigned: false,
+  },
+  {
+    name: "Benedikt Ziegler",
+    mail: "benedikt@gmail.com",
+    phone: "+491234567890",
+    color: generateRandomColor(),
+    assigned: false,
+  },
+  {
+    name: "David Eisenberg",
+    mail: "davidberg@gmail.com",
+    phone: "+491234567890",
+    color: generateRandomColor(),
+    assigned: false,
+  },
+  {
+    name: "Eva Fischer",
+    mail: "eva@gmail.com",
+    phone: "+491234567890",
+    color: generateRandomColor(),
+    assigned: false,
+  },
+  {
+    name: "Emmanuel Mauer",
+    mail: "emmanuelma@gmail.com",
+    phone: "+491234567890",
+    color: generateRandomColor(),
+    assigned: false,
+  },
+  {
+    name: "Marcel Bauer",
+    mail: "bauer@gmail.com",
+    phone: "+491234567890",
+    color: generateRandomColor(),
+    assigned: false,
+  },
+  {
+    name: "Tatjana Wolf",
+    mail: "wolf@gmail.com",
+    phone: "+491234567890",
+    color: generateRandomColor(),
+    assigned: false,
+  },
+  {
+    name: "Klaus Werner",
+    mail: "klausw@gmail.com",
+    phone: "+491234567890",
+    color: generateRandomColor(),
+    assigned: false,
+  },
+  {
+    name: "Peter Hahn",
+    mail: "peterhahn@gmail.com",
+    phone: "+491234567890",
+    color: generateRandomColor(),
+    assigned: false,
+  },
+  {
+    name: "Stefan Meier",
+    mail: "stefanMeier@gmail.com",
+    phone: "+491213212390",
+    color: generateRandomColor(),
+  },
+];
+
+let testTasks = [
+  {
+    id: 1,
+    items: [
+      {
+        id: 7955,
+        category: "User Story",
+        title: "Kochwelt Page &amp; Recipe Recommender",
+        description: "Build start page with recipe recommendation.",
+        assigned: [
+          { color: "", name: "Emmanuel Mauer" },
+          { color: "", name: "Marcel Bauer" },
+          { color: "", name: "Tatjana Wolf" },
+        ],
+        date: "10/05/2025",
+        priority: "medium",
+        subtasks: [
+          { checked: false, task: "Implement Recipe Recommendation" },
+          { checked: true, task: "Start Page Layout" },
+        ],
+      },
+      {
+        id: 2453,
+        category: "Technical Task",
+        title: "HTML Base Template Creation",
+        description: "Create reusable HTML base templates...",
+        assigned: [
+          { color: "", name: "David Eisenberg" },
+          { color: "", name: "Benedikt Ziegler" },
+          { color: "", name: "Anton Mayer" },
+        ],
+        date: "10/05/2025",
+        priority: "low",
+        subtasks: [
+          { checked: false, task: "Implement Recipe Recommendation" },
+          { checked: true, task: "Start Page Layout" },
+        ],
+      },
+      {
+        id: 8945,
+        category: "User Story",
+        title: "Daily Kochwelt Recipe",
+        description: "Implement daily recipe and portion calculator...",
+        assigned: [
+          { color: "", name: "Emmanuel Mauer" },
+          { color: "", name: "Anton Mayer" },
+          { color: "", name: "Tatjana Wolf" },
+        ],
+        date: "10/05/2025",
+        priority: "medium",
+        subtasks: [
+          { checked: false, task: "Implement Recipe Recommendation" },
+          { checked: true, task: "Start Page Layout" },
+        ],
+      },
+    ],
+  },
+  {
+    id: 2,
+    items: [
+      {
+        id: 7489,
+        category: "Technical Task",
+        title: "CSS Architecture Planning",
+        description: "Define CSS naming conventions and structure...",
+        assigned: [
+          { color: "", name: "Stefan Meier" },
+          { color: "", name: "Benedikt Ziegler" },
+        ],
+        date: "10/05/2025",
+        priority: "urgent",
+        subtasks: [
+          { checked: false, task: "Implement Recipe Recommendation" },
+          { checked: true, task: "Start Page Layout" },
+        ],
+      },
+    ],
+  },
+  {
+    id: 3,
+    items: "",
+  },
+  {
+    id: 4,
+    items: "",
+  },
+];
 
 /**
- * Gets example data from local
- * @returns example data
+ * This function generates a random color and returns it.
+ *
+ * @author: Robin
  */
-async function getExampleData() {
-  const response = await fetch("/assets/data/example.json");
-  return await response.json();
-}
-
-/**
- * Gets icons
- * @returns icon data
- */
-async function getIcons() {
-  const response = await fetch("/assets/data/getIcons.json");
-  return await response.json();
-}
-
-/**
- * On loading it inits the elements
- */
-async function init() {
-  icons = await getIcons();
-  await renderBoards();
-  getEventListeners();
-  getDropZones();
-}
-
-/**
- * Renders the board
- */
-async function renderBoards() {
-  let data = await getData("tasks");
-  getBoardSection(data);
-}
-
-/**
- * Gets the item by id
- * @param {number} id
- * @param {number} contentId
- * @returns item data
- */
-async function getItemById(id, contentId) {
-  let data = await getData("tasks");
-  let itemList = data.find((items) => items["id"] == contentId);
-  let item = itemList["items"].find((items) => items["id"] == id);
-  return item;
-}
-
-/**
- * Gets the board
- * @param {Object} data
- */
-function getBoardSection(data) {
-  const boardSection = document.getElementById("board-card-section");
-
-  boardSection.innerHTML = "";
-  for (let i = 0; i &lt; data.length; i++) {
-    const id = data[i]["id"];
-    boardSection.innerHTML += getBoardContainer(id);
-    getBoardContents(data[i]["items"], id);
+function generateRandomColor() {
+  var letters = "0123456789ABCDEF";
+  var color = "#";
+  for (var i = 0; i &lt; 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
   }
-}
-
-/**
- * Gets the board container
- * @param {number} id
- * @returns html code
- */
-function getBoardContainer(id) {
-  return /*html*/ ` 
-    &lt;div id="${id}" class="board-card-content">
-      &lt;div id="dropzone" ondragover="allowDrop(event)" ondrop="doDrop(event)" class="board-card-dropzone">&lt;/div>
-    &lt;/div>`;
-}
-
-/**
- * Gets the board contents
- * @param {Object} contents
- * @param {number} id
- */
-function getBoardContents(contents, id) {
-  let content = document.getElementById(`${id}`);
-
-  if (contents != "") {
-    contents.forEach(function (card) {
-      content.innerHTML += getBoardCard(card);
-      getCategory(card["category"], card["id"]);
-      getPriority(card["priority"], card["id"]);
-      getAssigned(card["assigned"], card["id"]);
-      getProgressBar(card["subtasks"], card["id"]);
-    });
-  }
-}
-
-/**
- * Gets the board card
- * @param {Object} card
- * @returns html code
- */
-function getBoardCard(card) {
-  return /*html*/ `
-  &lt;div id='${card["id"]}' class="board-card" draggable="true" ondragstart='doSetData(event, ${card["id"]})'>
-    &lt;img id="board-category" class="board-category">
-    &lt;div class="board-title">${card["title"]}&lt;/div>
-    &lt;div class="board-description">${card["description"]}&lt;/div> 
-    &lt;div class="board-progress-bar-container">
-      &lt;progress id="progress-bar" value="0" max="100">&lt;/progress>
-      &lt;label for="progress-bar">&lt;/label>
-    &lt;/div>
-    &lt;div class="board-bottom-container">
-      &lt;div id="board-users" class="board-user-container">
-      &lt;/div>
-      &lt;img id='board-priority' alt="">
-    &lt;/div>
-  &lt;/div> 
-  &lt;div  id="dropzone" ondragover="allowDrop(event)" ondrop="doDrop(event)" class="board-card-dropzone">&lt;/div>`;
-}
-
-/**
- * Get board category
- * @param {string} category - board category
- * @param {number} id - board id
- */
-function getCategory(category, id) {
-  const content = document.getElementById(`${id}`);
-  const boardCategory = content.querySelector("#board-category");
-
-  boardCategory.src = icons["categoryIcons"][category] || "";
-}
-
-/**
- * Get board priority
- * @param {string} priority - board priority
- * @param {number} id - board id
- */
-function getPriority(priority, id) {
-  const content = document.getElementById(`${id}`);
-  const boardPriority = content.querySelector("#board-priority");
-
-  boardPriority.src = icons["priorityIcons"][priority] || "";
-}
-
-/**
- * Get board assigned
- * @param {Object} assigned - board assigned user
- * @param {number} id - board id
- */
-function getAssigned(assigned, id) {
-  const content = document.getElementById(`${id}`);
-  const boardUser = content.querySelector("#board-users");
-
-  if (assigned != "") {
-    assigned.forEach((user) => {
-      let name = getInitials(user["name"]);
-      boardUser.innerHTML += /*html*/ `
-      &lt;div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}&lt;/div>`;
-    });
-  }
-}
-
-/**
- * Gets the progress bar
- * @param {Object} subtasks
- * @param {number} id
- */
-function getProgressBar(subtasks, id) {
-  const content = document.getElementById(`${id}`);
-  const progressBar = content.querySelector("#progress-bar");
-  const progressBarLabel = content.querySelector('label[for="progress-bar"]');
-  let process = 0;
-
-  if (subtasks == "") subtasks = [];
-  for (let i = 0; i &lt; subtasks.length; i++) {
-    if (subtasks[i]["checked"] == true) {
-      process++;
-    }
-  }
-  if (subtasks.length == 0) {
-    const container = progressBar.closest(".board-progress-bar-container");
-    container.classList.add("d-none");
-  } else {
-    progressBarLabel.textContent = `${process}/${subtasks.length} Subtasks`;
-    progressBar.value = +(process / subtasks.length) * 100;
-  }
+  return color;
 }
 </code></pre>
         </article>

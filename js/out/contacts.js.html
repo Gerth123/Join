@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: board.js</title>
+    <title>JSDoc: Source: contacts.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: board.js</h1>
+    <h1 class="page-title">Source: contacts.js</h1>
 
     
 
@@ -26,195 +26,175 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>let icons;
-
-/**
- * Gets example data from local
- * @returns example data
+            <pre class="prettyprint source linenums"><code>/**
+ * This script manages the visibility of an overlay.
+ * 
+ * - Clicking the addContactButton shows the overlay.
+ * - Clicking outside the overlay or on the closeImage inside the overlay hides the overlay.
+ * 
+ * Author: Elias
  */
-async function getExampleData() {
-  const response = await fetch("/assets/data/example.json");
-  return await response.json();
-}
+document.addEventListener("DOMContentLoaded", function () {
+  const addContactButton = document.querySelector(".addContactButton");
+  const overlay = document.getElementById("overlay");
+  const mainSectionOverlay = document.querySelector(".mainSectionOverlay");
+  const closeImage = document.querySelector(".imgcloseOverlay");
+  const cancelButton = document.querySelector(".clearButton");
 
-/**
- * Gets icons
- * @returns icon data
- */
-async function getIcons() {
-  const response = await fetch("/assets/data/getIcons.json");
-  return await response.json();
-}
+  addContactButton.addEventListener("click", function (event) {
+    event.stopPropagation();
+    overlay.style.display = "block";
+  });
 
-/**
- * On loading it inits the elements
- */
-async function init() {
-  icons = await getIcons();
-  await renderBoards();
-  getEventListeners();
-  getDropZones();
-}
-
-/**
- * Renders the board
- */
-async function renderBoards() {
-  let data = await getData("tasks");
-  getBoardSection(data);
-}
-
-/**
- * Gets the item by id
- * @param {number} id
- * @param {number} contentId
- * @returns item data
- */
-async function getItemById(id, contentId) {
-  let data = await getData("tasks");
-  let itemList = data.find((items) => items["id"] == contentId);
-  let item = itemList["items"].find((items) => items["id"] == id);
-  return item;
-}
-
-/**
- * Gets the board
- * @param {Object} data
- */
-function getBoardSection(data) {
-  const boardSection = document.getElementById("board-card-section");
-
-  boardSection.innerHTML = "";
-  for (let i = 0; i &lt; data.length; i++) {
-    const id = data[i]["id"];
-    boardSection.innerHTML += getBoardContainer(id);
-    getBoardContents(data[i]["items"], id);
-  }
-}
-
-/**
- * Gets the board container
- * @param {number} id
- * @returns html code
- */
-function getBoardContainer(id) {
-  return /*html*/ ` 
-    &lt;div id="${id}" class="board-card-content">
-      &lt;div id="dropzone" ondragover="allowDrop(event)" ondrop="doDrop(event)" class="board-card-dropzone">&lt;/div>
-    &lt;/div>`;
-}
-
-/**
- * Gets the board contents
- * @param {Object} contents
- * @param {number} id
- */
-function getBoardContents(contents, id) {
-  let content = document.getElementById(`${id}`);
-
-  if (contents != "") {
-    contents.forEach(function (card) {
-      content.innerHTML += getBoardCard(card);
-      getCategory(card["category"], card["id"]);
-      getPriority(card["priority"], card["id"]);
-      getAssigned(card["assigned"], card["id"]);
-      getProgressBar(card["subtasks"], card["id"]);
-    });
-  }
-}
-
-/**
- * Gets the board card
- * @param {Object} card
- * @returns html code
- */
-function getBoardCard(card) {
-  return /*html*/ `
-  &lt;div id='${card["id"]}' class="board-card" draggable="true" ondragstart='doSetData(event, ${card["id"]})'>
-    &lt;img id="board-category" class="board-category">
-    &lt;div class="board-title">${card["title"]}&lt;/div>
-    &lt;div class="board-description">${card["description"]}&lt;/div> 
-    &lt;div class="board-progress-bar-container">
-      &lt;progress id="progress-bar" value="0" max="100">&lt;/progress>
-      &lt;label for="progress-bar">&lt;/label>
-    &lt;/div>
-    &lt;div class="board-bottom-container">
-      &lt;div id="board-users" class="board-user-container">
-      &lt;/div>
-      &lt;img id='board-priority' alt="">
-    &lt;/div>
-  &lt;/div> 
-  &lt;div  id="dropzone" ondragover="allowDrop(event)" ondrop="doDrop(event)" class="board-card-dropzone">&lt;/div>`;
-}
-
-/**
- * Get board category
- * @param {string} category - board category
- * @param {number} id - board id
- */
-function getCategory(category, id) {
-  const content = document.getElementById(`${id}`);
-  const boardCategory = content.querySelector("#board-category");
-
-  boardCategory.src = icons["categoryIcons"][category] || "";
-}
-
-/**
- * Get board priority
- * @param {string} priority - board priority
- * @param {number} id - board id
- */
-function getPriority(priority, id) {
-  const content = document.getElementById(`${id}`);
-  const boardPriority = content.querySelector("#board-priority");
-
-  boardPriority.src = icons["priorityIcons"][priority] || "";
-}
-
-/**
- * Get board assigned
- * @param {Object} assigned - board assigned user
- * @param {number} id - board id
- */
-function getAssigned(assigned, id) {
-  const content = document.getElementById(`${id}`);
-  const boardUser = content.querySelector("#board-users");
-
-  if (assigned != "") {
-    assigned.forEach((user) => {
-      let name = getInitials(user["name"]);
-      boardUser.innerHTML += /*html*/ `
-      &lt;div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}&lt;/div>`;
-    });
-  }
-}
-
-/**
- * Gets the progress bar
- * @param {Object} subtasks
- * @param {number} id
- */
-function getProgressBar(subtasks, id) {
-  const content = document.getElementById(`${id}`);
-  const progressBar = content.querySelector("#progress-bar");
-  const progressBarLabel = content.querySelector('label[for="progress-bar"]');
-  let process = 0;
-
-  if (subtasks == "") subtasks = [];
-  for (let i = 0; i &lt; subtasks.length; i++) {
-    if (subtasks[i]["checked"] == true) {
-      process++;
+  document.addEventListener("click", function (event) {
+    if (overlay.style.display === "block" &amp;&amp; !mainSectionOverlay.contains(event.target)) {
+      overlay.style.display = "none";
     }
+  });
+
+  closeImage.addEventListener("click", function (event) {
+    event.stopPropagation();
+    overlay.style.display = "none";
+  });
+
+  cancelButton.addEventListener("click", function (event) {
+    event.stopPropagation();
+    overlay.style.display = "none";
+    clearInputFields();
+  });
+
+  const contactsADiv = document.querySelector('.contactsA');
+  if (contactsADiv) {
+    contactsADiv.addEventListener('click', () => {
+      contactsADiv.classList.toggle('active');
+    });
   }
-  if (subtasks.length == 0) {
-    const container = progressBar.closest(".board-progress-bar-container");
-    container.classList.add("d-none");
-  } else {
-    progressBarLabel.textContent = `${process}/${subtasks.length} Subtasks`;
-    progressBar.value = +(process / subtasks.length) * 100;
-  }
+});
+
+/**
+ * This function clears the text in the input fields for contact name, email, and phone.
+ * It retrieves the input elements by their respective IDs and sets their values to an empty string.
+ * 
+ * Author: Elias
+ */
+function clearInputFields() {
+  const contactNameInput = document.getElementById("contactName");
+  const contactEmailInput = document.getElementById("contactEmail");
+  const contactPhoneInput = document.getElementById("contactPhone");
+
+  contactNameInput.value = "";
+  contactEmailInput.value = "";
+  contactPhoneInput.value = "";
 }
-</code></pre>
+
+/**
+ * Fetches and displays sorted user contacts from Firebase when the DOM is fully loaded.
+ * 
+ * Author: Elias
+ */
+document.addEventListener("DOMContentLoaded", async function() {
+  try {
+      const baseUrl = 'https://join-ca44d-default-rtdb.europe-west1.firebasedatabase.app/';
+      const userId = '-NyKF7omq8KOQgBXWhYW';
+
+      const actualUsers = await loadData(`users/${userId}/contacts`, baseUrl);
+      console.log("Loaded Contacts:", actualUsers);
+
+      if (actualUsers) {
+          const sortedContacts = sortContacts(actualUsers);
+          displayContacts(sortedContacts);
+      } else {
+          console.error("Keine Kontakte im geladenen Benutzer gefunden.");
+      }
+  } catch (error) {
+      console.error("Fehler beim Laden der Daten:", error);
+  }
+});
+
+/**
+ * Fetches data from a given path in the Firebase database.
+ * 
+ * @param {string} path - The path to fetch data from.
+ * @param {string} baseUrl - The base URL of the Firebase database.
+ * @returns {Promise&lt;Object>} The JSON response.
+ * 
+ * Author: Elias
+ */
+async function loadData(path='', baseUrl) {
+  const response = await fetch(`${baseUrl}${path}.json`);
+  if (!response.ok) {
+      throw new Error('Fehler beim Laden der Daten: ' + response.statusText);
+  }
+  return await response.json();
+}
+
+/**
+ * Sorts contacts alphabetically by name.
+ * 
+ * @param {Array&lt;Object>} contacts - Array of contact objects.
+ * @returns {Array&lt;Object>} Sorted contacts.
+ * 
+ * Author: Elias
+ */
+function sortContacts(contacts) {
+  contacts.sort((a, b) => {
+      if (a !== null &amp;&amp; b !== null) {
+          const nameA = a.name.toUpperCase();
+          const nameB = b.name.toUpperCase();
+          if (nameA &lt; nameB) {
+              return -1;
+          }
+          if (nameA > nameB) {
+              return 1;
+          }
+      } else if (a === null &amp;&amp; b !== null) {
+          return 1;
+      } else if (a !== null &amp;&amp; b === null) {
+          return -1;
+      }
+      return 0;
+  });
+  return contacts;
+}
+
+/**
+ * Displays sorted contacts in the HTML container, grouped by the first letter.
+ * 
+ * @param {Array&lt;Object>} contacts - Sorted contact objects.
+ * 
+ * Author: Elias
+ */
+function displayContacts(contacts) {
+  const contactsContainer = document.getElementById('contacts-container');
+  if (!contactsContainer) {
+      console.error("Das Container-Element für Kontakte wurde nicht gefunden.");
+      return;
+  }
+  if (!contacts || contacts.length === 0) {
+      console.error("Keine Kontakte gefunden.");
+      return;
+  }
+
+  contactsContainer.innerHTML = '';
+  let currentLetter = '';
+
+  contacts.forEach(contact => {
+      const contactLetter = contact.name.charAt(0).toUpperCase();
+
+      if (contactLetter !== currentLetter) {
+          currentLetter = contactLetter;
+          contactsContainer.innerHTML += `
+            &lt;div class="contacts-list-letter">${currentLetter}&lt;/div>
+            &lt;div class="seperator-contacts-list">&lt;/div>
+          `;
+      }
+
+      const contactHTML = generateContactHTML(contact);
+      contactsContainer.innerHTML += contactHTML;
+  });
+
+  setupContactClickEvents();
+}</code></pre>
         </article>
     </section>
 

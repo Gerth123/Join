@@ -1,5 +1,7 @@
 /**
- * Checks the subtasks
+ * Onclick subtasks are modified
+ *
+ * @author Hanbit Chang
  */
 function checkAddSubtasks() {
   const list = document.getElementById("subtasks-list-addCard");
@@ -18,6 +20,8 @@ function checkAddSubtasks() {
  * Returns the html of subtask list
  * @param {string} subtaskInputValue
  * @returns html code
+ *
+ * @author Hanbit Chang
  */
 function getAddSubtaskListHTML(subtaskInputValue) {
   return /*html*/ `

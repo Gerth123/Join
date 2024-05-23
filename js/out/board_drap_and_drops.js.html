@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: board.js</title>
+    <title>JSDoc: Source: board_drap_and_drops.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: board.js</h1>
+    <h1 class="page-title">Source: board_drap_and_drops.js</h1>
 
     
 
@@ -26,193 +26,151 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>let icons;
-
-/**
- * Gets example data from local
- * @returns example data
+            <pre class="prettyprint source linenums"><code>/**
+ * Allows dropping
+ * @param {Event} ev
+ *
+ * @author Hanbit Chang
  */
-async function getExampleData() {
-  const response = await fetch("/assets/data/example.json");
-  return await response.json();
+function allowDrop(ev) {
+  ev.preventDefault();
 }
 
 /**
- * Gets icons
- * @returns icon data
+ * Get DropZones
+ *
+ * @author Hanbit Chang
  */
-async function getIcons() {
-  const response = await fetch("/assets/data/getIcons.json");
-  return await response.json();
+function getDropZones() {
+  const draggables = document.querySelectorAll(".board-card-dropzone");
+  draggables.forEach((task) => {
+    doDragOver(task);
+    doDragLeave(task);
+  });
 }
 
 /**
- * On loading it inits the elements
+ * Adds an event listener to the given task element to handle the "dragover" event.
+ * When the event is triggered, it adds the CSS class "board-card-dropzone--active" to the task element.
+ *
+ * @param {HTMLElement} task - The task element to add the event listener to.
+ * @author Hanbit Chang
  */
-async function init() {
-  icons = await getIcons();
-  await renderBoards();
-  getEventListeners();
-  getDropZones();
+function doDragOver(task) {
+  task.addEventListener("dragover", () => {
+    task.classList.add("board-card-dropzone--active");
+  });
 }
 
 /**
- * Renders the board
+ * Adds an event listener to the given task element to handle the "dragleave" event.
+ * When the event is triggered, it removes the CSS class "board-card-dropzone--active" from the task element.
+ *
+ * @param {HTMLElement} task - The task element to add the event listener to.
+ * @author Hanbit Chang
  */
-async function renderBoards() {
+function doDragLeave(task) {
+  task.addEventListener("dragleave", () => {
+    task.classList.remove("board-card-dropzone--active");
+  });
+}
+
+/**
+ * Sets the data to be transferred during a drag and drop operation.
+ *
+ * @param {Event} e - The drag event.
+ * @param {number} id - The ID of the data to be transferred.
+ * @return {void} This function does not return a value.
+ * @author Hanbit Chang
+ */
+function doSetData(e, id) {
+  e.dataTransfer.setData("text/plain", id);
+}
+
+/**
+ * Handles the drop event and performs the necessary operations.
+ *
+ * @param {Event} e - The drop event.
+ * @return {Promise&lt;void>} A promise that resolves when the operation is complete.
+ * @author Hanbit Chang
+ */
+async function doDrop(e) {
+  e.preventDefault();
+  let urlParams = new URLSearchParams(window.location.search);
+  let actualUsersNumber = urlParams.get("actualUsersNumber");
+  let draggableId = e.dataTransfer.getData("text/plain");
+  let [closestClickedContentID, itemsIndex] = getClosestContent(draggableId);
+  let task = e.target;
+  task.classList.remove("board-card-dropzone--active");
+  const closestTask = task.closest(".board-card-content");
+  let closestDroppedContentID = closestTask.id;
+  let contentId = Number(closestTask.id);
+  let dropZonesInColumn = Array.from(closestTask.querySelectorAll(".board-card-dropzone"));
+  let droppedIndex = dropZonesInColumn.indexOf(task);
+  let itemId = Number(e.dataTransfer.getData("text/plain"));
+  const droppedItemElement = document.querySelector(`[id="${itemId}"]`);
+  let insertAfter = task.parentElement.classList.contains("board-card") ? task.parentElement : task;
+
+  if (droppedItemElement.contains(task)) return;
+  if (itemsIndex &lt; droppedIndex &amp;&amp; closestClickedContentID == closestDroppedContentID) droppedIndex--;
+
+  insertAfter.after(droppedItemElement);
+  await updateItem(`users/${actualUsersNumber}/tasks/`, itemId, {
+    contentId,
+    position: droppedIndex,
+  });
+  init();
+}
+
+/**
+ * Retrieves the closest content element and its index for a given draggable element.
+ *
+ * @param {string} draggableId - The ID of the draggable element.
+ * @return {Array} An array containing the closest content element's ID and the index of the draggable element within the content.
+ * @author Hanbit Chang
+ */
+function getClosestContent(draggableId) {
+  const idElement = document.getElementById(draggableId);
+  const closestTaskforId = idElement.closest(".board-card-content");
+  const itemsInColumn = Array.from(closestTaskforId.querySelectorAll(".board-card"));
+  let closestClickedContentID = closestTaskforId.id;
+  let itemsIndex = itemsInColumn.indexOf(idElement);
+  return [closestClickedContentID, itemsIndex];
+}
+
+/**
+ *  Updates an item in the data with the given properties.
+ *
+ * @param {*} path
+ * @param {*} itemId
+ * @param {*} newProps
+ * @author Hanbit Chang
+ */
+async function updateItem(path = "", itemId, newProps) {
   let data = await getData("tasks");
-  getBoardSection(data);
-}
-
-/**
- * Gets the item by id
- * @param {number} id
- * @param {number} contentId
- * @returns item data
- */
-async function getItemById(id, contentId) {
-  let data = await getData("tasks");
-  let itemList = data.find((items) => items["id"] == contentId);
-  let item = itemList["items"].find((items) => items["id"] == id);
-  return item;
-}
-
-/**
- * Gets the board
- * @param {Object} data
- */
-function getBoardSection(data) {
-  const boardSection = document.getElementById("board-card-section");
-
-  boardSection.innerHTML = "";
-  for (let i = 0; i &lt; data.length; i++) {
-    const id = data[i]["id"];
-    boardSection.innerHTML += getBoardContainer(id);
-    getBoardContents(data[i]["items"], id);
-  }
-}
-
-/**
- * Gets the board container
- * @param {number} id
- * @returns html code
- */
-function getBoardContainer(id) {
-  return /*html*/ ` 
-    &lt;div id="${id}" class="board-card-content">
-      &lt;div id="dropzone" ondragover="allowDrop(event)" ondrop="doDrop(event)" class="board-card-dropzone">&lt;/div>
-    &lt;/div>`;
-}
-
-/**
- * Gets the board contents
- * @param {Object} contents
- * @param {number} id
- */
-function getBoardContents(contents, id) {
-  let content = document.getElementById(`${id}`);
-
-  if (contents != "") {
-    contents.forEach(function (card) {
-      content.innerHTML += getBoardCard(card);
-      getCategory(card["category"], card["id"]);
-      getPriority(card["priority"], card["id"]);
-      getAssigned(card["assigned"], card["id"]);
-      getProgressBar(card["subtasks"], card["id"]);
-    });
-  }
-}
-
-/**
- * Gets the board card
- * @param {Object} card
- * @returns html code
- */
-function getBoardCard(card) {
-  return /*html*/ `
-  &lt;div id='${card["id"]}' class="board-card" draggable="true" ondragstart='doSetData(event, ${card["id"]})'>
-    &lt;img id="board-category" class="board-category">
-    &lt;div class="board-title">${card["title"]}&lt;/div>
-    &lt;div class="board-description">${card["description"]}&lt;/div> 
-    &lt;div class="board-progress-bar-container">
-      &lt;progress id="progress-bar" value="0" max="100">&lt;/progress>
-      &lt;label for="progress-bar">&lt;/label>
-    &lt;/div>
-    &lt;div class="board-bottom-container">
-      &lt;div id="board-users" class="board-user-container">
-      &lt;/div>
-      &lt;img id='board-priority' alt="">
-    &lt;/div>
-  &lt;/div> 
-  &lt;div  id="dropzone" ondragover="allowDrop(event)" ondrop="doDrop(event)" class="board-card-dropzone">&lt;/div>`;
-}
-
-/**
- * Get board category
- * @param {string} category - board category
- * @param {number} id - board id
- */
-function getCategory(category, id) {
-  const content = document.getElementById(`${id}`);
-  const boardCategory = content.querySelector("#board-category");
-
-  boardCategory.src = icons["categoryIcons"][category] || "";
-}
-
-/**
- * Get board priority
- * @param {string} priority - board priority
- * @param {number} id - board id
- */
-function getPriority(priority, id) {
-  const content = document.getElementById(`${id}`);
-  const boardPriority = content.querySelector("#board-priority");
-
-  boardPriority.src = icons["priorityIcons"][priority] || "";
-}
-
-/**
- * Get board assigned
- * @param {Object} assigned - board assigned user
- * @param {number} id - board id
- */
-function getAssigned(assigned, id) {
-  const content = document.getElementById(`${id}`);
-  const boardUser = content.querySelector("#board-users");
-
-  if (assigned != "") {
-    assigned.forEach((user) => {
-      let name = getInitials(user["name"]);
-      boardUser.innerHTML += /*html*/ `
-      &lt;div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}&lt;/div>`;
-    });
-  }
-}
-
-/**
- * Gets the progress bar
- * @param {Object} subtasks
- * @param {number} id
- */
-function getProgressBar(subtasks, id) {
-  const content = document.getElementById(`${id}`);
-  const progressBar = content.querySelector("#progress-bar");
-  const progressBarLabel = content.querySelector('label[for="progress-bar"]');
-  let process = 0;
-
-  if (subtasks == "") subtasks = [];
-  for (let i = 0; i &lt; subtasks.length; i++) {
-    if (subtasks[i]["checked"] == true) {
-      process++;
+  let [item, currentColumn] = (() => {
+    for (let column of data) {
+      if (column.items == "") column.items = [];
+      let item = column.items.find((item) => item.id == itemId);
+      if (column.items.length == 0) column.items = "";
+      if (item) return [item, column];
     }
+  })();
+
+  item.content = newProps.content === undefined ? item.content : newProps.content;
+  if (newProps.contentId !== undefined &amp;&amp; newProps.position !== undefined) {
+    let targetColumn = data.find((column) => column.id == newProps.contentId);
+
+    if (currentColumn.items == "") currentColumn.items = [];
+    currentColumn.items.splice(currentColumn.items.indexOf(item), 1);
+    if (currentColumn.items.length == 0) currentColumn.items = "";
+
+    if (targetColumn.items == "") targetColumn.items = [];
+    targetColumn.items.splice(newProps.position, 0, item);
+    if (targetColumn.items.length == 0) targetColumn.items = "";
   }
-  if (subtasks.length == 0) {
-    const container = progressBar.closest(".board-progress-bar-container");
-    container.classList.add("d-none");
-  } else {
-    progressBarLabel.textContent = `${process}/${subtasks.length} Subtasks`;
-    progressBar.value = +(process / subtasks.length) * 100;
-  }
+
+  await putData(path, data);
 }
 </code></pre>
         </article>
