@@ -71,6 +71,11 @@ footer {
     }
 }
 
+.logoContainerSlideImgWhite {
+    display: none;
+    height: 30vh;
+}
+
 .logoContainerSlideLoaded {
     position: absolute;
     animation: slide-out 1s ease-in-out;
@@ -100,8 +105,15 @@ footer {
     flex-direction: column;
 }
 
+.signUpAndLoginContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .signUpContainer {
-    width: 80%;
+    width: 80vw;
     height: 10vh;
     display: flex;
     justify-content: flex-end;
@@ -136,6 +148,9 @@ footer {
     border-radius: 15px;
     height: 55vh;
     width: 35vw;
+    max-width: 550px;
+    min-width: 400px;
+    max-height: 400px;
     box-shadow: 0px 0px 5px 0px rgb(0, 0, 0, 0.1);
     margin: 12.5vh 0;
 }
@@ -428,4 +443,165 @@ footer {
     background-color: rgb(41, 171, 226);
     color: white;
     box-shadow: 0px 0px 5px 2px rgb(0, 0, 0, 0.3);
+}
+
+@media (max-width: 1300px) {
+    .loginContainer {
+        width: 38vw;
+    }
+}
+
+@media (max-width: 750px) {
+    .wholeLoginContainer {
+        z-index: 998;
+        position: relative;
+    }
+
+    .signUpAndLoginContainer {
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: center;
+        align-items: center;
+        gap: 0px;
+        padding-bottom: 2vh;
+    }
+
+    .signUpContainer {
+        gap: 10px;
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+    }
+
+    .notJoinUserTxt {
+        margin-top: 0;
+    }
+
+    .signUpButton {
+        margin-top: 0px;
+    }
+
+    .loginContainer {
+        margin: 21vh 0 4vh 0;
+    }
+
+    .logoContainerSlideLoaded {
+        top: 30px;
+        left: 30px;
+        z-index: 999;
+    }
+
+
+    .logoContainerSlideImg {
+        animation: logoSlideOut 1s ease-in-out 0.1s forwards;
+        animation-delay: 0.2s;
+        opacity: 0;
+    }
+
+    @keyframes logoSlideOut {
+        from {
+            opacity: 1;
+            height: 30vh;
+        }
+
+        to {
+            opacity: 1;
+            height: 12vh;
+        }
+    }
+
+    .logoContainerSlideWhite {
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        position: absolute;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .logoContainerSlideImgWhite {
+        position: fixed;
+        height: 30vh;
+        top: 35vh;
+        display: unset;
+        animation: showAndHide 0.2s forwards;
+        opacity: 0;
+    }
+
+    @keyframes showAndHide {
+        0% {
+            opacity: 1;
+        }
+
+        99.9% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0;
+        }
+    }
+
+    .logoContainerSlideLoaded {
+        top: 30px;
+        left: 30px;
+    }
+
+    @keyframes slide-out {
+        0% {
+            top: 35vh;
+            left: 33vw;
+        }
+
+        100% {
+            top: 30px;
+            left: 30px;
+        }
+    }
+
+    .responsiveBackgroundForSlide {
+        height: 100vh;
+        width: 100vw;
+        background-color: rgb(42, 54, 71);
+        animation: changeColor 0.5s forwards;
+        animation-delay: 0.2s;
+
+    }
+
+    @keyframes changeColor {
+        to {
+            background-color: rgb(246, 247, 248);
+            display: none;
+        }
+    }
+}
+
+@media (max-width: 370px) {
+    .loginContainer {
+        width: 95vw;
+        min-width: 300px;
+        justify-content: center;
+        height: 50vh;
+        margin: 25vh 0 5vh 0;
+    }
+
+    .logInInputFields {
+        width: 85vw;
+    }
+
+    .logInButtons {
+        flex-direction: column;
+    }
+
+    h1 {
+        padding-top: 1vh;
+    }
+
+    footer {
+        padding-top: 1.5vh;
+    }
+
+    .userLogInButton {
+        width: 120px;
+    }
 }

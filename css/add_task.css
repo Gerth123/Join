@@ -1,0 +1,42 @@
+.addTaskOpenedContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 82vw;
+    height: 88vh;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.addTaskOpened {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 80%;
+    gap: 20px;
+}
+
+.addTaskHeadline {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    font-size: 3em;
+    color: black;
+}
+
+.addTaskForm {
+    display: flex;
+    gap: 20px;
+}
+
+.addTaskLeftSide {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.addTaskRightSide {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

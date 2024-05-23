@@ -278,3 +278,132 @@ header {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.08);
 }
+
+.logoResponsive {
+    display: none;
+}
+
+@media (max-width: 1100px) {
+    .headerAndOpenedContainer {
+        width: unset;
+        height: auto;
+    }
+
+    header {
+        height: 10vh;
+    }
+
+    .headlineContainer {
+        display: none;
+    }
+
+    .logoResponsive {
+        display: block;
+        height: 40px;
+        padding-left: 5vw;
+    }
+
+    .helpIcon {
+        display: none;
+    }
+
+    .helpAndUserContainer {
+        width: unset;
+    }
+
+    .wholeJoinContainer {
+        flex-direction: column;
+    }
+    .sideBarContainer {
+        flex-direction: row;
+        height: 10vh;
+        width: 100vw;
+        top: 90vh;
+        position: fixed;
+    }
+
+    .sideBarChooseSectionContainer {
+        flex-direction: row;
+        justify-content: space-evenly;
+        width: 100vw;
+        gap: 0;
+    }
+
+    .sideBarLogoContainer {
+        display: none;
+    }
+
+    .openedDarkBackground {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        height: 10vh;
+        width: 20vw;
+        border-radius: 15px;
+    }
+
+    .sideBarImgContainer {
+        padding-left: 0;
+    }
+
+    .summaryContainer {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        height: 10vh;
+        width: 20vw;
+        border-radius: 15px;
+    }
+
+    .summaryContainer:hover {
+        height: 10vh;
+    }
+
+    .addTaskContainer {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        height: 10vh;
+        width: 20vw;
+        border-radius: 15px;
+    }
+
+    .addTaskContainer:hover {
+        height: 10vh;
+    }
+
+    .boardContainer {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        height: 10vh;
+        width: 20vw;
+        border-radius: 15px;
+    }
+
+    .boardContainer:hover {
+        height: 10vh;
+    }
+
+    .contactsContainer {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        height: 10vh;
+        width: 20vw;
+        border-radius: 15px;
+    }
+
+    .contactsContainer:hover {
+        height: 10vh;
+    }
+
+    .privacyPolicyAndLegalNoticeContainer {
+        display: none;
+    }
+}

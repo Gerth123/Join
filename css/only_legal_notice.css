@@ -1,0 +1,9 @@
+@media (max-width: 1100px) {
+    .sideBarContainer {
+        display: none !important;
+    }
+
+    .legalNoticeOpenedContainer {
+        padding-bottom: 8vh !important;
+    }
+}
