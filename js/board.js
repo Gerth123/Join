@@ -86,6 +86,10 @@ function getBoardContentsAll(data) {
 function getBoardContainer(id) {
   return /*html*/ ` 
     <div id="${id}" class="board-card-content">
+    <!-- <div class="board-header-task">
+                <div class="board-text">To do</div>
+                <div class="board-add-btn button" onclick="addTaskBtnSmall(1)"></div>
+              </div> -->
       <img id="no-content-img" class="no-content-img d-none" src="/assets/icons/no-tasks-todo.svg">
       <div id="dropzone" ondragover="allowDrop(event)" ondrop="doDrop(event)" class="board-card-dropzone"></div>
     </div>`;

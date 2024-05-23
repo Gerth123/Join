@@ -588,3 +588,6 @@ fieldset {
 .no-content-img {
   width: 255px;
 }
+
+@media screen and (max-width: 480px) {
+}
