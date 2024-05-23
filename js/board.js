@@ -1,4 +1,5 @@
 let icons;
+let data;
 
 /**
  * Gets example data from local
@@ -21,9 +22,10 @@ async function getIcons() {
 /**
  * On loading it inits the elements
  */
-async function init() {
+async function initBoard() {
+  data = await getData("tasks");
   icons = await getIcons();
-  await renderBoards();
+  renderBoards(data);
   getEventListeners();
   getDropZones();
 }
@@ -31,9 +33,9 @@ async function init() {
 /**
  * Renders the board
  */
-async function renderBoards() {
-  let data = await getData("tasks");
+function renderBoards(data) {
   getBoardSection(data);
+  getBoardContentsAll(data);
 }
 
 /**
@@ -43,7 +45,7 @@ async function renderBoards() {
  * @returns item data
  */
 async function getItemById(id, contentId) {
-  let data = await getData("tasks");
+  // let data = await getData("tasks");
   let itemList = data.find((items) => items["id"] == contentId);
   let item = itemList["items"].find((items) => items["id"] == id);
   return item;
@@ -65,6 +67,13 @@ function getBoardSection(data) {
       let container = containerElement.querySelector("#no-content-img");
       container.classList.remove("d-none");
     }
+    // getBoardContents(data[i]["items"], id);
+  }
+}
+
+function getBoardContentsAll(data) {
+  for (let i = 0; i < data.length; i++) {
+    const id = data[i]["id"];
     getBoardContents(data[i]["items"], id);
   }
 }

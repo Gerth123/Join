@@ -168,6 +168,7 @@ input:focus {
 
 .board-card-section {
   display: flex;
+  width: 1200px;
   padding-left: 64px;
 }
 

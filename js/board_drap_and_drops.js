@@ -99,7 +99,7 @@ async function doDrop(e) {
     contentId,
     position: droppedIndex,
   });
-  init();
+  initBoard();
 }
 
 /**
