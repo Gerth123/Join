@@ -28,13 +28,22 @@ async function init() {
   await renderBoards();
   // save(emptyData);
   getEventListeners();
+  getDropZones();
 }
 
 /**
  * Renders the board
  */
 async function renderBoards() {
-  const data = read();
+  let urlParams = new URLSearchParams(window.location.search);
+
+  let actualUsersNumber = urlParams.get("actualUsersNumber");
+  // console.log(actualUsersNumber);
+  let fulldata = await loadData("users");
+  // console.log("fulldata", fulldata[actualUsersNumber]["tasks"]);
+  const data = fulldata[actualUsersNumber]["tasks"];
+  // const data = read();
+
   getBoardSection(data);
 }
 
@@ -44,10 +53,16 @@ async function renderBoards() {
  * @param {number} contentId
  * @returns item data
  */
-function getItemById(id, contentId) {
-  let data = read();
+async function getItemById(id, contentId) {
+  let urlParams = new URLSearchParams(window.location.search);
+  let actualUsersNumber = urlParams.get("actualUsersNumber");
+  let fulldata = await loadData("users");
+  // console.log("fulldata", fulldata[actualUsersNumber]["tasks"]);
+  const data = fulldata[actualUsersNumber]["tasks"];
+  // let data = read();
   const itemList = data.find((items) => items["id"] == contentId);
   const item = itemList["items"].find((items) => items["id"] == id);
+  // console.log("this it item", item);
   return item;
 }
 
@@ -56,11 +71,15 @@ function getItemById(id, contentId) {
  * @param {Object} data
  */
 function getBoardSection(data) {
+  // console.log(data[0]["items"]);
   const boardSection = document.getElementById("board-card-section");
   boardSection.innerHTML = "";
   for (let i = 0; i < data.length; i++) {
+    // console.log("data id", data[i]["id"]);
     const id = data[i]["id"];
     boardSection.innerHTML += getBoardContainer(id);
+    // console.log("data[items]", data[i]["items"] == "");
+    // console.log("data Items", data[i]["items"] == "");
     getBoardContents(data[i]["items"], id);
   }
 }
@@ -73,7 +92,7 @@ function getBoardSection(data) {
 function getBoardContainer(id) {
   return /*html*/ ` 
     <div id="${id}" class="board-card-content">
-      <div id="dropzone" class="board-card-dropzone"></div>
+      <div id="dropzone" ondragover="allowDrop(event)" ondrop="doDrop(event)" class="board-card-dropzone"></div>
     </div>`;
 }
 
@@ -83,14 +102,17 @@ function getBoardContainer(id) {
  * @param {number} id
  */
 function getBoardContents(contents, id) {
+  // console.log("contents", contents);
   let content = document.getElementById(`${id}`);
-  contents.forEach(function (card) {
-    content.innerHTML += getBoardCard(card);
-    getCategory(card["category"], card["id"]);
-    getPriority(card["priority"], card["id"]);
-    getAssigned(card["assigned"], card["id"]);
-    getProgressBar(card["subtasks"], card["id"]);
-  });
+  if (contents != "") {
+    contents.forEach(function (card) {
+      content.innerHTML += getBoardCard(card);
+      getCategory(card["category"], card["id"]);
+      getPriority(card["priority"], card["id"]);
+      getAssigned(card["assigned"], card["id"]);
+      getProgressBar(card["subtasks"], card["id"]);
+    });
+  }
 }
 
 /**
@@ -100,7 +122,7 @@ function getBoardContents(contents, id) {
  */
 function getBoardCard(card) {
   return /*html*/ `
-  <div id='${card["id"]}' class="board-card" draggable="true">
+  <div id='${card["id"]}' class="board-card" draggable="true" ondragstart='doSetData(event, ${card["id"]})'>
     <img id="board-category" class="board-category">
     <div class="board-title">${card["title"]}</div>
     <div class="board-description">${card["description"]}</div> 
@@ -113,8 +135,8 @@ function getBoardCard(card) {
       </div>
       <img id='board-priority' alt="">
     </div>
-    <div  id="dropzone" class="kanban-dropzone"></div>
-  </div> `;
+  </div> 
+  <div  id="dropzone" ondragover="allowDrop(event)" ondrop="doDrop(event)" class="board-card-dropzone"></div>`;
 }
 
 /**
@@ -147,12 +169,15 @@ function getPriority(priority, id) {
 function getAssigned(assigned, id) {
   let content = document.getElementById(`${id}`);
   let boardUser = content.querySelector("#board-users");
-  assigned.forEach((user) => {
-    let name = Array.from(`${user["name"]}`)[0];
-    let lastName = Array.from(`${user["lastName"]}`)[0];
-    boardUser.innerHTML += /*html*/ `
-    <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}${lastName}</div>`;
-  });
+  if (assigned != "") {
+    assigned.forEach((user) => {
+      let name = getInitials(user["name"]);
+      // let name = Array.from(`${user["name"]}`)[0];
+      // let lastName = Array.from(`${user["lastName"]}`)[0];
+      boardUser.innerHTML += /*html*/ `
+      <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}</div>`;
+    });
+  }
 }
 
 /**
@@ -165,6 +190,10 @@ function getProgressBar(subtasks, id) {
   let progressBar = content.querySelector("#progress-bar");
   let progressBarLabel = content.querySelector('label[for="progress-bar"]');
   let process = 0;
+  // console.log("subtasks", subtasks == "");
+  if (subtasks == "") {
+    subtasks = [];
+  }
   for (let i = 0; i < subtasks.length; i++) {
     if (subtasks[i]["checked"] == true) {
       process++;

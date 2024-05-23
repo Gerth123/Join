@@ -3,8 +3,9 @@
  * @param {number} id
  * @param {number} contentId
  */
-function getFullSizeBoard(id, contentId) {
-  let itemData = getItemById(id, contentId);
+async function getFullSizeBoard(id, contentId) {
+  let itemData = await getItemById(id, contentId);
+  // console.log("itemData", itemData);
   let title = document.querySelector(".full-size-title");
   let description = document.querySelector(".full-size-description");
   let date = document.querySelector("#full-size-due-date");
@@ -43,15 +44,18 @@ function getFullSizeCategory(category) {
 function getFullSizeAssigned(assigned) {
   const fullSizeAssigned = document.querySelector("#full-size-assigned-users");
   fullSizeAssigned.innerHTML = "";
-  assigned.forEach((user) => {
-    let name = Array.from(`${user["name"]}`)[0];
-    let lastName = Array.from(`${user["lastName"]}`)[0];
-    fullSizeAssigned.innerHTML += /*html*/ `
-    <div class="full-size-assign-user">
-    <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}${lastName}</div>
-      ${user["name"]} ${user["lastName"]}  
-    </div>`;
-  });
+  if (assigned != "") {
+    assigned.forEach((user) => {
+      let name = getInitials(user["name"]);
+      fullSizeAssigned.innerHTML += /*html*/ `
+      <li class="full-size-assign-user">
+      <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}</div>
+      <div class="board-username">
+        ${user["name"]}
+      </div>
+      </li>`;
+    });
+  }
 }
 
 /**
@@ -63,8 +67,10 @@ function getFullSizeSubtask(subtasks) {
   fullSizeSubtasks.innerHTML = "";
   for (let i = 0; i < subtasks.length; i++) {
     fullSizeSubtasks.innerHTML += /*html*/ `
-    <input type="checkbox" id="subtask-${i}">
-    <label for="subtask-${i}">${subtasks[i]["task"]}</label>
+    <li class="full-size-subtask-li">
+      <input type="checkbox" id="subtask-${i}">
+      <label for="subtask-${i}">${subtasks[i]["task"]}</label>
+    </li>
     `;
   }
   for (let i = 0; i < subtasks.length; i++) {

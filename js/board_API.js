@@ -10,6 +10,9 @@ function save(data) {
  * Reads the data in the server.
  */
 function read() {
+  // let urlParams = new URLSearchParams(window.location.search);
+  // let actualUsersNumber = urlParams.get("actualUsersNumber");
+  // console.log("actualUsersNumber", actualUsersNumber);
   const json = localStorage.getItem("board-data");
   if (!json) return emptyData;
   return JSON.parse(json);

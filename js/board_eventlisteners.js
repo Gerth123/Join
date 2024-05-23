@@ -13,6 +13,36 @@ function getEventListeners() {
   onClickCloseFullSize(fullsize);
   onClickAddTaskBoard(fullsize, board, editBoard, addBoard);
   onClickEditBoard(board, editBoard, addBoard);
+  onClickEditCategory();
+  onClickAddCategory();
+}
+
+function onClickEditCategory() {
+  const categoryItems = document.querySelectorAll(".category-item");
+  categoryItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      const selectButton = document.querySelector("#select-btn-editCard");
+      const btnText = document.querySelector(".btn-text-category");
+      if (selectButton) {
+        selectButton.classList.remove("open");
+        btnText.textContent = item.textContent;
+      }
+    });
+  });
+}
+
+function onClickAddCategory() {
+  const categoryItems = document.querySelectorAll(".category-item");
+  categoryItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      const selectButton = document.querySelector("#select-btn-addCard");
+      const btnText = document.querySelector(".category-addCard .btn-text-category");
+      if (selectButton) {
+        selectButton.classList.remove("open");
+        btnText.textContent = item.textContent;
+      }
+    });
+  });
 }
 
 /**
@@ -42,10 +72,11 @@ function onClickFullSizeBoard(fullsize, board, editBoard, addBoard) {
  * @param {Element} fullsize
  */
 function onClickCloseFullSize(fullsize) {
-  document.addEventListener("click", (e) => {
+  document.addEventListener("click", async (e) => {
     if (e.target.matches("#close-btn-img")) {
       fullsize.classList.add("d-none");
-      let itemData = getItemById(id, contentId);
+
+      let itemData = await getItemById(id, contentId);
       let subtasks = itemData["subtasks"];
       for (let i = 0; i < subtasks.length; i++) {
         let check = document.getElementById(`subtask-${i}`);
@@ -55,8 +86,12 @@ function onClickCloseFullSize(fullsize) {
           subtasks[i]["checked"] = false;
         }
       }
-      updateSubtaskCheck(subtasks);
+      await updateSubtaskCheck(subtasks);
       location.reload();
+    }
+
+    if (e.target.matches("#close-btn-img-add")) {
+      fullsize.classList.add("d-none");
     }
   });
 }
@@ -65,8 +100,11 @@ function onClickCloseFullSize(fullsize) {
  * Update the subtasks check and reload
  * @param {Object} subtasks
  */
-function updateSubtaskCheck(subtasks) {
-  let data = read();
+async function updateSubtaskCheck(subtasks) {
+  let urlParams = new URLSearchParams(window.location.search);
+  let actualUsersNumber = urlParams.get("actualUsersNumber");
+  let fulldata = await loadData("users");
+  const data = fulldata[actualUsersNumber]["tasks"];
   for (let column of data) {
     if (column.id == contentId) {
       for (let item of column.items) {
@@ -76,7 +114,7 @@ function updateSubtaskCheck(subtasks) {
       }
     }
   }
-  save(data);
+  await putData(`users/${actualUsersNumber}/tasks/`, data);
 }
 
 /**
@@ -87,6 +125,12 @@ function updateSubtaskCheck(subtasks) {
  * @param {Element} addBoard
  */
 function onClickAddTaskBoard(fullsize, board, editBoard, addBoard) {
+  const selectBtns = document.querySelectorAll("#select-btn-addCard");
+  selectBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      btn.classList.toggle("open");
+    });
+  });
   const addTaskBtn = document.getElementById("board-header-add-btn");
   addTaskBtn.addEventListener("click", () => {
     fullsize.classList.remove("d-none");
@@ -95,6 +139,7 @@ function onClickAddTaskBoard(fullsize, board, editBoard, addBoard) {
     addBoard.classList.remove("d-none");
     contentId = 1;
     onClickAddSubTasks();
+    getAddAssgined();
   });
 }
 
@@ -103,13 +148,81 @@ function addTaskBtnSmall(contentIdAdd) {
   const board = document.getElementById("board");
   const editBoard = document.getElementById("edit-board");
   const addBoard = document.getElementById("add-board");
-  console.log(contentIdAdd);
   contentId = contentIdAdd;
   fullsize.classList.remove("d-none");
   board.classList.add("d-none");
   editBoard.classList.add("d-none");
   addBoard.classList.remove("d-none");
   onClickAddSubTasks();
+  getAddAssgined();
+}
+
+async function getAddAssgined() {
+  let urlParams = new URLSearchParams(window.location.search);
+  let actualUsersNumber = urlParams.get("actualUsersNumber");
+  let fulldata = await loadData("users");
+
+  let contacts = fulldata[actualUsersNumber]["contacts"];
+  let data = fulldata[actualUsersNumber]["tasks"];
+
+  let assignedUsers = [];
+  for (let column of data) {
+    if (column.id == contentId) {
+      for (let item of column.items) {
+        if (item.id == id) {
+          for (i = 0; i < item["assigned"].length; i++) {
+            assignedUsers.push(item["assigned"][i]["name"]);
+          }
+        }
+      }
+    }
+  }
+  let contactList = document.getElementById("assigned-list-items-addCard");
+  contactList.innerHTML = "";
+  contacts.forEach((contact) => {
+    let name = getInitials(contact["name"]);
+    contactList.innerHTML += /*html*/ `
+        <li class="assigned-item ${getCheckedUsers(assignedUsers, contact["name"])}">
+          <div class="assigned-user">
+            <div id="board-user" class="board-user" style="background-color:${contact["color"]}">${name}</div>
+            <span class="item-text">${contact["name"]}</span>
+          </div>
+          <div class="check-img"></div>
+        </li>`;
+  });
+
+  const assignedItems = document.querySelectorAll(".assigned-item");
+  assignedItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      item.classList.toggle("checked");
+      checkedUsers(contacts);
+    });
+  });
+}
+
+function checkedUsers(contacts) {
+  const checked = document.querySelectorAll(".checked");
+  const btnText = document.querySelector(".btn-text-addCard");
+  const checkedUsers = document.getElementById("assigned-users-addCard");
+  const userNames = document.querySelectorAll(".checked .item-text");
+  if (checked && checked.length > 0) {
+    btnText.innerText = `${checked.length} Selected`;
+    checkedUsers.innerHTML = "";
+    userNames.forEach((userName) => {
+      const personWithName = contacts.find((person) => person.name == userName.innerHTML);
+      if (personWithName) {
+        let name = getInitials(personWithName["name"]);
+        checkedUsers.innerHTML += /*html*/ `
+        <div class="assigned-user">
+          <div id="board-user" class="board-user-editCard" style="background-color: ${personWithName["color"]}">${name}</div>
+        </div>
+        `;
+      }
+    });
+  } else {
+    btnText.innerText = "Select contacts to assign";
+    checkedUsers.innerHTML = "";
+  }
 }
 
 /**
@@ -190,8 +303,11 @@ function getSubtaskListHTML(subtaskInputValue) {
 /**
  *  save edit data
  */
-function saveEditData() {
-  let data = read();
+async function saveEditData() {
+  let urlParams = new URLSearchParams(window.location.search);
+  let actualUsersNumber = urlParams.get("actualUsersNumber");
+  let fulldata = await loadData("users");
+  const data = fulldata[actualUsersNumber]["tasks"];
   let title = document.getElementById("title-editCard");
   let description = document.getElementById("description-editCard");
   let date = document.getElementById("date-editCard");
@@ -206,11 +322,34 @@ function saveEditData() {
           item.date = date.value;
           item.priority = editPriorityValue();
           item.subtasks = editSubTasksValue(item.subtasks);
+          item.assigned = editAssignedValue(fulldata[actualUsersNumber]["contacts"]);
         }
-        save(data);
+        await putData(`users/${actualUsersNumber}/tasks/`, data);
       }
     }
   }
+  console.log("working");
+  location.reload();
+}
+
+function editAssignedValue(contacts) {
+  const assignedUsers = document.querySelectorAll(".checked .item-text");
+  let assigned = [];
+  assignedUsers.forEach((assignedUser) => {
+    for (const contact of contacts) {
+      if (contact.name == assignedUser.textContent) {
+        assigned.push({
+          color: contact["color"],
+          name: contact["name"],
+        });
+      }
+    }
+  });
+
+  if (assigned.length == 0) {
+    return "";
+  }
+  return assigned;
 }
 
 /**
@@ -219,11 +358,12 @@ function saveEditData() {
  * @returns string
  */
 function editCategory(category) {
-  let newCategory = document.getElementById("category-editCard");
-  if (newCategory.value == "") {
+  let newCategory = document.querySelector(".btn-text-category");
+  const stripped = newCategory.textContent.replace(/\s+/g, " ").trim();
+  if (newCategory.textContent == "Select task category") {
     return category;
   } else {
-    return newCategory.value;
+    return stripped;
   }
 }
 
@@ -251,6 +391,9 @@ function editPriorityValue() {
  */
 function editSubTasksValue(subtasks) {
   let newSubtasks = document.querySelectorAll(".subtasks-li-text");
+  if (subtasks == "") {
+    subtasks = [];
+  }
   if (subtasks.length < newSubtasks.length) {
     for (let i = subtasks.length; i < newSubtasks.length; i++) {
       subtasks.push({ checked: false, task: newSubtasks[i].innerHTML });
@@ -262,6 +405,9 @@ function editSubTasksValue(subtasks) {
     });
     let updatedSubtask = (updatedTemp = updateChecked(temp.slice(), subtasks));
     subtasks = updatedSubtask;
+  }
+  if (subtasks == "") {
+    return "";
   }
   return subtasks;
 }
@@ -299,12 +445,14 @@ function onClickAddSubTasks() {
 /**
  *
  */
-function saveAddData() {
+async function saveAddData() {
   const title = document.getElementById("title-addCard");
   const description = document.getElementById("description-addCard");
   const date = document.getElementById("date-addCard");
-  console.log(date);
-  let data = read();
+  let urlParams = new URLSearchParams(window.location.search);
+  let actualUsersNumber = urlParams.get("actualUsersNumber");
+  let fulldata = await loadData("users");
+  const data = fulldata[actualUsersNumber]["tasks"];
   const content = data.find((content) => content.id == contentId);
   const newId = Math.floor(Math.random() * 100000);
   const obj = {
@@ -312,21 +460,44 @@ function saveAddData() {
     category: addCategory(),
     title: title.value,
     description: description.value,
-    assigned: [],
+    assigned: addAssignedValue(fulldata[actualUsersNumber]["contacts"]),
     date: date.value,
     priority: addPriorityValue(),
-    subtasks: [],
+    subtasks: await addSubTasks(),
   };
   id = newId;
-
-  console.log(id, contentId);
+  if (content.items == "") {
+    content.items = [];
+  }
   content.items.push(obj);
-  save(data);
+  await putData(`users/${actualUsersNumber}/tasks/`, data);
+  location.reload();
+}
+
+function addAssignedValue(contacts) {
+  const assignedUsers = document.querySelectorAll(".checked .item-text");
+  let assigned = [];
+  assignedUsers.forEach((assignedUser) => {
+    for (const contact of contacts) {
+      if (contact.name == assignedUser.textContent) {
+        assigned.push({
+          color: contact["color"],
+          name: contact["name"],
+        });
+      }
+    }
+  });
+
+  if (assigned.length == 0) {
+    return "";
+  }
+  return assigned;
 }
 
 function addCategory() {
-  let newCategory = document.getElementById("category-addCard");
-  return newCategory.value;
+  let newCategory = document.querySelector(".btn-text-category");
+  const stripped = newCategory.textContent.replace(/\s+/g, " ").trim();
+  return stripped;
 }
 
 function addPriorityValue() {
@@ -340,4 +511,17 @@ function addPriorityValue() {
   } else if (priority4.checked) {
     return "low";
   }
+}
+
+function addSubTasks() {
+  let newSubtasks = document.querySelectorAll(".subtasks-li-text");
+  let temp = [];
+  newSubtasks.forEach((task) => {
+    temp.push({ checked: false, task: task.textContent });
+  });
+
+  if (temp.length == 0) {
+    return "";
+  }
+  return temp;
 }
