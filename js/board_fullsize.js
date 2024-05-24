@@ -75,4 +75,14 @@ function getFullSizeSubtask(subtasks) {
     const check = document.getElementById(`subtask-${i}`);
     if (subtasks[i]["checked"]) check.checked = true;
   }
+
+  const subtaskList = document.querySelectorAll(".full-size-subtask-li");
+  // console.log("subtaskList", subtaskList);
+  // console.log("id", id);
+  const idElement = document.getElementById(`${id}`);
+  // console.log("idElement", idElement);
+  const progressBar = idElement.querySelector("#progress-bar");
+  const label = idElement.getElementsByTagName("LABEL");
+  // console.log("progressBar", progressBar);
+  // console.log("label", label);
 }

@@ -63,7 +63,7 @@ label {
   justify-content: space-between;
   height: 152px;
   padding-top: 80px;
-  padding-left: 64px;
+  padding-left: min(5%, 64px);
 }
 
 .board-header-top {
@@ -129,7 +129,8 @@ label {
 }
 
 .board-header-search {
-  width: 280px;
+  max-width: 280px;
+  width: 100%;
   height: 30px;
   display: flex;
   padding: 8px 16px 8px 16px;
@@ -169,7 +170,7 @@ input:focus {
 .board-card-section {
   display: flex;
   width: 1200px;
-  padding-left: 64px;
+  padding-left: min(5%, 64px);
 }
 
 .board-card-content {

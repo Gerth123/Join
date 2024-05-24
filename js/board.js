@@ -204,4 +204,6 @@ function getProgressBar(subtasks, id) {
     progressBarLabel.textContent = `${process}/${subtasks.length} Subtasks`;
     progressBar.value = +(process / subtasks.length) * 100;
   }
+
+  const subtaskList = document.querySelectorAll(".full-size-subtask-li");
 }
