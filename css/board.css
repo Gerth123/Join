@@ -61,7 +61,7 @@ label {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 152px;
+  height: 70px;
   padding-top: 80px;
   padding-left: min(5%, 64px);
 }
@@ -169,13 +169,14 @@ input:focus {
 
 .board-card-section {
   display: flex;
-  width: 1200px;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1200px;
   padding-left: min(5%, 64px);
 }
 
 .board-card-content {
   width: 252px;
-  margin-top: 8px;
   margin-right: 16px;
 }
 
@@ -591,4 +592,30 @@ fieldset {
 }
 
 @media screen and (max-width: 480px) {
+  .board-header-section {
+    padding-left: 16px;
+  }
+
+  .board-header-title {
+    font-size: 47px;
+  }
+
+  .board-header-top {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .board-header-right {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .board-header-search {
+    width: 100%;
+    max-width: 396px;
+    padding: 4px 8px 4px 8px;
+    margin-right: 0;
+  }
 }
