@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: htmlcontacts.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: htmlcontacts.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Listens for DOMContentLoaded, adds click listener to 'contactCard' elements,
+ * extracts data from clicked card, and updates '.contactdetails-right' HTML.
+ * 
+ * Author: Elias
+ */
+function setupContactClickEvents() {
+    const contactCards = document.querySelectorAll('.contactCard');
+
+    contactCards.forEach(function(card) {
+        card.addEventListener('click', function() {
+            let name = card.querySelector('.NameContact').textContent;
+            let email = card.querySelector('.EmailContact').textContent;
+            let phone = card.getAttribute('data-phone');
+            let randomColor = generateRandomColor(name);
+            let initials = getInitials(name);
+
+            let contactDetailsDiv = document.querySelector('.contactdetails-right');
+            contactDetailsDiv.innerHTML = `
+                &lt;div class="profil-user">
+                    &lt;div class="profil-user-left">
+                        &lt;div class="profilePicture largeProfilePicture" style="background-color: ${randomColor};">${initials}&lt;/div>
+                    &lt;/div>
+                    &lt;div class="profil-user-right">
+                        &lt;p class="contact-name">${name}&lt;/p>
+                        &lt;div class="editDelete-div">
+                            &lt;div class="edit-div">
+                                &lt;img class="contact-img1" src="assets/img/edit.svg"/>
+                                &lt;img class="contact-img2" src="assets/img/edit (1).svg"/>
+                                &lt;span>Edit&lt;/span>
+                            &lt;/div>
+                            &lt;div class="delete-div">
+                                &lt;img class="contact-img1" src="assets/img/delete.svg"/>
+                                &lt;img class="contact-img2" src="assets/img/delete (1).svg"/>
+                                &lt;span>Delete&lt;/span>
+                            &lt;/div>
+                        &lt;/div>
+                    &lt;/div>
+                &lt;/div>
+                &lt;div class="div-h2">
+                    &lt;h2 class="h2Contactinfo">Contact Information&lt;/h2>
+                &lt;/div>
+                &lt;div class="div-P">
+                    &lt;p class="contact-mail">Email&lt;/p>
+                    &lt;p class="contact-email">${email}&lt;/p>
+                &lt;/div>
+                &lt;div class="Phone-div">
+                    &lt;p class="contact-Phone">Phone&lt;/p>
+                    &lt;p class="contact-Phone1">${phone}&lt;/p>
+                &lt;/div>
+            `;
+        });
+    });
+}
+
+/**
+ * Generates HTML for a contact.
+ * 
+ * @param {Object} contact - The contact object.
+ * @returns {string} - The HTML string for the contact.
+ * 
+ * Author: Elias
+ */
+function generateContactHTML(contact) {
+    const randomColor = generateRandomColor(contact.name);
+    const initials = getInitials(contact.name);
+    return `
+        &lt;div class="contact contactCard" data-phone="${contact.phone}">
+            &lt;div class="profilePicture" style="background-color: ${randomColor};">${initials}&lt;/div>
+            &lt;div class="name-mailDiv">
+                &lt;div class="NameContact">${contact.name}&lt;/div>
+                &lt;div class="EmailContact">${contact.mail}&lt;/div>
+            &lt;/div>
+        &lt;/div>
+    `;
+}
+
+/**
+ * Generates a random color based on a seed string.
+ * 
+ * @param {string} seed - The seed string used to generate the color.
+ * @returns {string} - A hex color code generated from the seed.
+ * 
+ * Author: Elias
+ */
+function generateRandomColor(seed) {
+    var hash = 0;
+    for (var i = 0; i &lt; seed.length; i++) {
+        hash = seed.charCodeAt(i) + ((hash &lt;&lt; 5) - hash);
+    }
+    var color = "#";
+    for (var j = 0; j &lt; 3; j++) {
+        var value = (hash >> (j * 8)) &amp; 255;
+        color += value.toString(16).padStart(2, '0');
+    }
+    return color;
+}
+
+/**
+ * Generates initials from a name string.
+ * 
+ * @param {string} name - The full name from which initials are generated.
+ * @returns {string} - The initials extracted from the name.
+ * 
+ * Author: Elias
+ */
+function getInitials(name) {
+    const words = name.split(' ');
+    const initials = words.map(word => word.charAt(0)).join('').toUpperCase();
+    return initials;
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addAssignedValue">addAssignedValue</a></li><li><a href="global.html#addCategory">addCategory</a></li><li><a href="global.html#addPriorityValue">addPriorityValue</a></li><li><a href="global.html#addSubTasks">addSubTasks</a></li><li><a href="global.html#addTaskBtnSmall">addTaskBtnSmall</a></li><li><a href="global.html#addUser">addUser</a></li><li><a href="global.html#allowDrop">allowDrop</a></li><li><a href="global.html#assignedItemEventListener">assignedItemEventListener</a></li><li><a href="global.html#cancelAddCard">cancelAddCard</a></li><li><a href="global.html#checkAcceptPrivacyPolicy">checkAcceptPrivacyPolicy</a></li><li><a href="global.html#checkAddSubtasks">checkAddSubtasks</a></li><li><a href="global.html#checkEditSubtasks">checkEditSubtasks</a></li><li><a href="global.html#checkMail">checkMail</a></li><li><a href="global.html#checkName">checkName</a></li><li><a href="global.html#checkUser">checkUser</a></li><li><a href="global.html#checkUsers">checkUsers</a></li><li><a href="global.html#checkedUsers">checkedUsers</a></li><li><a href="global.html#clearInputFields">clearInputFields</a></li><li><a href="global.html#deleteFullSizeBoard">deleteFullSizeBoard</a></li><li><a href="global.html#displayContacts">displayContacts</a></li><li><a href="global.html#doDragLeave">doDragLeave</a></li><li><a href="global.html#doDragOver">doDragOver</a></li><li><a href="global.html#doDrop">doDrop</a></li><li><a href="global.html#doSetData">doSetData</a></li><li><a href="global.html#editAssignedValue">editAssignedValue</a></li><li><a href="global.html#editCategory">editCategory</a></li><li><a href="global.html#editPriorityValue">editPriorityValue</a></li><li><a href="global.html#editSubTasksValue">editSubTasksValue</a></li><li><a href="global.html#fillDates">fillDates</a></li><li><a href="global.html#fillUrgentDate">fillUrgentDate</a></li><li><a href="global.html#fillUrgentTask">fillUrgentTask</a></li><li><a href="global.html#generateContactHTML">generateContactHTML</a></li><li><a href="global.html#generateRandomColor">generateRandomColor</a></li><li><a href="global.html#getAddAssgined">getAddAssgined</a></li><li><a href="global.html#getAddObj">getAddObj</a></li><li><a href="global.html#getAddSubtaskListHTML">getAddSubtaskListHTML</a></li><li><a href="global.html#getAssigned">getAssigned</a></li><li><a href="global.html#getAssignedItem">getAssignedItem</a></li><li><a href="global.html#getAssignedUser">getAssignedUser</a></li><li><a href="global.html#getAssignedUsersAddCard">getAssignedUsersAddCard</a></li><li><a href="global.html#getBoardCard">getBoardCard</a></li><li><a href="global.html#getBoardContainer">getBoardContainer</a></li><li><a href="global.html#getBoardContents">getBoardContents</a></li><li><a href="global.html#getBoardSection">getBoardSection</a></li><li><a href="global.html#getCategory">getCategory</a></li><li><a href="global.html#getCheckedUsers">getCheckedUsers</a></li><li><a href="global.html#getClosestContent">getClosestContent</a></li><li><a href="global.html#getData">getData</a></li><li><a href="global.html#getDropZones">getDropZones</a></li><li><a href="global.html#getEditAssigned">getEditAssigned</a></li><li><a href="global.html#getEditAssignedUser">getEditAssignedUser</a></li><li><a href="global.html#getEditBoard">getEditBoard</a></li><li><a href="global.html#getEditContacts">getEditContacts</a></li><li><a href="global.html#getEditDate">getEditDate</a></li><li><a href="global.html#getEditPriority">getEditPriority</a></li><li><a href="global.html#getEditSubtasks">getEditSubtasks</a></li><li><a href="global.html#getEditSubtasksList">getEditSubtasksList</a></li><li><a href="global.html#getElementById">getElementById</a></li><li><a href="global.html#getEventListeners">getEventListeners</a></li><li><a href="global.html#getExampleData">getExampleData</a></li><li><a href="global.html#getFullSizeAssigned">getFullSizeAssigned</a></li><li><a href="global.html#getFullSizeBoard">getFullSizeBoard</a></li><li><a href="global.html#getFullSizeCategory">getFullSizeCategory</a></li><li><a href="global.html#getFullSizePriority">getFullSizePriority</a></li><li><a href="global.html#getFullSizeSubtask">getFullSizeSubtask</a></li><li><a href="global.html#getIcons">getIcons</a></li><li><a href="global.html#getInitials">getInitials</a></li><li><a href="global.html#getItemById">getItemById</a></li><li><a href="global.html#getPriority">getPriority</a></li><li><a href="global.html#getProgressBar">getProgressBar</a></li><li><a href="global.html#getSubtaskListHTML">getSubtaskListHTML</a></li><li><a href="global.html#getSubtasksEventListeners">getSubtasksEventListeners</a></li><li><a href="global.html#guestLogIn">guestLogIn</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initSummary">initSummary</a></li><li><a href="global.html#loadData">loadData</a></li><li><a href="global.html#loadUserData">loadUserData</a></li><li><a href="global.html#onClickAddCategory">onClickAddCategory</a></li><li><a href="global.html#onClickAddSubTasks">onClickAddSubTasks</a></li><li><a href="global.html#onClickAddTaskBoard">onClickAddTaskBoard</a></li><li><a href="global.html#onClickChecker">onClickChecker</a></li><li><a href="global.html#onClickCloseFullSize">onClickCloseFullSize</a></li><li><a href="global.html#onClickEditBoard">onClickEditBoard</a></li><li><a href="global.html#onClickEditCategory">onClickEditCategory</a></li><li><a href="global.html#onClickEditSubtasks">onClickEditSubtasks</a></li><li><a href="global.html#onClickEditing">onClickEditing</a></li><li><a href="global.html#onClickFullSizeBoard">onClickFullSizeBoard</a></li><li><a href="global.html#onClickTrash">onClickTrash</a></li><li><a href="global.html#putNewUser">putNewUser</a></li><li><a href="global.html#read">read</a></li><li><a href="global.html#renderBoards">renderBoards</a></li><li><a href="global.html#save">save</a></li><li><a href="global.html#saveAddData">saveAddData</a></li><li><a href="global.html#saveEditData">saveEditData</a></li><li><a href="global.html#saveUserData">saveUserData</a></li><li><a href="global.html#searchCard">searchCard</a></li><li><a href="global.html#setEditItems">setEditItems</a></li><li><a href="global.html#setupContactClickEvents">setupContactClickEvents</a></li><li><a href="global.html#showCheckboxes">showCheckboxes</a></li><li><a href="global.html#sortContacts">sortContacts</a></li><li><a href="global.html#toggleCheckUsers">toggleCheckUsers</a></li><li><a href="global.html#togglePasswordVisbility">togglePasswordVisbility</a></li><li><a href="global.html#toggleSelectBtn">toggleSelectBtn</a></li><li><a href="global.html#updateChecked">updateChecked</a></li><li><a href="global.html#updateItem">updateItem</a></li><li><a href="global.html#updateSubtaskCheck">updateSubtaskCheck</a></li><li><a href="global.html#userNotFound">userNotFound</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu May 23 2024 15:42:07 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

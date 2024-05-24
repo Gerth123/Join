@@ -26,7 +26,9 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
+            <pre class="prettyprint source linenums"><code>let icons;
+
+/**
  * Gets example data from local
  * @returns example data
  */
@@ -44,25 +46,21 @@ async function getIcons() {
   return await response.json();
 }
 
-let icons;
-let emptyData;
-///////////////////Render Boards//////////////////////
 /**
  * On loading it inits the elements
  */
 async function init() {
-  emptyData = await getExampleData();
   icons = await getIcons();
   await renderBoards();
-  // save(emptyData);
   getEventListeners();
+  getDropZones();
 }
 
 /**
  * Renders the board
  */
 async function renderBoards() {
-  const data = read();
+  let data = await getData("tasks");
   getBoardSection(data);
 }
 
@@ -72,10 +70,10 @@ async function renderBoards() {
  * @param {number} contentId
  * @returns item data
  */
-function getItemById(id, contentId) {
-  let data = read();
-  const itemList = data.find((items) => items["id"] == contentId);
-  const item = itemList["items"].find((items) => items["id"] == id);
+async function getItemById(id, contentId) {
+  let data = await getData("tasks");
+  let itemList = data.find((items) => items["id"] == contentId);
+  let item = itemList["items"].find((items) => items["id"] == id);
   return item;
 }
 
@@ -85,6 +83,7 @@ function getItemById(id, contentId) {
  */
 function getBoardSection(data) {
   const boardSection = document.getElementById("board-card-section");
+
   boardSection.innerHTML = "";
   for (let i = 0; i &lt; data.length; i++) {
     const id = data[i]["id"];
@@ -101,7 +100,7 @@ function getBoardSection(data) {
 function getBoardContainer(id) {
   return /*html*/ ` 
     &lt;div id="${id}" class="board-card-content">
-      &lt;div id="dropzone" class="board-card-dropzone">&lt;/div>
+      &lt;div id="dropzone" ondragover="allowDrop(event)" ondrop="doDrop(event)" class="board-card-dropzone">&lt;/div>
     &lt;/div>`;
 }
 
@@ -112,13 +111,16 @@ function getBoardContainer(id) {
  */
 function getBoardContents(contents, id) {
   let content = document.getElementById(`${id}`);
-  contents.forEach(function (card) {
-    content.innerHTML += getBoardCard(card);
-    getCategory(card["category"], card["id"]);
-    getPriority(card["priority"], card["id"]);
-    getAssigned(card["assigned"], card["id"]);
-    getProgressBar(card["subtasks"], card["id"]);
-  });
+
+  if (contents != "") {
+    contents.forEach(function (card) {
+      content.innerHTML += getBoardCard(card);
+      getCategory(card["category"], card["id"]);
+      getPriority(card["priority"], card["id"]);
+      getAssigned(card["assigned"], card["id"]);
+      getProgressBar(card["subtasks"], card["id"]);
+    });
+  }
 }
 
 /**
@@ -128,7 +130,7 @@ function getBoardContents(contents, id) {
  */
 function getBoardCard(card) {
   return /*html*/ `
-  &lt;div id='${card["id"]}' class="board-card" draggable="true">
+  &lt;div id='${card["id"]}' class="board-card" draggable="true" ondragstart='doSetData(event, ${card["id"]})'>
     &lt;img id="board-category" class="board-category">
     &lt;div class="board-title">${card["title"]}&lt;/div>
     &lt;div class="board-description">${card["description"]}&lt;/div> 
@@ -141,8 +143,8 @@ function getBoardCard(card) {
       &lt;/div>
       &lt;img id='board-priority' alt="">
     &lt;/div>
-    &lt;div  id="dropzone" class="kanban-dropzone">&lt;/div>
-  &lt;/div> `;
+  &lt;/div> 
+  &lt;div  id="dropzone" ondragover="allowDrop(event)" ondrop="doDrop(event)" class="board-card-dropzone">&lt;/div>`;
 }
 
 /**
@@ -151,8 +153,9 @@ function getBoardCard(card) {
  * @param {number} id - board id
  */
 function getCategory(category, id) {
-  let content = document.getElementById(`${id}`);
-  let boardCategory = content.querySelector("#board-category");
+  const content = document.getElementById(`${id}`);
+  const boardCategory = content.querySelector("#board-category");
+
   boardCategory.src = icons["categoryIcons"][category] || "";
 }
 
@@ -162,8 +165,9 @@ function getCategory(category, id) {
  * @param {number} id - board id
  */
 function getPriority(priority, id) {
-  let content = document.getElementById(`${id}`);
-  let boardPriority = content.querySelector("#board-priority");
+  const content = document.getElementById(`${id}`);
+  const boardPriority = content.querySelector("#board-priority");
+
   boardPriority.src = icons["priorityIcons"][priority] || "";
 }
 
@@ -173,14 +177,16 @@ function getPriority(priority, id) {
  * @param {number} id - board id
  */
 function getAssigned(assigned, id) {
-  let content = document.getElementById(`${id}`);
-  let boardUser = content.querySelector("#board-users");
-  assigned.forEach((user) => {
-    let name = Array.from(`${user["name"]}`)[0];
-    let lastName = Array.from(`${user["lastName"]}`)[0];
-    boardUser.innerHTML += /*html*/ `
-    &lt;div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}${lastName}&lt;/div>`;
-  });
+  const content = document.getElementById(`${id}`);
+  const boardUser = content.querySelector("#board-users");
+
+  if (assigned != "") {
+    assigned.forEach((user) => {
+      let name = getInitials(user["name"]);
+      boardUser.innerHTML += /*html*/ `
+      &lt;div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}&lt;/div>`;
+    });
+  }
 }
 
 /**
@@ -189,17 +195,24 @@ function getAssigned(assigned, id) {
  * @param {number} id
  */
 function getProgressBar(subtasks, id) {
-  let content = document.getElementById(`${id}`);
-  let progressBar = content.querySelector("#progress-bar");
-  let progressBarLabel = content.querySelector('label[for="progress-bar"]');
+  const content = document.getElementById(`${id}`);
+  const progressBar = content.querySelector("#progress-bar");
+  const progressBarLabel = content.querySelector('label[for="progress-bar"]');
   let process = 0;
+
+  if (subtasks == "") subtasks = [];
   for (let i = 0; i &lt; subtasks.length; i++) {
     if (subtasks[i]["checked"] == true) {
       process++;
     }
   }
-  progressBarLabel.textContent = `${process}/${subtasks.length} Subtasks`;
-  progressBar.value = +(process / subtasks.length) * 100;
+  if (subtasks.length == 0) {
+    const container = progressBar.closest(".board-progress-bar-container");
+    container.classList.add("d-none");
+  } else {
+    progressBarLabel.textContent = `${process}/${subtasks.length} Subtasks`;
+    progressBar.value = +(process / subtasks.length) * 100;
+  }
 }
 </code></pre>
         </article>
@@ -211,13 +224,13 @@ function getProgressBar(subtasks, id) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#checkAcceptPrivacyPolicy">checkAcceptPrivacyPolicy</a></li><li><a href="global.html#checkSubtasks">checkSubtasks</a></li><li><a href="global.html#editCategory">editCategory</a></li><li><a href="global.html#editPriorityValue">editPriorityValue</a></li><li><a href="global.html#editSubTasksValue">editSubTasksValue</a></li><li><a href="global.html#generateRandomColor">generateRandomColor</a></li><li><a href="global.html#getAssigned">getAssigned</a></li><li><a href="global.html#getBoardCard">getBoardCard</a></li><li><a href="global.html#getBoardContainer">getBoardContainer</a></li><li><a href="global.html#getBoardContents">getBoardContents</a></li><li><a href="global.html#getBoardSection">getBoardSection</a></li><li><a href="global.html#getCategory">getCategory</a></li><li><a href="global.html#getEventListeners">getEventListeners</a></li><li><a href="global.html#getExampleData">getExampleData</a></li><li><a href="global.html#getFullSizeAssigned">getFullSizeAssigned</a></li><li><a href="global.html#getFullSizeBoard">getFullSizeBoard</a></li><li><a href="global.html#getFullSizeCategory">getFullSizeCategory</a></li><li><a href="global.html#getFullSizePriority">getFullSizePriority</a></li><li><a href="global.html#getFullSizeSubtask">getFullSizeSubtask</a></li><li><a href="global.html#getIcons">getIcons</a></li><li><a href="global.html#getItemById">getItemById</a></li><li><a href="global.html#getPriority">getPriority</a></li><li><a href="global.html#getProgressBar">getProgressBar</a></li><li><a href="global.html#getSubtaskListHTML">getSubtaskListHTML</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#onClickAddTaskBoard">onClickAddTaskBoard</a></li><li><a href="global.html#onClickCloseFullSize">onClickCloseFullSize</a></li><li><a href="global.html#onClickEditBoard">onClickEditBoard</a></li><li><a href="global.html#onClickEditSubtasks">onClickEditSubtasks</a></li><li><a href="global.html#onClickFullSizeBoard">onClickFullSizeBoard</a></li><li><a href="global.html#read">read</a></li><li><a href="global.html#renderBoards">renderBoards</a></li><li><a href="global.html#save">save</a></li><li><a href="global.html#saveEditData">saveEditData</a></li><li><a href="global.html#togglePasswordVisbility">togglePasswordVisbility</a></li><li><a href="global.html#updateChecked">updateChecked</a></li><li><a href="global.html#updateSubtaskCheck">updateSubtaskCheck</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addAssignedValue">addAssignedValue</a></li><li><a href="global.html#addCategory">addCategory</a></li><li><a href="global.html#addPriorityValue">addPriorityValue</a></li><li><a href="global.html#addSubTasks">addSubTasks</a></li><li><a href="global.html#addTaskBtnSmall">addTaskBtnSmall</a></li><li><a href="global.html#addUser">addUser</a></li><li><a href="global.html#allowDrop">allowDrop</a></li><li><a href="global.html#assignedItemEventListener">assignedItemEventListener</a></li><li><a href="global.html#cancelAddCard">cancelAddCard</a></li><li><a href="global.html#checkAcceptPrivacyPolicy">checkAcceptPrivacyPolicy</a></li><li><a href="global.html#checkAddSubtasks">checkAddSubtasks</a></li><li><a href="global.html#checkEditSubtasks">checkEditSubtasks</a></li><li><a href="global.html#checkMail">checkMail</a></li><li><a href="global.html#checkName">checkName</a></li><li><a href="global.html#checkUser">checkUser</a></li><li><a href="global.html#checkUsers">checkUsers</a></li><li><a href="global.html#checkedUsers">checkedUsers</a></li><li><a href="global.html#clearInputFields">clearInputFields</a></li><li><a href="global.html#deleteFullSizeBoard">deleteFullSizeBoard</a></li><li><a href="global.html#displayContacts">displayContacts</a></li><li><a href="global.html#doDragLeave">doDragLeave</a></li><li><a href="global.html#doDragOver">doDragOver</a></li><li><a href="global.html#doDrop">doDrop</a></li><li><a href="global.html#doSetData">doSetData</a></li><li><a href="global.html#editAssignedValue">editAssignedValue</a></li><li><a href="global.html#editCategory">editCategory</a></li><li><a href="global.html#editPriorityValue">editPriorityValue</a></li><li><a href="global.html#editSubTasksValue">editSubTasksValue</a></li><li><a href="global.html#fillDates">fillDates</a></li><li><a href="global.html#fillUrgentDate">fillUrgentDate</a></li><li><a href="global.html#fillUrgentTask">fillUrgentTask</a></li><li><a href="global.html#generateContactHTML">generateContactHTML</a></li><li><a href="global.html#generateRandomColor">generateRandomColor</a></li><li><a href="global.html#getAddAssgined">getAddAssgined</a></li><li><a href="global.html#getAddObj">getAddObj</a></li><li><a href="global.html#getAddSubtaskListHTML">getAddSubtaskListHTML</a></li><li><a href="global.html#getAssigned">getAssigned</a></li><li><a href="global.html#getAssignedItem">getAssignedItem</a></li><li><a href="global.html#getAssignedUser">getAssignedUser</a></li><li><a href="global.html#getAssignedUsersAddCard">getAssignedUsersAddCard</a></li><li><a href="global.html#getBoardCard">getBoardCard</a></li><li><a href="global.html#getBoardContainer">getBoardContainer</a></li><li><a href="global.html#getBoardContents">getBoardContents</a></li><li><a href="global.html#getBoardSection">getBoardSection</a></li><li><a href="global.html#getCategory">getCategory</a></li><li><a href="global.html#getCheckedUsers">getCheckedUsers</a></li><li><a href="global.html#getClosestContent">getClosestContent</a></li><li><a href="global.html#getData">getData</a></li><li><a href="global.html#getDropZones">getDropZones</a></li><li><a href="global.html#getEditAssigned">getEditAssigned</a></li><li><a href="global.html#getEditAssignedUser">getEditAssignedUser</a></li><li><a href="global.html#getEditBoard">getEditBoard</a></li><li><a href="global.html#getEditContacts">getEditContacts</a></li><li><a href="global.html#getEditDate">getEditDate</a></li><li><a href="global.html#getEditPriority">getEditPriority</a></li><li><a href="global.html#getEditSubtasks">getEditSubtasks</a></li><li><a href="global.html#getEditSubtasksList">getEditSubtasksList</a></li><li><a href="global.html#getElementById">getElementById</a></li><li><a href="global.html#getEventListeners">getEventListeners</a></li><li><a href="global.html#getExampleData">getExampleData</a></li><li><a href="global.html#getFullSizeAssigned">getFullSizeAssigned</a></li><li><a href="global.html#getFullSizeBoard">getFullSizeBoard</a></li><li><a href="global.html#getFullSizeCategory">getFullSizeCategory</a></li><li><a href="global.html#getFullSizePriority">getFullSizePriority</a></li><li><a href="global.html#getFullSizeSubtask">getFullSizeSubtask</a></li><li><a href="global.html#getIcons">getIcons</a></li><li><a href="global.html#getInitials">getInitials</a></li><li><a href="global.html#getItemById">getItemById</a></li><li><a href="global.html#getPriority">getPriority</a></li><li><a href="global.html#getProgressBar">getProgressBar</a></li><li><a href="global.html#getSubtaskListHTML">getSubtaskListHTML</a></li><li><a href="global.html#getSubtasksEventListeners">getSubtasksEventListeners</a></li><li><a href="global.html#guestLogIn">guestLogIn</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initSummary">initSummary</a></li><li><a href="global.html#loadData">loadData</a></li><li><a href="global.html#loadUserData">loadUserData</a></li><li><a href="global.html#onClickAddCategory">onClickAddCategory</a></li><li><a href="global.html#onClickAddSubTasks">onClickAddSubTasks</a></li><li><a href="global.html#onClickAddTaskBoard">onClickAddTaskBoard</a></li><li><a href="global.html#onClickChecker">onClickChecker</a></li><li><a href="global.html#onClickCloseFullSize">onClickCloseFullSize</a></li><li><a href="global.html#onClickEditBoard">onClickEditBoard</a></li><li><a href="global.html#onClickEditCategory">onClickEditCategory</a></li><li><a href="global.html#onClickEditSubtasks">onClickEditSubtasks</a></li><li><a href="global.html#onClickEditing">onClickEditing</a></li><li><a href="global.html#onClickFullSizeBoard">onClickFullSizeBoard</a></li><li><a href="global.html#onClickTrash">onClickTrash</a></li><li><a href="global.html#putNewUser">putNewUser</a></li><li><a href="global.html#read">read</a></li><li><a href="global.html#renderBoards">renderBoards</a></li><li><a href="global.html#save">save</a></li><li><a href="global.html#saveAddData">saveAddData</a></li><li><a href="global.html#saveEditData">saveEditData</a></li><li><a href="global.html#saveUserData">saveUserData</a></li><li><a href="global.html#searchCard">searchCard</a></li><li><a href="global.html#setEditItems">setEditItems</a></li><li><a href="global.html#setupContactClickEvents">setupContactClickEvents</a></li><li><a href="global.html#showCheckboxes">showCheckboxes</a></li><li><a href="global.html#sortContacts">sortContacts</a></li><li><a href="global.html#toggleCheckUsers">toggleCheckUsers</a></li><li><a href="global.html#togglePasswordVisbility">togglePasswordVisbility</a></li><li><a href="global.html#toggleSelectBtn">toggleSelectBtn</a></li><li><a href="global.html#updateChecked">updateChecked</a></li><li><a href="global.html#updateItem">updateItem</a></li><li><a href="global.html#updateSubtaskCheck">updateSubtaskCheck</a></li><li><a href="global.html#userNotFound">userNotFound</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun May 12 2024 12:00:49 GMT+0200 (Central European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu May 23 2024 15:42:07 GMT+0200 (Central European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -1,3 +1,7 @@
+let icons;
+let data;
+let header = ["To do", "In progress", "Await feedback", "Done"];
+
 /**
  * Gets example data from local
  * @returns example data
@@ -16,17 +20,13 @@ async function getIcons() {
   return await response.json();
 }
 
-let icons;
-let emptyData;
-///////////////////Render Boards//////////////////////
 /**
  * On loading it inits the elements
  */
-async function init() {
-  emptyData = await getExampleData();
+async function initBoard() {
+  data = await getData("tasks");
   icons = await getIcons();
-  await renderBoards();
-  // save(emptyData);
+  renderBoards(data);
   getEventListeners();
   getDropZones();
 }
@@ -34,17 +34,9 @@ async function init() {
 /**
  * Renders the board
  */
-async function renderBoards() {
-  let urlParams = new URLSearchParams(window.location.search);
-
-  let actualUsersNumber = urlParams.get("actualUsersNumber");
-  // console.log(actualUsersNumber);
-  let fulldata = await loadData("users");
-  // console.log("fulldata", fulldata[actualUsersNumber]["tasks"]);
-  const data = fulldata[actualUsersNumber]["tasks"];
-  // const data = read();
-
+function renderBoards(data) {
   getBoardSection(data);
+  getBoardContentsAll(data);
 }
 
 /**
@@ -54,15 +46,9 @@ async function renderBoards() {
  * @returns item data
  */
 async function getItemById(id, contentId) {
-  let urlParams = new URLSearchParams(window.location.search);
-  let actualUsersNumber = urlParams.get("actualUsersNumber");
-  let fulldata = await loadData("users");
-  // console.log("fulldata", fulldata[actualUsersNumber]["tasks"]);
-  const data = fulldata[actualUsersNumber]["tasks"];
-  // let data = read();
-  const itemList = data.find((items) => items["id"] == contentId);
-  const item = itemList["items"].find((items) => items["id"] == id);
-  // console.log("this it item", item);
+  // let data = await getData("tasks");
+  let itemList = data.find((items) => items["id"] == contentId);
+  let item = itemList["items"].find((items) => items["id"] == id);
   return item;
 }
 
@@ -71,15 +57,24 @@ async function getItemById(id, contentId) {
  * @param {Object} data
  */
 function getBoardSection(data) {
-  // console.log(data[0]["items"]);
   const boardSection = document.getElementById("board-card-section");
   boardSection.innerHTML = "";
   for (let i = 0; i < data.length; i++) {
-    // console.log("data id", data[i]["id"]);
     const id = data[i]["id"];
-    boardSection.innerHTML += getBoardContainer(id);
-    // console.log("data[items]", data[i]["items"] == "");
-    // console.log("data Items", data[i]["items"] == "");
+    const items = data[i]["items"];
+    boardSection.innerHTML += getBoardContainer(id, header[i]);
+    if (items == "") {
+      let containerElement = document.getElementById(`${id}`);
+      let container = containerElement.querySelector("#no-content-img");
+      container.classList.remove("d-none");
+    }
+    // getBoardContents(data[i]["items"], id);
+  }
+}
+
+function getBoardContentsAll(data) {
+  for (let i = 0; i < data.length; i++) {
+    const id = data[i]["id"];
     getBoardContents(data[i]["items"], id);
   }
 }
@@ -89,9 +84,14 @@ function getBoardSection(data) {
  * @param {number} id
  * @returns html code
  */
-function getBoardContainer(id) {
+function getBoardContainer(id, header) {
   return /*html*/ ` 
     <div id="${id}" class="board-card-content">
+    <div class="board-header-task">
+                <div class="board-text">${header}</div>
+                <div class="board-add-btn button" onclick="addTaskBtnSmall(1)"></div>
+              </div>
+      <img id="no-content-img" class="no-content-img d-none" src="/assets/icons/no-tasks-todo.svg">
       <div id="dropzone" ondragover="allowDrop(event)" ondrop="doDrop(event)" class="board-card-dropzone"></div>
     </div>`;
 }
@@ -102,8 +102,8 @@ function getBoardContainer(id) {
  * @param {number} id
  */
 function getBoardContents(contents, id) {
-  // console.log("contents", contents);
   let content = document.getElementById(`${id}`);
+
   if (contents != "") {
     contents.forEach(function (card) {
       content.innerHTML += getBoardCard(card);
@@ -145,8 +145,9 @@ function getBoardCard(card) {
  * @param {number} id - board id
  */
 function getCategory(category, id) {
-  let content = document.getElementById(`${id}`);
-  let boardCategory = content.querySelector("#board-category");
+  const content = document.getElementById(`${id}`);
+  const boardCategory = content.querySelector("#board-category");
+
   boardCategory.src = icons["categoryIcons"][category] || "";
 }
 
@@ -156,8 +157,9 @@ function getCategory(category, id) {
  * @param {number} id - board id
  */
 function getPriority(priority, id) {
-  let content = document.getElementById(`${id}`);
-  let boardPriority = content.querySelector("#board-priority");
+  const content = document.getElementById(`${id}`);
+  const boardPriority = content.querySelector("#board-priority");
+
   boardPriority.src = icons["priorityIcons"][priority] || "";
 }
 
@@ -167,13 +169,12 @@ function getPriority(priority, id) {
  * @param {number} id - board id
  */
 function getAssigned(assigned, id) {
-  let content = document.getElementById(`${id}`);
-  let boardUser = content.querySelector("#board-users");
+  const content = document.getElementById(`${id}`);
+  const boardUser = content.querySelector("#board-users");
+
   if (assigned != "") {
     assigned.forEach((user) => {
       let name = getInitials(user["name"]);
-      // let name = Array.from(`${user["name"]}`)[0];
-      // let lastName = Array.from(`${user["lastName"]}`)[0];
       boardUser.innerHTML += /*html*/ `
       <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}</div>`;
     });
@@ -186,24 +187,24 @@ function getAssigned(assigned, id) {
  * @param {number} id
  */
 function getProgressBar(subtasks, id) {
-  let content = document.getElementById(`${id}`);
-  let progressBar = content.querySelector("#progress-bar");
-  let progressBarLabel = content.querySelector('label[for="progress-bar"]');
+  const content = document.getElementById(`${id}`);
+  const progressBar = content.querySelector("#progress-bar");
+  const progressBarLabel = content.querySelector('label[for="progress-bar"]');
   let process = 0;
-  // console.log("subtasks", subtasks == "");
-  if (subtasks == "") {
-    subtasks = [];
-  }
+
+  if (subtasks == "") subtasks = [];
   for (let i = 0; i < subtasks.length; i++) {
     if (subtasks[i]["checked"] == true) {
       process++;
     }
   }
   if (subtasks.length == 0) {
-    let container = progressBar.closest(".board-progress-bar-container");
+    const container = progressBar.closest(".board-progress-bar-container");
     container.classList.add("d-none");
   } else {
     progressBarLabel.textContent = `${process}/${subtasks.length} Subtasks`;
     progressBar.value = +(process / subtasks.length) * 100;
   }
+
+  const subtaskList = document.querySelectorAll(".full-size-subtask-li");
 }

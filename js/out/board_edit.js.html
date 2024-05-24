@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: board_edit.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: board_edit.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Asynchronously retrieves the data of a specific board item and updates the edit form with its values.
+ *
+ * @param {string} id - The ID of the board item to retrieve.
+ * @param {string} contentId - The ID of the content to which the board item belongs.
+ * @return {Promise&lt;void>} A Promise that resolves when the edit form has been updated.
+ * @author Hanbit Chang
+ */
+async function getEditBoard(id, contentId) {
+  const title = document.querySelector("input[id=title-editCard]");
+  const description = document.querySelector("input[id=description-editCard]");
+  const date = document.querySelector("input[id=date-editCard]");
+  let itemData = await getItemById(id, contentId);
+  title.value = `${itemData["title"]}`;
+  description.value = `${itemData["description"]}`;
+  date.value = `${itemData["date"]}`;
+  toggleSelectBtn();
+  getEditPriority(itemData["priority"]);
+  getEditSubtasks(itemData["subtasks"]);
+  await getEditAssigned();
+  getSubtasksEventListeners();
+  getEditDate(itemData["date"]);
+}
+
+/**
+ * Toggles the "open" class on the select buttons with the ID "select-btn-editCard" when clicked.
+ *
+ * @author Hanbit Chang
+ */
+function toggleSelectBtn() {
+  const selectBtns = document.querySelectorAll("#select-btn-editCard");
+  selectBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      btn.classList.toggle("open");
+    });
+  });
+}
+
+/**
+ * Sets the checked state of the corresponding radio button based on the given priority.
+ *
+ * @param {string} priority - The priority value to set the radio button for.
+ * @author Hanbit Chang
+ */
+function getEditPriority(priority) {
+  if (priority == "urgent") {
+    let urgentBtn = document.querySelector("#radio-btn-3");
+    urgentBtn.checked = true;
+  }
+  if (priority == "medium") {
+    let mediumBtn = document.querySelector("#radio-btn-2");
+    mediumBtn.checked = true;
+  }
+  if (priority == "low") {
+    let lowBtn = document.querySelector("#radio-btn-1");
+    lowBtn.checked = true;
+  }
+}
+
+/**
+ * Checks if the given contact name is present in the array of assigned users.
+ *
+ * @param {Array} assignedUsers - The array of assigned user names.
+ * @param {string} contactName - The name of the contact to check.
+ * @return {string} - The string "checked" if the contact name is found in the array, otherwise an empty string.
+ * @author Hanbit Chang
+ */
+function getCheckedUsers(assignedUsers, contactName) {
+  for (const userName of assignedUsers) {
+    if (userName == contactName) {
+      return "checked";
+    }
+  }
+}
+
+/**
+ * Retrieves the assigned users for a specific task and updates the edit form with their names.
+ *
+ * @author Hanbit Chang
+ */
+async function getEditAssigned() {
+  let contacts = await getData("contacts");
+  let data = await getData("tasks");
+  let assignedUsers = [];
+  for (let column of data) {
+    if (column.id == contentId) {
+      for (let item of column.items) {
+        if (item.id == id) {
+          for (i = 0; i &lt; item["assigned"].length; i++) {
+            assignedUsers.push(item["assigned"][i]["name"]);
+          }
+        }
+      }
+    }
+  }
+  getEditContacts(assignedUsers, contacts);
+  toggleCheckUsers(contacts);
+}
+
+/**
+ * Generates the HTML list of contacts for the edit view, with checkboxes indicating which contacts are assigned.
+ *
+ * @param {Array} assignedUsers - An array of user names that are currently assigned to the task.
+ * @param {Array} contacts - An array of contact objects, each containing a name and color property.
+ * @author Hanbit Chang
+ */
+function getEditContacts(assignedUsers, contacts) {
+  const contactList = document.getElementById("assigned-list-items");
+  contactList.innerHTML = "";
+  contacts.forEach((contact) => {
+    let name = getInitials(contact["name"]);
+    contactList.innerHTML += /*html*/ `
+      &lt;li class="assigned-item ${getCheckedUsers(assignedUsers, contact["name"])}">
+        &lt;div class="assigned-user">
+          &lt;div id="board-user" class="board-user" style="background-color:${contact["color"]}">${name}&lt;/div>
+          &lt;span class="item-text">${contact["name"]}&lt;/span>
+        &lt;/div>
+        &lt;div class="check-img">&lt;/div>
+      &lt;/li>`;
+  });
+}
+
+/**
+ * Toggles the "checked" class on the assigned items and updates the checked users list.
+ *
+ * @param {Array} contacts - An array of contact objects, each containing a name and color property.
+ * @author Hanbit Chang
+ */
+function toggleCheckUsers(contacts) {
+  const assignedItems = document.querySelectorAll(".assigned-item");
+  assignedItems.forEach((item) => {
+    checkUsers(contacts);
+    item.addEventListener("click", () => {
+      item.classList.toggle("checked");
+      checkUsers(contacts);
+    });
+  });
+}
+
+/**
+ * Updates the checked users list based on the selected contacts.
+ *
+ * @param {Array} contacts - An array of contact objects, each containing a name and color property.
+ * @author Hanbit Chang
+ */
+function checkUsers(contacts) {
+  const checked = document.querySelectorAll(".checked");
+  const btnText = document.querySelector(".btn-text");
+  const checkedUsers = document.getElementById("assigned-users-editCard");
+  const userNames = document.querySelectorAll(".checked .item-text");
+  if (checked &amp;&amp; checked.length > 0) {
+    btnText.innerText = `${checked.length} Selected`;
+    checkedUsers.innerHTML = "";
+    userNames.forEach((userName) => {
+      const personWithName = contacts.find((person) => person.name == userName.innerHTML);
+      if (personWithName) {
+        let name = getInitials(personWithName["name"]);
+        checkedUsers.innerHTML += getEditAssignedUser(personWithName["color"], name);
+      }
+    });
+  } else {
+    btnText.innerText = "Select contacts to assign";
+    checkedUsers.innerHTML = "";
+  }
+}
+
+/**
+ * Returns an HTML string representing an assigned user element with a background color and name.
+ *
+ * @param {string} color - The background color of the assigned user element.
+ * @param {string} name - The name of the assigned user.
+ * @return {string} - The HTML string representing the assigned user element.
+ * @author Hanbit Chang
+ */
+function getEditAssignedUser(color, name) {
+  return /*html*/ `
+  &lt;div class="assigned-user">
+    &lt;div id="board-user" class="board-user-editCard" style="background-color: ${color}">${name}&lt;/div>
+  &lt;/div>
+  `;
+}
+
+/**
+ * Generates initials from a name string.
+ *
+ * @param {string} name - The full name from which initials are generated.
+ * @return {string} - The initials extracted from the name.
+ * @author Hanbit Chang
+ */
+function getInitials(name) {
+  let words = name.split(" ");
+  let initials = "";
+  for (let word of words) {
+    initials += word[0].toUpperCase();
+  }
+  return initials;
+}
+
+/**
+ * Generates the HTML for the subtasks list and updates the DOM with it.
+ *
+ * @param {Array} subtasks - An array of objects containing the task for each subtask.
+ * @return {void} This function does not return anything.
+ * @author Hanbit Chang
+ */
+function getEditSubtasks(subtasks) {
+  const list = document.getElementById("subtasks-list");
+  list.innerHTML = "";
+  for (let i = 0; i &lt; subtasks.length; i++) {
+    list.innerHTML += getEditSubtasksList(subtasks[i]["task"]);
+  }
+}
+
+/**
+ * Generates the HTML for a subtask list item with a task name and edit/trash buttons.
+ *
+ * @param {string} task - The name of the task to display in the subtask list item.
+ * @return {string} The HTML code for the subtask list item.
+ * @author Hanbit Chang
+ */
+function getEditSubtasksList(task) {
+  return /*html*/ `
+  &lt;li id="subtasks-li">
+    &lt;div class="subtasks-li-container">
+      &lt;p class="subtasks-li-text" contenteditable=false>${task}&lt;/p>
+      &lt;div class="row" id="subtask-first-btns">
+        &lt;img class="subtasks-btn-none" id="subtasks-edit" src="/assets/icons/board/edit/edit_button.svg" alt="">
+        &lt;div class="subtasks-line-none">&lt;/div>
+        &lt;img class="subtasks-btn-none" id="subtasks-trash" src="/assets/icons/board/edit/trash_button.svg" alt="">  
+      &lt;/div>
+      &lt;div class="row d-none" id="subtask-second-btns">
+        &lt;img class="subtasks-btn-none" id="subtasks-trash" src="/assets/icons/board/edit/trash_button.svg" alt="">
+        &lt;div class="subtasks-line-none">&lt;/div>
+        &lt;img class="subtasks-btn-none" id="subtasks-checker" src="./assets/icons/board/edit/check_button.svg" alt="" />
+      &lt;/div>  
+    &lt;/div>
+  &lt;/li>
+  `;
+}
+
+/**
+ * Attaches a click event listener to all elements with the id "subtasks-trash".
+ * When clicked, the function finds the closest parent element with the id "subtasks-li"
+ * and removes it from the DOM.
+ *
+ * @return {void} This function does not return anything.
+ * @author Hanbit Chang
+ */
+function onClickTrash() {
+  const trashes = document.querySelectorAll("#subtasks-trash");
+  trashes.forEach((trash) => {
+    trash.addEventListener("click", () => {
+      let parentLi = trash.closest("#subtasks-li");
+      if (parentLi) {
+        parentLi.remove();
+      }
+    });
+  });
+}
+
+/**
+ * Attaches a click event listener to all elements with the id "subtasks-edit".
+ * When clicked, the function finds the closest parent element with the class "subtasks-li-container"
+ * and performs the following actions:
+ * - Hides the element with the id "subtask-first-btns"
+ * - Shows the element with the id "subtask-second-btns"
+ * - Sets the contentEditable property of the element with the class "subtasks-li-text" to true.
+ *
+ * @return {void} This function does not return anything.
+ * @author Hanbit Chang
+ */
+function onClickEditing() {
+  const edits = document.querySelectorAll("#subtasks-edit");
+  edits.forEach((edit) => {
+    edit.addEventListener("click", () => {
+      const parentContent = edit.closest(".subtasks-li-container");
+      const subtaskElement = parentContent.querySelector(".subtasks-li-text");
+      const subtaskFirstBtns = parentContent.querySelector("#subtask-first-btns");
+      const subtaskSecondBtns = parentContent.querySelector("#subtask-second-btns");
+      subtaskFirstBtns.classList.add("d-none");
+      subtaskSecondBtns.classList.remove("d-none");
+      subtaskElement.contentEditable = true;
+    });
+  });
+}
+
+/**
+ * Attaches a click event listener to all elements with the id "subtasks-checker".
+ * When clicked, the function finds the closest parent element with the class "subtasks-li-container"
+ * and performs the following actions:
+ * - Hides the element with the id "subtask-first-btns"
+ * - Shows the element with the id "subtask-second-btns"
+ * - Sets the contentEditable property of the element with the class "subtasks-li-text" to false.
+ *
+ * @return {void} This function does not return anything.
+ * @author Hanbit Chang
+ */
+function onClickChecker() {
+  const checkers = document.querySelectorAll("#subtasks-checker");
+  checkers.forEach((checker) => {
+    checker.addEventListener("click", () => {
+      const parentContent = checker.closest(".subtasks-li-container");
+      const subtaskElement = parentContent.querySelector(".subtasks-li-text");
+      const subtaskFirstBtns = parentContent.querySelector("#subtask-first-btns");
+      const subtaskSecondBtns = parentContent.querySelector("#subtask-second-btns");
+      subtaskFirstBtns.classList.remove("d-none");
+      subtaskSecondBtns.classList.add("d-none");
+      subtaskElement.contentEditable = false;
+    });
+  });
+}
+
+/**
+ * Attaches event listeners for subtasks.
+ *
+ * This function calls the `onClickTrash`, `onClickEditing`, and `onClickChecker` functions
+ * to attach event listeners for the corresponding actions.
+ *
+ * @return {void} This function does not return anything.
+ * @author Hanbit Chang
+ */
+function getSubtasksEventListeners() {
+  onClickTrash();
+  onClickEditing();
+  onClickChecker();
+}
+
+/**
+ * Sets the minimum date of the "date-editCard" input field to the current date and
+ * sets the value of the "date-editCard" input field to the provided date.
+ *
+ * @param {string} date - The date to be set as the value of the "date-editCard" input field.
+ * @return {void} This function does not return anything.
+ * @author Hanbit Chang
+ */
+function getEditDate(date) {
+  const dateData = document.getElementById("date-editCard");
+  dateData.min = new Date().toISOString().split("T")[0];
+  dateData.value = date;
+}
+
+let show = true;
+
+/**
+ * Toggles the visibility of the checkboxes element by changing its display style property.
+ *
+ * @return {void} This function does not return anything.
+ * @author Hanbit Chang
+ */
+function showCheckboxes() {
+  const checkboxes = document.getElementById("checkBoxes");
+  if (show) {
+    checkboxes.style.display = "block";
+    show = false;
+  } else {
+    checkboxes.style.display = "none";
+    show = true;
+  }
+}
+
+/**
+ * Retrieves data from the "users" object based on the provided key.
+ *
+ * @param {string} data - The key to retrieve data from the "users" object.
+ * @return {Promise&lt;any>} A promise that resolves to the data retrieved from the "users" object.
+ * @author Hanbit Chang
+ */
+async function getData(data) {
+  let urlParams = new URLSearchParams(window.location.search);
+  let actualUsersNumber = urlParams.get("actualUsersNumber");
+  let fulldata = await loadData("users");
+  return fulldata[actualUsersNumber][data];
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addAssignedValue">addAssignedValue</a></li><li><a href="global.html#addCategory">addCategory</a></li><li><a href="global.html#addPriorityValue">addPriorityValue</a></li><li><a href="global.html#addSubTasks">addSubTasks</a></li><li><a href="global.html#addTaskBtnSmall">addTaskBtnSmall</a></li><li><a href="global.html#addUser">addUser</a></li><li><a href="global.html#allowDrop">allowDrop</a></li><li><a href="global.html#assignedItemEventListener">assignedItemEventListener</a></li><li><a href="global.html#cancelAddCard">cancelAddCard</a></li><li><a href="global.html#checkAcceptPrivacyPolicy">checkAcceptPrivacyPolicy</a></li><li><a href="global.html#checkAddSubtasks">checkAddSubtasks</a></li><li><a href="global.html#checkEditSubtasks">checkEditSubtasks</a></li><li><a href="global.html#checkMail">checkMail</a></li><li><a href="global.html#checkName">checkName</a></li><li><a href="global.html#checkUser">checkUser</a></li><li><a href="global.html#checkUsers">checkUsers</a></li><li><a href="global.html#checkedUsers">checkedUsers</a></li><li><a href="global.html#clearInputFields">clearInputFields</a></li><li><a href="global.html#deleteFullSizeBoard">deleteFullSizeBoard</a></li><li><a href="global.html#displayContacts">displayContacts</a></li><li><a href="global.html#doDragLeave">doDragLeave</a></li><li><a href="global.html#doDragOver">doDragOver</a></li><li><a href="global.html#doDrop">doDrop</a></li><li><a href="global.html#doSetData">doSetData</a></li><li><a href="global.html#editAssignedValue">editAssignedValue</a></li><li><a href="global.html#editCategory">editCategory</a></li><li><a href="global.html#editPriorityValue">editPriorityValue</a></li><li><a href="global.html#editSubTasksValue">editSubTasksValue</a></li><li><a href="global.html#fillDates">fillDates</a></li><li><a href="global.html#fillUrgentDate">fillUrgentDate</a></li><li><a href="global.html#fillUrgentTask">fillUrgentTask</a></li><li><a href="global.html#generateContactHTML">generateContactHTML</a></li><li><a href="global.html#generateRandomColor">generateRandomColor</a></li><li><a href="global.html#getAddAssgined">getAddAssgined</a></li><li><a href="global.html#getAddObj">getAddObj</a></li><li><a href="global.html#getAddSubtaskListHTML">getAddSubtaskListHTML</a></li><li><a href="global.html#getAssigned">getAssigned</a></li><li><a href="global.html#getAssignedItem">getAssignedItem</a></li><li><a href="global.html#getAssignedUser">getAssignedUser</a></li><li><a href="global.html#getAssignedUsersAddCard">getAssignedUsersAddCard</a></li><li><a href="global.html#getBoardCard">getBoardCard</a></li><li><a href="global.html#getBoardContainer">getBoardContainer</a></li><li><a href="global.html#getBoardContents">getBoardContents</a></li><li><a href="global.html#getBoardSection">getBoardSection</a></li><li><a href="global.html#getCategory">getCategory</a></li><li><a href="global.html#getCheckedUsers">getCheckedUsers</a></li><li><a href="global.html#getClosestContent">getClosestContent</a></li><li><a href="global.html#getData">getData</a></li><li><a href="global.html#getDropZones">getDropZones</a></li><li><a href="global.html#getEditAssigned">getEditAssigned</a></li><li><a href="global.html#getEditAssignedUser">getEditAssignedUser</a></li><li><a href="global.html#getEditBoard">getEditBoard</a></li><li><a href="global.html#getEditContacts">getEditContacts</a></li><li><a href="global.html#getEditDate">getEditDate</a></li><li><a href="global.html#getEditPriority">getEditPriority</a></li><li><a href="global.html#getEditSubtasks">getEditSubtasks</a></li><li><a href="global.html#getEditSubtasksList">getEditSubtasksList</a></li><li><a href="global.html#getElementById">getElementById</a></li><li><a href="global.html#getEventListeners">getEventListeners</a></li><li><a href="global.html#getExampleData">getExampleData</a></li><li><a href="global.html#getFullSizeAssigned">getFullSizeAssigned</a></li><li><a href="global.html#getFullSizeBoard">getFullSizeBoard</a></li><li><a href="global.html#getFullSizeCategory">getFullSizeCategory</a></li><li><a href="global.html#getFullSizePriority">getFullSizePriority</a></li><li><a href="global.html#getFullSizeSubtask">getFullSizeSubtask</a></li><li><a href="global.html#getIcons">getIcons</a></li><li><a href="global.html#getInitials">getInitials</a></li><li><a href="global.html#getItemById">getItemById</a></li><li><a href="global.html#getPriority">getPriority</a></li><li><a href="global.html#getProgressBar">getProgressBar</a></li><li><a href="global.html#getSubtaskListHTML">getSubtaskListHTML</a></li><li><a href="global.html#getSubtasksEventListeners">getSubtasksEventListeners</a></li><li><a href="global.html#guestLogIn">guestLogIn</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initSummary">initSummary</a></li><li><a href="global.html#loadData">loadData</a></li><li><a href="global.html#loadUserData">loadUserData</a></li><li><a href="global.html#onClickAddCategory">onClickAddCategory</a></li><li><a href="global.html#onClickAddSubTasks">onClickAddSubTasks</a></li><li><a href="global.html#onClickAddTaskBoard">onClickAddTaskBoard</a></li><li><a href="global.html#onClickChecker">onClickChecker</a></li><li><a href="global.html#onClickCloseFullSize">onClickCloseFullSize</a></li><li><a href="global.html#onClickEditBoard">onClickEditBoard</a></li><li><a href="global.html#onClickEditCategory">onClickEditCategory</a></li><li><a href="global.html#onClickEditSubtasks">onClickEditSubtasks</a></li><li><a href="global.html#onClickEditing">onClickEditing</a></li><li><a href="global.html#onClickFullSizeBoard">onClickFullSizeBoard</a></li><li><a href="global.html#onClickTrash">onClickTrash</a></li><li><a href="global.html#putNewUser">putNewUser</a></li><li><a href="global.html#read">read</a></li><li><a href="global.html#renderBoards">renderBoards</a></li><li><a href="global.html#save">save</a></li><li><a href="global.html#saveAddData">saveAddData</a></li><li><a href="global.html#saveEditData">saveEditData</a></li><li><a href="global.html#saveUserData">saveUserData</a></li><li><a href="global.html#searchCard">searchCard</a></li><li><a href="global.html#setEditItems">setEditItems</a></li><li><a href="global.html#setupContactClickEvents">setupContactClickEvents</a></li><li><a href="global.html#showCheckboxes">showCheckboxes</a></li><li><a href="global.html#sortContacts">sortContacts</a></li><li><a href="global.html#toggleCheckUsers">toggleCheckUsers</a></li><li><a href="global.html#togglePasswordVisbility">togglePasswordVisbility</a></li><li><a href="global.html#toggleSelectBtn">toggleSelectBtn</a></li><li><a href="global.html#updateChecked">updateChecked</a></li><li><a href="global.html#updateItem">updateItem</a></li><li><a href="global.html#updateSubtaskCheck">updateSubtaskCheck</a></li><li><a href="global.html#userNotFound">userNotFound</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu May 23 2024 15:42:07 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
