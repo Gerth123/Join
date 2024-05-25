@@ -20,6 +20,10 @@ button {
   border: unset;
 }
 
+textarea {
+  outline: none;
+}
+
 .d-none {
   display: none;
 }
