@@ -3,8 +3,13 @@
 // }
 
 function initAddTask() {
-  const selectBtns = document.querySelector("#select-btn-addCard");
-  selectBtns.addEventListener("click", (e) => {
-    selectBtns.classList.toggle("open");
+  const selectBtns = document.querySelectorAll("#select-btn-addCard");
+  selectBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      btn.classList.toggle("open");
+    });
   });
+  onClickAddSubTasks();
+  getAddAssgined();
+  onClickAddCategory();
 }

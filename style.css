@@ -1,280 +1,280 @@
 body {
-    margin: 0;
-    font-family: 'PTSans', sans-serif;
+  margin: 0;
+  font-family: "PTSans", sans-serif;
 }
 
 a {
-    text-decoration: none;
-    color: white;
+  text-decoration: none;
+  color: white;
 }
 
 a:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 input {
-    border: unset;
+  border: unset;
 }
 
 button {
-    border: unset;
+  border: unset;
 }
 
 .d-none {
-    display: none;
+  display: none;
 }
 
 .wholeJoinContainer {
-    display: flex;
-    flex-direction: row-reverse;
+  display: flex;
+  flex-direction: row-reverse;
 }
 
 .sideBarContainer {
-    height: 100vh;
-    width: 18vw;
-    background-color: rgb(42, 54, 71);
-    justify-content: space-between;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    position: sticky;
-    top: 0;
+  height: 100vh;
+  width: 18vw;
+  background-color: rgb(42, 54, 71);
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: sticky;
+  top: 0;
 }
 
 .sideBarLogoContainer {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    height: 35vh;
-    width: 100%;
-    padding-left: 5vw;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 35vh;
+  width: 100%;
+  padding-left: 5vw;
 }
 
 .logoImg {
-    height: 122px;
-    width: 100px;
+  height: 122px;
+  width: 100px;
 }
 
 .sideBarChooseSectionContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-    height: 40vh;
-    gap: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  height: 40vh;
+  gap: 12px;
 }
 
 .summaryContainer {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    width: 100%;
-    height: 40px;
-    color: rgb(205,205,205);
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  color: rgb(205, 205, 205);
 }
 
 .summaryContainer:hover {
-    background-color: rgb(41, 171, 226, 0.1);
-    transition: all 0.2s ease;
+  background-color: rgb(41, 171, 226, 0.1);
+  transition: all 0.2s ease;
 }
 
 .sideBarImgContainer {
-    max-height: 30px;
-    max-width: 30px;
-    padding-left: 5vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  max-height: 30px;
+  max-width: 30px;
+  padding-left: 5vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .sideBarImg {
-    height: auto;
+  height: auto;
 }
 
 .openedDarkBackground {
-    background-color: rgb(9, 25, 49);
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    width: 100%;
-    height: 40px;
+  background-color: rgb(9, 25, 49);
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  width: 100%;
+  height: 40px;
 }
 
 .openedDarkBackground:hover {
-    cursor: default;
+  cursor: default;
 }
 
 .addTaskContainer {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    width: 100%;
-    height: 40px;
-    color: rgb(205,205,205);
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  color: rgb(205, 205, 205);
 }
 
 .addTaskContainer:hover {
-    background-color: rgb(41, 171, 226, 0.1);
-    transition: all 0.2s ease;
+  background-color: rgb(41, 171, 226, 0.1);
+  transition: all 0.2s ease;
 }
 
 .boardContainer {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    width: 100%;
-    height: 40px;
-    color: rgb(205,205,205);
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  color: rgb(205, 205, 205);
 }
 
 .boardContainer:hover {
-    background-color: rgb(41, 171, 226, 0.1);
-    transition: all 0.2s ease;
+  background-color: rgb(41, 171, 226, 0.1);
+  transition: all 0.2s ease;
 }
 
 .contactsContainer {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    width: 100%;
-    height: 40px;
-    color: rgb(205,205,205);
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  color: rgb(205, 205, 205);
 }
 
 .contactsContainer:hover {
-    background-color: rgb(41, 171, 226, 0.1);
-    transition: all 0.2s ease;
+  background-color: rgb(41, 171, 226, 0.1);
+  transition: all 0.2s ease;
 }
 
 .privacyPolicyAndLegalNoticeContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    gap: 10px;
-    align-items: flex-start;
-    height: 25vh;
-    padding-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 10px;
+  align-items: flex-start;
+  height: 25vh;
+  padding-bottom: 40px;
 }
 
 .openedPrivacyPolicyOrLegalNotice {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 30px;
-    background-color: rgb(9, 25, 49);
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 30px;
+  background-color: rgb(9, 25, 49);
 }
 
 .openedPrivacyPolicyOrLegalNotice:hover {
-    cursor: default;
+  cursor: default;
 }
 
 .privacyPolicyContainer {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 30px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 30px;
 }
 
 .privacyPolicyContainer:hover {
-    scale: 1.05;
-    color: rgb(41, 171, 226) !important;
-    cursor: pointer;
+  scale: 1.05;
+  color: rgb(41, 171, 226) !important;
+  cursor: pointer;
 }
 
 .privacyPolicyText {
-    padding-left: 5vw;
-    color: rgb(205,205,205);
+  padding-left: 5vw;
+  color: rgb(205, 205, 205);
 }
 
 .privacyPolicyText:hover {
-    color: rgb(41, 171, 226);
+  color: rgb(41, 171, 226);
 }
 
 .privacyPolicyTextOpened {
-    padding-left: 5vw;
+  padding-left: 5vw;
 }
 
 .legalNoticeContainer {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    width: 100%;
-    height: 30px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  width: 100%;
+  height: 30px;
 }
 
 .legalNoticeContainer:hover {
-    scale: 1.05;
-    color: rgb(41, 171, 226);
-    cursor: pointer;
+  scale: 1.05;
+  color: rgb(41, 171, 226);
+  cursor: pointer;
 }
 
 .legalNoticeText {
-    padding-left: 5vw;
-    color: rgb(205,205,205);
+  padding-left: 5vw;
+  color: rgb(205, 205, 205);
 }
 
 .legalNoticeText:hover {
-    color: rgb(41, 171, 226);
+  color: rgb(41, 171, 226);
 }
 
 .legalNoticeTextOpened {
-    padding-left: 5vw;
+  padding-left: 5vw;
 }
 
 .headerAndOpenedContainer {
-    display: flex;
-    flex-direction: column;
-    width: 82vw;
+  display: flex;
+  flex-direction: column;
+  width: 82vw;
 }
 
 header {
-    height: 12vh;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    width: 100%;
-    box-shadow: 0px 2px 2px 2px rgb(0, 0, 0, 0.1);
+  height: 12vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  box-shadow: 0px 2px 2px 2px rgb(0, 0, 0, 0.1);
 }
 
 .headline {
-    font-size: 15px;
-    width: 20px;
-    padding-left: 8vw;
+  font-size: 15px;
+  width: 20px;
+  padding-left: 8vw;
 }
 
 .helpAndUserContainer {
-    display: flex;
-    justify-content: space-evenly;
-    width: 10vw;
-    padding-right: 2vw;
-    align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+  width: 10vw;
+  padding-right: 2vw;
+  align-items: center;
 }
 
 .helpIcon {
-    height: 20px;
-    border-radius: 30px;
+  height: 20px;
+  border-radius: 30px;
 }
 
 .helpIcon:hover {
-    cursor: pointer;
-    scale: 1.05;
-    background-color: rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  scale: 1.05;
+  background-color: rgba(0, 0, 0, 0.08);
 }
 
 .initials {
-    display: flex;
-    border-radius: 30px;
-    height: 40px;
-    width: 40px;
-    border: 2px solid black;
-    justify-content: center;
-    align-items: center;
-    color: rgb(41, 171, 226);
-    font-weight: bold;
+  display: flex;
+  border-radius: 30px;
+  height: 40px;
+  width: 40px;
+  border: 2px solid black;
+  justify-content: center;
+  align-items: center;
+  color: rgb(41, 171, 226);
+  font-weight: bold;
 }
 
 .initials:hover {
-    cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.08);
 }
