@@ -43,23 +43,6 @@
                 </div>
               </div>
             </div>
-            <!-- <div class="board-header-nav">
-              <div class="board-header-task">
-                <div class="board-text">To do</div>
-                <div class="board-add-btn button" onclick="addTaskBtnSmall(1)"></div>
-              </div>
-              <div class="board-header-task">
-                <div class="board-text">In progress</div>
-                <div class="board-add-btn button" onclick="addTaskBtnSmall(2)"></div>
-              </div>
-              <div class="board-header-task">
-                <div class="board-text">Await feedback</div>
-                <div class="board-add-btn button" onclick="addTaskBtnSmall(3)"></div>
-              </div>
-              <div class="board-header-task">
-                <div class="board-text">Done</div>
-              </div>
-            </div> -->
           </section>
           <section id="board-card-section" class="board-card-section"></section>
         </section>
@@ -154,7 +137,7 @@
               <label class="full-size-label" for="title-editCard">Title</label>
               <input class="full-size-input" id="title-editCard" type="text" placeholder="Enter a title" />
               <label class="full-size-label" for="description-editCard">Description</label>
-              <input class="full-size-input" id="description-editCard" type="text" placeholder="Enter a description" />
+              <textarea class="full-size-input h-120" id="description-editCard" type="text" placeholder="Enter a description"></textarea>
               <label class="full-size-label" for="date-editCard">Due date</label>
               <input class="full-size-input" id="date-editCard" type="date" placeholder="Date" />
               <label class="full-size-label" for="date-editCard">Priority</label>
@@ -234,7 +217,13 @@
                 <label class="full-size-label" for="title-addCard">Title</label>
                 <input class="full-size-input" id="title-addCard" type="text" placeholder="Enter a title" required />
                 <label class="full-size-label" for="description-addCard">Description</label>
-                <input class="full-size-input" id="description-addCard" type="text" placeholder="Enter a description" required />
+                <textarea
+                  class="full-size-input h-120"
+                  id="description-addCard"
+                  type="text"
+                  placeholder="Enter a description"
+                  required
+                ></textarea>
                 <!-- <label class="full-size-label" for="assigned">Assigned to</label>
                 <input class="full-size-input" id="assigned" type="text" placeholder="Assigned to" /> -->
                 <div class="full-size-label">Assigned to</div>
@@ -266,7 +255,7 @@
                     <label for="radio-btn-4" class="btn1"></label>
                   </div>
                 </div>
-                <div class="full-size-label" for="category-addcard">Category</div>
+                <div class="full-size-label" for="category-addCard">Category</div>
                 <div id="category-addCard" class="category-addCard">
                   <div id="select-btn-addCard" class="select-btn">
                     <span class="btn-text-category">Select task category</span>

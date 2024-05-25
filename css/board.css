@@ -557,6 +557,10 @@ progress[value]::-moz-progress-bar {
   display: none;
 }
 
+.h-120 {
+  height: 120px;
+}
+
 .jc-fe {
   justify-content: flex-end;
 }

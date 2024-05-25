@@ -562,7 +562,9 @@ async function saveAddData() {
   let actualUsersNumber = urlParams.get("actualUsersNumber");
   let data = await getData("tasks");
   let contacts = await getData("contacts");
+  if (contentId == undefined) contentId = 1;
   const content = data.find((content) => content.id == contentId);
+  console.log(content);
   const obj = getAddObj(contacts);
   if (content.items == "") content.items = [];
   content.items.push(obj);

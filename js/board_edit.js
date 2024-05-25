@@ -369,5 +369,6 @@ async function getData(data) {
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
   let fulldata = await loadData("users");
+  console.log(fulldata);
   return fulldata[actualUsersNumber][data];
 }
