@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join Privacy Policy</title>
     <script src="script.js"></script>
+    <script src="js/initials.js"></script>
     <link rel="stylesheet" href="css/privacy_policy.css" />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="assets/img/logo.png" type="image/x-icon" />
@@ -22,14 +23,19 @@
             <span class="headline">Kanban Project Management Tool</span>
           </div>
           <div class="helpAndUserContainer">
-            <img src="assets/img/help.svg" alt="Help" class="helpIcon" />
-            <span class="initials">RG</span>
+            <img src="assets/img/help.svg" alt="Help" class="helpIcon" onclick="changeHtmlPage('help.html')"/>
+            <div class="initials">RG</div>
+            <div class="menu" id="menu">
+              <a href="legal_notice.html">Legal Notice</a>
+              <a href="privacy_policy.html">Privacy Policy</a>
+              <a href="login.html">Log out</a>
+            </div>
           </div>
         </header>
         <section class="privacyPolicyOpenedContainer">
           <div class="privacyPolicyHeadlineAndArrowContainer">
             <h1 class="privacyPolicyHeadline">Privacy Policy</h1>
-            <img class="arrowLeftImg" src="assets/img/arrowLeft.svg" alt="Back" onclick="goBackToLastTab()" />
+            <img class="arrowLeftImg" src="assets/img/arrowLeft.svg" alt="Back" onclick="goBackToLastTabWithoutClosing()" />
           </div>
           <div class="privacyPolicyTextContainer">
             <p>Last updated: May 20, 2024</p>

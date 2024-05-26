@@ -7,6 +7,7 @@
     <title>Join Contacts</title>
     <script src="script.js"></script>
     <script src="js/contacts.js"></script>
+    <script src="js/initials.js"></script>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="css/help.css" />
     <link rel="icon" href="assets/img/logo.png" type="image/x-icon" />
@@ -18,20 +19,25 @@
     <div class="wholeJoinContainer">
       <section class="headerAndOpenedContainer">
         <header>
-          <img class="logoResponsive" src="assets/img/logo.svg" alt="Logo">
+          <img class="logoResponsive" src="assets/img/logo.svg" alt="Logo" />
           <div class="headlineContainer">
             <span class="headline">Kanban Project Management Tool</span>
           </div>
           <div class="helpAndUserContainer">
-            <img src="assets/img/help.svg" alt="Help" class="helpIcon" />
-            <span class="initials">RG</span>
+            <img src="assets/img/help.svg" alt="Help" class="helpIcon" onclick="changeHtmlPage('help.html')"/>
+            <div class="initials">RG</div>
+            <div class="menu" id="menu">
+              <a href="legal_notice.html">Legal Notice</a>
+              <a href="privacy_policy.html">Privacy Policy</a>
+              <a href="login.html">Log out</a>
+            </div>
           </div>
         </header>
         <section class="helpOpenedContainer">
           <div class="helpContentContainer">
             <div class="helpHeadlineAndArrowContainer">
               <h1 class="helpHeadline">Help</h1>
-              <img class="arrowLeftImg" src="assets/img/arrowLeft.svg" alt="Back" onclick="goBackToLastTab()" />
+              <img class="arrowLeftImg" src="assets/img/arrowLeft.svg" alt="Back" onclick="goBackToLastTabWithoutClosing()" />
             </div>
             <div>
               <p>
@@ -122,7 +128,8 @@
                       Remember that using Join effectively requires consistent updates from you and your team to ensure the board reflects
                       the current state of your project.<br /><br />
 
-                      Have more questions about Join? Feel free to contact us at <a class="helpLink" href="mailto:robingerth21@gmail.com">robingerth21@gmail.com</a>. We're here to help you!
+                      Have more questions about Join? Feel free to contact us at
+                      <a class="helpLink" href="mailto:robingerth21@gmail.com">robingerth21@gmail.com</a>. We're here to help you!
                       <p></p>
                     </td>
                   </tr>
@@ -156,7 +163,7 @@
             </div>
             <span class="sideBarText">Board</span></a
           >
-          <a onclick="changeHtmlPage('contacts.html')" class="openedDarkBackground"
+          <a onclick="changeHtmlPage('contacts.html')" class="contactsContainer"
             ><div class="sideBarImgContainer">
               <img src="assets/img/contactsIcon.svg" alt="Assets Icon" class="sideBarImage" />
             </div>
