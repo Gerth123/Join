@@ -576,13 +576,20 @@ footer {
     }
 }
 
+@media (max-width: 450px) {
+    .loginContainer {
+        min-width: 370px;
+    }
+}
+
 @media (max-width: 370px) {
     .loginContainer {
         width: 95vw;
         min-width: 300px;
         justify-content: center;
-        height: 50vh;
-        margin: 25vh 0 5vh 0;
+        height: 57vh;
+        justify-content: flex-start;
+        margin: 22vh 0 4vh 0;
     }
 
     .logInInputFields {
@@ -603,5 +610,11 @@ footer {
 
     .userLogInButton {
         width: 120px;
+    }
+}
+
+@media (max-width: 310px) {
+    .loginContainer {
+        min-width: 95vw;
     }
 }
