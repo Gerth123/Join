@@ -1,11 +1,3 @@
-/** 
- * Generates a greeting message based on the current time:
- * - 'Good morning' before 12 PM,
- * - 'Good afternoon' between 12 PM and 6 PM,
- * - 'Good evening' otherwise.
- * Displays the greeting in an element with id 'greetingText'.
- * 
- * Author: Elias
 /**
  * This function is used onload of the body of the summary HTML page. It gets the number of the user from the link and shares it with the fillDates functions. 
  * The function also uses the function loadData to load the data from the remoteStorage (Firebase).
@@ -19,10 +11,14 @@ async function initSummary() {
   fillDates(actualUsersNumber, actualUsers);
 }
 
-/**
- * This function is used to check the time and greet the user, with the daily salutation.
- *
- * @author: Elias
+/** 
+ * Generates a greeting message based on the current time:
+ * - 'Good morning' before 12 PM,
+ * - 'Good afternoon' between 12 PM and 6 PM,
+ * - 'Good evening' otherwise.
+ * Displays the greeting in an element with id 'greetingText'.
+ * 
+ * Author: Elias
  */
 document.addEventListener("DOMContentLoaded", function () {
   let today = new Date();

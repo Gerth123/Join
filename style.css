@@ -344,6 +344,7 @@ header {
         gap: 5px;
         height: 10vh;
         width: 20vw;
+        min-width: 75px;
         border-radius: 15px;
     }
 
@@ -358,6 +359,7 @@ header {
         gap: 5px;
         height: 10vh;
         width: 20vw;
+        min-width: 70px;
         border-radius: 15px;
     }
 
@@ -372,6 +374,7 @@ header {
         gap: 5px;
         height: 10vh;
         width: 20vw;
+        min-width: 70px;
         border-radius: 15px;
     }
 
@@ -386,6 +389,7 @@ header {
         gap: 5px;
         height: 10vh;
         width: 20vw;
+        min-width: 70px;
         border-radius: 15px;
     }
 
@@ -400,6 +404,7 @@ header {
         gap: 5px;
         height: 10vh;
         width: 20vw;
+        min-width: 70px;
         border-radius: 15px;
     }
 
@@ -410,4 +415,10 @@ header {
     .privacyPolicyAndLegalNoticeContainer {
         display: none;
     }
+}
+
+@media (max-width: 370px) {
+  .sideBarText {
+    font-size: 0.9em;
+  }
 }
