@@ -4,11 +4,11 @@
  * 
  * Author: Elias
  */
-function setupContactClickEvents() {
+async function setupContactClickEvents() {
     const contactCards = document.querySelectorAll('.contactCard');
 
-    contactCards.forEach(function(card) {
-        card.addEventListener('click', function() {
+    contactCards.forEach(function (card) {
+        card.addEventListener('click', function () {
             let name = card.querySelector('.NameContact').textContent;
             let email = card.querySelector('.EmailContact').textContent;
             let phone = card.getAttribute('data-phone');
@@ -51,12 +51,18 @@ function setupContactClickEvents() {
             `;
 
             const deleteButton = contactDetailsDiv.querySelector('.delete-div');
-            deleteButton.addEventListener('click', async function() {
+            deleteButton.addEventListener('click', async function () {
                 const contactId = card.dataset.id;
-                
+
                 try {
                     await deleteContactFromFirebase(email);
                     card.remove();
+                    let urlParams = new URLSearchParams(window.location.search);
+                    const userId = urlParams.get('actualUsersNumber');
+                    const contactCard = document.querySelector(`.contactCard[data-id="${userId}"]`);
+                    if (contactCard) {
+                        contactCard.remove();
+                    }
                     contactDetailsDiv.innerHTML = '';
                 } catch (error) {
                     console.error("Fehler beim Löschen des Kontakts:", error);
@@ -88,11 +94,12 @@ async function findUserIdByEmail(email) {
  * 
  * Author: Elias
  */
-function generateContactHTML(contact) {
-    const randomColor = generateRandomColor(contact.name);
-    const initials = getInitials(contact.name);
+async function generateContactHTML(contact) {
+    const randomColor = await generateRandomColor(contact.name);
+    const initials = await getInitials(contact.name);
+    let userId = await getContactsNumber(contact.mail);
     return `
-        <div class="contact contactCard" data-id="${contact.id}" data-phone="${contact.phone}">
+        <div class="contact contactCard" data-id="${userId}" data-phone="${contact.phone}">
             <div class="profilePicture" style="background-color: ${randomColor};">${initials}</div>
             <div class="name-mailDiv">
                 <div class="NameContact">${contact.name}</div>
@@ -115,7 +122,7 @@ function generateRandomColor(seed) {
     for (var i = 0; i < seed.length; i++) {
         hash = seed.charCodeAt(i) + ((hash << 5) - hash);
     }
-    
+
     var color = "#";
     for (var j = 0; j < 3; j++) {
         var value = (hash >> (j * 8)) & 255;
@@ -198,11 +205,14 @@ async function getContactsNumber(email) {
     let actualUsersNumber = urlParams.get('actualUsersNumber');
     let users = await loadData('users/' + actualUsersNumber + '/contacts');
     for (let userId in users) {
-      if (users[userId]['mail'] === email) {
-        return userId;
-    } 
+        if (users[userId] === null) {
+            continue;
+        }
+        if (users[userId]['mail'] === email) {
+            return userId;
+        }
     }
-  }
+}
 
 /**
  * Removes the contact element from the UI.
@@ -212,8 +222,8 @@ async function getContactsNumber(email) {
  * Author: Elias
  */
 function removeContactFromUI(contactId) {
-    const contactCard = document.querySelector(`.contactCard[data-id="${contactId}"]`);
-    if (contactCard) {
+    const contactCard = document.querySelector(`.contactCard[data-id="${email}"]`); 
+    if (contactCard && contactList) {
         contactCard.remove();
     }
 }

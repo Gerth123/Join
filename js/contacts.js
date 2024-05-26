@@ -12,6 +12,22 @@ document.addEventListener("DOMContentLoaded", function () {
   const mainSectionOverlay = document.querySelector(".mainSectionOverlay");
   const closeImage = document.querySelector(".imgcloseOverlay");
   const cancelButton = document.querySelector(".clearButton");
+  const contactForm = document.getElementById("contactForm");
+
+  const editDivs = document.querySelectorAll(".edit-div");
+  const editOverlay = document.getElementById("edit-overlay");
+  const closeEditOverlay = document.querySelector(".closeEditOverlay");
+  const editContactForm = document.getElementById("editContactForm");
+
+  const baseUrl = 'https://join-ca44d-default-rtdb.europe-west1.firebasedatabase.app/';
+  const userId = '-NyKF7omq8KOQgBXWhYW';
+
+  editDivs.forEach(editDiv => {
+    editDiv.addEventListener("click", function (event) {
+      event.stopPropagation();
+      editOverlay.style.display = "block";
+    });
+  });
 
   addContactButton.addEventListener("click", function (event) {
     event.stopPropagation();
@@ -21,6 +37,9 @@ document.addEventListener("DOMContentLoaded", function () {
   document.addEventListener("click", function (event) {
     if (overlay.style.display === "block" && !mainSectionOverlay.contains(event.target)) {
       overlay.style.display = "none";
+    }
+    if (editOverlay.style.display === "block" && !editOverlay.contains(event.target)) {
+      editOverlay.style.display = "none";
     }
   });
 
@@ -64,22 +83,22 @@ function clearInputFields() {
  * 
  * Author: Elias
  */
-document.addEventListener("DOMContentLoaded", async function() {
+document.addEventListener("DOMContentLoaded", async function () {
   try {
-      const baseUrl = 'https://join-ca44d-default-rtdb.europe-west1.firebasedatabase.app/';
-      const userId = '-NyKF7omq8KOQgBXWhYW';
+    const baseUrl = 'https://join-ca44d-default-rtdb.europe-west1.firebasedatabase.app/';
+    const userId = '-NyKF7omq8KOQgBXWhYW';
 
-      const actualUsers = await loadData(`users/${userId}/contacts`, baseUrl);
-      console.log("Loaded Contacts:", actualUsers);
+    const actualUsers = await loadData(`users/${userId}/contacts`);
+    console.log("Loaded Contacts:", actualUsers);
 
-      if (actualUsers) {
-          const sortedContacts = sortContacts(actualUsers);
-          displayContacts(sortedContacts);
-      } else {
-          console.error("Keine Kontakte im geladenen Benutzer gefunden.");
-      }
+    if (actualUsers) {
+      const sortedContacts = sortContacts(actualUsers);
+      displayContacts(sortedContacts);
+    } else {
+      console.error("Keine Kontakte im geladenen Benutzer gefunden.");
+    }
   } catch (error) {
-      console.error("Fehler beim Laden der Daten:", error);
+    console.error("Fehler beim Laden der Daten:", error);
   }
 });
 
@@ -110,21 +129,21 @@ document.addEventListener("DOMContentLoaded", async function() {
  */
 function sortContacts(contacts) {
   contacts.sort((a, b) => {
-      if (a !== null && b !== null) {
-          const nameA = a.name.toUpperCase();
-          const nameB = b.name.toUpperCase();
-          if (nameA < nameB) {
-              return -1;
-          }
-          if (nameA > nameB) {
-              return 1;
-          }
-      } else if (a === null && b !== null) {
-          return 1;
-      } else if (a !== null && b === null) {
-          return -1;
+    if (a !== null && b !== null) {
+      const nameA = a.name.toUpperCase();
+      const nameB = b.name.toUpperCase();
+      if (nameA < nameB) {
+        return -1;
       }
-      return 0;
+      if (nameA > nameB) {
+        return 1;
+      }
+    } else if (a === null && b !== null) {
+      return 1;
+    } else if (a !== null && b === null) {
+      return -1;
+    }
+    return 0;
   });
   return contacts;
 }
@@ -136,7 +155,7 @@ function sortContacts(contacts) {
  * 
  * Author: Elias
  */
-function displayContacts(contacts) {
+async function displayContacts(contacts) {
   const contactsContainer = document.getElementById('contacts-container');
   if (!contactsContainer) {
       console.error("Das Container-Element für Kontakte wurde nicht gefunden.");
@@ -150,23 +169,30 @@ function displayContacts(contacts) {
   contactsContainer.innerHTML = '';
   let currentLetter = '';
 
-  contacts.forEach(contact => {
-      const contactLetter = contact.name.charAt(0).toUpperCase();
+  for (const contact of contacts) {
+      if (contact && contact.name) {
+          const contactLetter = contact.name.charAt(0).toUpperCase();
 
-      if (contactLetter !== currentLetter) {
-          currentLetter = contactLetter;
-          contactsContainer.innerHTML += `
-            <div class="contacts-list-letter">${currentLetter}</div>
-            <div class="seperator-contacts-list"></div>
-          `;
+          if (contactLetter !== currentLetter) {
+              currentLetter = contactLetter;
+              const letterDiv = document.createElement('div');
+              letterDiv.classList.add('contacts-list-letter');
+              letterDiv.textContent = currentLetter;
+              contactsContainer.appendChild(letterDiv);
+
+              const separatorDiv = document.createElement('div');
+              separatorDiv.classList.add('seperator-contacts-list');
+              contactsContainer.appendChild(separatorDiv);
+          }
+
+          const contactHTML = await generateContactHTML(contact);
+          contactsContainer.innerHTML += contactHTML;
       }
-
-      const contactHTML = generateContactHTML(contact);
-      contactsContainer.innerHTML += contactHTML;
-  });
+  }
 
   setupContactClickEvents();
 }
+
 
 /**
  * Speichert einen Kontakt in Firebase unter einer sequenziellen ID und fügt eine zufällig generierte Farbe hinzu.
@@ -190,16 +216,16 @@ async function saveContact(name, mail, phone, userId) {
     return color;
   }
 
-  const contactData = { 
-    name, 
-    mail, 
-    phone, 
-    color: generateRandomColor() 
+  const contactData = {
+    name,
+    mail,
+    phone,
+    color: generateRandomColor()
   };
-  
+
   const contacts = await loadData(`users/${userId}/contacts`);
   const newContactId = contacts.length;
-  
+
   const response = await fetch(`${baseUrl}users/${userId}/contacts/${newContactId}.json`, {
     method: 'PUT',
     headers: {
@@ -222,3 +248,33 @@ async function saveContact(name, mail, phone, userId) {
 //   }
 //   return await response.json();
 // }
+
+async function createContact(event) {
+  event.preventDefault();
+  const name = document.getElementById('contactName').value;
+  const mail = document.getElementById('contactEmail').value;
+  const phone = document.getElementById('contactPhone').value;
+  let urlParams = new URLSearchParams(window.location.search);
+  let userId = urlParams.get('actualUsersNumber');
+
+  try {
+    const newContact = await saveContact(name, mail, phone, userId);
+    clearInputFields();
+    const newUrl = `/contacts.html?msg=welcome&actualUsersNumber=${userId}`;
+    history.pushState(null, '', newUrl);
+
+
+    // Hier wird der Code ausgeführt, nachdem der neue Kontakt gespeichert wurde
+    const actualUsers = await loadData(`users/${userId}/contacts`);
+    console.log("Loaded Contacts:", actualUsers);
+
+    if (actualUsers) {
+      const sortedContacts = sortContacts(actualUsers);
+      displayContacts(sortedContacts);
+    } else {
+      console.error("Keine Kontakte im geladenen Benutzer gefunden.");
+    }
+  } catch (error) {
+    console.error('Fehler beim Speichern des Kontakts:', error);
+  }
+}

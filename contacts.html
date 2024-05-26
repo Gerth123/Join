@@ -9,7 +9,7 @@
     <script src="js/contacts.js"></script>
     <script src="js/initials.js"></script>
     <script src="js/htmlcontacts.js"></script>
-    <script src="js/delete.json"></script>
+    <!-- <script src="js/delete.json"></script> -->
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="css/contacts.css" />
     <link rel="icon" href="assets/img/logo.png" type="image/x-icon" />
@@ -113,7 +113,7 @@
         <div class="overlay-contentright">
           <img class="imgcloseOverlay" src="assets/img/Close.svg" />
           <img src="assets/img/Group 13.svg" />
-          <form class="inputSection" id="contactForm">
+          <form class="inputSection" id="contactForm" onsubmit="createContact(event)">
             <div class="input-divs">
               <input required id="contactName" placeholder="Name" />
               <img src="assets/img/person.svg" class="imgsinput">
@@ -123,7 +123,7 @@
               <img src="assets/img/mail.svg" class="imgsinput1">
             </div>
             <div class="input-divs">
-              <input required id="contactPhone" placeholder="Phone" pattern="+\d*" title="Only numbers allowed" />
+              <input required id="contactPhone" placeholder="Phone" pattern="\+\d*" title="Only numbers allowed" />
               <img src="assets/img/call.svg" class="imgsinput2">
             </div>
             <div class="overlayButtons">
