@@ -426,8 +426,10 @@
 
 .editDelete-div {
   display: flex;
-  margin-top: -35px;
+  align-items: center;
+  gap: 16px;
   margin-left: 50px;
+  margin-top: -40px;
 }
 
 .edit-div {
@@ -435,7 +437,6 @@
   justify-content: center;
   align-items: center;
   font-size: 16px;
-  padding-right: 16px;
   cursor: pointer;
   gap: 8px;
 }
@@ -511,6 +512,7 @@
   gap: 35px;
   cursor: pointer;
   border-radius: 10px;
+  align-items: center;
 }
 
 #contacts-container {
@@ -592,3 +594,30 @@
   background-color: #d1d1d1;
   margin: 8px 0;
 }
+<<<<<<< HEAD
+=======
+
+.imginput {
+  width: 24px;
+  height: 24px;
+  margin-left: 380px;
+}
+
+.imgsinput {
+  position: absolute;
+  right: 89px;
+  top: 26%;
+}
+
+.imgsinput1 {
+  position: absolute;
+  right: 90px;
+  top: 40.4%;
+}
+
+.imgsinput2 {
+  position: absolute;
+  right: 89px;
+  top: 55%;
+}
+>>>>>>> e006eb69f7dd0951ce4a67dcbed98f7c163bd451

@@ -9,6 +9,7 @@
     <script src="js/contacts.js"></script>
     <script src="js/initials.js"></script>
     <script src="js/htmlcontacts.js"></script>
+    <script src="js/delete.json"></script>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="css/contacts.css" />
     <link rel="icon" href="assets/img/logo.png" type="image/x-icon" />
@@ -42,7 +43,7 @@
               </button>
             </div>
             <div id="contacts" class="contacts">
-              <div id="contacts-container"></div>
+              <div id="contacts-container" class="contacts-container"></div>
             </div>
           </section>
           <section class="contentright">
@@ -112,16 +113,25 @@
         <div class="overlay-contentright">
           <img class="imgcloseOverlay" src="assets/img/Close.svg" />
           <img src="assets/img/Group 13.svg" />
-          <form class="inputSection">
-            <input required id="contactName" placeholder="Name" />
-            <input required id="contactEmail" placeholder="Email" pattern=".*@.*\..*" title="An @ is required" />
-            <input required id="contactPhone" placeholder="Phone" pattern="\d*" title="Only numbers allowed" />
+          <form class="inputSection" id="contactForm">
+            <div class="input-divs">
+              <input required id="contactName" placeholder="Name" />
+              <img src="assets/img/person.svg" class="imgsinput">
+            </div>
+            <div class="input-divs">
+              <input required id="contactEmail" placeholder="Email" pattern=".*@.*\..*" title="An @ is required" />
+              <img src="assets/img/mail.svg" class="imgsinput1">
+            </div>
+            <div class="input-divs">
+              <input required id="contactPhone" placeholder="Phone" pattern="+\d*" title="Only numbers allowed" />
+              <img src="assets/img/call.svg" class="imgsinput2">
+            </div>
             <div class="overlayButtons">
               <div class="clearButton">
                 Cancel
                 <img class="imgClear" src="assets/img/Close.svg" />
               </div>
-              <button class="createButton">
+              <button type="submit" class="createButton">
                 Create contact
                 <img class="imgcheck" src="assets/img/check.svg" />
               </button>
@@ -130,5 +140,21 @@
         </div>
       </div>
     </div>
+    <div id="edit-overlay" class="overlay" style="display: none;">
+      <div class="mainSectionOverlay">
+        <div class="overlay-content">
+          <span class="closeEditOverlay">&times;</span>
+          <form id="editContactForm">
+            <label for="editContactName">Name:</label>
+            <input type="text" id="editContactName" name="name">
+            <label for="editContactEmail">Email:</label>
+            <input type="email" id="editContactEmail" name="email">
+            <label for="editContactPhone">Phone:</label>
+            <input type="tel" id="editContactPhone" name="phone">
+            <button type="submit">Save</button>
+          </form>
+        </div>
+      </div>
+    </div>    
   </body>
 </html>
