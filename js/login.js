@@ -58,12 +58,12 @@ async function checkUser() {
     await saveUserData(email, password);
 }
 
-/**
- * This function is used to check if the user or the password is incorrect. If either one is incorrect, an error message is shown to explain, which one is wrong.
+/** 
+ * This function is used to show an error message if the user is not found.
  * 
- * @param {boolean} found - A boolean value that is used to determine if the user was found.
- * @param {object} actualUsers - An object that contains all the users.
- * @param {number} actualMailSearchIndex - The index of the user that was found.
+ * @param {boolean} found - If the user is found or not.
+ * @param {Array} actualUsers - The array of actual users.
+ * @param {number} actualMailSearchIndex - The index of the user in the array.
  * 
  * @author: Robin
  */
@@ -72,7 +72,7 @@ async function userNotFound(found, actualUsers, actualMailSearchIndex) {
         let msgBox = document.getElementById('msgBox');
         msgBox.classList.remove('d-none');
         let msgBoxText = document.getElementById('msgBoxText');
-        console.log(actualUsers);	
+        console.log(actualUsers);
         if (actualMailSearchIndex !== undefined) {
             msgBoxText.innerHTML = 'Wrong password. Please try again!';
         } else {
@@ -132,6 +132,23 @@ async function guestLogIn() {
     for (let [index, user] of Object.entries(users)) {
         if (user && user.mail === 'test@testmail.com') {
             window.location.href = `summary.html?msg=Testlogin erfolgreich&actualUsersNumber=${index}`;
-        }    
+        }
     }
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    var backgroundElement = document.querySelector('.responsiveBackgroundForSlide');
+
+    // Hinzufügen eines Event-Listeners, um das Entfernen der Klasse zu überwachen
+    backgroundElement.addEventListener('animationend', function (event) {
+        // Überprüfen, ob die Animation changeColor abgeschlossen ist
+        if (event.animationName === 'changeColor') {
+            // Entfernen der Klasse .responsiveBackgroundForSlide
+            document.getElementById('wholeLoginContainer').classList.remove('d-none');
+            let logoContainerSlideWhite = document.getElementById('logoContainerSlideWhite');
+            if (logoContainerSlideWhite) {
+                logoContainerSlide.style.zIndex = "0";
+            }
+        }
+    });
+});

@@ -39,3 +39,44 @@
 .linkAtPrivacyPolicy {
     color: rgb(41, 171, 226);
 }
+
+@media (max-width: 1100px) {
+    .privacyPolicyOpenedContainer {
+        padding-top: 8vh;
+        padding-bottom: 15vh;
+    }
+
+    .privacyPolicyHeadlineAndArrowContainer {
+        width: 90%;
+    }
+
+    .privacyPolicyTextContainer {
+        width: 90%;
+    }
+}
+
+@media (max-width: 430px) {
+    .privacyPolicyHeadline {
+        font-size: 2.5em;
+    }
+
+    body {
+        font-size: smaller;
+    }
+
+    .arrowLeftImg {
+        height: 24px;
+        width: 24px;
+    }
+}
+
+@media (max-width: 300px) {
+    .privacyPolicyHeadline {
+        font-size: 1.8em;
+    }
+
+    .arrowLeftImg {
+        height: 20px;
+        width: 20px;
+    }
+}

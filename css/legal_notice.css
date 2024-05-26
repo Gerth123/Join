@@ -47,3 +47,44 @@
 .joinLink:hover {
     cursor: default;
 }
+
+@media (max-width: 1100px) {
+    .legalNoticeOpenedContainer {
+        padding-top: 8vh;
+        padding-bottom: 15vh;
+    }
+
+    .legalNoticeHeadlineAndArrowContainer {
+        width: 90%;
+    }
+
+    .legalNoticeTextContainer {
+        width: 90%;
+    }
+}
+
+@media (max-width: 430px) {
+    .legalNoticeHeadline {
+        font-size: 2.5em;
+    }
+
+    body {
+        font-size: smaller;
+    }
+
+    .arrowLeftImg {
+        height: 24px;
+        width: 24px;
+    }
+}
+
+@media (max-width: 300px) {
+    .legalNoticeHeadline {
+        font-size: 1.8em;
+    }
+
+    .arrowLeftImg {
+        height: 20px;
+        width: 20px;
+    }
+}
