@@ -24,12 +24,12 @@ function setupContactClickEvents() {
                     <div class="profil-user-right">
                         <p class="contact-name">${name}</p>
                         <div class="editDelete-div">
-                            <div class="edit-div">
+                            <div class="edit-div" data-id="1">
                                 <img class="contact-img1" src="assets/img/edit.svg"/>
                                 <img class="contact-img2" src="assets/img/edit (1).svg"/>
                                 <span>Edit</span>
                             </div>
-                            <div class="delete-div">
+                            <div class="delete-div" data-id="${card.dataset.id}">
                                 <img class="contact-img1" src="assets/img/delete.svg"/>
                                 <img class="contact-img2" src="assets/img/delete (1).svg"/>
                                 <span>Delete</span>
@@ -49,9 +49,38 @@ function setupContactClickEvents() {
                     <p class="contact-Phone1">${phone}</p>
                 </div>
             `;
+
+            const deleteButton = contactDetailsDiv.querySelector('.delete-div');
+            deleteButton.addEventListener('click', async function() {
+                const contactId = deleteButton.dataset.id;
+                let users = await loadData('users');
+                
+                try {
+                    await deleteContactFromFirebase(contactId, email);
+                    card.remove();
+                    contactDetailsDiv.innerHTML = '';
+                } catch (error) {
+                    console.error("Fehler beim Löschen des Kontakts:", error);
+                }
+            });
         });
     });
 }
+
+async function findUserIdByEmail(email) {
+    try {
+        let users = await loadData('users');
+        for (let userId in users) {
+            if (users[userId].email === email) {
+                return userId;
+            }
+        }
+        throw new Error("No matching user found for email: " + email);
+    } catch (error) {
+        throw error;
+    }
+}
+
 
 /**
  * Generates HTML for a contact.
@@ -65,7 +94,7 @@ function generateContactHTML(contact) {
     const randomColor = generateRandomColor(contact.name);
     const initials = getInitials(contact.name);
     return `
-        <div class="contact contactCard" data-phone="${contact.phone}">
+        <div class="contact contactCard" data-id="${contact.id}" data-phone="${contact.phone}">
             <div class="profilePicture" style="background-color: ${randomColor};">${initials}</div>
             <div class="name-mailDiv">
                 <div class="NameContact">${contact.name}</div>
@@ -88,6 +117,7 @@ function generateRandomColor(seed) {
     for (var i = 0; i < seed.length; i++) {
         hash = seed.charCodeAt(i) + ((hash << 5) - hash);
     }
+    
     var color = "#";
     for (var j = 0; j < 3; j++) {
         var value = (hash >> (j * 8)) & 255;
@@ -108,4 +138,73 @@ function getInitials(name) {
     const words = name.split(' ');
     const initials = words.map(word => word.charAt(0)).join('').toUpperCase();
     return initials;
+}
+
+/**
+ * Deletes a contact from Firebase and updates the UI.
+ * 
+ * @param {string} contactId - The ID of the contact to delete.
+ * 
+ * Author: Elias
+ */
+async function deleteContact(contactId) {
+    try {
+        await deleteContactFromFirebase(contactId);
+        removeContactFromUI(contactId);
+    } catch (error) {
+        console.error('Fehler beim Löschen des Kontakts:', error);
+    }
+}
+
+/**
+ * Deletes a contact from Firebase.
+ * 
+ * @param {string} contactId - The ID of the contact to delete.
+ * @returns {Promise<void>}
+ * 
+ * Author: Elias
+ */
+async function deleteContactFromFirebase(contactId, email) {
+    const baseUrl = 'https://join-ca44d-default-rtdb.europe-west1.firebasedatabase.app/';
+    const userId = '-NyKF7omq8KOQgBXWhYW';
+
+    const url = `${baseUrl}users/${userId}/contacts.json`;
+    const response = await fetch(url);
+    const data = await response.json();
+    const users = data.users;
+    
+    const updatedContacts = Object.entries(users[userId].contacts).filter(([id, contact]) => contact.email !== email);
+
+    const updateData = {};
+    updatedContacts.forEach(([id, contact], index) => {
+        updateData[index] = contact;
+    });
+
+    await fetch(`${baseUrl}users/${userId}/contacts.json`, {
+        method: 'PUT',
+        body: JSON.stringify(updateData)
+    });
+}
+
+async function init(user, email) {
+    let users = await loadData('users/' + user + '/contacts');
+    for (let userId in users) {
+      if (users[userId]['mail'] === email) {
+        return userId;
+    } 
+    }
+  }
+
+/**
+ * Removes the contact element from the UI.
+ * 
+ * @param {string} contactId - The ID of the contact to remove from the UI.
+ * 
+ * Author: Elias
+ */
+function removeContactFromUI(contactId) {
+    const contactCard = document.querySelector(`.contactCard[data-id="${contactId}"]`);
+    if (contactCard) {
+        contactCard.remove();
+    }
 }
