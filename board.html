@@ -25,8 +25,13 @@
             <span class="headline">Kanban Project Management Tool</span>
           </div>
           <div class="helpAndUserContainer">
-            <img src="assets/img/help.svg" alt="Help" class="helpIcon" />
-            <span class="initials">RG</span>
+            <img src="assets/img/help.svg" alt="Help" class="helpIcon" onclick="changeHtmlPage('help.html')"/>
+            <div class="initials">RG</div>
+            <div class="menu" id="menu">
+              <a href="legal_notice.html">Legal Notice</a>
+              <a href="privacy_policy.html">Privacy Policy</a>
+              <a href="login.html">Log out</a>
+            </div>
           </div>
         </header>
         <section class="addTaskOpenedContainer">
@@ -308,7 +313,7 @@
     <script src="/js/board.js"></script>
     <script src="/js/board_eventlisteners.js"></script>
     <script src="/js/board_drap_and_drops.js"></script>
-
+    <script src="js/initials.js"></script>
     <script src="/js/board_fullsize.js"></script>
     <script src="/js/board_edit.js"></script>
     <script src="/js/board_add.js"></script>

@@ -8,6 +8,7 @@
     <script src="script.js"></script>
     <script src="js/summary.js"></script>
     <script src="js/login.js"></script>
+    <script src="js/initials.js"></script>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="css/summary.css" />
     <link rel="icon" href="assets/img/logo.png" type="image/x-icon" />
@@ -24,8 +25,13 @@
             <span class="headline">Kanban Project Management Tool</span>
           </div>
           <div class="helpAndUserContainer">
-            <img src="assets/img/help.svg" alt="Help" class="helpIcon" />
-            <span class="initials">RG</span>
+            <img src="assets/img/help.svg" alt="Help" class="helpIcon" onclick="changeHtmlPage('help.html')"/>
+            <div class="initials">RG</div>
+            <div class="menu" id="menu">
+              <a href="legal_notice.html">Legal Notice</a>
+              <a href="privacy_policy.html">Privacy Policy</a>
+              <a href="login.html">Log out</a>
+            </div>
           </div>
         </header>
 

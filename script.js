@@ -99,3 +99,12 @@ function changeHtmlPage(page) {
     let actualUsersNumber = urlParams.get('actualUsersNumber');
     window.location.href = page + `?msg=welcome&actualUsersNumber=${actualUsersNumber}`;
 }
+
+/**
+ * This function is used to go back to the last HTML page without closing it.
+ * 
+ * @author: Robin
+ */
+function goBackToLastTabWithoutClosing() {
+    window.history.back();
+}
