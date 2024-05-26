@@ -4,11 +4,10 @@
  * @param {number} contentId
  */
 async function getFullSizeBoard(id, contentId) {
+  const title = document.querySelector(".full-size-title");
+  const description = document.querySelector(".full-size-description");
+  const date = document.querySelector("#full-size-due-date");
   let itemData = await getItemById(id, contentId);
-  // console.log("itemData", itemData);
-  let title = document.querySelector(".full-size-title");
-  let description = document.querySelector(".full-size-description");
-  let date = document.querySelector("#full-size-due-date");
   title.textContent = `${itemData["title"]}`;
   description.textContent = `${itemData["description"]}`;
   date.textContent = "";
@@ -49,10 +48,10 @@ function getFullSizeAssigned(assigned) {
       let name = getInitials(user["name"]);
       fullSizeAssigned.innerHTML += /*html*/ `
       <li class="full-size-assign-user">
-      <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}</div>
-      <div class="board-username">
-        ${user["name"]}
-      </div>
+        <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}</div>
+        <div class="board-username">
+          ${user["name"]}
+        </div>
       </li>`;
     });
   }
@@ -70,13 +69,20 @@ function getFullSizeSubtask(subtasks) {
     <li class="full-size-subtask-li">
       <input type="checkbox" id="subtask-${i}">
       <label for="subtask-${i}">${subtasks[i]["task"]}</label>
-    </li>
-    `;
+    </li>`;
   }
   for (let i = 0; i < subtasks.length; i++) {
-    let check = document.getElementById(`subtask-${i}`);
-    if (subtasks[i]["checked"]) {
-      check.checked = true;
-    }
+    const check = document.getElementById(`subtask-${i}`);
+    if (subtasks[i]["checked"]) check.checked = true;
   }
+
+  const subtaskList = document.querySelectorAll(".full-size-subtask-li");
+  // console.log("subtaskList", subtaskList);
+  // console.log("id", id);
+  const idElement = document.getElementById(`${id}`);
+  // console.log("idElement", idElement);
+  const progressBar = idElement.querySelector("#progress-bar");
+  const label = idElement.getElementsByTagName("LABEL");
+  // console.log("progressBar", progressBar);
+  // console.log("label", label);
 }

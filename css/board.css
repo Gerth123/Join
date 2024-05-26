@@ -61,9 +61,9 @@ label {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 152px;
+  height: 70px;
   padding-top: 80px;
-  padding-left: 64px;
+  padding-left: min(5%, 64px);
 }
 
 .board-header-top {
@@ -129,7 +129,8 @@ label {
 }
 
 .board-header-search {
-  width: 280px;
+  max-width: 280px;
+  width: 100%;
   height: 30px;
   display: flex;
   padding: 8px 16px 8px 16px;
@@ -168,12 +169,14 @@ input:focus {
 
 .board-card-section {
   display: flex;
-  padding-left: 64px;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1200px;
+  padding-left: min(5%, 64px);
 }
 
 .board-card-content {
   width: 252px;
-  margin-top: 8px;
   margin-right: 16px;
 }
 
@@ -554,6 +557,10 @@ progress[value]::-moz-progress-bar {
   display: none;
 }
 
+.h-120 {
+  height: 120px;
+}
+
 .jc-fe {
   justify-content: flex-end;
 }
@@ -582,4 +589,37 @@ fieldset {
   width: 1px;
   height: 400px;
   background-color: #d1d1d1;
+}
+
+.no-content-img {
+  width: 255px;
+}
+
+@media screen and (max-width: 480px) {
+  .board-header-section {
+    padding-left: 16px;
+  }
+
+  .board-header-title {
+    font-size: 47px;
+  }
+
+  .board-header-top {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .board-header-right {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .board-header-search {
+    width: 100%;
+    max-width: 396px;
+    padding: 4px 8px 4px 8px;
+    margin-right: 0;
+  }
 }

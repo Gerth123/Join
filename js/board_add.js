@@ -1,11 +1,14 @@
 /**
- * Checks the subtasks
+ * Onclick subtasks are modified
+ *
+ * @author Hanbit Chang
  */
 function checkAddSubtasks() {
   const list = document.getElementById("subtasks-list-addCard");
   const subtaskInput = document.getElementById("subtasks-input-addCard");
   const subtaskAddBtn = document.getElementById("subtasks-add-addCard");
   const subtaskContainer = document.getElementById("subtasks-btn-container-addCard");
+
   list.innerHTML += getAddSubtaskListHTML(subtaskInput.value);
   subtaskInput.value = "";
   subtaskContainer.classList.add("d-none");
@@ -17,6 +20,8 @@ function checkAddSubtasks() {
  * Returns the html of subtask list
  * @param {string} subtaskInputValue
  * @returns html code
+ *
+ * @author Hanbit Chang
  */
 function getAddSubtaskListHTML(subtaskInputValue) {
   return /*html*/ `

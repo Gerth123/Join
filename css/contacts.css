@@ -1,14 +1,23 @@
+.headerAndOpenedContainer {
+  min-height: 100vh;
+  overflow: none;
+}
+
 .openContactsContainer {
   width: 480px;
   height: 832px;
   background-color: white;
   box-shadow: 4px 0px 6px 0px #00000014;
-  overflow: scroll;
+  /* overflow: scroll; */
 }
 
 .addContact {
   width: 456px;
   height: 101px;
+}
+
+.addTaskOpenedContainer {
+  /* overflow: scroll; */
 }
 
 .addContactButton {
