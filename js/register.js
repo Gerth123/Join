@@ -1,17 +1,4 @@
 /**
- * This function is used to render the page if the user refresh the page or switch from another HTML-page to this one.
- * 
- * @author: Robin
- */
-
-// async function init() {
-//     loadUsers();
-//     checkAcceptPrivacyPolicy();
-// document.getElementById('msgBoxSignedUp').classList.add('d-none');
-// document.getElementById('registerContainer').classList.remove('d-none');
-// }
-
-/**
  * This function is used to block and reactivate the button, if the user accepts the privacy policy and the inputs are not empty.
  * 
  * @author: Robin

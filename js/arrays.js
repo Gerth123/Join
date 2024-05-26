@@ -1,3 +1,8 @@
+/**
+ * This variable contains the data for the contacts that automatically appear in the contacts HTML.
+ * 
+ * @author Robin
+ */
 let testContacts = [
   {
     name: "Anton Mayer",
@@ -67,6 +72,11 @@ let testContacts = [
   },
 ];
 
+/**
+ * This variable contains the data for the tasks that automatically appear in the tasks HTML.
+ * 
+ * @author Robin
+ */
 let testTasks = [
   {
     id: 1,

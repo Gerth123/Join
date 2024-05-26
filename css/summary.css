@@ -32,6 +32,10 @@ h1 {
   border-radius: 3px;
 }
 
+.seperatorResponsiveContainer {
+  display: none;
+}
+
 .h2KeyMet {
   font-size: 23px;
   color: #2a3647;
@@ -248,7 +252,7 @@ h1 {
 .container2:hover .text-urgent,
 .container2:hover .number-urgent,
 .tasks:hover .text-task,
-.tasks:hover .number-task{
+.tasks:hover .number-task {
   color: white;
 }
 
@@ -287,4 +291,223 @@ h1 {
   color: rgb(41, 171, 226);
   font-weight: bold;
   font-size: 47px;
+}
+
+@media (max-width: 1100px) {
+  .greetingContainer {
+    display: none;
+  }
+
+  .mainSection {
+    width: 100vw;
+    height: 80vh;
+    justify-content: center;
+  }
+
+  .headingSectionAndMainContainer {
+    width: 100vw;
+    height: 80vh;
+  }
+
+  .headingSection {
+    width: 100vw;
+    padding-left: 0vw;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    height: 20vh;
+  }
+
+  .joinSuh1 {
+    font-size: 3em;
+    display: flex;
+    justify-content: flex-start;
+    max-width: 550px;
+    width: 80vw;
+  }
+
+  .h2KeyMet {
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    font-size: 1.5em;
+    display: flex;
+    justify-content: flex-start;
+    max-width: 550px;
+    width: 80vw;
+  }
+  
+  .seperator {
+    display: none;
+  }
+
+  .seperatorResponsiveContainer {
+    display: flex;
+    max-width: 550px;
+    width: 80vw;
+    justify-content: flex-start;
+  }
+
+  .seperatorResponsive {
+    display: flex;
+    background-color: #29abe2;
+    min-height: 3px;
+    width: 80px;
+    border-radius: 3px;
+    justify-content: flex-start;
+    margin-top: 1vh;
+  }
+
+  .mainContainer {
+    width: 90vw;
+    padding: 0 5vw;
+    height: 55vh;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  img {
+    max-height: 10vh;
+  }
+
+  .container1 {
+    justify-content: space-between;
+    height: 16vh;
+    font-size: 0.9em;
+    max-width: 550px;
+    width: 80vw;
+    gap: 0;
+  }
+
+  .toDo {
+    width: 38.5vw;
+    height: 16vh;
+    max-width: 259px;
+  }
+
+  .done {
+    width: 38.5vw;
+    height: 16vh;
+    max-width: 259px;
+  }
+
+  .container2 {
+    height: 16vh;
+    font-size: 0.9em;
+    max-width: 550px;
+    width: 80vw;
+  }
+
+  .task-container {
+    height: 16vh;
+    font-size: 0.9em;
+    max-width: 550px;
+    width: 80vw;
+  }
+
+  .tasks {
+    width: 24vw;
+    max-width: 163px;
+  }
+
+
+}
+
+@media (max-width: 420px) {
+  .joinSuh1 {
+    width: 90vw;
+  }
+
+  .h2KeyMet {
+    width: 90vw;
+  }
+
+  .seperatorResponsiveContainer {
+    width: 90vw;
+  }
+
+  .container1 {
+    width: 90vw;
+  }
+
+  .toDo {
+    width: 43.5vw;
+  }
+
+  .done {
+    width: 43.5vw;
+  }
+
+  .container2 {
+    width: 90vw;
+  }
+
+  .task-container {
+    width: 90vw;
+    gap: 3vw;
+  }
+
+  .tasks {
+    width: 27vw;
+  }
+}
+
+@media (max-width: 370px) {
+  .joinSuh1 {
+    font-size: 2.5em;
+  }
+
+  .h2KeyMet {
+    font-size: 1.3em;
+  }
+
+  .seperatorResponsive {
+    width: 60px;
+  }
+
+  img {
+    max-height: 8vh;
+  }
+
+  .toDo {
+    font-size: 0.7em;
+  }
+
+  .text-ToDo {
+    font-size: 14px;
+  }
+
+  .done {
+    font-size: 0.7em;
+  }
+
+  .text-done {
+    font-size: 14px;
+  }
+
+  .container2 {
+    font-size: 0.7em;
+  }
+
+  .text-urgent {
+    font-size: 14px;
+  }
+
+  .urgent-date {
+    font-size: 17px;
+    line-height: unset;
+  }
+
+  .text-urgent2 {
+    font-size: 14px;
+  }
+
+  .task-container {
+    font-size: 0.7em;
+  }
+
+  .text-task {
+    font-size: 14px;
+    padding: 0 10px;
+  }
 }

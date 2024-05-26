@@ -136,18 +136,20 @@ async function guestLogIn() {
     }
 }
 
+/**
+ * This function is used to add an event listener to the background element, if the animation is ended, the login container is shown.
+ * 
+ * @author: Robin
+ */
 document.addEventListener("DOMContentLoaded", function () {
     var backgroundElement = document.querySelector('.responsiveBackgroundForSlide');
-
-    // Hinzufügen eines Event-Listeners, um das Entfernen der Klasse zu überwachen
     backgroundElement.addEventListener('animationend', function (event) {
-        // Überprüfen, ob die Animation changeColor abgeschlossen ist
         if (event.animationName === 'changeColor') {
-            // Entfernen der Klasse .responsiveBackgroundForSlide
             document.getElementById('wholeLoginContainer').classList.remove('d-none');
             let logoContainerSlideWhite = document.getElementById('logoContainerSlideWhite');
             if (logoContainerSlideWhite) {
-                logoContainerSlide.style.zIndex = "0";
+                logoContainerSlide.style.zIndex = "999";
+                logoContainerSlideWhite.style.display = "none";
             }
         }
     });
