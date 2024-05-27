@@ -364,6 +364,7 @@ h1 {
     height: 55vh;
     justify-content: space-evenly;
     align-items: center;
+    margin-top: 4vh;
   }
 
   img {

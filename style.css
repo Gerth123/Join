@@ -25,7 +25,7 @@ textarea {
 }
 
 .d-none {
-  display: none;
+  display: none !important;
 }
 
 .menu {
@@ -33,14 +33,14 @@ textarea {
   z-index: 10;
   font-size: 16px;
   position: absolute;
-  right: 50px;
+  right: 3vw;
   width: fit-content;
   background-color: #2a3647;
   padding: 10px;
   box-sizing: border-box;
   color: #fff;
   border-radius: 20px 0 20px 20px;
-  margin-top: 270px;
+  top: 10vh;
   width: 150px;
   height: 158px;
 }
@@ -51,10 +51,15 @@ textarea {
   height: 48px;
   align-items: center;
   justify-content: center;
+  color: rgb(165,168,172);
 }
 
 .menu a:hover {
   background-color: #0059ac31;
+}
+
+.helpAtNavBar {
+  display: none !important;
 }
 
 .wholeJoinContainer {
@@ -313,137 +318,170 @@ header {
 }
 
 .logoResponsive {
-    display: none;
+  display: none;
 }
 
 @media (max-width: 1100px) {
-    .headerAndOpenedContainer {
-        width: unset;
-        height: auto;
-    }
+  .headerAndOpenedContainer {
+    width: unset;
+    height: auto;
+  }
 
-    header {
-        height: 10vh;
-    }
+  header {
+    height: 10vh;
+  }
 
-    .headlineContainer {
-        display: none;
-    }
+  .headlineContainer {
+    display: none;
+  }
 
-    .logoResponsive {
-        display: block;
-        height: 40px;
-        padding-left: 5vw;
-    }
+  .logoResponsive {
+    display: block;
+    height: 40px;
+    padding-left: 5vw;
+  }
 
-    .helpIcon {
-        display: none;
-    }
+  .helpIcon {
+    display: none;
+  }
 
-    .helpAndUserContainer {
-        width: unset;
-    }
+  .helpAndUserContainer {
+    width: unset;
+  }
 
-    .wholeJoinContainer {
-        flex-direction: column;
-    }
-    .sideBarContainer {
-        flex-direction: row;
-        height: 10vh;
-        width: 100vw;
-        top: 90vh;
-        position: fixed;
-    }
+  .menu {
+    font-size: small;
+    top: 9vh;
+    height: 150px;
+    width: 140px;
+    right: 1vw;
+    padding: 5px 5px 5px 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+  }
 
-    .sideBarChooseSectionContainer {
-        flex-direction: row;
-        justify-content: space-evenly;
-        width: 100vw;
-        gap: 0;
-    }
+  .menu a {
+    height: 35px;
+    width: auto;
+    justify-content: flex-start;
+    padding-left: 20px;
+  }
 
-    .sideBarLogoContainer {
-        display: none;
-    }
+  .menu a:hover {
+    background-color: unset;
+  }
 
-    .openedDarkBackground {
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 5px;
-        height: 10vh;
-        width: 20vw;
-        min-width: 75px;
-        border-radius: 15px;
-    }
+  .helpAtNavBar {
+    display: flex !important;
+    width: 130px;
+    height: 35px;
+    align-items: center;
+    justify-content: center;
+  }
 
-    .sideBarImgContainer {
-        padding-left: 0;
-    }
+  .wholeJoinContainer {
+    flex-direction: column;
+  }
 
-    .summaryContainer {
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 5px;
-        height: 10vh;
-        width: 20vw;
-        min-width: 70px;
-        border-radius: 15px;
-    }
+  .sideBarContainer {
+    flex-direction: row;
+    height: 10vh;
+    width: 100vw;
+    top: 90vh;
+    position: fixed;
+  }
 
-    .summaryContainer:hover {
-        height: 10vh;
-    }
+  .sideBarChooseSectionContainer {
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100vw;
+    gap: 0;
+  }
 
-    .addTaskContainer {
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 5px;
-        height: 10vh;
-        width: 20vw;
-        min-width: 70px;
-        border-radius: 15px;
-    }
+  .sideBarLogoContainer {
+    display: none;
+  }
 
-    .addTaskContainer:hover {
-        height: 10vh;
-    }
+  .openedDarkBackground {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    height: 10vh;
+    width: 20vw;
+    min-width: 75px;
+    border-radius: 15px;
+  }
 
-    .boardContainer {
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 5px;
-        height: 10vh;
-        width: 20vw;
-        min-width: 70px;
-        border-radius: 15px;
-    }
+  .sideBarImgContainer {
+    padding-left: 0;
+  }
 
-    .boardContainer:hover {
-        height: 10vh;
-    }
+  .summaryContainer {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    height: 10vh;
+    width: 20vw;
+    min-width: 70px;
+    border-radius: 15px;
+  }
 
-    .contactsContainer {
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 5px;
-        height: 10vh;
-        width: 20vw;
-        min-width: 70px;
-        border-radius: 15px;
-    }
+  .summaryContainer:hover {
+    height: 10vh;
+  }
 
-    .contactsContainer:hover {
-        height: 10vh;
-    }
+  .addTaskContainer {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    height: 10vh;
+    width: 20vw;
+    min-width: 70px;
+    border-radius: 15px;
+  }
 
-    .privacyPolicyAndLegalNoticeContainer {
-        display: none;
-    }
+  .addTaskContainer:hover {
+    height: 10vh;
+  }
+
+  .boardContainer {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    height: 10vh;
+    width: 20vw;
+    min-width: 70px;
+    border-radius: 15px;
+  }
+
+  .boardContainer:hover {
+    height: 10vh;
+  }
+
+  .contactsContainer {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    height: 10vh;
+    width: 20vw;
+    min-width: 70px;
+    border-radius: 15px;
+  }
+
+  .contactsContainer:hover {
+    height: 10vh;
+  }
+
+  .privacyPolicyAndLegalNoticeContainer {
+    display: none;
+  }
 }
 
 @media (max-width: 370px) {

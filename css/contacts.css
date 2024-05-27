@@ -366,35 +366,6 @@
   margin-top: 15px;
 }
 
-.menu {
-  display: none;
-  z-index: 10;
-  font-size: 16px;
-  position: absolute;
-  right: 50px;
-  width: fit-content;
-  background-color: #2a3647;
-  padding: 10px;
-  box-sizing: border-box;
-  color: #fff;
-  border-radius: 20px 0 20px 20px;
-  margin-top: 270px;
-  width: 150px;
-  height: 158px;
-}
-
-.menu a {
-  display: flex;
-  width: 130px;
-  height: 48px;
-  align-items: center;
-  justify-content: center;
-}
-
-.menu a:hover {
-  background-color: #0059ac31;
-}
-
 .conatactsA.active {
   background-color: #2a3647;
 }
