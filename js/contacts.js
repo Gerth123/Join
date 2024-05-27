@@ -89,7 +89,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     const userId = '-NyKF7omq8KOQgBXWhYW';
 
     const actualUsers = await loadData(`users/${userId}/contacts`);
-    console.log("Loaded Contacts:", actualUsers);
 
     if (actualUsers) {
       const sortedContacts = sortContacts(actualUsers);

@@ -57,12 +57,7 @@ async function setupContactClickEvents() {
                 try {
                     await deleteContactFromFirebase(email);
                     card.remove();
-                    let urlParams = new URLSearchParams(window.location.search);
-                    const userId = urlParams.get('actualUsersNumber');
-                    const contactCard = document.querySelector(`.contactCard[data-id="${userId}"]`);
-                    if (contactCard) {
-                        contactCard.remove();
-                    }
+                    await removeContactFromUI(email);
                     contactDetailsDiv.innerHTML = '';
                 } catch (error) {
                     console.error("Fehler beim Löschen des Kontakts:", error);
@@ -73,10 +68,17 @@ async function setupContactClickEvents() {
 }
 
 async function findUserIdByEmail(email) {
+    console.log(email);
+    let urlParams = new URLSearchParams(window.location.search);
+    let actualUsersNumber = urlParams.get('actualUsersNumber');
+    
     try {
-        let users = await loadData('users');
+        let users = await loadData('users/' + actualUsersNumber + '/contacts');
         for (let userId in users) {
-            if (users[userId].email === email) {
+            if (users[userId] === null) {
+                continue;
+            }
+            if (users[userId].mail === email) {
                 return userId;
             }
         }
@@ -97,7 +99,7 @@ async function findUserIdByEmail(email) {
 async function generateContactHTML(contact) {
     const randomColor = await generateRandomColor(contact.name);
     const initials = await getInitials(contact.name);
-    let userId = await getContactsNumber(contact.mail);
+    let userId = await findUserIdByEmail(contact.mail);
     return `
         <div class="contact contactCard" data-id="${userId}" data-phone="${contact.phone}">
             <div class="profilePicture" style="background-color: ${randomColor};">${initials}</div>
@@ -176,9 +178,11 @@ async function deleteContactFromFirebase(email) {
     const url = `${baseUrl}users/${userId}/contacts.json`;
     const response = await fetch(url);
     const data = await response.json();
-    const users = data.users;
-    newContactId = await getContactsNumber(email);
-    deleteData(`users/` + userId + `/contacts/` + newContactId);
+    newContactId = await findUserIdByEmail(email);
+    await deleteData(`users/` + userId + `/contacts/` + newContactId);
+    let actualUsers = await loadData('users/' + userId + '/contacts');
+    const sortedContacts = await sortContacts(actualUsers);
+    await displayContacts(sortedContacts);
 
     // const updatedContacts = Object.entries(users[userId].contacts).filter(([id, contact]) => contact.email !== email);
 
@@ -194,34 +198,13 @@ async function deleteContactFromFirebase(email) {
 }
 
 /**
- * This function is used to get the number of the contact in the URL and returns it.
- * 
- * @param {string} email - The email of the contact.
- * 
- * @author: Robin
- */
-async function getContactsNumber(email) {
-    let urlParams = new URLSearchParams(window.location.search);
-    let actualUsersNumber = urlParams.get('actualUsersNumber');
-    let users = await loadData('users/' + actualUsersNumber + '/contacts');
-    for (let userId in users) {
-        if (users[userId] === null) {
-            continue;
-        }
-        if (users[userId]['mail'] === email) {
-            return userId;
-        }
-    }
-}
-
-/**
  * Removes the contact element from the UI.
  * 
  * @param {string} contactId - The ID of the contact to remove from the UI.
  * 
  * Author: Elias
  */
-function removeContactFromUI(contactId) {
+function removeContactFromUI(email) {
     const contactCard = document.querySelector(`.contactCard[data-id="${email}"]`); 
     if (contactCard && contactList) {
         contactCard.remove();
