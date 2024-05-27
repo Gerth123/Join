@@ -7,7 +7,6 @@
     <title>Join Summary</title>
     <script src="script.js"></script>
     <script src="js/summary.js"></script>
-    <script src="js/login.js"></script>
     <script src="js/initials.js"></script>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="css/summary.css" />
@@ -26,7 +25,7 @@
           </div>
           <div class="helpAndUserContainer">
             <img src="assets/img/help.svg" alt="Help" class="helpIcon" onclick="changeHtmlPage('help.html')"/>
-            <div class="initials">RG</div>
+            <div class="initials" id="headerInitials"></div>
             <div class="menu" id="menu">
               <a onclick="changeHtmlPage('help.html')" class="helpAtNavBar">Help</a>
               <a onclick="changeHtmlPage('legal_notice.html')">Legal Notice</a>
@@ -37,7 +36,7 @@
         </header>
 
         <div class="mainSection">
-          <div class="headingSectionAndMainContainer">
+          <div class="headingSectionAndMainContainer" id="headingSectionAndMainContainer">
             <div class="headingSection">
               <h1 class="joinSuh1">Join 360</h1>
               <div class="seperator"></div>
@@ -109,9 +108,9 @@
               </div>
             </div>
           </div>
-          <div class="greetingContainer">
+          <div class="greetingContainer" id="greetingContainer">
             <div id="greetingText" class="greetingText"></div>
-            <span class="greetingName" id="greetingName">Max Mustermann</span>
+            <span class="greetingName" id="greetingName"></span>
           </div>
         </div>
       </section>

@@ -29,6 +29,7 @@ async function initBoard() {
   renderBoards(data);
   getEventListeners();
   getDropZones();
+  await fillHeaderInitials();
 }
 
 /**

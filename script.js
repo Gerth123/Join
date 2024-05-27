@@ -108,3 +108,25 @@ function changeHtmlPage(page) {
 function goBackToLastTabWithoutClosing() {
     window.history.back();
 }
+
+async function fillHeaderInitials() {
+    let urlParams = new URLSearchParams(window.location.search);
+    let actualUsersNumber = urlParams.get('actualUsersNumber');
+    let actualUsersName = await loadData('users/' + actualUsersNumber + '/name');
+    console.log(actualUsersName);
+    document.getElementById('headerInitials').innerHTML = getInitialsUniversal(actualUsersName);
+}
+
+/**
+ * Generates initials from a name string.
+ * 
+ * @param {string} name - The full name from which initials are generated.
+ * @returns {string} - The initials extracted from the name.
+ * 
+ * Author: Elias
+ */
+function getInitialsUniversal(name) {
+    const words = name.split(' ');
+    const initials = words.map(word => word.charAt(0)).join('').toUpperCase();
+    return initials;
+}

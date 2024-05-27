@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="fonts/PTSans-Bold.ttf" />
     <link rel="stylesheet" href="fonts/PTSans-Italic.ttf" />
   </head>
-  <body>
+  <body onload="fillHeaderInitials()">
     <div class="wholeJoinContainer">
       <section class="headerAndOpenedContainer">
         <header>
@@ -25,7 +25,7 @@
           </div>
           <div class="helpAndUserContainer">
             <img src="assets/img/help.svg" alt="Help" class="helpIcon" onclick="changeHtmlPage('help.html')"/>
-            <div class="initials">RG</div>
+            <div class="initials" id="headerInitials"></div>
             <div class="menu" id="menu">
               <a onclick="changeHtmlPage('help.html')" class="helpAtNavBar">Help</a>
               <a onclick="changeHtmlPage('legal_notice.html')">Legal Notice</a>
