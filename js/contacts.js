@@ -1,8 +1,10 @@
 /**
- * This script manages the visibility of an overlay.
+ * This script manages the visibility of overlays.
  * 
- * - Clicking the addContactButton shows the overlay.
- * - Clicking outside the overlay or on the closeImage inside the overlay hides the overlay.
+ * - Clicking the addContactButton shows the main overlay.
+ * - Clicking outside the main overlay or on the closeImage inside the main overlay hides the main overlay.
+ * - Clicking any div with the class "edit-div" shows the edit overlay.
+ * - Clicking outside the edit overlay or on the close button inside the edit overlay hides the edit overlay.
  * 
  * Author: Elias
  */
@@ -16,22 +18,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const editDivs = document.querySelectorAll(".edit-div");
   const editOverlay = document.getElementById("edit-overlay");
-  const closeEditOverlay = document.querySelector(".closeEditOverlay");
+  const closeEditOverlay = document.querySelector(".edit-closeEditOverlay");
   const editContactForm = document.getElementById("editContactForm");
 
-  const baseUrl = 'https://join-ca44d-default-rtdb.europe-west1.firebasedatabase.app/';
-  const userId = '-NyKF7omq8KOQgBXWhYW';
+  addContactButton.addEventListener("click", function (event) {
+    event.stopPropagation();
+    overlay.style.display = "block";
+  });
 
   editDivs.forEach(editDiv => {
     editDiv.addEventListener("click", function (event) {
       event.stopPropagation();
       editOverlay.style.display = "block";
     });
-  });
-
-  addContactButton.addEventListener("click", function (event) {
-    event.stopPropagation();
-    overlay.style.display = "block";
   });
 
   document.addEventListener("click", function (event) {
@@ -52,6 +51,11 @@ document.addEventListener("DOMContentLoaded", function () {
     event.stopPropagation();
     overlay.style.display = "none";
     clearInputFields();
+  });
+
+  closeEditOverlay.addEventListener("click", function (event) {
+    event.stopPropagation();
+    editOverlay.style.display = "none";
   });
 
   const contactsADiv = document.querySelector('.contactsA');
@@ -100,23 +104,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     console.error("Fehler beim Laden der Daten:", error);
   }
 });
-
-/**
- * Fetches data from a given path in the Firebase database.
- * 
- * @param {string} path - The path to fetch data from.
- * @param {string} baseUrl - The base URL of the Firebase database.
- * @returns {Promise<Object>} The JSON response.
- * 
- * Author: Elias
- */
-// async function loadData(path='', baseUrl) {
-//   const response = await fetch(`${baseUrl}${path}.json`);
-//   if (!response.ok) {
-//       throw new Error('Fehler beim Laden der Daten: ' + response.statusText);
-//   }
-//   return await response.json();
-// }
 
 /**
  * Sorts contacts alphabetically by name.
@@ -239,14 +226,6 @@ async function saveContact(name, mail, phone, userId) {
 
   return await response.json();
 }
-
-// async function loadData(path, baseUrl) {
-//   const response = await fetch(`${baseUrl}${path}.json`);
-//   if (!response.ok) {
-//       throw new Error('Fehler beim Laden der Daten: ' + response.statusText);
-//   }
-//   return await response.json();
-// }
 
 async function createContact(event) {
   event.preventDefault();

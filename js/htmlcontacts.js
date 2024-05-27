@@ -183,18 +183,6 @@ async function deleteContactFromFirebase(email) {
     let actualUsers = await loadData('users/' + userId + '/contacts');
     const sortedContacts = await sortContacts(actualUsers);
     await displayContacts(sortedContacts);
-
-    // const updatedContacts = Object.entries(users[userId].contacts).filter(([id, contact]) => contact.email !== email);
-
-    // const updateData = {};
-    // updatedContacts.forEach(([id, contact], index) => {
-    //     updateData[index] = contact;
-    // });
-
-    // await fetch(`${baseUrl}users/${userId}/contacts.json`, {
-    //     method: 'PUT',
-    //     body: JSON.stringify(updateData)
-    // });
 }
 
 /**
