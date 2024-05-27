@@ -296,6 +296,15 @@ h1 {
 @media (max-width: 1100px) {
   .greetingContainer {
     display: none;
+    height: 80vh;
+    width: 100vw;
+    padding-left: 0;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .greetingName {
+    text-align: center;
   }
 
   .mainSection {
@@ -305,6 +314,7 @@ h1 {
   }
 
   .headingSectionAndMainContainer {
+    display: none;
     width: 100vw;
     height: 80vh;
   }
@@ -313,7 +323,7 @@ h1 {
     width: 100vw;
     padding-left: 0vw;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     gap: 0;
     height: 20vh;
