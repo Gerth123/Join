@@ -573,10 +573,6 @@ progress[value]::-moz-progress-bar {
   width: 45%;
 }
 
-.wd-100 {
-  width: 100%;
-}
-
 .column {
   display: flex;
   flex-direction: column;
@@ -603,21 +599,23 @@ fieldset {
   width: 255px;
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
+  .board-header-top {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
   .board-header-section {
     padding-left: 16px;
     padding-right: 16px;
     height: fit-content;
   }
+}
 
+@media screen and (max-width: 510px) {
   .board-header-title {
     font-size: 47px;
-  }
-
-  .board-header-top {
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
   }
 
   .board-header-right {
@@ -627,11 +625,10 @@ fieldset {
   }
 
   .board-header-search {
-    max-width: 420px;
-    padding: 4px 8px 4px 8px;
+    max-width: fit-content;
+    padding: 4px 0px 4px 8px;
     margin-right: 0;
   }
-
   .board-header-search-img {
     margin-left: 0;
   }
@@ -654,5 +651,13 @@ fieldset {
     background-image: url("/assets/icons/board/board-header-btn-sml-hover.svg");
     background-repeat: no-repeat;
     background-size: contain;
+  }
+
+  .wd-100 {
+    width: 100%;
+  }
+
+  .mb-40 {
+    margin-bottom: 40px;
   }
 }
