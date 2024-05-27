@@ -149,15 +149,17 @@ function onClickAddTaskBoard(fullsize, board, editBoard, addBoard) {
       btn.classList.toggle("open");
     });
   });
-  const addTaskBtn = document.getElementById("board-header-add-btn");
-  addTaskBtn.addEventListener("click", () => {
-    fullsize.classList.remove("d-none");
-    board.classList.add("d-none");
-    editBoard.classList.add("d-none");
-    addBoard.classList.remove("d-none");
-    contentId = 1;
-    onClickAddSubTasks();
-    getAddAssgined();
+  const addTaskBtn = document.querySelectorAll("#board-header-add-btn");
+  addTaskBtn.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      fullsize.classList.remove("d-none");
+      board.classList.add("d-none");
+      editBoard.classList.add("d-none");
+      addBoard.classList.remove("d-none");
+      contentId = 1;
+      onClickAddSubTasks();
+      getAddAssgined();
+    });
   });
 }
 

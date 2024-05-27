@@ -4,6 +4,10 @@
   padding: 4px;
 }
 
+body {
+  background-color: #f6f7f8;
+}
+
 /* Track */
 ::-webkit-scrollbar-track {
   border-radius: 10px;
@@ -170,7 +174,7 @@ input:focus {
 .board-card-section {
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
+  /* width: 100%; */
   max-width: 1200px;
   padding-left: min(5%, 64px);
 }
@@ -569,6 +573,10 @@ progress[value]::-moz-progress-bar {
   width: 45%;
 }
 
+.wd-100 {
+  width: 100%;
+}
+
 .column {
   display: flex;
   flex-direction: column;
@@ -598,6 +606,8 @@ fieldset {
 @media screen and (max-width: 480px) {
   .board-header-section {
     padding-left: 16px;
+    padding-right: 16px;
+    height: fit-content;
   }
 
   .board-header-title {
@@ -617,9 +627,32 @@ fieldset {
   }
 
   .board-header-search {
-    width: 100%;
-    max-width: 396px;
+    max-width: 420px;
     padding: 4px 8px 4px 8px;
     margin-right: 0;
+  }
+
+  .board-header-search-img {
+    margin-left: 0;
+  }
+
+  .add-btn-container {
+    display: none;
+  }
+
+  .board-header-add-btn-small {
+    width: 40px;
+    height: 40px;
+    background-image: url("/assets/icons/board/board-header-btn-sml.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .board-header-add-btn-small:hover {
+    width: 40px;
+    height: 40px;
+    background-image: url("/assets/icons/board/board-header-btn-sml-hover.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
   }
 }
