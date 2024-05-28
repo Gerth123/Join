@@ -8,7 +8,9 @@ async function initSummary() {
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
   let actualUsers = await loadData("users");
-  fillDates(actualUsersNumber, actualUsers);
+  await fillDates(actualUsersNumber, actualUsers);
+  await checkConditions();
+  await fillHeaderInitials();
 }
 
 /** 
@@ -34,6 +36,40 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   document.getElementById("greetingText").textContent = greeting;
 });
+
+/**
+   * This function is used to check the mediaQuery and the referrer. If the mediaQuery matches and the referrer contains login.html, 
+   * the showGreetingThenMain function is called. Otherwise, the mainContainer is shown.
+   * 
+   * @author: Robin
+   */
+async function checkConditions() {
+  var mediaQuery = window.matchMedia("(max-width: 1100px)");
+  var referrer = document.referrer;
+  if (mediaQuery.matches && referrer.includes("login.html")) {
+    await showGreetingThenMain();
+  } else {
+    let mainContainer = document.getElementById('headingSectionAndMainContainer');
+    mainContainer.style.display = 'flex';
+  }
+}
+
+/**
+ * This function is used to show the greeting and then the mainContainer.
+ * 
+ * @author: Robin
+ */
+
+function showGreetingThenMain() {
+  let greetingContainer = document.getElementById('greetingContainer');
+  let mainContainer = document.getElementById('headingSectionAndMainContainer');
+  mainContainer.style.display = 'none';
+  greetingContainer.style.display = 'flex';
+  setTimeout(function () {
+    greetingContainer.style.display = 'none';
+    mainContainer.style.display = 'flex';
+  }, 2000);
+}
 
 /**
  * This function is used to fill the content of the summary page.
@@ -108,3 +144,5 @@ function fillUrgentDate(urgentDates) {
   let formattedDate = `${monthName} ${day}, ${year}`;
   getElementById("urgentDate").innerHTML = formattedDate;
 }
+
+
