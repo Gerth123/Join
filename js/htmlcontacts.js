@@ -24,7 +24,7 @@ async function setupContactClickEvents() {
                     <div class="profil-user-right">
                         <p class="contact-name">${name}</p>
                         <div class="editDelete-div">
-                            <div class="edit-div" data-id="1">
+                            <div class="edit-div" data-id="1" onclick="openEditContactOverlay()">
                                 <img class="contact-img1" src="assets/img/edit.svg"/>
                                 <img class="contact-img2" src="assets/img/edit (1).svg"/>
                                 <span>Edit</span>
@@ -199,20 +199,10 @@ function removeContactFromUI(email) {
     }
 }
 
-async function setupEditContactOverlay() {
-    const editDivs = document.querySelectorAll('.edit-div');
-
-    editDivs.forEach(function (editDiv) {
-        editDiv.addEventListener('click', function () {
-            let name = editDiv.dataset.name; // Nehme den Namen aus dem Dataset des Edit-Divs
-            let email = editDiv.dataset.email; // Nehme die E-Mail aus dem Dataset des Edit-Divs
-            let phone = editDiv.dataset.phone; // Nehme die Telefonnummer aus dem Dataset des Edit-Divs
-
-            let overlay = document.getElementById('edit-overlay');
-            overlay.classList.add('show-overlay');
-
-            let mainSectionOverlay = document.querySelector('.mainSectionOverlay');
-            mainSectionOverlay.innerHTML = `
+function editcontactHTML() {
+    return `
+        <div class="overlay">
+            <div class="overlay-content">
                 <div class="contentleft">
                     <div class="contentleft2">
                         <img class="logoAddContact" src="assets/img/Capa 2.svg" />
@@ -223,19 +213,19 @@ async function setupEditContactOverlay() {
                     </div>
                 </div>
                 <div class="overlay-contentright">
-                    <img class="imgcloseOverlay" src="assets/img/Close.svg" />
+                    <img class="imgcloseOverlay" src="assets/img/Close.svg" onclick="closeEditContact()" />
                     <img src="assets/img/Group 13.svg" />
-                    <form class="inputSection" id="contactForm" onsubmit="createContact(event)">
+                    <form class="inputSection" id="contactForm" onsubmit="updateContact(event)">
                         <div class="input-divs">
-                            <input required id="contactName" placeholder="Name" value="${name}" />
+                            <input required id="contactName" placeholder="Name"/>
                             <img src="assets/img/person.svg" class="imgsinput">
                         </div>
                         <div class="input-divs">
-                            <input required id="contactEmail" placeholder="Email" pattern=".*@.*\..*" type="email" title="An @ is required" value="${email}" />
+                            <input required id="contactEmail" placeholder="Email" pattern=".*@.*\..*" type="email" title="An @ is required" />
                             <img src="assets/img/mail.svg" class="imgsinput1">
                         </div>
                         <div class="input-divs">
-                            <input required id="contactPhone" placeholder="Phone" type="tel" title="Only numbers allowed" value="${phone}" />
+                            <input required id="contactPhone" placeholder="Phone" type="tel" title="Only numbers allowed" />
                             <img src="assets/img/call.svg" class="imgsinput2">
                         </div>
                         <div class="overlayButtons">
@@ -250,7 +240,17 @@ async function setupEditContactOverlay() {
                         </div>
                     </form>
                 </div>
-            `;
-        });
-    });
+            </div>
+        </div>
+    `;
+}
+
+function openEditContactOverlay() {
+    const overlayContainer = document.getElementById('overlay-container');
+    const editOverlayHTML = editcontactHTML();
+
+    if (overlayContainer.style.display !== 'block' || !overlayContainer.innerHTML.includes(editOverlayHTML)) {
+        overlayContainer.innerHTML = editOverlayHTML;
+        overlayContainer.style.display = 'block';
+    }
 }
