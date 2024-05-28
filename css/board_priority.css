@@ -15,7 +15,8 @@ input[type="radio"] {
 }
 
 input[type="radio"] + label.btn1 {
-  width: 136px;
+  width: 100%;
+  max-width: 136px;
   height: 56px;
   display: inline-block;
   background-image: url("/assets/icons/board/priority/low_button.svg");
@@ -30,7 +31,8 @@ input[type="radio"] + label.btn1 {
 }
 
 input[type="radio"] + label.btn2 {
-  width: 136px;
+  width: 100%;
+  max-width: 136px;
   height: 56px;
   display: inline-block;
   background-image: url("/assets/icons/board/priority/medium_button.svg");
@@ -45,7 +47,8 @@ input[type="radio"] + label.btn2 {
 }
 
 input[type="radio"] + label.btn3 {
-  width: 136px;
+  width: 100%;
+  max-width: 136px;
   height: 56px;
   display: inline-block;
   background-image: url("/assets/icons/board/priority/urgent_button.svg");
@@ -73,18 +76,21 @@ input[type="radio"] + label.btn3:hover {
 
 input[type="radio"]:checked + label.btn1 {
   background-image: url("/assets/icons/board/priority/low_button_clicked.svg");
-  width: 136px;
+  width: 100%;
+  max-width: 136px;
   height: 50px;
 }
 
 input[type="radio"]:checked + label.btn2 {
   background-image: url("/assets/icons/board/priority/medium_button_clicked.svg");
-  width: 136px;
+  width: 100%;
+  max-width: 136px;
   height: 50px;
 }
 
 input[type="radio"]:checked + label.btn3 {
   background-image: url("/assets/icons/board/priority/urgent_button_clicked.svg");
-  width: 136px;
+  width: 100%;
+  max-width: 136px;
   height: 50px;
 }

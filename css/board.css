@@ -1,25 +1,25 @@
-/* width */
+body {
+  background-color: #f6f7f8;
+}
+
+/* html {
+  overflow: hidden;
+} */
+
 ::-webkit-scrollbar {
   width: 8px;
   padding: 4px;
 }
 
-body {
-  background-color: #f6f7f8;
-}
-
-/* Track */
 ::-webkit-scrollbar-track {
   border-radius: 10px;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: #a8a8a8;
   border-radius: 10px;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
 }
@@ -452,7 +452,7 @@ fieldset {
 
   .board-header-section {
     padding-left: 16px;
-    padding-right: 16px;
+    padding-right: 12px;
     height: fit-content;
   }
 }
@@ -469,7 +469,7 @@ fieldset {
   }
 
   .board-header-search {
-    max-width: fit-content;
+    max-width: 470px;
     padding: 4px 0px 4px 8px;
     margin-right: 0;
   }
