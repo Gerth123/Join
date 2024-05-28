@@ -14,31 +14,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const mainSectionOverlay = document.querySelector(".mainSectionOverlay");
   const closeImage = document.querySelector(".imgcloseOverlay");
   const cancelButton = document.querySelector(".clearButton");
-  const contactForm = document.getElementById("contactForm");
-
-  const editDivs = document.querySelectorAll(".edit-div");
-  const editOverlay = document.getElementById("edit-overlay");
-  const closeEditOverlay = document.querySelector(".edit-closeEditOverlay");
-  const editContactForm = document.getElementById("editContactForm");
 
   addContactButton.addEventListener("click", function (event) {
     event.stopPropagation();
     overlay.style.display = "block";
   });
 
-  editDivs.forEach(editDiv => {
-    editDiv.addEventListener("click", function (event) {
-      event.stopPropagation();
-      editOverlay.style.display = "block";
-    });
-  });
-
   document.addEventListener("click", function (event) {
     if (overlay.style.display === "block" && !mainSectionOverlay.contains(event.target)) {
       overlay.style.display = "none";
-    }
-    if (editOverlay.style.display === "block" && !editOverlay.contains(event.target)) {
-      editOverlay.style.display = "none";
     }
   });
 
@@ -53,11 +37,6 @@ document.addEventListener("DOMContentLoaded", function () {
     clearInputFields();
   });
 
-  closeEditOverlay.addEventListener("click", function (event) {
-    event.stopPropagation();
-    editOverlay.style.display = "none";
-  });
-
   const contactsADiv = document.querySelector('.contactsA');
   if (contactsADiv) {
     contactsADiv.addEventListener('click', () => {
@@ -65,6 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
 
 /**
  * This function clears the text in the input fields for contact name, email, and phone.

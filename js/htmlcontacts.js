@@ -198,3 +198,59 @@ function removeContactFromUI(email) {
         contactCard.remove();
     }
 }
+
+async function setupEditContactOverlay() {
+    const editDivs = document.querySelectorAll('.edit-div');
+
+    editDivs.forEach(function (editDiv) {
+        editDiv.addEventListener('click', function () {
+            let name = editDiv.dataset.name; // Nehme den Namen aus dem Dataset des Edit-Divs
+            let email = editDiv.dataset.email; // Nehme die E-Mail aus dem Dataset des Edit-Divs
+            let phone = editDiv.dataset.phone; // Nehme die Telefonnummer aus dem Dataset des Edit-Divs
+
+            let overlay = document.getElementById('edit-overlay');
+            overlay.classList.add('show-overlay');
+
+            let mainSectionOverlay = document.querySelector('.mainSectionOverlay');
+            mainSectionOverlay.innerHTML = `
+                <div class="contentleft">
+                    <div class="contentleft2">
+                        <img class="logoAddContact" src="assets/img/Capa 2.svg" />
+                        <div class="overlayText">
+                            <p class="P1overlay">Edit contact</p>
+                            <div class="divider-vertical"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="overlay-contentright">
+                    <img class="imgcloseOverlay" src="assets/img/Close.svg" />
+                    <img src="assets/img/Group 13.svg" />
+                    <form class="inputSection" id="contactForm" onsubmit="createContact(event)">
+                        <div class="input-divs">
+                            <input required id="contactName" placeholder="Name" value="${name}" />
+                            <img src="assets/img/person.svg" class="imgsinput">
+                        </div>
+                        <div class="input-divs">
+                            <input required id="contactEmail" placeholder="Email" pattern=".*@.*\..*" type="email" title="An @ is required" value="${email}" />
+                            <img src="assets/img/mail.svg" class="imgsinput1">
+                        </div>
+                        <div class="input-divs">
+                            <input required id="contactPhone" placeholder="Phone" type="tel" title="Only numbers allowed" value="${phone}" />
+                            <img src="assets/img/call.svg" class="imgsinput2">
+                        </div>
+                        <div class="overlayButtons">
+                            <div class="clearButton">
+                                Delete
+                                <img class="imgClear" src="assets/img/Close.svg" />
+                            </div>
+                            <button type="submit" class="createButton">
+                                Save
+                                <img class="imgcheck" src="assets/img/check.svg" />
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+        });
+    });
+}
