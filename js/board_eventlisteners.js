@@ -314,11 +314,11 @@ function getAssignedUser(personWithName) {
 function onClickEditBoard(board, editBoard, addBoard) {
   const editBtn = document.getElementById("edit-btn");
 
-  editBtn.addEventListener("click", () => {
+  editBtn.addEventListener("click", async () => {
     board.classList.add("d-none");
     editBoard.classList.remove("d-none");
     addBoard.classList.add("d-none");
-    getEditBoard(id, contentId);
+    await getEditBoard(id, contentId);
     onClickEditSubtasks();
   });
 }

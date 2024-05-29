@@ -443,6 +443,12 @@ fieldset {
   width: 255px;
 }
 
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 @media screen and (max-width: 768px) {
   .board-header-top {
     flex-direction: column;
@@ -454,6 +460,22 @@ fieldset {
     padding-left: 16px;
     padding-right: 12px;
     height: fit-content;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  .add-line {
+    display: none;
+  }
+
+  .wd-100 {
+    width: 100%;
+  }
+
+  .due-date {
+    margin-top: 32px;
   }
 }
 

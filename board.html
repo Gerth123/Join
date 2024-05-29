@@ -39,9 +39,13 @@
         <section class="addTaskOpenedContainer">
           <section class="board-header-section">
             <div class="board-header-top">
-              <div class="row wd-100 mb-40">
+              <div class="header-row wd-100 mb-40">
                 <div class="board-header-title">Board</div>
-                <div id="board-header-add-btn" class="button board-header-add-btn-small"></div>
+                <div
+                  id="board-header-add-btn-small"
+                  onclick="changeHtmlPage('add_task.html')"
+                  class="button board-header-add-btn-small"
+                ></div>
               </div>
 
               <div class="board-header-right">
@@ -227,7 +231,7 @@
           </div>
           <form class="full-size-add-form" action="" onsubmit="saveAddData(); return false">
             <div class="row">
-              <div class="column wd-45">
+              <div class="column wd-45 wd-100">
                 <label class="full-size-label" for="title-addCard">Title</label>
                 <input class="full-size-input" id="title-addCard" type="text" placeholder="Enter a title" required />
                 <label class="full-size-label" for="description-addCard">Description</label>
@@ -252,9 +256,10 @@
               </div>
 
               <div class="add-line"></div>
-              <div class="column wd-45">
-                <label class="full-size-label" for="date-addCard">Due date</label>
+              <div class="column wd-45 wd-100">
+                <label class="full-size-label due-date" for="date-addCard">Due date</label>
                 <input class="full-size-input" id="date-addCard" type="date" required />
+                <div class="full-size-label">Priority</div>
                 <div class="full-size-priority-container">
                   <div class="priority-button-container">
                     <input type="radio" id="radio-btn-6" name="radio-btnss" />

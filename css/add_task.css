@@ -51,6 +51,10 @@
   justify-content: flex-end;
 }
 
+.cancel-button {
+  margin-right: 16px;
+}
+
 @media screen and (max-width: 1100px) {
   .addTaskOpenedContainer {
     width: 100%;
@@ -64,6 +68,7 @@
   .addTaskContent {
     margin-top: 40px;
     margin-left: 16px;
+    margin-right: 16px;
   }
 
   .row {
@@ -81,6 +86,7 @@
   .wd-100 {
     width: 100%;
   }
+
   .cancel-button {
     display: none;
   }
@@ -88,6 +94,7 @@
   .full-size-footer {
     display: flex;
     justify-content: flex-end;
+    padding-bottom: 16px;
   }
 
   .due-date {

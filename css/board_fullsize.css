@@ -18,10 +18,14 @@
 }
 
 .full-size-add-board {
-  width: 890px;
+  width: 100%;
+  max-width: 890px;
   min-height: 620px;
-
-  padding: 48px 40px 48px 40px;
+  /* padding: 48px 40px 48px 40px; */
+  padding-top: 48px;
+  padding-bottom: 48px;
+  padding-left: min(40px, 5%);
+  padding-right: min(40px, 5%);
   border-radius: 30px;
   background-color: #fff;
   box-shadow: 0px 0px 4px 0px #00000029;
@@ -152,4 +156,38 @@
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
+}
+
+@media screen and (max-width: 1100px) {
+  .full-size-add-board {
+    /* padding: 48px 40px 48px 40px; */
+    padding-top: 24px;
+    padding-bottom: 24px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .full-size-container {
+    align-items: flex-start;
+  }
+
+  .full-size-board {
+    width: 100%;
+    max-width: 396px;
+    height: 640px;
+  }
+
+  .full-size-add-board {
+    max-width: 600px;
+    padding: 24px 20px 24px 20px;
+  }
+}
+
+@media screen and (max-width: 510px) {
+  .full-size-add-board {
+    max-width: 400px;
+    padding: 12px 10px 12px 10px;
+  }
 }
