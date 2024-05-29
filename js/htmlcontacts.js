@@ -202,43 +202,44 @@ function removeContactFromUI(email) {
 function editcontactHTML() {
     return `
         <div class="overlay">
-            <div class="overlay-content">
-                <div class="contentleft">
-                    <div class="contentleft2">
-                        <img class="logoAddContact" src="assets/img/Capa 2.svg" />
-                        <div class="overlayText">
-                            <p class="P1overlay">Edit contact</p>
-                            <div class="divider-vertical"></div>
+            <div class="mainSectionOverlay">  
+                <div class="overlay-content">
+                    <div class="contentleft">
+                        <div class="contentleft2">
+                            <img class="logoAddContact" src="assets/img/Capa 2.svg" />
+                            <div class="overlayText">
+                                <p class="P1overlay">Edit contact</p>
+                                <div class="divider-vertical2"></div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="overlay-contentright">
-                    <img class="imgcloseOverlay" src="assets/img/Close.svg" onclick="closeEditContact()" />
-                    <img src="assets/img/Group 13.svg" />
-                    <form class="inputSection" id="contactForm" onsubmit="updateContact(event)">
-                        <div class="input-divs">
-                            <input required id="contactName" placeholder="Name"/>
-                            <img src="assets/img/person.svg" class="imgsinput">
-                        </div>
-                        <div class="input-divs">
-                            <input required id="contactEmail" placeholder="Email" pattern=".*@.*\..*" type="email" title="An @ is required" />
-                            <img src="assets/img/mail.svg" class="imgsinput1">
-                        </div>
-                        <div class="input-divs">
-                            <input required id="contactPhone" placeholder="Phone" type="tel" title="Only numbers allowed" />
-                            <img src="assets/img/call.svg" class="imgsinput2">
-                        </div>
-                        <div class="overlayButtons">
-                            <div class="clearButton">
-                                Delete
-                                <img class="imgClear" src="assets/img/Close.svg" />
+                    <div class="overlay-contentright2">
+                        <img class="imgcloseOverlay2" src="assets/img/Close.svg" onclick="closeEditContact()" />
+                        <img src="assets/img/Group 13.svg" />
+                        <form class="inputSection" id="contactForm" onsubmit="updateContact(event)">
+                            <div class="input-divs">
+                                <input required id="contactName" placeholder="Name"/>
+                                <img src="assets/img/person.svg" class="imgsinput0-1">
                             </div>
-                            <button type="submit" class="createButton">
-                                Save
-                                <img class="imgcheck" src="assets/img/check.svg" />
-                            </button>
-                        </div>
-                    </form>
+                            <div class="input-divs">
+                                <input required id="contactEmail" placeholder="Email" pattern=".*@.*\..*" type="email" title="An @ is required" />
+                                <img src="assets/img/mail.svg" class="imgsinput1-2">
+                            </div>
+                            <div class="input-divs">
+                                <input required id="contactPhone" placeholder="Phone" type="tel" title="Only numbers allowed" />
+                                <img src="assets/img/call.svg" class="imgsinput2-3">
+                            </div>
+                            <div class="overlayButtons">
+                                <div class="clearButton1-2">
+                                    Delete
+                                </div>
+                                <button type="submit" class="createButton2">
+                                    Save
+                                    <img class="imgcheck" src="assets/img/check.svg" />
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -253,4 +254,9 @@ function openEditContactOverlay() {
         overlayContainer.innerHTML = editOverlayHTML;
         overlayContainer.style.display = 'block';
     }
+}
+
+function closeEditContact() {
+    const overlayContainer = document.getElementById('overlay-container');
+    overlayContainer.style.display = 'none';
 }
