@@ -180,6 +180,7 @@
   }
 
   .full-size-add-board {
+    width: 90%;
     max-width: 600px;
     padding: 24px 20px 24px 20px;
   }
