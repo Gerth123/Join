@@ -9,7 +9,7 @@ p {
 }
 
 .openContactsContainer {
-  width: 38vw;
+  width: 30vw;
   height: 88vh;
   display: flex;
   flex-direction: column;
@@ -21,8 +21,8 @@ p {
 }
 
 .addContact {
-  width: 37vw;
-  height: 15vh;
+  width: 30vw;
+  height: 12vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -59,7 +59,8 @@ p {
 }
 
 .contacts {
-  width: 38vw;
+  width: 29vw;
+  height: 74vh;
   position: relative;;
   display: flex;
   overflow-y: auto;
@@ -81,8 +82,8 @@ p {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  height: 592px;
-  width: 1212px;
+  height: 80vh;
+  width: 80vw;
   display: flex;
   animation-name: slideIn;
   animation-duration: 0.5s;
@@ -325,22 +326,29 @@ p {
 }
 
 .contentright {
-  height: 90vh;
-  width: 50vw;
+  height: 88vh;
+  width: 47vw;
+  max-width: 600px;
+  display: flex;
   background-color: #f6f7f8;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-left: 5vw;
 }
 
 .h1contact {
-  width: 50vw;
-  height: 20vh;
+  padding-top: 10vh;
+  width: 45vw;
+  height: 15vh;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .mainContent {
   display: flex;
-  height: 90vh;
+  height: 88vh;
   width: 88vw;
 }
 
@@ -353,19 +361,19 @@ p {
 }
 
 .P-contact {
-  font-size: 61px;
+  font-size: 55px;
   font-weight: 700;
 }
 
 .seperator {
-  height: 59px;
+  height: 55px;
   border-radius: 3px;
   background-color: #29abe2;
   min-width: 3px;
 }
 
 .P-contact-right {
-  font-size: 27px;
+  font-size: 25px;
   font-weight: 400;
   line-height: 32.4px;
 }
@@ -375,11 +383,12 @@ p {
 }
 
 .contactdetails-right {
-  height: 400px;
+  height: 68vh;
   display: flex;
   flex-direction: column;
   background-color: #f6f7f8;
   position: relative;
+  gap: 2vh;
 }
 
 .contact-img {
@@ -389,20 +398,22 @@ p {
 
 .profil-user {
   display: flex;
+  align-items: center;
 }
 
 .contact-name {
   font-weight: 500;
-  font-size: 47px;
+  font-size: 43px;
   line-height: 56.4px;
 }
 
 .editDelete-div {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
+  width: 32vw;
   gap: 16px;
-  margin-left: 50px;
-  margin-top: -40px;
+  padding-top: 1vh;
 }
 
 .edit-div {
@@ -468,6 +479,22 @@ p {
   color: #007cee;
 }
 
+.div-P {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 2vh;
+  padding-top: 1vh;
+  gap: 1vh;
+}
+
+.Phone-div {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 2vh;
+  padding-top: 1vh;
+  gap: 1vh;
+}
+
 .contact-Phone {
   font-weight: 700;
   font-size: 16px;
@@ -490,13 +517,13 @@ p {
 }
 
 .contacts-container {
-  width: 38vw;
+  width: 30vw;
   max-height: 68vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
-  padding-bottom: 5vh;
+  padding-bottom: 10vh;
 }
 
 .contact:hover {
@@ -513,6 +540,7 @@ p {
   font-size: 16px;
   font-weight: 400;
   line-height: 19.2px;
+  color: rgb(0,163,242);
 }
 
 .profilePicture {
@@ -534,8 +562,8 @@ p {
 }
 
 .largeProfilePicture {
-  min-width: 120px;
-  height: 120px;
+  min-width: 110px;
+  height: 110px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -547,8 +575,12 @@ p {
 .profil-user-right {
   display: flex;
   flex-direction: column;
-  align-items: baseline;
-
+  justify-content: center;
+  align-items: flex-start;
+  height: 20vh;
+  width: 32vw;
+  min-width: 370px;
+  padding-left: 2vw;
 }
 
 .contacts-list-letter {
@@ -595,11 +627,6 @@ p {
   position: absolute;
   right: 89px;
   top: 55%;
-}
-
-.contacts {
-  height: 740px;
-  overflow-y: auto;
 }
 
 .contacts::-webkit-scrollbar {
@@ -728,6 +755,13 @@ p {
   position: absolute;
   margin-top: 15px;
   margin-left: -50px;
+}
+
+@media (max-width: 1210px) {
+  .contentright {
+    padding-left: 3vw;
+    width: 49vw;
+  }
 }
 
 @media (max-width: 1100px) {

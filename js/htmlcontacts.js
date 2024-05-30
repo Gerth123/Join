@@ -46,7 +46,7 @@ async function setupContactClickEvents() {
                 </div>
                 <div class="Phone-div">
                     <p class="contact-Phone">Phone</p>
-                    <p class="contact-Phone1">${phone}</p>
+                    <a href="tel:${phone}" class="contact-Phone1">${phone}</a>
                 </div>
             `;
 
