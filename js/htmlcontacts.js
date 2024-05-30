@@ -1,63 +1,29 @@
-/**
- * Listens for DOMContentLoaded, adds click listener to 'contactCard' elements,
- * extracts data from clicked card, and updates '.contactdetails-right' HTML.
- * 
- * Author: Elias
- */
+document.addEventListener('DOMContentLoaded', setupContactClickEvents);
+
 async function setupContactClickEvents() {
     const contactCards = document.querySelectorAll('.contactCard');
 
     contactCards.forEach(function (card) {
         card.addEventListener('click', function () {
-            let name = card.querySelector('.NameContact').textContent;
-            let email = card.querySelector('.EmailContact').textContent;
-            let phone = card.getAttribute('data-phone');
-            let randomColor = generateRandomColor(name);
-            let initials = getInitials(name);
+            const name = card.querySelector('.NameContact').textContent;
+            const email = card.querySelector('.EmailContact').textContent;
+            const phone = card.getAttribute('data-phone');
+            const randomColor = generateRandomColor(name);
+            const initials = getInitials(name);
 
-            let contactDetailsDiv = document.querySelector('.contactdetails-right');
-            contactDetailsDiv.innerHTML = `
-                <div class="profil-user">
-                    <div class="profil-user-left">
-                        <div class="profilePicture largeProfilePicture" style="background-color: ${randomColor};">${initials}</div>
-                    </div>
-                    <div class="profil-user-right">
-                        <p class="contact-name">${name}</p>
-                        <div class="editDelete-div">
-                            <div class="edit-div" data-id="1" onclick="openEditContactOverlay()">
-                                <img class="contact-img1" src="assets/img/edit.svg"/>
-                                <img class="contact-img2" src="assets/img/edit (1).svg"/>
-                                <span>Edit</span>
-                            </div>
-                            <div class="delete-div" data-id="${card.dataset.id}">
-                                <img class="contact-img1" src="assets/img/delete.svg"/>
-                                <img class="contact-img2" src="assets/img/delete (1).svg"/>
-                                <span>Delete</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="div-h2">
-                    <h2 class="h2Contactinfo">Contact Information</h2>
-                </div>
-                <div class="div-P">
-                    <p class="contact-mail">Email</p>
-                    <p class="contact-email">${email}</p>
-                </div>
-                <div class="Phone-div">
-                    <p class="contact-Phone">Phone</p>
-                    <p class="contact-Phone1">${phone}</p>
-                </div>
-            `;
+            const contactDetailsDiv = document.querySelector('.contactdetails-right');
+            contactDetailsDiv.innerHTML = generateContactDetailsHTML(name, email, phone, randomColor, initials);
+
+            const editButton = contactDetailsDiv.querySelector('.edit-div');
+            editButton.addEventListener('click', function () {
+                openEditContactOverlay(name, email, phone, randomColor, initials);
+            });
 
             const deleteButton = contactDetailsDiv.querySelector('.delete-div');
             deleteButton.addEventListener('click', async function () {
-                const contactId = card.dataset.id;
-
                 try {
                     await deleteContactFromFirebase(email);
                     card.remove();
-                    await removeContactFromUI(email);
                     contactDetailsDiv.innerHTML = '';
                 } catch (error) {
                     console.error("Fehler beim Löschen des Kontakts:", error);
@@ -65,6 +31,42 @@ async function setupContactClickEvents() {
             });
         });
     });
+}
+
+function generateContactDetailsHTML(name, email, phone, randomColor, initials) {
+    return `
+        <div class="profil-user">
+            <div class="profil-user-left">
+                <div class="profilePicture largeProfilePicture" style="background-color: ${randomColor};">${initials}</div>
+            </div>
+            <div class="profil-user-right">
+                <p class="contact-name">${name}</p>
+                <div class="editDelete-div">
+                    <div class="edit-div" data-id="1">
+                        <img class="contact-img1" src="assets/img/edit.svg"/>
+                        <img class="contact-img2" src="assets/img/edit (1).svg"/>
+                        <span>Edit</span>
+                    </div>
+                    <div class="delete-div" data-id="${email}">
+                        <img class="contact-img1" src="assets/img/delete.svg"/>
+                        <img class="contact-img2" src="assets/img/delete (1).svg"/>
+                        <span>Delete</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="div-h2">
+            <h2 class="h2Contactinfo">Contact Information</h2>
+        </div>
+        <div class="div-P">
+            <p class="contact-mail">Email</p>
+            <p class="contact-email">${email}</p>
+        </div>
+        <div class="Phone-div">
+            <p class="contact-Phone">Phone</p>
+            <p class="contact-Phone1">${phone}</p>
+        </div>
+    `;
 }
 
 async function findUserIdByEmail(email) {
@@ -204,11 +206,14 @@ function removeContactFromUI(email) {
  * 
  * @param {string} randomColor - The random color for the contact's profile picture.
  * @param {string} initials - The initials of the contact's name.
+ * @param {string} name - The contact's name.
+ * @param {string} email - The contact's email.
+ * @param {string} phone - The contact's phone.
  * @returns {string} The HTML string for the edit contact overlay.
  */
-function editcontactHTML(randomColor, initials) {
+function editContactHTML(randomColor, initials, name, email, phone) {
     return `
-        <div class="overlay">
+        <div class="overlay" id="editOverlay">
             <div class="mainSectionOverlay">  
                 <div class="overlay-content">
                     <div class="contentleft">
@@ -225,19 +230,19 @@ function editcontactHTML(randomColor, initials) {
                         <div class="profilePicture largeProfilePicture" style="background-color: ${randomColor};">${initials}</div>
                         <form class="inputSection" id="contactForm" onsubmit="updateContact(event)">
                             <div class="input-divs">
-                                <input required id="contactName" placeholder="Name"/>
+                                <input required id="contactName" value="${name}" placeholder="Name"/>
                                 <img src="assets/img/person.svg" class="imgsinput0-1">
                             </div>
                             <div class="input-divs">
-                                <input required id="contactEmail" placeholder="Email" pattern=".*@.*\..*" type="email" title="An @ is required" />
+                                <input required id="contactEmail" value="${email}" placeholder="Email" pattern=".*@.*\..*" type="email" title="An @ is required" />
                                 <img src="assets/img/mail.svg" class="imgsinput1-2">
                             </div>
                             <div class="input-divs">
-                                <input required id="contactPhone" placeholder="Phone" type="tel" title="Only numbers allowed" />
+                                <input required id="contactPhone" value="${phone}" placeholder="Phone" type="tel" title="Only numbers allowed" />
                                 <img src="assets/img/call.svg" class="imgsinput2-3">
                             </div>
                             <div class="overlayButtons">
-                                <div class="clearButton1-2">
+                                <div class="clearButton1-2 deleteButton">
                                     Delete
                                 </div>
                                 <button type="submit" class="createButton2">
@@ -253,26 +258,38 @@ function editcontactHTML(randomColor, initials) {
     `;
 }
 
-/**
- * Open the edit contact overlay.
- * 
- * @param {string} randomColor - The random color for the contact's profile picture.
- * @param {string} initials - The initials of the contact's name.
- */
-function openEditContactOverlay(randomColor, initials) {
-    const overlayContainer = document.getElementById('overlay-container');
-    const editOverlayHTML = editcontactHTML(randomColor, initials);
+function openEditContactOverlay(name, email, phone, randomColor, initials) {
+    const overlayHTML = editContactHTML(randomColor, initials, name, email, phone);
+    document.body.insertAdjacentHTML('beforeend', overlayHTML);
 
-    if (overlayContainer.style.display !== 'block' || !overlayContainer.innerHTML.includes(editOverlayHTML)) {
-        overlayContainer.innerHTML = editOverlayHTML;
-        overlayContainer.style.display = 'block';
+    const deleteButton = document.querySelector('.deleteButton');
+    deleteButton.addEventListener('click', async function () {
+        try {
+            await deleteContactFromFirebase(email);
+            closeEditContact();
+            const contactCard = document.querySelector(`.contactCard[data-id="${email}"]`);
+            if (contactCard) {
+                contactCard.remove();
+            }
+        } catch (error) {
+            console.error("Fehler beim Löschen des Kontakts:", error);
+        }
+    });
+}
+
+function closeEditContact() {
+    const overlay = document.getElementById('editOverlay');
+    if (overlay) {
+        overlay.remove();
     }
 }
 
-/**
- * Close the edit contact overlay.
- */
-function closeEditContact() {
-    const overlayContainer = document.getElementById('overlay-container');
-    overlayContainer.style.display = 'none';
+function updateContact(event) {
+    event.preventDefault();
+
+    const name = document.getElementById('contactName').value;
+    const email = document.getElementById('contactEmail').value;
+    const phone = document.getElementById('contactPhone').value;
+
+    closeEditContact();
 }
