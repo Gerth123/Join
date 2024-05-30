@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join Add Task</title>
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="css/add_task.css" />
     <link rel="stylesheet" href="css/board.css" />
     <link rel="stylesheet" href="css/board_assigned_category.css" />
     <link rel="stylesheet" href="css/board_edit.css" />
@@ -14,22 +13,11 @@
     <link rel="stylesheet" href="css/board.css" />
     <link rel="stylesheet" href="css/board_priority.css" />
     <link rel="stylesheet" href="css/board_edit.css" />
+    <link rel="stylesheet" href="css/add_task.css" />
     <link rel="icon" href="assets/img/logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="fonts/PTSans-Regular.ttf" />
     <link rel="stylesheet" href="fonts/PTSans-Bold.ttf" />
     <link rel="stylesheet" href="fonts/PTSans-Italic.ttf" />
-    <style>
-      .addTaskContent {
-        margin-top: 110px;
-        margin-left: 96px;
-        width: 100%;
-        max-width: 1200px;
-      }
-
-      .h-120 {
-        height: 120px;
-      }
-    </style>
   </head>
   <body onload="initAddTask()">
     <div class="wholeJoinContainer">
@@ -52,10 +40,10 @@
         </header>
         <section class="addTaskOpenedContainer">
           <div class="addTaskContent">
-            <div class="board-header-title">Add Task</div>
+            <div class="board-header-title pb-40">Add Task</div>
             <form class="full-size-add-form" action="" onsubmit="saveAddData(); return false">
               <div class="row">
-                <div class="column wd-45">
+                <div class="column wd-45 wd-100">
                   <label class="full-size-label" for="title-addCard">Title</label>
                   <input class="full-size-input" id="title-addCard" type="text" placeholder="Enter a title" />
                   <label class="full-size-label" for="description-addCard">Description</label>
@@ -71,9 +59,10 @@
                   <div id="assigned-users-addCard" class="assigned-users-editPage"></div>
                 </div>
                 <div class="add-line"></div>
-                <div class="column wd-45">
-                  <label class="full-size-label" for="date-addCard">Due date</label>
+                <div class="column wd-45 wd-100">
+                  <label class="full-size-label due-date" for="date-addCard">Due date</label>
                   <input class="full-size-input" id="date-addCard" type="date" />
+                  <div class="full-size-label">Priority</div>
                   <div class="full-size-priority-container">
                     <div class="priority-button-container">
                       <input type="radio" id="radio-btn-6" name="radio-btnss" />

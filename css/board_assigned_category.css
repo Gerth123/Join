@@ -89,7 +89,7 @@ select {
 }
 
 .category-list-items {
-  position: absolute;
+  position: relative;
   width: 400px;
   height: 100px;
   margin-block-start: 0;

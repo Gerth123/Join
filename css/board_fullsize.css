@@ -1,0 +1,194 @@
+.full-size-container {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: #00000050;
+}
+
+.full-size-board {
+  width: 445px;
+  height: 890px;
+  padding: 48px 40px 48px 40px;
+  border-radius: 30px;
+  background-color: #fff;
+  box-shadow: 0px 0px 4px 0px #00000029;
+}
+
+.full-size-add-board {
+  width: 100%;
+  max-width: 890px;
+  min-height: 620px;
+  /* padding: 48px 40px 48px 40px; */
+  padding-top: 48px;
+  padding-bottom: 48px;
+  padding-left: min(40px, 5%);
+  padding-right: min(40px, 5%);
+  border-radius: 30px;
+  background-color: #fff;
+  box-shadow: 0px 0px 4px 0px #00000029;
+}
+
+.full-size-add-form {
+  min-height: 550px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.full-size-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.full-size-title {
+  margin-top: 24px;
+  font-size: 61px;
+  font-weight: bold;
+}
+
+.full-size-description {
+  margin-top: 24px;
+}
+
+.full-size-date {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.full-size-due-date {
+  margin-left: 25px;
+}
+
+.full-size-priority {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.full-size-priority-icon {
+  margin-left: 22px;
+}
+
+.full-size-assign {
+  margin-top: 24px;
+}
+
+.full-size-assign-user {
+  height: 56px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.full-size-subtasks {
+  margin-top: 24px;
+}
+
+.full-size-subtask-li {
+  display: flex;
+  align-items: center;
+}
+
+.full-size-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.full-size-button {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.full-size-button-edit {
+  margin-left: 8px;
+  margin-right: 8px;
+  width: 63px;
+  height: 24px;
+  background-image: url("/assets/icons/board/fullsize/edit-button.svg");
+  background-size: cover;
+}
+
+.full-size-button-edit:hover {
+  margin-left: 8px;
+  margin-right: 8px;
+  width: 63px;
+  height: 24px;
+  background-image: url("/assets/icons/board/fullsize/edit-button-hover.svg");
+  background-size: cover;
+}
+
+.full-size-button-delete {
+  margin-left: 8px;
+  margin-right: 8px;
+  width: 81px;
+  height: 24px;
+  background-image: url("/assets/icons/board/fullsize/delete-button.svg");
+  background-size: cover;
+}
+
+.full-size-button-delete:hover {
+  margin-left: 8px;
+  margin-right: 8px;
+  width: 83px;
+  height: 24px;
+  background-image: url("/assets/icons/board/fullsize/delete-button-hover.svg");
+  background-size: cover;
+}
+
+.full-size-add-task {
+  font-size: 61px;
+  font-weight: bold;
+  margin-bottom: 32px;
+}
+
+.full-size-line {
+  width: 1px;
+  height: 24px;
+  background-color: #d1d1d1;
+}
+
+.full-size-form {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+@media screen and (max-width: 1100px) {
+  .full-size-add-board {
+    /* padding: 48px 40px 48px 40px; */
+    padding-top: 24px;
+    padding-bottom: 24px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .full-size-container {
+    align-items: flex-start;
+  }
+
+  .full-size-board {
+    width: 100%;
+    max-width: 396px;
+    height: 640px;
+  }
+
+  .full-size-add-board {
+    width: 90%;
+    max-width: 600px;
+    padding: 24px 20px 24px 20px;
+  }
+}
+
+@media screen and (max-width: 510px) {
+  .full-size-add-board {
+    max-width: 400px;
+    padding: 12px 10px 12px 10px;
+  }
+}

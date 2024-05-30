@@ -8,7 +8,7 @@
  */
 async function getEditBoard(id, contentId) {
   const title = document.querySelector("input[id=title-editCard]");
-  const description = document.querySelector("input[id=description-editCard]");
+  const description = document.querySelector("textarea[id=description-editCard]");
   const date = document.querySelector("input[id=date-editCard]");
   let itemData = await getItemById(id, contentId);
   title.value = `${itemData["title"]}`;
@@ -369,6 +369,6 @@ async function getData(data) {
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
   let fulldata = await loadData("users");
-  console.log(fulldata);
+  // console.log(fulldata);
   return fulldata[actualUsersNumber][data];
 }

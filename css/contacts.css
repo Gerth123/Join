@@ -102,7 +102,6 @@ p {
 }
 
 .overlay {
-  /* Weitere Eigenschaften */
   transition: transform 0.3s ease;
 }
 
@@ -120,7 +119,7 @@ p {
 
 .contentleft {
   width: 467px;
-  height: 594px;
+  height: 593px;
   background-color: #2a3647;
   border-radius: 30px 0 0 30px;
 }
@@ -400,6 +399,10 @@ p {
 
 .editDelete-div {
   display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: 50px;
+  margin-top: -40px;
 }
 
 .edit-div {
@@ -483,6 +486,7 @@ p {
   gap: 35px;
   cursor: pointer;
   border-radius: 10px;
+  align-items: center;
 }
 
 .contacts-container {
@@ -566,6 +570,164 @@ p {
   min-height: 1px;
   background-color: #d1d1d1;
   margin: 1vh 0;
+}
+
+
+.imginput {
+  width: 24px;
+  height: 24px;
+  margin-left: 380px;
+}
+
+.imgsinput {
+  position: absolute;
+  right: 89px;
+  top: 26%;
+}
+
+.imgsinput1 {
+  position: absolute;
+  right: 90px;
+  top: 40.4%;
+}
+
+.imgsinput2 {
+  position: absolute;
+  right: 89px;
+  top: 55%;
+}
+
+.contacts {
+  height: 740px;
+  overflow-y: auto;
+}
+
+.contacts::-webkit-scrollbar {
+  width: 7px;
+}
+
+.contacts::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.contacts::-webkit-scrollbar-thumb {
+  background: #2a3647;
+  border-radius: 5px;
+}
+
+.contacts::-webkit-scrollbar-thumb:hover {
+  background: #546c8e;
+}
+
+.overlay-container {
+  display: none;
+  position: fixed;
+}
+
+.overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.overlay-content {
+  display: flex;
+}
+
+.imgcloseOverlay2 {
+  cursor: pointer;
+  position: absolute;
+  cursor: pointer;
+  border-radius: 100px;
+  top: 48px;
+  right: 68px;
+}
+
+.imgcloseOverlay2:hover {
+  background-color: rgb(238, 238, 238);
+}
+
+.overlay-contentright2 {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 72px;
+  flex: 1;
+  padding-right: 48px;
+  padding-left: 16px;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+
+.divider-vertical2 {
+  border-radius: 3px;
+  min-height: 3px;
+  width: 90px;
+  align-self: self-start;
+  background-color: #29abe2;
+  margin-top: -30px;
+  margin-bottom: 30px;
+}
+
+.createButton2 {
+  background-color: #2a3647;
+  width: 111px;
+  height: 57px;
+  border-radius: 10px;
+  margin-left: 30px;
+  cursor: pointer;
+  color: white;
+  font-weight: 700;
+  font-size: 21px;
+  line-height: 25.2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.createButton2:hover {
+  background-color: #29abe2;
+  box-shadow: 0px 3px 3px 1px rgba(122, 122, 122, 0.5);
+}
+
+.clearButton1-2 {
+  border: 1px solid #2a3647;
+  border-radius: 10px;
+  width: 113px;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  cursor: pointer;
+}
+
+.clearButton1-2:hover {
+  color: #29abe2;
+  box-shadow: 0px 3px 3px 1px rgba(122, 122, 122, 0.5);
+  border: 2px solid #29abe2;
+}
+
+.imgsinput0-1 {
+  position: absolute;
+  margin-top: 15px;
+  margin-left: -50px;
+}
+
+.imgsinput1-2 {
+  position: absolute;
+  margin-top: 15px;
+  margin-left: -50px;
+}
+
+.imgsinput2-3 {
+  position: absolute;
+  margin-top: 15px;
+  margin-left: -50px;
 }
 
 @media (max-width: 1100px) {
