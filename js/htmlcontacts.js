@@ -70,21 +70,17 @@ function generateContactDetailsHTML(name, email, phone, randomColor, initials) {
 }
 
 async function findUserIdByEmail(email) {
-    console.log(email);
-    let urlParams = new URLSearchParams(window.location.search);
-    let actualUsersNumber = urlParams.get('actualUsersNumber');
-    
     try {
-        let users = await loadData('users/' + actualUsersNumber + '/contacts');
-        for (let userId in users) {
-            if (users[userId] === null) {
+        let actualUsers = await loadData('users/-NyKF7omq8KOQgBXWhYW/contacts');
+        for (let userId in actualUsers) {
+            if (actualUsers[userId] === null) {
                 continue;
             }
-            if (users[userId].mail === email) {
+            if (actualUsers[userId].mail === email) {
                 return userId;
             }
         }
-        throw new Error("No matching user found for email: " + email);
+        throw new Error("Kein Benutzer gefunden für E-Mail: " + email);
     } catch (error) {
         throw error;
     }
@@ -194,9 +190,9 @@ async function deleteContactFromFirebase(email) {
  * 
  * Author: Elias
  */
-function removeContactFromUI(email) {
-    const contactCard = document.querySelector(`.contactCard[data-id="${email}"]`); 
-    if (contactCard && contactList) {
+function removeContactFromUI(contactId) {
+    const contactCard = document.querySelector(`.contactCard[data-id="${contactId}"]`);
+    if (contactCard) {
         contactCard.remove();
     }
 }
@@ -284,12 +280,48 @@ function closeEditContact() {
     }
 }
 
-function updateContact(event) {
+async function updateContact(event) {
     event.preventDefault();
 
     const name = document.getElementById('contactName').value;
     const email = document.getElementById('contactEmail').value;
     const phone = document.getElementById('contactPhone').value;
+    const contactId = document.querySelector('.contactCard.active').dataset.id;
 
-    closeEditContact();
+    try {
+        const updatedContact = {
+            name: name,
+            mail: email,
+            phone: phone
+        };
+
+        await updateContactInFirebase(contactId, updatedContact);
+        closeEditContact();
+
+        const actualUsers = await loadData(`users/-NyKF7omq8KOQgBXWhYW/contacts`);
+        const sortedContacts = await sortContacts(actualUsers);
+        await displayContacts(sortedContacts);
+    } catch (error) {
+        console.error("Fehler beim Aktualisieren des Kontakts:", error);
+    }
+}
+
+async function updateContactInFirebase(contactId, updatedContact) {
+    const baseUrl = 'https://join-ca44d-default-rtdb.europe-west1.firebasedatabase.app/';
+    const userId = '-NyKF7omq8KOQgBXWhYW';
+
+    const url = `${baseUrl}users/${userId}/contacts/${contactId}.json`;
+    const response = await fetch(url, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedContact)
+    });
+
+    if (!response.ok) {
+        throw new Error('Fehler beim Aktualisieren des Kontakts: ' + response.statusText);
+    }
+
+    return await response.json();
 }
