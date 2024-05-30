@@ -199,7 +199,14 @@ function removeContactFromUI(email) {
     }
 }
 
-function editcontactHTML() {
+/**
+ * Generates the HTML for the edit contact overlay.
+ * 
+ * @param {string} randomColor - The random color for the contact's profile picture.
+ * @param {string} initials - The initials of the contact's name.
+ * @returns {string} The HTML string for the edit contact overlay.
+ */
+function editcontactHTML(randomColor, initials) {
     return `
         <div class="overlay">
             <div class="mainSectionOverlay">  
@@ -215,7 +222,7 @@ function editcontactHTML() {
                     </div>
                     <div class="overlay-contentright2">
                         <img class="imgcloseOverlay2" src="assets/img/Close.svg" onclick="closeEditContact()" />
-                        <img src="assets/img/Group 13.svg" />
+                        <div class="profilePicture largeProfilePicture" style="background-color: ${randomColor};">${initials}</div>
                         <form class="inputSection" id="contactForm" onsubmit="updateContact(event)">
                             <div class="input-divs">
                                 <input required id="contactName" placeholder="Name"/>
@@ -235,7 +242,7 @@ function editcontactHTML() {
                                 </div>
                                 <button type="submit" class="createButton2">
                                     Save
-                                    <img class="imgcheck" src="assets/img/check.svg" />
+                                    <img class="imgcheck" src="assets/img/check.svg">
                                 </button>
                             </div>
                         </form>
@@ -246,9 +253,15 @@ function editcontactHTML() {
     `;
 }
 
-function openEditContactOverlay() {
+/**
+ * Open the edit contact overlay.
+ * 
+ * @param {string} randomColor - The random color for the contact's profile picture.
+ * @param {string} initials - The initials of the contact's name.
+ */
+function openEditContactOverlay(randomColor, initials) {
     const overlayContainer = document.getElementById('overlay-container');
-    const editOverlayHTML = editcontactHTML();
+    const editOverlayHTML = editcontactHTML(randomColor, initials);
 
     if (overlayContainer.style.display !== 'block' || !overlayContainer.innerHTML.includes(editOverlayHTML)) {
         overlayContainer.innerHTML = editOverlayHTML;
@@ -256,6 +269,9 @@ function openEditContactOverlay() {
     }
 }
 
+/**
+ * Close the edit contact overlay.
+ */
 function closeEditContact() {
     const overlayContainer = document.getElementById('overlay-container');
     overlayContainer.style.display = 'none';
