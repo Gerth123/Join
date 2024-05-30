@@ -197,6 +197,8 @@ function removeContactFromUI(contactId) {
     }
 }
 
+let globalEmail;
+
 /**
  * Generates the HTML for the edit contact overlay.
  * 
@@ -208,6 +210,7 @@ function removeContactFromUI(contactId) {
  * @returns {string} The HTML string for the edit contact overlay.
  */
 function editContactHTML(randomColor, initials, name, email, phone) {
+    globalEmail = email;
     return `
         <div class="overlay" id="editOverlay">
             <div class="mainSectionOverlay">  
@@ -224,17 +227,17 @@ function editContactHTML(randomColor, initials, name, email, phone) {
                     <div class="overlay-contentright2">
                         <img class="imgcloseOverlay2" src="assets/img/Close.svg" onclick="closeEditContact()" />
                         <div class="profilePicture largeProfilePicture" style="background-color: ${randomColor};">${initials}</div>
-                        <form class="inputSection" id="contactForm" onsubmit="updateContact(event)">
+                        <form class="inputSection" id="contactForm${email}" onsubmit="updateContact(event)">
                             <div class="input-divs">
-                                <input required id="contactName" value="${name}" placeholder="Name"/>
+                                <input required id="contactName${email}" value="${name}" placeholder="Name"/>
                                 <img src="assets/img/person.svg" class="imgsinput0-1">
                             </div>
                             <div class="input-divs">
-                                <input required id="contactEmail" value="${email}" placeholder="Email" pattern=".*@.*\..*" type="email" title="An @ is required" />
+                                <input required id="contactEmail${email}" value="${email}" placeholder="Email" pattern=".*@.*\..*" type="email" title="An @ is required" />
                                 <img src="assets/img/mail.svg" class="imgsinput1-2">
                             </div>
                             <div class="input-divs">
-                                <input required id="contactPhone" value="${phone}" placeholder="Phone" type="tel" title="Only numbers allowed" />
+                                <input required id="contactPhone${email}" value="${phone}" placeholder="Phone" type="tel" title="Only numbers allowed" />
                                 <img src="assets/img/call.svg" class="imgsinput2-3">
                             </div>
                             <div class="overlayButtons">
@@ -254,8 +257,8 @@ function editContactHTML(randomColor, initials, name, email, phone) {
     `;
 }
 
-function openEditContactOverlay(name, email, phone, randomColor, initials) {
-    const overlayHTML = editContactHTML(randomColor, initials, name, email, phone);
+async function openEditContactOverlay(name, email, phone, randomColor, initials) {
+    const overlayHTML = await editContactHTML(randomColor, initials, name, email, phone);
     document.body.insertAdjacentHTML('beforeend', overlayHTML);
 
     const deleteButton = document.querySelector('.deleteButton');
@@ -282,18 +285,18 @@ function closeEditContact() {
 
 async function updateContact(event) {
     event.preventDefault();
-
-    const name = document.getElementById('contactName').value;
-    const email = document.getElementById('contactEmail').value;
-    const phone = document.getElementById('contactPhone').value;
-    const contactId = document.querySelector('.contactCard.active').dataset.id;
+    let name = document.getElementById('contactName' + globalEmail).value;
+    let newEmail = document.getElementById('contactEmail' + globalEmail).value;
+    let phone = document.getElementById('contactPhone' + globalEmail).value;
+    console.log(name, newEmail, phone);
+    let contactId = await findUserIdByEmail(email);
 
     try {
         const updatedContact = {
+            mail: newEmail,
             name: name,
-            mail: email,
-            phone: phone
-        };
+            phone: phone,
+    };
 
         await updateContactInFirebase(contactId, updatedContact);
         closeEditContact();
@@ -312,7 +315,7 @@ async function updateContactInFirebase(contactId, updatedContact) {
 
     const url = `${baseUrl}users/${userId}/contacts/${contactId}.json`;
     const response = await fetch(url, {
-        method: 'PATCH',
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
