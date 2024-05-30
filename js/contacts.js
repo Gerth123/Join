@@ -70,7 +70,7 @@ function clearInputFields() {
 document.addEventListener("DOMContentLoaded", async function () {
   try {
     const baseUrl = 'https://join-ca44d-default-rtdb.europe-west1.firebasedatabase.app/';
-    const userId = '-NyKF7omq8KOQgBXWhYW';
+    const userId = '-NyQZIrDvTgyGwkges5f';
 
     const actualUsers = await loadData(`users/${userId}/contacts`);
 

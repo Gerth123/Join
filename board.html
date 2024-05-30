@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/board_priority.css" />
     <link rel="stylesheet" href="css/board_edit.css" />
     <link rel="stylesheet" href="css/board_assigned_category.css" />
+    <link rel="stylesheet" href="css/board_fullsize.css" />
     <link rel="icon" href="assets/img/logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="fonts/PTSans-Regular.ttf" />
     <link rel="stylesheet" href="fonts/PTSans-Bold.ttf" />
@@ -20,12 +21,12 @@
     <div class="wholeJoinContainer">
       <section class="headerAndOpenedContainer">
         <header>
-          <img class="logoResponsive" src="assets/img/logo.svg" alt="Logo">
+          <img class="logoResponsive" src="assets/img/logo.svg" alt="Logo" />
           <div class="headlineContainer">
             <span class="headline">Kanban Project Management Tool</span>
           </div>
           <div class="helpAndUserContainer">
-            <img src="assets/img/help.svg" alt="Help" class="helpIcon" onclick="changeHtmlPage('help.html')"/>
+            <img src="assets/img/help.svg" alt="Help" class="helpIcon" onclick="changeHtmlPage('help.html')" />
             <div class="initials" id="headerInitials"></div>
             <div class="menu" id="menu">
               <a onclick="changeHtmlPage('help.html')" class="helpAtNavBar">Help</a>
@@ -38,12 +39,22 @@
         <section class="addTaskOpenedContainer">
           <section class="board-header-section">
             <div class="board-header-top">
-              <div class="board-header-title">Board</div>
+              <div class="header-row wd-100 mb-40">
+                <div class="board-header-title">Board</div>
+                <div
+                  id="board-header-add-btn-small"
+                  onclick="changeHtmlPage('add_task.html')"
+                  class="button board-header-add-btn-small"
+                ></div>
+              </div>
+
               <div class="board-header-right">
-                <div class="board-header-search">
-                  <input id="board-header-search-input" class="board-header-search-input" type="text" placeholder="Find Task" />
-                  <div class="board-header-line"></div>
-                  <img class="board-header-search-img" src="/assets/icons/board/search.svg" alt="" />
+                <div class="wd-100">
+                  <div class="board-header-search">
+                    <input id="board-header-search-input" class="board-header-search-input" type="text" placeholder="Find Task" />
+                    <div class="board-header-line"></div>
+                    <img class="board-header-search-img" src="/assets/icons/board/search.svg" alt="" />
+                  </div>
                 </div>
                 <div class="add-btn-container">
                   <div id="board-header-add-btn" class="button board-header-add-btn"></div>
@@ -220,7 +231,7 @@
           </div>
           <form class="full-size-add-form" action="" onsubmit="saveAddData(); return false">
             <div class="row">
-              <div class="column wd-45">
+              <div class="column wd-45 wd-100">
                 <label class="full-size-label" for="title-addCard">Title</label>
                 <input class="full-size-input" id="title-addCard" type="text" placeholder="Enter a title" required />
                 <label class="full-size-label" for="description-addCard">Description</label>
@@ -245,9 +256,10 @@
               </div>
 
               <div class="add-line"></div>
-              <div class="column wd-45">
-                <label class="full-size-label" for="date-addCard">Due date</label>
+              <div class="column wd-45 wd-100">
+                <label class="full-size-label due-date" for="date-addCard">Due date</label>
                 <input class="full-size-input" id="date-addCard" type="date" required />
+                <div class="full-size-label">Priority</div>
                 <div class="full-size-priority-container">
                   <div class="priority-button-container">
                     <input type="radio" id="radio-btn-6" name="radio-btnss" />

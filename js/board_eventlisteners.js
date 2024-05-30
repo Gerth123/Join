@@ -149,15 +149,17 @@ function onClickAddTaskBoard(fullsize, board, editBoard, addBoard) {
       btn.classList.toggle("open");
     });
   });
-  const addTaskBtn = document.getElementById("board-header-add-btn");
-  addTaskBtn.addEventListener("click", () => {
-    fullsize.classList.remove("d-none");
-    board.classList.add("d-none");
-    editBoard.classList.add("d-none");
-    addBoard.classList.remove("d-none");
-    contentId = 1;
-    onClickAddSubTasks();
-    getAddAssgined();
+  const addTaskBtn = document.querySelectorAll("#board-header-add-btn");
+  addTaskBtn.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      fullsize.classList.remove("d-none");
+      board.classList.add("d-none");
+      editBoard.classList.add("d-none");
+      addBoard.classList.remove("d-none");
+      contentId = 1;
+      onClickAddSubTasks();
+      getAddAssgined();
+    });
   });
 }
 
@@ -312,11 +314,11 @@ function getAssignedUser(personWithName) {
 function onClickEditBoard(board, editBoard, addBoard) {
   const editBtn = document.getElementById("edit-btn");
 
-  editBtn.addEventListener("click", () => {
+  editBtn.addEventListener("click", async () => {
     board.classList.add("d-none");
     editBoard.classList.remove("d-none");
     addBoard.classList.add("d-none");
-    getEditBoard(id, contentId);
+    await getEditBoard(id, contentId);
     onClickEditSubtasks();
   });
 }
@@ -564,7 +566,7 @@ async function saveAddData() {
   let contacts = await getData("contacts");
   if (contentId == undefined) contentId = 1;
   const content = data.find((content) => content.id == contentId);
-  console.log(content);
+  // console.log(content);
   const obj = getAddObj(contacts);
   if (content.items == "") content.items = [];
   content.items.push(obj);
