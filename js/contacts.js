@@ -67,7 +67,8 @@ function clearInputFields() {
 document.addEventListener("DOMContentLoaded", async function() {
   try {
       const baseUrl = 'https://join-ca44d-default-rtdb.europe-west1.firebasedatabase.app/';
-      const userId = '-NyKF7omq8KOQgBXWhYW';
+      let urlParams = new URLSearchParams(window.location.search);
+      let userId = urlParams.get('actualUsersNumber');
 
       const actualUsers = await loadData(`users/${userId}/contacts`, baseUrl);
       console.log("Loaded Contacts:", actualUsers);

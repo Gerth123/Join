@@ -1,19 +1,31 @@
+p {
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+}
+
 .headerAndOpenedContainer {
-  min-height: 100vh;
-  overflow: none;
+  height: 100vh;
+  overflow-x: hidden;
 }
 
 .openContactsContainer {
-  width: 480px;
-  height: 832px;
+  width: 38vw;
+  height: 88vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   background-color: white;
   box-shadow: 4px 0px 6px 0px #00000014;
-  /* overflow: scroll; */
+  overflow-y: auto;
 }
 
 .addContact {
-  width: 456px;
-  height: 101px;
+  width: 37vw;
+  height: 15vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .addTaskOpenedContainer {
@@ -23,9 +35,6 @@
 .addContactButton {
   width: 352px;
   height: 56px;
-  margin-top: 22.5px;
-  border: 1px solid #2a3647;
-  margin-left: 52px;
   border-radius: 10px;
   background-color: #2a3647;
   color: #ffffff;
@@ -50,9 +59,10 @@
 }
 
 .contacts {
-  width: 400px;
-  margin-left: 28px;
-  margin-top: -40px;
+  width: 38vw;
+  position: relative;;
+  display: flex;
+  overflow-y: auto;
 }
 
 .overlay {
@@ -81,10 +91,13 @@
 
 @keyframes slideIn {
   from {
-    left: 150%; /* Startposition rechts außerhalb des Bildschirms */
+    left: 150%;
+    /* Startposition rechts außerhalb des Bildschirms */
   }
+
   to {
-    left: 50%; /* Endposition in der Mitte des Bildschirms */
+    left: 50%;
+    /* Endposition in der Mitte des Bildschirms */
   }
 }
 
@@ -115,7 +128,6 @@
 .logoAddContact {
   width: 55.6px;
   height: 66.48px;
-  margin-bottom: -50px;
 }
 
 .P1overlay {
@@ -134,7 +146,6 @@
   font-weight: 400;
   font-size: 27px;
   line-height: 32.4px;
-  margin-top: -60px;
 }
 
 .contentleft2 {
@@ -147,7 +158,6 @@
   border-bottom-left-radius: 30px;
   height: 100%;
   max-width: 467px;
-  padding: 66px 48px;
   gap: 12px;
 }
 
@@ -166,8 +176,6 @@
   justify-content: center;
   gap: 72px;
   flex: 1;
-  padding-right: 48px;
-  padding-left: 16px;
 }
 
 .imgcloseOverlay {
@@ -198,7 +206,6 @@
   font-size: 20px;
   line-height: 24px;
   color: #000000;
-  padding-left: 20px;
 }
 
 #contactEmail {
@@ -210,7 +217,6 @@
   font-size: 20px;
   line-height: 24px;
   color: #000000;
-  padding-left: 20px;
 }
 
 #contactPhone {
@@ -222,7 +228,6 @@
   font-size: 20px;
   line-height: 24px;
   color: #000000;
-  padding-left: 20px;
 }
 
 .overlayButtons {
@@ -260,7 +265,6 @@
   width: 214px;
   height: 57px;
   border-radius: 10px;
-  margin-left: 30px;
   cursor: pointer;
   color: white;
   font-weight: 700;
@@ -280,8 +284,6 @@
   width: 352px;
   min-height: 1px;
   background-color: #d1d1d1;
-  margin: 8px 0;
-  margin-left: 23px;
 }
 
 .EmailContact {
@@ -292,7 +294,6 @@
   width: 352px;
   height: 78px;
   border-radius: 10px;
-  margin-left: 25px;
 }
 
 .conatactsT:hover {
@@ -304,16 +305,18 @@
   background-color: #bcbcbc;
 }
 
-.openContactsContainer::-webkit-scrollbar {
+.contacts::-webkit-scrollbar {
   width: 8px;
+  color: rgb(168,168,168);
 }
 
-.openContactsContainer::-webkit-scrollbar-track {
+.contacts::-webkit-scrollbar-track {
   background: #ffffff;
+  padding-top: 1vh;
 }
 
-.openContactsContainer::-webkit-scrollbar-thumb {
-  background: #2a3647;
+.contacts::-webkit-scrollbar-thumb {
+  background: rgb(168, 168, 168);
   border-radius: 5px;
   cursor: pointer;
 }
@@ -323,33 +326,36 @@
 }
 
 .contentright {
-  height: 100%;
-  width: 1090px;
+  height: 90vh;
+  width: 50vw;
   background-color: #f6f7f8;
 }
 
 .h1contact {
-  width: 569px;
-  height: 73px;
-  margin-top: 94px;
-  margin-left: 82px;
+  width: 50vw;
+  height: 20vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .mainContent {
   display: flex;
+  height: 90vh;
+  width: 88vw;
 }
 
 .h1-div-contact {
-  padding-right: 16px;
   box-sizing: border-box;
   display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 30px;
 }
 
 .P-contact {
   font-size: 61px;
   font-weight: 700;
-  margin-top: -9px;
 }
 
 .seperator {
@@ -363,7 +369,6 @@
   font-size: 27px;
   font-weight: 400;
   line-height: 32.4px;
-  margin-top: 15px;
 }
 
 .conatactsA.active {
@@ -376,8 +381,6 @@
   flex-direction: column;
   background-color: #f6f7f8;
   position: relative;
-  margin-top: 40px;
-  margin-left: 90px;
 }
 
 .contact-img {
@@ -397,8 +400,6 @@
 
 .editDelete-div {
   display: flex;
-  margin-top: -35px;
-  margin-left: 50px;
 }
 
 .edit-div {
@@ -406,7 +407,6 @@
   justify-content: center;
   align-items: center;
   font-size: 16px;
-  padding-right: 16px;
   cursor: pointer;
   gap: 8px;
 }
@@ -456,9 +456,7 @@
   line-height: 24px;
 }
 
-.div-h2 {
-  margin-top: 30px;
-}
+.div-h2 {}
 
 .contact-email {
   font-weight: 400;
@@ -476,19 +474,25 @@
 .contact {
   display: flex;
   box-sizing: border-box;
-  width: 100%;
-  height: 78px;
-  padding: 15px 24px;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 2.5vh;
+  padding-bottom: 2.5vh;
+  width: 28vw;
+  padding-left: 2vw;
   gap: 35px;
   cursor: pointer;
   border-radius: 10px;
 }
 
-#contacts-container {
+.contacts-container {
+  width: 38vw;
+  max-height: 68vh;
   display: flex;
   flex-direction: column;
-  padding-left: 32px;
-  padding-right: 32px;
+  align-items: center;
+  position: relative;
+  padding-bottom: 5vh;
 }
 
 .contact:hover {
@@ -540,26 +544,101 @@
   display: flex;
   flex-direction: column;
   align-items: baseline;
-  margin-top: -35px;
+
 }
 
 .contacts-list-letter {
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 28vw;
+  padding-left: 3vw;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
   height: 58px;
-  padding-left: 37px;
-  padding-bottom: 8px;
-  margin-top: 32px;
   font-size: 24px;
-  font-weight: bold;
+  font-weight: normal;
   color: #2a3647;
 }
 
 .seperator-contacts-list {
-  width: 100%;
+  width: 80%;
   min-height: 1px;
   background-color: #d1d1d1;
-  margin: 8px 0;
+  margin: 1vh 0;
+}
+
+@media (max-width: 1100px) {
+  .headerAndOpenedContainer {
+    height: 90vh;
+  }
+
+  .mainContent {
+    height: 80vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .openContactsContainer {
+    height: 79vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .addContact {
+    width: 80vw;
+    display: flex;
+    justify-content: flex-end;
+    height: 10vh;
+  }
+  
+  .addContactButton {
+    border-radius: 30px;
+    width: 5vw;
+    min-width: 56px;
+  }
+
+  .addContactText {
+    display: none;
+  }
+
+  .contacts {
+    height: 79vh;
+    width: 95vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .contacts-container {
+    max-height: 70vh;
+    padding-bottom: 0vh;
+  }
+
+  .contacts-list-letter {
+    min-width: 290px;
+  }
+  
+  .seperator-contacts-list {
+    min-width: 320px;
+  }
+
+  .contact {
+    min-width: 290px;
+  }
+
+  .profilePicture {
+    min-width: 50px;
+  }
+
+  .name-mailDiv {
+    min-width: 160px
+  }
+
+  .contentright {
+    display: none;
+  }
 }
