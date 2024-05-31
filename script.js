@@ -10,7 +10,7 @@ let baseUrl = 'https://join-ca44d-default-rtdb.europe-west1.firebasedatabase.app
  * 
  * @author: Robin
  */
-async function loadData(path='') {
+async function loadData(path = '') {
     let response = await fetch(baseUrl + path + '.json');
     return responseToJson = await response.json();
 }
@@ -23,7 +23,7 @@ async function loadData(path='') {
  * 
  * @author: Robin
  */
-async function postData(path='', data={}) {
+async function postData(path = '', data = {}) {
     let response = await fetch(baseUrl + path + '.json', {
         method: 'POST',
         header: {
@@ -41,7 +41,7 @@ async function postData(path='', data={}) {
  * 
  * @author: Robin
  */
-async function deleteData(path='') {
+async function deleteData(path = '') {
     let response = await fetch(baseUrl + path + '.json', {
         method: 'DELETE',
     });
@@ -56,7 +56,7 @@ async function deleteData(path='') {
  * 
  * @author: Robin
  */
-async function putData(path='', data={}) {
+async function putData(path = '', data = {}) {
     let response = await fetch(baseUrl + path + '.json', {
         method: 'PUT',
         header: {
@@ -109,11 +109,15 @@ function goBackToLastTabWithoutClosing() {
     window.history.back();
 }
 
+/**
+ * this function is used to fill the header initials.
+ * 
+ * @author: Robin
+ */
+
 async function fillHeaderInitials() {
-    let urlParams = new URLSearchParams(window.location.search);
-    let actualUsersNumber = urlParams.get('actualUsersNumber');
-    let actualUsersName = await loadData('users/' + actualUsersNumber + '/name');
-    console.log(actualUsersName);
+    let userId = await getUserIdFormUrl();
+    let actualUsersName = await loadData('users/' + userId + '/name');
     document.getElementById('headerInitials').innerHTML = getInitialsUniversal(actualUsersName);
 }
 
@@ -129,4 +133,15 @@ function getInitialsUniversal(name) {
     const words = name.split(' ');
     const initials = words.map(word => word.charAt(0)).join('').toUpperCase();
     return initials;
+}
+
+/**
+ * This function is used to return the id of the actual user from the URL.
+ * 
+ * @author: Robin
+ */
+function getUserIdFormUrl() {
+    let urlParams = new URLSearchParams(window.location.search);
+    let actualUsersNumber = urlParams.get('actualUsersNumber');
+    return actualUsersNumber;
 }

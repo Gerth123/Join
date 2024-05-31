@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   addContactButton.addEventListener("click", function (event) {
     event.stopPropagation();
-    overlay.style.display = "block";
+    overlay.style.display = "flex";
   });
 
   document.addEventListener("click", function (event) {
@@ -69,10 +69,7 @@ function clearInputFields() {
  */
 document.addEventListener("DOMContentLoaded", async function () {
   try {
-      const baseUrl = 'https://join-ca44d-default-rtdb.europe-west1.firebasedatabase.app/';
-      let urlParams = new URLSearchParams(window.location.search);
-      let userId = urlParams.get('actualUsersNumber');
-
+    let userId = await getUserIdFormUrl();
     const actualUsers = await loadData(`users/${userId}/contacts`);
 
     if (actualUsers) {
@@ -214,15 +211,15 @@ async function findFirstMissingId(userId) {
 
   // Überprüfen, ob contacts null ist
   if (contacts === null) {
-      // Behandlung des Falls, wenn keine Kontakte vorhanden sind
-      console.error("Es wurden keine Kontakte gefunden.");
-      return 1; // Oder eine andere Standard-ID, je nach Bedarf
+    // Behandlung des Falls, wenn keine Kontakte vorhanden sind
+    console.error("Es wurden keine Kontakte gefunden.");
+    return 1; // Oder eine andere Standard-ID, je nach Bedarf
   }
-  
+
   // Sammle alle vorhandenen gültigen IDs in einem Array
   const ids = contacts
-      .filter(contact => contact && typeof contact.id === 'number' && !isNaN(contact.id))
-      .map(contact => contact.id);
+    .filter(contact => contact && typeof contact.id === 'number' && !isNaN(contact.id))
+    .map(contact => contact.id);
 
   // Sortiere die IDs aufsteigend
   ids.sort((a, b) => a - b);
@@ -230,25 +227,21 @@ async function findFirstMissingId(userId) {
   // Durchlaufe die sortierten IDs und finde die erste Lücke
   let missingId = 1;
   for (const id of ids) {
-      if (id !== missingId) {
-          break; // Lücke gefunden
-      }
-      missingId++;
+    if (id !== missingId) {
+      break; // Lücke gefunden
+    }
+    missingId++;
   }
 
   return missingId;
 }
-
-
-
 
 async function createContact(event) {
   event.preventDefault();
   const name = document.getElementById('contactName').value;
   const mail = document.getElementById('contactEmail').value;
   const phone = document.getElementById('contactPhone').value;
-  let urlParams = new URLSearchParams(window.location.search);
-  let userId = urlParams.get('actualUsersNumber');
+  let userId = await getUserIdFormUrl();
 
   try {
     const newContact = await saveContact(name, mail, phone, userId);
