@@ -124,36 +124,36 @@ function sortContacts(contacts) {
 async function displayContacts(contacts) {
   const contactsContainer = document.getElementById('contacts-container');
   if (!contactsContainer) {
-      console.error("Das Container-Element für Kontakte wurde nicht gefunden.");
-      return;
+    console.error("Das Container-Element für Kontakte wurde nicht gefunden.");
+    return;
   }
   if (!contacts || contacts.length === 0) {
-      console.error("Keine Kontakte gefunden.");
-      return;
+    console.error("Keine Kontakte gefunden.");
+    return;
   }
 
   contactsContainer.innerHTML = '';
   let currentLetter = '';
 
   for (const contact of contacts) {
-      if (contact && contact.name) {
-          const contactLetter = contact.name.charAt(0).toUpperCase();
+    if (contact && contact.name) {
+      const contactLetter = contact.name.charAt(0).toUpperCase();
 
-          if (contactLetter !== currentLetter) {
-              currentLetter = contactLetter;
-              const letterDiv = document.createElement('div');
-              letterDiv.classList.add('contacts-list-letter');
-              letterDiv.textContent = currentLetter;
-              contactsContainer.appendChild(letterDiv);
+      if (contactLetter !== currentLetter) {
+        currentLetter = contactLetter;
+        const letterDiv = document.createElement('div');
+        letterDiv.classList.add('contacts-list-letter');
+        letterDiv.textContent = currentLetter;
+        contactsContainer.appendChild(letterDiv);
 
-              const separatorDiv = document.createElement('div');
-              separatorDiv.classList.add('seperator-contacts-list');
-              contactsContainer.appendChild(separatorDiv);
-          }
-
-          const contactHTML = await generateContactHTML(contact);
-          contactsContainer.innerHTML += contactHTML;
+        const separatorDiv = document.createElement('div');
+        separatorDiv.classList.add('seperator-contacts-list');
+        contactsContainer.appendChild(separatorDiv);
       }
+
+      const contactHTML = await generateContactHTML(contact);
+      contactsContainer.innerHTML += contactHTML;
+    }
   }
 
   setupContactClickEvents();
@@ -190,7 +190,8 @@ async function saveContact(name, mail, phone, userId) {
   };
 
   const contacts = await loadData(`users/${userId}/contacts`);
-  const newContactId = contacts.length;
+  const newContactId = await findFirstMissingId(userId);
+  console.log("newContactId", newContactId);
 
   const response = await fetch(`${baseUrl}users/${userId}/contacts/${newContactId}.json`, {
     method: 'PUT',
@@ -206,6 +207,39 @@ async function saveContact(name, mail, phone, userId) {
 
   return await response.json();
 }
+
+async function findFirstMissingId(userId) {
+  const contacts = await loadData(`users/${userId}/contacts`);
+
+  // Überprüfen, ob contacts null ist
+  if (contacts === null) {
+      // Behandlung des Falls, wenn keine Kontakte vorhanden sind
+      console.error("Es wurden keine Kontakte gefunden.");
+      return 1; // Oder eine andere Standard-ID, je nach Bedarf
+  }
+  
+  // Sammle alle vorhandenen gültigen IDs in einem Array
+  const ids = contacts
+      .filter(contact => contact && typeof contact.id === 'number' && !isNaN(contact.id))
+      .map(contact => contact.id);
+
+  // Sortiere die IDs aufsteigend
+  ids.sort((a, b) => a - b);
+
+  // Durchlaufe die sortierten IDs und finde die erste Lücke
+  let missingId = 1;
+  for (const id of ids) {
+      if (id !== missingId) {
+          break; // Lücke gefunden
+      }
+      missingId++;
+  }
+
+  return missingId;
+}
+
+
+
 
 async function createContact(event) {
   event.preventDefault();
