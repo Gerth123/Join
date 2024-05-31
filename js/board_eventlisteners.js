@@ -99,6 +99,7 @@ function onClickCloseFullSize(fullsize) {
   document.addEventListener("click", async (e) => {
     if (e.target.matches("#close-btn-img")) {
       fullsize.classList.add("d-none");
+
       let itemData = await getItemById(id, contentId);
       let subtasks = itemData["subtasks"];
       for (let i = 0; i < subtasks.length; i++) {
@@ -109,7 +110,9 @@ function onClickCloseFullSize(fullsize) {
       await updateSubtaskCheck(subtasks);
       location.reload();
     }
-    if (e.target.matches("#close-btn-img-add")) fullsize.classList.add("d-none");
+    if (e.target.matches("#close-btn-img-add")) { 
+      fullsize.classList.add("d-none");
+    };
   });
 }
 
