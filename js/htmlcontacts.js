@@ -291,6 +291,8 @@ async function updateContact(event) {
     let phone = document.getElementById('contactPhone' + globalEmail).value;
     console.log(name, newEmail, phone);
     let contactId = await findUserIdByEmail(email);
+    let urlParams = new URLSearchParams(window.location.search);
+    let userId = urlParams.get('actualUsersNumber');
 
     try {
         const updatedContact = {
@@ -302,7 +304,7 @@ async function updateContact(event) {
         await updateContactInFirebase(contactId, updatedContact);
         closeEditContact();
 
-        const actualUsers = await loadData(`users/-NyKF7omq8KOQgBXWhYW/contacts`);
+        const actualUsers = await loadData(`users/${userId}/contacts`);
         const sortedContacts = await sortContacts(actualUsers);
         await displayContacts(sortedContacts);
     } catch (error) {
@@ -312,7 +314,8 @@ async function updateContact(event) {
 
 async function updateContactInFirebase(contactId, updatedContact) {
     const baseUrl = 'https://join-ca44d-default-rtdb.europe-west1.firebasedatabase.app/';
-    const userId = '-NyKF7omq8KOQgBXWhYW';
+    let urlParams = new URLSearchParams(window.location.search);
+    let userId = urlParams.get('actualUsersNumber');
 
     const url = `${baseUrl}users/${userId}/contacts/${contactId}.json`;
     const response = await fetch(url, {
