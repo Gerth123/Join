@@ -27,7 +27,7 @@ async function initBoard() {
   data = await getData("tasks");
   let contacts = await getData("contacts");
   for(let i = 0; i < data.length; i++) {
-    getAssignedKeyByName(data[i], contacts)
+   data[i] = await getAssignedKeyByName(data[i], contacts)
   }
   icons = await getIcons();
   renderBoards(data);
@@ -36,22 +36,27 @@ async function initBoard() {
   await fillHeaderInitials();
 }
 
+/**
+ * Retrieves the assigned key by name from the given data object using the contacts array.
+ *
+ * @param {Object} data - The data object containing items with assigned names.
+ * @param {Array} contacts - The array of contacts.
+ * @return {Object} The modified data object with any invalid assigned names removed.
+ */
 function getAssignedKeyByName(data, contacts) {
   for (const item of data.items) {
-    for(let i = 0; i< item.assigned.length; i++) {
+    let i = 0
+    for(i = 0; i< item.assigned.length; i++) {
       let assigned = item.assigned[i];
-      const contactExists = contacts.some(contact => contact && contact.name === assigned.name);
-      if(contactExists) {
-        console.log("exists",assigned.name)
-      }
-            if(!contactExists) {
-        console.log("not exists",
-        assigned.name)
-        item.assigned.splice(i, 1)
+      const contactExists = contacts.some(contact => contact && contact.name == assigned.name);
+      if(!contactExists) {
+          const index = item.assigned.findIndex(assign => assign.name == item.assigned[i].name )
+          item.assigned.splice(index, 1)
+          i = -1
       }
     }
   }
-  return data; // Return null if the name is not found
+  return data;
 }
 
 /**
