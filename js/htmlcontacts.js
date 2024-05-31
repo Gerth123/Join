@@ -263,9 +263,9 @@ function openEditContactOverlay(randomColor, initials) {
     const overlayContainer = document.getElementById('overlay-container');
     const editOverlayHTML = editcontactHTML(randomColor, initials);
 
-    if (overlayContainer.style.display !== 'block' || !overlayContainer.innerHTML.includes(editOverlayHTML)) {
+    if (overlayContainer.style.display !== 'flex' || !overlayContainer.innerHTML.includes(editOverlayHTML)) {
         overlayContainer.innerHTML = editOverlayHTML;
-        overlayContainer.style.display = 'block';
+        overlayContainer.style.display = 'flex';
     }
 }
 

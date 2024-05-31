@@ -1,3 +1,7 @@
+body {
+  background-color: #F6F7F8;
+}
+
 p {
   margin-block-start: 0em;
   margin-block-end: 0em;
@@ -26,10 +30,6 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.addTaskOpenedContainer {
-  /* overflow: scroll; */
 }
 
 .addContactButton {
@@ -71,19 +71,19 @@ p {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   z-index: 1000;
+  justify-content: center;
+  align-items: center;
   background-color: rgba(0, 0, 0, 0.229);
 }
 
 .mainSectionOverlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  height: 80vh;
-  width: 80vw;
+  position: relative;
+  transform: translate(0, 0);
+  height: 70vh;
+  width: 70vw;
   display: flex;
   animation-name: slideIn;
   animation-duration: 0.5s;
@@ -92,12 +92,12 @@ p {
 
 @keyframes slideIn {
   from {
-    left: 150%;
+    left: 200vh;
     /* Startposition rechts außerhalb des Bildschirms */
   }
 
   to {
-    left: 50%;
+    left: 0;
     /* Endposition in der Mitte des Bildschirms */
   }
 }
@@ -114,15 +114,18 @@ p {
   background-color: white;
   border-radius: 0px 30px 30px 0px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  height: 592px;
-  width: 745px;
+  height: 70vh;
+  width: 45vw;
 }
 
 .contentleft {
-  width: 467px;
-  height: 593px;
+  width: 25vw;
+  height: 70vh;
   background-color: #2a3647;
   border-radius: 30px 0 0 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .logoAddContact {
@@ -156,8 +159,9 @@ p {
   background-color: #2a3647;
   border-top-left-radius: 30px;
   border-bottom-left-radius: 30px;
-  height: 100%;
-  max-width: 467px;
+  height: 50vh;
+  width: 23.5vw;
+  padding-left: 1.5vw;
   gap: 12px;
 }
 
@@ -167,6 +171,7 @@ p {
   width: 90px;
   align-self: self-start;
   background-color: #29abe2;
+  margin-top: 1vh;
 }
 
 .overlay-contentright {
@@ -470,8 +475,6 @@ p {
   line-height: 24px;
 }
 
-.div-h2 {}
-
 .contact-email {
   font-weight: 400;
   font-size: 16px;
@@ -649,13 +652,6 @@ p {
 .overlay-container {
   display: none;
   position: fixed;
-}
-
-.overlay {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
 }
 
 .overlay-content {

@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   addContactButton.addEventListener("click", function (event) {
     event.stopPropagation();
-    overlay.style.display = "block";
+    overlay.style.display = "flex";
   });
 
   document.addEventListener("click", function (event) {
