@@ -12,4 +12,5 @@ function initAddTask() {
   onClickAddSubTasks();
   getAddAssgined();
   onClickAddCategory();
+  fillHeaderInitials();
 }

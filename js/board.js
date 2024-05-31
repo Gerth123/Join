@@ -25,10 +25,33 @@ async function getIcons() {
  */
 async function initBoard() {
   data = await getData("tasks");
+  let contacts = await getData("contacts");
+  for(let i = 0; i < data.length; i++) {
+    getAssignedKeyByName(data[i], contacts)
+  }
   icons = await getIcons();
   renderBoards(data);
   getEventListeners();
   getDropZones();
+  await fillHeaderInitials();
+}
+
+function getAssignedKeyByName(data, contacts) {
+  for (const item of data.items) {
+    for(let i = 0; i< item.assigned.length; i++) {
+      let assigned = item.assigned[i];
+      const contactExists = contacts.some(contact => contact && contact.name === assigned.name);
+      if(contactExists) {
+        console.log("exists",assigned.name)
+      }
+            if(!contactExists) {
+        console.log("not exists",
+        assigned.name)
+        item.assigned.splice(i, 1)
+      }
+    }
+  }
+  return data; // Return null if the name is not found
 }
 
 /**

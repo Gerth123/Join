@@ -1,17 +1,4 @@
 /**
- * This function is used to render the page if the user refresh the page or switch from another HTML-page to this one.
- * 
- * @author: Robin
- */
-
-// async function init() {
-//     loadUsers();
-//     checkAcceptPrivacyPolicy();
-// document.getElementById('msgBoxSignedUp').classList.add('d-none');
-// document.getElementById('registerContainer').classList.remove('d-none');
-// }
-
-/**
  * This function is used to block and reactivate the button, if the user accepts the privacy policy and the inputs are not empty.
  * 
  * @author: Robin
@@ -43,7 +30,15 @@ async function addUser() {
     let email = document.getElementById('email').value;
     let password = document.getElementById('password1');
     let confirmPassword = document.getElementById('password2');
-    let newArray = { 'mail': email, 'name': name, 'password': password.value, 'contacts': testContacts, 'tasks': testTasks };
+    let userContact = [{
+        'name': name,
+        'mail': email,
+        'phone': 'none',
+        'color': await generateRandomColor(),
+    }];
+    let testContactsAndUser = [...testContacts, ...userContact];
+    console.log(testContactsAndUser);
+    let newArray = { 'mail': email, 'name': name, 'password': password.value, 'contacts': testContactsAndUser, 'tasks': testTasks };
     let actualUsers = await loadData('users');
     let mailExists = await checkMail(msgBox, email, actualUsers);
     if (mailExists) {

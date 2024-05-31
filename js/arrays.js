@@ -1,73 +1,68 @@
+/**
+ * This variable contains the data for the contacts that automatically appear in the contacts HTML.
+ * 
+ * @author Robin
+ */
 let testContacts = [
   {
     name: "Anton Mayer",
     mail: "antom@gmail.com",
     phone: "+491234567890",
     color: generateRandomColor(),
-    assigned: false,
   },
   {
     name: "Hans Mueller",
     mail: "hans@gmail.com",
     phone: "+491234567890",
     color: generateRandomColor(),
-    assigned: false,
   },
   {
     name: "Benedikt Ziegler",
     mail: "benedikt@gmail.com",
     phone: "+491234567890",
     color: generateRandomColor(),
-    assigned: false,
   },
   {
     name: "David Eisenberg",
     mail: "davidberg@gmail.com",
     phone: "+491234567890",
     color: generateRandomColor(),
-    assigned: false,
   },
   {
     name: "Eva Fischer",
     mail: "eva@gmail.com",
     phone: "+491234567890",
     color: generateRandomColor(),
-    assigned: false,
   },
   {
     name: "Emmanuel Mauer",
     mail: "emmanuelma@gmail.com",
     phone: "+491234567890",
     color: generateRandomColor(),
-    assigned: false,
   },
   {
     name: "Marcel Bauer",
     mail: "bauer@gmail.com",
     phone: "+491234567890",
     color: generateRandomColor(),
-    assigned: false,
   },
   {
     name: "Tatjana Wolf",
     mail: "wolf@gmail.com",
     phone: "+491234567890",
     color: generateRandomColor(),
-    assigned: false,
   },
   {
     name: "Klaus Werner",
     mail: "klausw@gmail.com",
     phone: "+491234567890",
     color: generateRandomColor(),
-    assigned: false,
   },
   {
     name: "Peter Hahn",
     mail: "peterhahn@gmail.com",
     phone: "+491234567890",
     color: generateRandomColor(),
-    assigned: false,
   },
   {
     name: "Stefan Meier",
@@ -77,6 +72,11 @@ let testContacts = [
   },
 ];
 
+/**
+ * This variable contains the data for the tasks that automatically appear in the tasks HTML.
+ * 
+ * @author Robin
+ */
 let testTasks = [
   {
     id: 1,
@@ -151,6 +151,23 @@ let testTasks = [
         subtasks: [
           { checked: false, task: "Implement Recipe Recommendation" },
           { checked: true, task: "Start Page Layout" },
+        ],
+      },
+      {
+        id: 9876,
+        category: "Bug Fix",
+        title: "Fix Responsive Layout Issues",
+        description: "Resolve layout issues on mobile devices.",
+        assigned: [
+          { color: "", name: "Stefan Meier" },
+          { color: "", name: "David Eisenberg" },
+        ],
+        date: "10/06/2025",
+        priority: "high",
+        subtasks: [
+          { checked: false, task: "Identify Issues" },
+          { checked: false, task: "Fix CSS Bugs" },
+          { checked: false, task: "Test on Devices" },
         ],
       },
     ],

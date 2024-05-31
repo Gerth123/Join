@@ -1,11 +1,3 @@
-/** 
- * Generates a greeting message based on the current time:
- * - 'Good morning' before 12 PM,
- * - 'Good afternoon' between 12 PM and 6 PM,
- * - 'Good evening' otherwise.
- * Displays the greeting in an element with id 'greetingText'.
- * 
- * Author: Elias
 /**
  * This function is used onload of the body of the summary HTML page. It gets the number of the user from the link and shares it with the fillDates functions. 
  * The function also uses the function loadData to load the data from the remoteStorage (Firebase).
@@ -16,13 +8,19 @@ async function initSummary() {
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
   let actualUsers = await loadData("users");
-  fillDates(actualUsersNumber, actualUsers);
+  await fillDates(actualUsersNumber, actualUsers);
+  await checkConditions();
+  await fillHeaderInitials();
 }
 
-/**
- * This function is used to check the time and greet the user, with the daily salutation.
- *
- * @author: Elias
+/** 
+ * Generates a greeting message based on the current time:
+ * - 'Good morning' before 12 PM,
+ * - 'Good afternoon' between 12 PM and 6 PM,
+ * - 'Good evening' otherwise.
+ * Displays the greeting in an element with id 'greetingText'.
+ * 
+ * Author: Elias
  */
 document.addEventListener("DOMContentLoaded", function () {
   let today = new Date();
@@ -38,6 +36,40 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   document.getElementById("greetingText").textContent = greeting;
 });
+
+/**
+   * This function is used to check the mediaQuery and the referrer. If the mediaQuery matches and the referrer contains login.html, 
+   * the showGreetingThenMain function is called. Otherwise, the mainContainer is shown.
+   * 
+   * @author: Robin
+   */
+async function checkConditions() {
+  var mediaQuery = window.matchMedia("(max-width: 1100px)");
+  var referrer = document.referrer;
+  if (mediaQuery.matches && referrer.includes("login.html")) {
+    await showGreetingThenMain();
+  } else {
+    let mainContainer = document.getElementById('headingSectionAndMainContainer');
+    mainContainer.style.display = 'flex';
+  }
+}
+
+/**
+ * This function is used to show the greeting and then the mainContainer.
+ * 
+ * @author: Robin
+ */
+
+function showGreetingThenMain() {
+  let greetingContainer = document.getElementById('greetingContainer');
+  let mainContainer = document.getElementById('headingSectionAndMainContainer');
+  mainContainer.style.display = 'none';
+  greetingContainer.style.display = 'flex';
+  setTimeout(function () {
+    greetingContainer.style.display = 'none';
+    mainContainer.style.display = 'flex';
+  }, 2000);
+}
 
 /**
  * This function is used to fill the content of the summary page.
@@ -112,3 +144,5 @@ function fillUrgentDate(urgentDates) {
   let formattedDate = `${monthName} ${day}, ${year}`;
   getElementById("urgentDate").innerHTML = formattedDate;
 }
+
+

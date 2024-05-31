@@ -21,15 +21,17 @@
     <div class="wholeJoinContainer">
       <section class="headerAndOpenedContainer">
         <header>
+          <img class="logoResponsive" src="assets/img/logo.svg" alt="Logo">
           <div class="headlineContainer">
             <span class="headline">Kanban Project Management Tool</span>
           </div>
           <div class="helpAndUserContainer">
-            <img src="assets/img/help.svg" alt="Help" class="helpIcon" />
-            <div class="initials">RG</div>
+            <img src="assets/img/help.svg" alt="Help" class="helpIcon" onclick="changeHtmlPage('help.html')"/>
+            <div class="initials"  id="headerInitials"></div>
             <div class="menu" id="menu">
-              <a href="legal_notice.html">Legal Notice</a>
-              <a href="privacy_policy.html">Privacy Policy</a>
+              <a onclick="changeHtmlPage('help.html')" class="helpAtNavBar">Help</a>
+              <a onclick="changeHtmlPage('legal_notice.html')">Legal Notice</a>
+              <a onclick="changeHtmlPage('privacy_policy.html')">Privacy Policy</a>
               <a href="login.html">Log out</a>
             </div>
           </div>
@@ -38,7 +40,7 @@
           <section class="openContactsContainer">
             <div class="addContact">
               <button class="addContactButton">
-                Add new contact
+                <span class="addContactText">Add new contact</span>
                 <img class="imgaddcontact" src="assets/img/person_add.svg" />
               </button>
             </div>
@@ -67,25 +69,25 @@
             ><div class="sideBarImgContainer">
               <img src="assets/img/summaryIcon.svg" alt="Summary Icon" class="sideBarImage" />
             </div>
-            <span>Summary</span></a
+            <span class="sideBarText">Summary</span></a
           >
           <a onclick="changeHtmlPage('add_task.html')" class="addTaskContainer"
             ><div class="sideBarImgContainer">
               <img src="assets/img/addTaskIcon.svg" alt="Add Task Icon" class="sideBarImage" />
             </div>
-            <span>Add Task</span></a
+            <span class="sideBarText">Add Task</span></a
           >
           <a onclick="changeHtmlPage('board.html')" class="boardContainer"
             ><div class="sideBarImgContainer">
               <img src="assets/img/boardIcon.svg" alt="Board Icon" class="sideBarImage" />
             </div>
-            <span>Board</span></a
+            <span class="sideBarText">Board</span></a
           >
           <a onclick="changeHtmlPage('contacts.html')" class="openedDarkBackground"
             ><div class="sideBarImgContainer">
               <img src="assets/img/contactsIcon.svg" alt="Assets Icon" class="sideBarImage" />
             </div>
-            <span>Contacts</span></a
+            <span class="sideBarText">Contacts</span></a
           >
         </div>
         <div class="privacyPolicyAndLegalNoticeContainer">

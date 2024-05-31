@@ -7,7 +7,7 @@
     <title>Join Summary</title>
     <script src="script.js"></script>
     <script src="js/summary.js"></script>
-    <script src="js/login.js"></script>
+    <script src="js/initials.js"></script>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="css/summary.css" />
     <link rel="icon" href="assets/img/logo.png" type="image/x-icon" />
@@ -19,21 +19,29 @@
     <div class="wholeJoinContainer">
       <section class="headerAndOpenedContainer">
         <header>
+          <img class="logoResponsive" src="assets/img/logo.svg" alt="Logo">
           <div class="headlineContainer">
             <span class="headline">Kanban Project Management Tool</span>
           </div>
           <div class="helpAndUserContainer">
-            <img src="assets/img/help.svg" alt="Help" class="helpIcon" />
-            <span class="initials">RG</span>
+            <img src="assets/img/help.svg" alt="Help" class="helpIcon" onclick="changeHtmlPage('help.html')"/>
+            <div class="initials" id="headerInitials"></div>
+            <div class="menu" id="menu">
+              <a onclick="changeHtmlPage('help.html')" class="helpAtNavBar">Help</a>
+              <a onclick="changeHtmlPage('legal_notice.html')">Legal Notice</a>
+              <a onclick="changeHtmlPage('privacy_policy.html')">Privacy Policy</a>
+              <a href="login.html">Log out</a>
+            </div>
           </div>
         </header>
 
         <div class="mainSection">
-          <div class="headingSectionAndMainContainer">
+          <div class="headingSectionAndMainContainer" id="headingSectionAndMainContainer">
             <div class="headingSection">
               <h1 class="joinSuh1">Join 360</h1>
               <div class="seperator"></div>
               <h2 class="h2KeyMet">Key Metrics at a Glance</h2>
+              <div class="seperatorResponsiveContainer"><div class="seperatorResponsive"></div></div>
             </div>
             <div class="mainContainer">
               <div class="container1">
@@ -100,9 +108,9 @@
               </div>
             </div>
           </div>
-          <div class="greetingContainer">
+          <div class="greetingContainer" id="greetingContainer">
             <div id="greetingText" class="greetingText"></div>
-            <span class="greetingName" id="greetingName">Max Mustermann</span>
+            <span class="greetingName" id="greetingName"></span>
           </div>
         </div>
       </section>
@@ -115,25 +123,25 @@
             ><div class="sideBarImgContainer">
               <img src="assets/img/summaryIcon.svg" alt="Summary Icon" class="sideBarImage" />
             </div>
-            <span>Summary</span>
+            <span class="sideBarText">Summary</span>
           </a>
           <a onclick="changeHtmlPage('add_task.html')" class="addTaskContainer"
             ><div class="sideBarImgContainer">
               <img src="assets/img/addTaskIcon.svg" alt="Add Task Icon" class="sideBarImage" />
             </div>
-            <span>Add Task</span>
+            <span class="sideBarText">Add Task</span>
           </a>
           <a onclick="changeHtmlPage('board.html')" class="boardContainer"
             ><div class="sideBarImgContainer">
               <img src="assets/img/boardIcon.svg" alt="Board Icon" class="sideBarImage" />
             </div>
-            <span>Board</span>
+            <span class="sideBarText">Board</span>
           </a>
           <a onclick="changeHtmlPage('contacts.html')" class="contactsContainer"
             ><div class="sideBarImgContainer">
               <img src="assets/img/contactsIcon.svg" alt="Assets Icon" class="sideBarImage" />
             </div>
-            <span>Contacts</span>
+            <span class="sideBarText">Contacts</span>
           </a>
         </div>
         <div class="privacyPolicyAndLegalNoticeContainer">

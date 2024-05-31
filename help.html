@@ -7,6 +7,7 @@
     <title>Join Contacts</title>
     <script src="script.js"></script>
     <script src="js/contacts.js"></script>
+    <script src="js/initials.js"></script>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="css/help.css" />
     <link rel="icon" href="assets/img/logo.png" type="image/x-icon" />
@@ -14,23 +15,30 @@
     <link rel="stylesheet" href="fonts/PTSans-Bold.ttf" />
     <link rel="stylesheet" href="fonts/PTSans-Italic.ttf" />
   </head>
-  <body>
+  <body onload="fillHeaderInitials()">
     <div class="wholeJoinContainer">
       <section class="headerAndOpenedContainer">
         <header>
+          <img class="logoResponsive" src="assets/img/logo.svg" alt="Logo" />
           <div class="headlineContainer">
             <span class="headline">Kanban Project Management Tool</span>
           </div>
           <div class="helpAndUserContainer">
-            <img src="assets/img/help.svg" alt="Help" class="helpIcon" />
-            <span class="initials">RG</span>
+            <img src="assets/img/help.svg" alt="Help" class="helpIcon" onclick="changeHtmlPage('help.html')"/>
+            <div class="initials" id="headerInitials"></div>
+            <div class="menu" id="menu">
+              <a onclick="changeHtmlPage('help.html')" class="helpAtNavBar">Help</a>
+              <a onclick="changeHtmlPage('legal_notice.html')">Legal Notice</a>
+              <a onclick="changeHtmlPage('privacy_policy.html')">Privacy Policy</a>
+              <a href="login.html">Log out</a>
+            </div>
           </div>
         </header>
         <section class="helpOpenedContainer">
           <div class="helpContentContainer">
             <div class="helpHeadlineAndArrowContainer">
               <h1 class="helpHeadline">Help</h1>
-              <img class="arrowLeftImg" src="assets/img/arrowLeft.svg" alt="Back" onclick="goBackToLastTab()" />
+              <img class="arrowLeftImg" src="assets/img/arrowLeft.svg" alt="Back" onclick="goBackToLastTabWithoutClosing()" />
             </div>
             <div>
               <p>
@@ -39,7 +47,7 @@
               </p>
             </div>
             <div>
-              <h2>Whats is Join</h2>
+              <h2>What is Join</h2>
               <p>
                 Join is a kanban-based project management tool designed and built by a group of dedicated students as part of their web
                 development bootcamp at the Developer Akademie.<br /><br />
@@ -64,7 +72,7 @@
                     </td>
                     <td>
                       <p></p>
-                      <h2>Exploring th Board</h2>
+                      <h2>Exploring the Board</h2>
                       When you log in to Join, you'll find a default board. This board represents your project and contains four default
                       lists: "To Do", "In Progress", “Await feedback” and "Done".
                       <p></p>
@@ -121,13 +129,14 @@
                       Remember that using Join effectively requires consistent updates from you and your team to ensure the board reflects
                       the current state of your project.<br /><br />
 
-                      Have more questions about Join? Feel free to contact us at <a class="helpLink" href="mailto:robingerth21@gmail.com">robingerth21@gmail.com</a>. We're here to help you!
+                      Have more questions about Join? Feel free to contact us at
+                      <a class="helpLink" href="mailto:robingerth21@gmail.com">robingerth21@gmail.com</a>. We're here to help you!
                       <p></p>
                     </td>
                   </tr>
                 </tbody>
               </table>
-              <h2>Enjoy unsing Join</h2>
+              <h2>Enjoy using Join</h2>
             </div>
           </div>
         </section>
@@ -141,25 +150,25 @@
             ><div class="sideBarImgContainer">
               <img src="assets/img/summaryIcon.svg" alt="Summary Icon" class="sideBarImage" />
             </div>
-            <span>Summary</span></a
+            <span class="sideBarText">Summary</span></a
           >
           <a onclick="changeHtmlPage('add_task.html')" class="addTaskContainer"
             ><div class="sideBarImgContainer">
               <img src="assets/img/addTaskIcon.svg" alt="Add Task Icon" class="sideBarImage" />
             </div>
-            <span>Add Task</span></a
+            <span class="sideBarText">Add Task</span></a
           >
           <a onclick="changeHtmlPage('board.html')" class="boardContainer"
             ><div class="sideBarImgContainer">
               <img src="assets/img/boardIcon.svg" alt="Board Icon" class="sideBarImage" />
             </div>
-            <span>Board</span></a
+            <span class="sideBarText">Board</span></a
           >
-          <a onclick="changeHtmlPage('contacts.html')" class="openedDarkBackground"
+          <a onclick="changeHtmlPage('contacts.html')" class="contactsContainer"
             ><div class="sideBarImgContainer">
               <img src="assets/img/contactsIcon.svg" alt="Assets Icon" class="sideBarImage" />
             </div>
-            <span>Contacts</span></a
+            <span class="sideBarText">Contacts</span></a
           >
         </div>
         <div class="privacyPolicyAndLegalNoticeContainer">

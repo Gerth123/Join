@@ -149,15 +149,17 @@ function onClickAddTaskBoard(fullsize, board, editBoard, addBoard) {
       btn.classList.toggle("open");
     });
   });
-  const addTaskBtn = document.getElementById("board-header-add-btn");
-  addTaskBtn.addEventListener("click", () => {
-    fullsize.classList.remove("d-none");
-    board.classList.add("d-none");
-    editBoard.classList.add("d-none");
-    addBoard.classList.remove("d-none");
-    contentId = 1;
-    onClickAddSubTasks();
-    getAddAssgined();
+  const addTaskBtn = document.querySelectorAll("#board-header-add-btn");
+  addTaskBtn.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      fullsize.classList.remove("d-none");
+      board.classList.add("d-none");
+      editBoard.classList.add("d-none");
+      addBoard.classList.remove("d-none");
+      contentId = 1;
+      onClickAddSubTasks();
+      getAddAssgined();
+    });
   });
 }
 
@@ -191,6 +193,10 @@ function addTaskBtnSmall(contentIdAdd) {
 async function getAddAssgined() {
   let data = await getData("tasks");
   let contacts = await getData("contacts");
+  let contactsData = []
+  for(let i = 0; i < contacts.length; i++) {
+    if(contacts[i] != null)  contactsData.push(contacts[i])
+  }
   let assignedUsers = [];
   for (let column of data) {
     if (column.id == contentId) {
@@ -203,7 +209,7 @@ async function getAddAssgined() {
       }
     }
   }
-  getAssignedUsersAddCard(assignedUsers, contacts);
+  getAssignedUsersAddCard(assignedUsers, contactsData);
 }
 
 /**
@@ -312,11 +318,11 @@ function getAssignedUser(personWithName) {
 function onClickEditBoard(board, editBoard, addBoard) {
   const editBtn = document.getElementById("edit-btn");
 
-  editBtn.addEventListener("click", () => {
+  editBtn.addEventListener("click", async () => {
     board.classList.add("d-none");
     editBoard.classList.remove("d-none");
     addBoard.classList.add("d-none");
-    getEditBoard(id, contentId);
+    await getEditBoard(id, contentId);
     onClickEditSubtasks();
   });
 }
@@ -397,10 +403,14 @@ async function saveEditData() {
   let actualUsersNumber = urlParams.get("actualUsersNumber");
   let data = await getData("tasks");
   let contacts = await getData("contacts");
+  let contactsData = []
+  for(let i = 0; i < contacts.length; i++) {
+    if(contacts[i] != null)  contactsData.push(contacts[i])
+  }
   for (let listItem of data) {
     if (listItem.id == contentId) {
       for (let item of listItem.items) {
-        item = setEditItems(item, contacts);
+        item = setEditItems(item, contactsData);
         await putData(`users/${actualUsersNumber}/tasks/`, data);
       }
     }
@@ -564,7 +574,7 @@ async function saveAddData() {
   let contacts = await getData("contacts");
   if (contentId == undefined) contentId = 1;
   const content = data.find((content) => content.id == contentId);
-  console.log(content);
+  // console.log(content);
   const obj = getAddObj(contacts);
   if (content.items == "") content.items = [];
   content.items.push(obj);

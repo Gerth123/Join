@@ -6,50 +6,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join Add Task</title>
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="css/add_task.css" />
     <link rel="stylesheet" href="css/board.css" />
     <link rel="stylesheet" href="css/board_assigned_category.css" />
     <link rel="stylesheet" href="css/board_edit.css" />
     <link rel="stylesheet" href="css/board_priority.css" />
+    <link rel="stylesheet" href="css/board.css" />
+    <link rel="stylesheet" href="css/board_priority.css" />
+    <link rel="stylesheet" href="css/board_edit.css" />
+    <link rel="stylesheet" href="css/add_task.css" />
     <link rel="icon" href="assets/img/logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="fonts/PTSans-Regular.ttf" />
     <link rel="stylesheet" href="fonts/PTSans-Bold.ttf" />
     <link rel="stylesheet" href="fonts/PTSans-Italic.ttf" />
-    <style>
-      .addTaskContent {
-        margin-top: 110px;
-        margin-left: 96px;
-        width: 100%;
-        max-width: 1200px;
-      }
-
-      .h-120 {
-        height: 120px;
-      }
-    </style>
   </head>
   <body onload="initAddTask()">
     <div class="wholeJoinContainer">
       <section class="headerAndOpenedContainer">
         <header>
+          <img class="logoResponsive" src="assets/img/logo.svg" alt="Logo" />
           <div class="headlineContainer">
             <span class="headline">Kanban Project Management Tool</span>
           </div>
           <div class="helpAndUserContainer">
-            <img src="assets/img/help.svg" alt="Help" class="helpIcon" />
-            <span class="initials">RG</span>
+            <img src="assets/img/help.svg" alt="Help" class="helpIcon" onclick="changeHtmlPage('help.html')" />
+            <div class="initials" id="headerInitials"></div>
+            <div class="menu" id="menu">
+              <a onclick="changeHtmlPage('help.html')" class="helpAtNavBar">Help</a>
+              <a onclick="changeHtmlPage('legal_notice.html')">Legal Notice</a>
+              <a onclick="changeHtmlPage('privacy_policy.html')">Privacy Policy</a>
+              <a href="login.html">Log out</a>
+            </div>
           </div>
         </header>
         <section class="addTaskOpenedContainer">
           <div class="addTaskContent">
-            <div class="board-header-title">Add Task</div>
+            <div class="board-header-title pb-40">Add Task</div>
             <form class="full-size-add-form" action="" onsubmit="saveAddData(); return false">
               <div class="row">
-                <div class="column wd-45">
+                <div class="column wd-45 wd-100">
                   <label class="full-size-label" for="title-addCard">Title</label>
-                  <input class="full-size-input" id="title-addCard" type="text" placeholder="Enter a title" />
+                  <input class="full-size-input" id="title-addCard" type="text" placeholder="Enter a title" required/>
                   <label class="full-size-label" for="description-addCard">Description</label>
-                  <textarea class="full-size-input h-120" id="description-addCard" type="text" placeholder="Enter a description"></textarea>
+                  <textarea class="full-size-input h-120" id="description-addCard" type="text" placeholder="Enter a description" required></textarea>
                   <div class="full-size-label">Assigned to</div>
                   <div class="assigned-addCard">
                     <div id="select-btn-addCard" class="select-btn">
@@ -61,9 +59,10 @@
                   <div id="assigned-users-addCard" class="assigned-users-editPage"></div>
                 </div>
                 <div class="add-line"></div>
-                <div class="column wd-45">
-                  <label class="full-size-label" for="date-addCard">Due date</label>
-                  <input class="full-size-input" id="date-addCard" type="date" />
+                <div class="column wd-45 wd-100">
+                  <label class="full-size-label due-date" for="date-addCard">Due date</label>
+                  <input class="full-size-input" id="date-addCard" type="date" required/>
+                  <div class="full-size-label">Priority</div>
                   <div class="full-size-priority-container">
                     <div class="priority-button-container">
                       <input type="radio" id="radio-btn-6" name="radio-btnss" />
@@ -125,8 +124,6 @@
             </form>
           </div>
         </section>
-
-        <footer class="d-none"></footer>
       </section>
       <section class="sideBarContainer">
         <div class="sideBarLogoContainer">
@@ -137,25 +134,25 @@
             <div class="sideBarImgContainer">
               <img src="assets/img/summaryIcon.svg" alt="Summary Icon" class="sideBarImage" />
             </div>
-            <span>Summary</span>
+            <span class="sideBarText">Summary</span>
           </a>
           <a onclick="changeHtmlPage('add_task.html')" class="openedDarkBackground">
             <div class="sideBarImgContainer">
               <img src="assets/img/addTaskIcon.svg" alt="Add Task Icon" class="sideBarImage" />
             </div>
-            <span>Add Task</span>
+            <span class="sideBarText">Add Task</span>
           </a>
           <a onclick="changeHtmlPage('board.html')" class="boardContainer">
             <div class="sideBarImgContainer">
               <img src="assets/img/boardIcon.svg" alt="Board Icon" class="sideBarImage" />
             </div>
-            <span>Board</span>
+            <span class="sideBarText">Board</span>
           </a>
           <a onclick="changeHtmlPage('contacts.html')" class="contactsContainer">
             <div class="sideBarImgContainer">
               <img src="assets/img/contactsIcon.svg" alt="Assets Icon" class="sideBarImage" />
             </div>
-            <span>Contacts</span>
+            <span class="sideBarText">Contacts</span>
           </a>
         </div>
         <div class="privacyPolicyAndLegalNoticeContainer">
@@ -175,6 +172,7 @@
     <script src="/js/board_fullsize.js"></script>
     <script src="/js/board_edit.js"></script>
     <script src="/js/board_add.js"></script>
+    <script src="js/initials.js"></script>
 
     <script src="script.js"></script>
   </body>

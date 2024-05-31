@@ -8,7 +8,7 @@
  */
 async function getEditBoard(id, contentId) {
   const title = document.querySelector("input[id=title-editCard]");
-  const description = document.querySelector("input[id=description-editCard]");
+  const description = document.querySelector("textarea[id=description-editCard]");
   const date = document.querySelector("input[id=date-editCard]");
   let itemData = await getItemById(id, contentId);
   title.value = `${itemData["title"]}`;
@@ -80,6 +80,10 @@ function getCheckedUsers(assignedUsers, contactName) {
  */
 async function getEditAssigned() {
   let contacts = await getData("contacts");
+  let contactsData = []
+  for(let i = 0; i < contacts.length; i++) {
+    if(contacts[i] != null)  contactsData.push(contacts[i])
+  }
   let data = await getData("tasks");
   let assignedUsers = [];
   for (let column of data) {
@@ -93,8 +97,8 @@ async function getEditAssigned() {
       }
     }
   }
-  getEditContacts(assignedUsers, contacts);
-  toggleCheckUsers(contacts);
+  getEditContacts(assignedUsers, contactsData);
+  toggleCheckUsers(contactsData);
 }
 
 /**
@@ -107,6 +111,8 @@ async function getEditAssigned() {
 function getEditContacts(assignedUsers, contacts) {
   const contactList = document.getElementById("assigned-list-items");
   contactList.innerHTML = "";
+
+  console.log(contacts)
   contacts.forEach((contact) => {
     let name = getInitials(contact["name"]);
     contactList.innerHTML += /*html*/ `
@@ -117,7 +123,10 @@ function getEditContacts(assignedUsers, contacts) {
         </div>
         <div class="check-img"></div>
       </li>`;
-  });
+  })
+
+  // contacts.forEach((contact) => {
+  // });
 }
 
 /**
@@ -369,6 +378,6 @@ async function getData(data) {
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
   let fulldata = await loadData("users");
-  console.log(fulldata);
+  // console.log(fulldata);
   return fulldata[actualUsersNumber][data];
 }
