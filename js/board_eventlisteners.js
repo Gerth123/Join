@@ -110,7 +110,9 @@ function onClickCloseFullSize(fullsize) {
       await updateSubtaskCheck(subtasks);
       location.reload();
     }
-    if (e.target.matches("#close-btn-img-add")) { 
+    if (e.target.matches("#close-btn-img-add")) {
+      let addboard = document.getElementById("add-board")
+      // addboard.classList.add("overlay-closed-add-board") 
       fullsize.classList.add("d-none");
     };
   });

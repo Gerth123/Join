@@ -26,6 +26,17 @@
   animation-timing-function: ease-in-out;
 }
 
+.full-size-edit-board {
+  position: absolute;
+  width: 40vw;
+  height: 890px;
+  /* padding: 48px 40px 48px 40px; */
+  overflow: hidden;
+  border-radius: 30px;
+  background-color: #fff;
+}
+
+
 .overlay-closed {
   animation-name: slideOut;
   animation-duration: 0.9s;
@@ -59,8 +70,8 @@
   width: 60vw;
   /* max-width: 890px; */
   min-height: 620px;
-  padding-top: 48px;
-  padding-bottom: 48px;
+  /* padding-top: 48px;
+  padding-bottom: 48px; */
   /* padding-left: min(40px, 5%);
   padding-right: min(40px, 5%); */
   border-radius: 30px;
@@ -81,6 +92,23 @@
   }
 }
 
+@keyframes slideOutAdd {
+  from {
+    left: 20vw;
+  }
+
+  to {
+    left: 150vw;
+  }
+}
+
+.overlay-closed-add-board {
+  animation-name: slideOutAdd;
+  animation-duration: 0.9s;
+  transition: transform 0.9s ease;
+  animation-timing-function: ease-in-out;
+}
+
 .full-size-add-form {
   min-height: 550px;
   display: flex;
@@ -91,6 +119,11 @@
 .full-size-header {
   display: flex;
   justify-content: space-between;
+}
+
+.full-size-edit-header {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .full-size-title {
@@ -213,10 +246,10 @@
 @media screen and (max-width: 1100px) {
   .full-size-add-board {
     /* padding: 48px 40px 48px 40px; */
-    padding-top: 24px;
+    /* padding-top: 24px;
     padding-bottom: 24px;
     padding-left: 16px;
-    padding-right: 16px;
+    padding-right: 16px; */
   }
 }
 
@@ -228,16 +261,14 @@
     /* height: 640px; */
   }
 
-  .full-size-add-board {
-    width: 90%;
-    max-width: 600px;
-    padding: 24px 20px 24px 20px;
-  }
+  /* .full-size-add-board {
+    width: 60vw
+  } */
 }
 
 @media screen and (max-width: 510px) {
-  .full-size-add-board {
+  /* .full-size-add-board {
     max-width: 400px;
     padding: 12px 10px 12px 10px;
-  }
+  } */
 }
