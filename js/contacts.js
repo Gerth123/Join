@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
   addContactButton.addEventListener("click", function (event) {
     event.stopPropagation();
     overlay.style.display = "flex";
+    overlay.classList.remove("overlay-closed");
   });
 
   document.addEventListener("click", function (event) {
@@ -28,7 +29,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   closeImage.addEventListener("click", function (event) {
     event.stopPropagation();
-    overlay.style.display = "none";
+    overlay.classList.add("overlay-closed");
+    setTimeout(function() {
+      overlay.style.display = "none";
+    }, 450);
   });
 
   cancelButton.addEventListener("click", function (event) {

@@ -93,9 +93,10 @@ function generateContactDetailsHTML(name, email, phone, randomColor, initials) {
  * @returns {string} - The user ID associated with the email address.
  * Author: Elias
  */
-async function findUserIdByEmail(email) {
+async function findContactIdByEmail(email) {
     try {
-        let actualUsers = await loadData('users/-NyKF7omq8KOQgBXWhYW/contacts');
+        let userId = await getUserIdFormUrl();
+        let actualUsers = await loadData('users/' + userId + '/contacts');
         for (let userId in actualUsers) {
             if (actualUsers[userId] === null) {
                 continue;
@@ -121,7 +122,7 @@ async function findUserIdByEmail(email) {
 async function generateContactHTML(contact) {
     const randomColor = await generateRandomColor(contact.name);
     const initials = await getInitials(contact.name);
-    let userId = await findUserIdByEmail(contact.mail);
+    let userId = await findContactIdByEmail(contact.mail);
     return `
         <div class="contact contactCard" data-id="${userId}" data-phone="${contact.phone}">
             <div class="profilePicture" style="background-color: ${randomColor};">${initials}</div>
@@ -195,7 +196,7 @@ async function deleteContact(contactId) {
  */
 async function deleteContactFromFirebase(email) {
     let userId = await getUserIdFormUrl();
-    newContactId = await findUserIdByEmail(email);
+    newContactId = await findContactIdByEmail(email);
     await deleteData(`users/` + userId + `/contacts/` + newContactId);
     let actualUsers = await loadData('users/' + userId + '/contacts');
     const sortedContacts = await sortContacts(actualUsers);
@@ -316,7 +317,10 @@ function openEditContactOverlay(name, email, phone, randomColor, initials) {
 function closeEditContact() {
     const overlay = document.getElementById('editOverlay');
     if (overlay) {
+      overlay.classList.add('editOverlayClosed');
+      setTimeout(function() {
         overlay.remove();
+      }, 450);
     }
 }
 
@@ -330,7 +334,7 @@ async function updateContact(event) {
     let name = document.getElementById('contactName' + globalEmail).value;
     let newEmail = document.getElementById('contactEmail' + globalEmail).value;
     let phone = document.getElementById('contactPhone' + globalEmail).value;
-    let contactId = await findUserIdByEmail(globalEmail);
+    let contactId = await findContactIdByEmail(globalEmail);
     let userId = getUserIdFormUrl();
     try {
         let updatedContact = {
