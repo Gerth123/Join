@@ -1,13 +1,5 @@
-/** 
- * Initializes contact click events after the DOM is fully loaded.
- * Author: Elias
- */
 document.addEventListener('DOMContentLoaded', setupContactClickEvents);
 
-/** 
- * Sets up click events for each contact card.
- * Author: Elias
- */
 async function setupContactClickEvents() {
     const contactCards = document.querySelectorAll('.contactCard');
 
@@ -18,15 +10,12 @@ async function setupContactClickEvents() {
             const phone = card.getAttribute('data-phone');
             const randomColor = generateRandomColor(name);
             const initials = getInitials(name);
-
             const contactDetailsDiv = document.querySelector('.contactdetails-right');
             contactDetailsDiv.innerHTML = generateContactDetailsHTML(name, email, phone, randomColor, initials);
-
             const editButton = contactDetailsDiv.querySelector('.edit-div');
             editButton.addEventListener('click', function () {
                 openEditContactOverlay(name, email, phone, randomColor, initials);
             });
-
             const deleteButton = contactDetailsDiv.querySelector('.delete-div');
             deleteButton.addEventListener('click', async function () {
                 try {
@@ -41,16 +30,6 @@ async function setupContactClickEvents() {
     });
 }
 
-/** 
- * Generates HTML for displaying contact details.
- * @param {string} name - The contact's name.
- * @param {string} email - The contact's email.
- * @param {string} phone - The contact's phone number.
- * @param {string} randomColor - The random color for the contact's profile picture.
- * @param {string} initials - The initials of the contact's name.
- * @returns {string} - The HTML string for displaying contact details.
- * Author: Elias
- */
 function generateContactDetailsHTML(name, email, phone, randomColor, initials) {
     return `
         <div class="profil-user">
@@ -87,12 +66,6 @@ function generateContactDetailsHTML(name, email, phone, randomColor, initials) {
     `;
 }
 
-/** 
- * Finds the user ID based on the email address.
- * @param {string} email - The email address to search for.
- * @returns {string} - The user ID associated with the email address.
- * Author: Elias
- */
 async function findUserIdByEmail(email) {
     try {
         let actualUsers = await loadData('users/-NyKF7omq8KOQgBXWhYW/contacts');
@@ -195,7 +168,7 @@ async function deleteContact(contactId) {
  */
 async function deleteContactFromFirebase(email) {
     const baseUrl = 'https://join-ca44d-default-rtdb.europe-west1.firebasedatabase.app/';
-    const userId = '-NyKF7omq8KOQgBXWhYW';
+    const userId = '-NyQZIrDvTgyGwkges5f';
 
     const url = `${baseUrl}users/${userId}/contacts.json`;
     const response = await fetch(url);
@@ -281,17 +254,8 @@ function editContactHTML(randomColor, initials, name, email, phone) {
     `;
 }
 
-/** 
- * Opens the edit contact overlay with the given contact information.
- * @param {string} name - The contact's name.
- * @param {string} email - The contact's email.
- * @param {string} phone - The contact's phone number.
- * @param {string} randomColor - The random color for the contact's profile picture.
- * @param {string} initials - The initials of the contact's name.
- * Author: Elias
- */
-function openEditContactOverlay(name, email, phone, randomColor, initials) {
-    const overlayHTML = editContactHTML(randomColor, initials, name, email, phone);
+async function openEditContactOverlay(name, email, phone, randomColor, initials) {
+    const overlayHTML = await editContactHTML(randomColor, initials, name, email, phone);
     document.body.insertAdjacentHTML('beforeend', overlayHTML);
 
     const deleteButton = document.querySelector('.deleteButton');
@@ -309,10 +273,6 @@ function openEditContactOverlay(name, email, phone, randomColor, initials) {
     });
 }
 
-/** 
- * Closes the edit contact overlay.
- * Author: Elias
- */
 function closeEditContact() {
     const overlay = document.getElementById('editOverlay');
     if (overlay) {
@@ -320,11 +280,6 @@ function closeEditContact() {
     }
 }
 
-/** 
- * Updates a contact's information based on the form input.
- * @param {Event} event - The submit event from the form.
- * Author: Elias
- */
 async function updateContact(event) {
     event.preventDefault();
     let name = document.getElementById('contactName' + globalEmail).value;
@@ -351,13 +306,6 @@ async function updateContact(event) {
     }
 }
 
-/** 
- * Updates a contact's information in Firebase.
- * @param {string} contactId - The ID of the contact to update.
- * @param {Object} updatedContact - The updated contact object containing name, email, and phone.
- * @returns {Promise<Object>} - The response JSON from Firebase after updating the contact.
- * Author: Elias
- */
 async function updateContactInFirebase(contactId, updatedContact) {
     const baseUrl = 'https://join-ca44d-default-rtdb.europe-west1.firebasedatabase.app/';
     const userId = '-NyKF7omq8KOQgBXWhYW';
