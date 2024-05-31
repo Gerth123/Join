@@ -1,3 +1,7 @@
+body {
+  background-color: rgb(246, 247, 248);
+}
+
 p {
   margin-block-start: 0em;
   margin-block-end: 0em;
@@ -26,10 +30,6 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.addTaskOpenedContainer {
-  /* overflow: scroll; */
 }
 
 .addContactButton {
@@ -61,7 +61,8 @@ p {
 .contacts {
   width: 29vw;
   height: 74vh;
-  position: relative;;
+  position: relative;
+  ;
   display: flex;
   overflow-y: auto;
 }
@@ -69,73 +70,123 @@ p {
 .overlay {
   display: none;
   position: fixed;
+  justify-content: center;
+  align-items: center;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   z-index: 1000;
   background-color: rgba(0, 0, 0, 0.229);
 }
 
 .mainSectionOverlay {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  height: 80vh;
+  transform: translate(0, 0);
+  height: 75vh;
   width: 80vw;
   display: flex;
   animation-name: slideIn;
-  animation-duration: 0.5s;
+  animation-duration: 0.9s;
   animation-timing-function: ease-in-out;
 }
 
 @keyframes slideIn {
   from {
-    left: 150%;
-    /* Startposition rechts außerhalb des Bildschirms */
+    left: 150vw;
   }
 
   to {
-    left: 50%;
-    /* Endposition in der Mitte des Bildschirms */
+    left: 10vw;
+  }
+}
+
+.mainSectionOverlay2 {
+  position: absolute;
+  transform: translate(0, 0);
+  height: 75vh;
+  width: 80vw;
+  display: flex;
+  animation-name: slideIn2;
+  animation-duration: 0.9s;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes slideIn2 {
+  from {
+    left: 150vw;
+  }
+
+  to {
+    left: 10vw;
+  }
+}
+
+.overlay-closed2 {
+  animation-name: slideOut2;
+  animation-duration: 0.9s;
+  transition: transform 0.9s ease;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes slideOut2 {
+  from {
+    left: 10vw;
+  }
+
+  to {
+    left: 150vw;
   }
 }
 
 .overlay {
-  transition: transform 0.3s ease;
+  transition: transform 0.9s ease;
 }
 
 .overlay-closed {
-  transform: translate(-50%, -50%) scale(0);
+  animation-name: slideOut;
+  animation-duration: 0.9s;
+  transition: transform 0.9s ease;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes slideOut {
+  from {
+    left: 10vw;
+  }
+
+  to {
+    left: 150vw;
+  }
 }
 
 .overlay-contentright {
   background-color: white;
   border-radius: 0px 30px 30px 0px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  height: 592px;
-  width: 745px;
+  height: 75vh;
+  width: 40vw;
 }
 
 .contentleft {
-  width: 467px;
-  height: 593px;
+  padding-left: 2vw;
+  width: 28vw;
+  height: 75vh;
   background-color: #2a3647;
   border-radius: 30px 0 0 30px;
 }
 
 .logoAddContact {
-  width: 55.6px;
-  height: 66.48px;
+  width: 50px;
+  margin-bottom: -5px;
 }
 
 .P1overlay {
   font-weight: 700;
-  font-size: 61px;
+  font-size: 52px;
   line-height: 73.2px;
   color: #ffffff;
-  width: 366px;
+  width: 28vw;
   height: 73px;
 }
 
@@ -144,45 +195,54 @@ p {
   width: 371px;
   height: 32px;
   font-weight: 400;
-  font-size: 27px;
+  font-size: 23px;
   line-height: 32.4px;
 }
 
 .contentleft2 {
+  padding-left: 2vw;
+  width: 28vw;
+  height: 75vh;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   justify-content: center;
-  box-sizing: border-box;
   background-color: #2a3647;
-  border-top-left-radius: 30px;
-  border-bottom-left-radius: 30px;
-  height: 100%;
-  max-width: 467px;
-  gap: 12px;
+  border-radius: 30px 0 0 30px;
+  gap: 20px;
+}
+
+.overlayText {
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
 }
 
 .divider-vertical {
   border-radius: 3px;
-  min-height: 3px;
+  min-height: 2px;
   width: 90px;
   align-self: self-start;
   background-color: #29abe2;
+  margin-top: 1.5vh;
 }
 
 .overlay-contentright {
   background-color: #fff;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 72px;
+  justify-content: space-evenly;
   flex: 1;
 }
 
+.imgAddContact {
+  width: 100px;
+}
+
 .imgcloseOverlay {
-  cursor: pointer;
   position: absolute;
-  top: 48px;
-  right: 48px;
+  top: 4vh;
+  right: 3vw;
   cursor: pointer;
   border-radius: 100px;
 }
@@ -192,36 +252,27 @@ p {
 }
 
 .inputSection {
-  gap: 32px;
+  height: 50vh;
   display: flex;
+  width: 30vw;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
 }
 
-#contactName {
-  width: 422px;
-  height: 50px;
-  border-radius: 10px;
-  border: 1px solid #d1d1d1;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 24px;
-  color: #000000;
+.input-divs {
+  width: 30vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 14vh;
+  margin-top: -1vh;
 }
 
-#contactEmail {
-  width: 422px;
-  height: 50px;
-  border-radius: 10px;
-  border: 1px solid #d1d1d1;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 24px;
-  color: #000000;
-}
-
-#contactPhone {
-  width: 422px;
-  height: 50px;
+.input-divs input {
+  width: 30vw;
+  padding-left: 10px;
+  height: 8vh;
   border-radius: 10px;
   border: 1px solid #d1d1d1;
   font-weight: 400;
@@ -231,9 +282,11 @@ p {
 }
 
 .overlayButtons {
-  width: 364px;
-  height: 57px;
+  width: 30vw;
+  height: 5vh;
   display: flex;
+  gap: 2vw;
+  padding-top: 3vh;
 }
 
 .clearButton {
@@ -307,7 +360,7 @@ p {
 
 .contacts::-webkit-scrollbar {
   width: 8px;
-  color: rgb(168,168,168);
+  color: rgb(168, 168, 168);
 }
 
 .contacts::-webkit-scrollbar-track {
@@ -470,8 +523,6 @@ p {
   line-height: 24px;
 }
 
-.div-h2 {}
-
 .contact-email {
   font-weight: 400;
   font-size: 16px;
@@ -540,7 +591,7 @@ p {
   font-size: 16px;
   font-weight: 400;
   line-height: 19.2px;
-  color: rgb(0,163,242);
+  color: rgb(0, 163, 242);
 }
 
 .profilePicture {
@@ -562,8 +613,9 @@ p {
 }
 
 .largeProfilePicture {
-  min-width: 110px;
-  height: 110px;
+  min-width: 110px !important;
+  min-height: 110px !important;
+  /* height: 110px; */
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -612,21 +664,18 @@ p {
 }
 
 .imgsinput {
-  position: absolute;
-  right: 89px;
-  top: 26%;
+  height: 30px;
+  margin-left: -3vw;
 }
 
 .imgsinput1 {
-  position: absolute;
-  right: 90px;
-  top: 40.4%;
+  height: 30px;
+  margin-left: -3vw;
 }
 
 .imgsinput2 {
-  position: absolute;
-  right: 89px;
-  top: 55%;
+  height: 30px;
+  margin-left: -3vw;
 }
 
 .contacts::-webkit-scrollbar {
@@ -651,11 +700,16 @@ p {
   position: fixed;
 }
 
-.overlay {
+.overlayForEdit {
+  background-color: rgba(0, 0, 0, 0.229);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
 }
 
 .overlay-content {
@@ -667,8 +721,8 @@ p {
   position: absolute;
   cursor: pointer;
   border-radius: 100px;
-  top: 48px;
-  right: 68px;
+  top: 3vh;
+  right: 2vw;
 }
 
 .imgcloseOverlay2:hover {
@@ -679,13 +733,12 @@ p {
   background-color: #fff;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 72px;
-  flex: 1;
-  padding-right: 48px;
-  padding-left: 16px;
+  justify-content: space-evenly;
   border-top-right-radius: 30px;
   border-bottom-right-radius: 30px;
+  width: 47vw;
+  height: 75vh;
+  padding-left: 3vw;
 }
 
 .divider-vertical2 {
@@ -694,8 +747,6 @@ p {
   width: 90px;
   align-self: self-start;
   background-color: #29abe2;
-  margin-top: -30px;
-  margin-bottom: 30px;
 }
 
 .createButton2 {
@@ -740,21 +791,18 @@ p {
 }
 
 .imgsinput0-1 {
-  position: absolute;
-  margin-top: 15px;
-  margin-left: -50px;
+  height: 30px;
+  margin-left: -3vw;
 }
 
 .imgsinput1-2 {
-  position: absolute;
-  margin-top: 15px;
-  margin-left: -50px;
+  height: 30px;
+  margin-left: -3vw;
 }
 
 .imgsinput2-3 {
-  position: absolute;
-  margin-top: 15px;
-  margin-left: -50px;
+  height: 30px;
+  margin-left: -3vw;
 }
 
 @media (max-width: 1210px) {
@@ -790,7 +838,7 @@ p {
     justify-content: flex-end;
     height: 10vh;
   }
-  
+
   .addContactButton {
     border-radius: 30px;
     width: 5vw;
@@ -817,7 +865,7 @@ p {
   .contacts-list-letter {
     min-width: 290px;
   }
-  
+
   .seperator-contacts-list {
     min-width: 320px;
   }

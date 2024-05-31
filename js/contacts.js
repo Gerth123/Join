@@ -15,25 +15,33 @@ document.addEventListener("DOMContentLoaded", function () {
   const closeImage = document.querySelector(".imgcloseOverlay");
   const cancelButton = document.querySelector(".clearButton");
 
+
   addContactButton.addEventListener("click", function (event) {
     event.stopPropagation();
-    overlay.style.display = "block";
+    overlay.style.display = "flex";
+    mainSectionOverlay.classList.remove("overlay-closed");
   });
 
   document.addEventListener("click", function (event) {
-    if (overlay.style.display === "block" && !mainSectionOverlay.contains(event.target)) {
+    if (overlay.style.display === "flex" && !mainSectionOverlay.contains(event.target)) {
       overlay.style.display = "none";
     }
   });
 
   closeImage.addEventListener("click", function (event) {
     event.stopPropagation();
-    overlay.style.display = "none";
+    mainSectionOverlay.classList.add("overlay-closed");
+    setTimeout(function () {
+      overlay.style.display = "none";
+    }, 850);
   });
 
   cancelButton.addEventListener("click", function (event) {
     event.stopPropagation();
-    overlay.style.display = "none";
+    mainSectionOverlay.classList.add("overlay-closed");
+    setTimeout(function () {
+      overlay.style.display = "none";
+    }, 850);
     clearInputFields();
   });
 
@@ -44,7 +52,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
-
 
 /**
  * This function clears the text in the input fields for contact name, email, and phone.
@@ -69,10 +76,7 @@ function clearInputFields() {
  */
 document.addEventListener("DOMContentLoaded", async function () {
   try {
-      const baseUrl = 'https://join-ca44d-default-rtdb.europe-west1.firebasedatabase.app/';
-      let urlParams = new URLSearchParams(window.location.search);
-      let userId = urlParams.get('actualUsersNumber');
-
+    let userId = await getUserIdFormUrl();
     const actualUsers = await loadData(`users/${userId}/contacts`);
 
     if (actualUsers) {
@@ -214,15 +218,15 @@ async function findFirstMissingId(userId) {
 
   // Überprüfen, ob contacts null ist
   if (contacts === null) {
-      // Behandlung des Falls, wenn keine Kontakte vorhanden sind
-      console.error("Es wurden keine Kontakte gefunden.");
-      return 1; // Oder eine andere Standard-ID, je nach Bedarf
+    // Behandlung des Falls, wenn keine Kontakte vorhanden sind
+    console.error("Es wurden keine Kontakte gefunden.");
+    return 1; // Oder eine andere Standard-ID, je nach Bedarf
   }
-  
+
   // Sammle alle vorhandenen gültigen IDs in einem Array
   const ids = contacts
-      .filter(contact => contact && typeof contact.id === 'number' && !isNaN(contact.id))
-      .map(contact => contact.id);
+    .filter(contact => contact && typeof contact.id === 'number' && !isNaN(contact.id))
+    .map(contact => contact.id);
 
   // Sortiere die IDs aufsteigend
   ids.sort((a, b) => a - b);
@@ -230,10 +234,10 @@ async function findFirstMissingId(userId) {
   // Durchlaufe die sortierten IDs und finde die erste Lücke
   let missingId = 1;
   for (const id of ids) {
-      if (id !== missingId) {
-          break; // Lücke gefunden
-      }
-      missingId++;
+    if (id !== missingId) {
+      break; // Lücke gefunden
+    }
+    missingId++;
   }
 
   return missingId;
@@ -253,8 +257,7 @@ async function createContact(event) {
   const name = document.getElementById('contactName').value;
   const mail = document.getElementById('contactEmail').value;
   const phone = document.getElementById('contactPhone').value;
-  let urlParams = new URLSearchParams(window.location.search);
-  let userId = urlParams.get('actualUsersNumber');
+  let userId = await getUserIdFormUrl();
 
   let contacts = await getData("contacts");
   let alreadyExist = contacts.find(contact => contact && contact.mail == mail)
