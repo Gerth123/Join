@@ -84,7 +84,6 @@
 }
 
 .overlay {
-  /* Weitere Eigenschaften */
   transition: transform 0.3s ease;
 }
 
@@ -657,8 +656,8 @@
   position: absolute;
   cursor: pointer;
   border-radius: 100px;
-  top: 200px;
-  right: 200px;
+  top: 48px;
+  right: 68px;
 }
 
 .imgcloseOverlay2:hover {
@@ -727,4 +726,22 @@
   color: #29abe2;
   box-shadow: 0px 3px 3px 1px rgba(122, 122, 122, 0.5);
   border: 2px solid #29abe2;
+}
+
+.imgsinput0-1 {
+  position: absolute;
+  margin-top: 15px;
+  margin-left: -50px;
+}
+
+.imgsinput1-2 {
+  position: absolute;
+  margin-top: 15px;
+  margin-left: -50px;
+}
+
+.imgsinput2-3 {
+  position: absolute;
+  margin-top: 15px;
+  margin-left: -50px;
 }
