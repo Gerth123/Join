@@ -78,7 +78,8 @@ select {
 }
 
 .assigned-list-items {
-  position: relative;
+  position: absolute;
+  width: 100%;
   height: 200px;
   margin-block-start: 0;
   padding-inline-start: 0;
@@ -89,8 +90,8 @@ select {
 }
 
 .category-list-items {
-  position: relative;
-  width: 400px;
+  position: absolute;
+  width: 100%;
   height: 100px;
   margin-block-start: 0;
   padding-inline-start: 0;

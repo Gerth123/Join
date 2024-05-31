@@ -39,7 +39,7 @@ label {
   border: 1px solid #d1d1d1;
   border-radius: 10px;
   font-size: 20px;
-  height: 24px;
+  min-height: 24px;
 }
 
 .headerAndOpenedContainer {
@@ -407,7 +407,7 @@ progress[value]::-moz-progress-bar {
 }
 
 .h-120 {
-  height: 120px;
+  min-height: 120px;
 }
 
 .jc-fe {
@@ -419,6 +419,7 @@ progress[value]::-moz-progress-bar {
 }
 
 .column {
+  position:relative;
   display: flex;
   flex-direction: column;
 }

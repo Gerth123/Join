@@ -43,7 +43,7 @@
 }
 
 .h-120 {
-  height: 120px;
+  min-height: 120px;
 }
 
 .full-size-footer {
