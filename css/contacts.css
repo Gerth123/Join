@@ -93,7 +93,7 @@ p {
   }
 
   to {
-    left: 0;
+    left: 10vw;
     /* Endposition in der Mitte des Bildschirms */
   }
 }
@@ -124,6 +124,7 @@ p {
 
 .logoAddContact {
   width: 50px;
+  margin-bottom: -5px;
 }
 
 .P1overlay {
@@ -170,16 +171,18 @@ p {
   background-color: #fff;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 72px;
+  justify-content: space-evenly;
   flex: 1;
 }
 
+.imgAddContact {
+  width: 100px;
+}
+
 .imgcloseOverlay {
-  cursor: pointer;
   position: absolute;
-  top: 48px;
-  right: 48px;
+  top: 4vh;
+  right: 3vw;
   cursor: pointer;
   border-radius: 100px;
 }
@@ -189,14 +192,27 @@ p {
 }
 
 .inputSection {
-  gap: 32px;
+  height: 50vh;
   display: flex;
+  gap: 2vw;
+  width: 30vw;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
 }
 
+.input-divs {
+  width: 30vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 14vh;
+}
+
 #contactName {
-  width: 422px;
-  height: 50px;
+  width: 30vw;
+  padding-left: 10px;
+  height: 8vh;
   border-radius: 10px;
   border: 1px solid #d1d1d1;
   font-weight: 400;
@@ -206,8 +222,9 @@ p {
 }
 
 #contactEmail {
-  width: 422px;
-  height: 50px;
+  width: 30vw;
+  padding-left: 10px;
+  height: 8vh;
   border-radius: 10px;
   border: 1px solid #d1d1d1;
   font-weight: 400;
@@ -217,8 +234,9 @@ p {
 }
 
 #contactPhone {
-  width: 422px;
-  height: 50px;
+  width: 30vw;
+  padding-left: 10px;
+  height: 8vh;
   border-radius: 10px;
   border: 1px solid #d1d1d1;
   font-weight: 400;
@@ -228,9 +246,10 @@ p {
 }
 
 .overlayButtons {
-  width: 364px;
-  height: 57px;
+  width: 30vw;
+  height: 5vh;
   display: flex;
+  gap: 2vw;
 }
 
 .clearButton {
@@ -607,21 +626,18 @@ p {
 }
 
 .imgsinput {
-  position: absolute;
-  right: 89px;
-  top: 26%;
+  height: 30px;
+  margin-left: -3vw;
 }
 
 .imgsinput1 {
-  position: absolute;
-  right: 90px;
-  top: 40.4%;
+  height: 30px;
+  margin-left: -3vw;
 }
 
 .imgsinput2 {
-  position: absolute;
-  right: 89px;
-  top: 55%;
+  height: 30px;
+  margin-left: -3vw;
 }
 
 .contacts::-webkit-scrollbar {
