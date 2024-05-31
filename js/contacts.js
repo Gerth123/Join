@@ -240,7 +240,13 @@ async function findFirstMissingId(userId) {
 }
 
 
-
+async function getData(data) {
+  let urlParams = new URLSearchParams(window.location.search);
+  let actualUsersNumber = urlParams.get("actualUsersNumber");
+  let fulldata = await loadData("users");
+  // console.log(fulldata);
+  return fulldata[actualUsersNumber][data];
+}
 
 async function createContact(event) {
   event.preventDefault();
@@ -250,7 +256,11 @@ async function createContact(event) {
   let urlParams = new URLSearchParams(window.location.search);
   let userId = urlParams.get('actualUsersNumber');
 
-  try {
+  let contacts = await getData("contacts");
+  let alreadyExist = contacts.find(contact => contact && contact.mail == mail)
+  if(alreadyExist) {
+    alert("the contact already exists!")
+  } else {  try {
     const newContact = await saveContact(name, mail, phone, userId);
     clearInputFields();
     const newUrl = `/contacts.html?msg=welcome&actualUsersNumber=${userId}`;
@@ -269,5 +279,6 @@ async function createContact(event) {
     }
   } catch (error) {
     console.error('Fehler beim Speichern des Kontakts:', error);
-  }
+  }}
+
 }
