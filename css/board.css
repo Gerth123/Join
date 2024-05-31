@@ -54,7 +54,7 @@ label {
 .board-container {
     padding: 48px 40px 48px 40px;
   /* width: 30vw; */
-  height: 90%;
+  height: 93%;
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
