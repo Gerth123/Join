@@ -10,15 +10,12 @@ async function setupContactClickEvents() {
             const phone = card.getAttribute('data-phone');
             const randomColor = generateRandomColor(name);
             const initials = getInitials(name);
-
             const contactDetailsDiv = document.querySelector('.contactdetails-right');
             contactDetailsDiv.innerHTML = generateContactDetailsHTML(name, email, phone, randomColor, initials);
-
             const editButton = contactDetailsDiv.querySelector('.edit-div');
             editButton.addEventListener('click', function () {
                 openEditContactOverlay(name, email, phone, randomColor, initials);
             });
-
             const deleteButton = contactDetailsDiv.querySelector('.delete-div');
             deleteButton.addEventListener('click', async function () {
                 try {
