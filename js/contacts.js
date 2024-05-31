@@ -285,3 +285,7 @@ async function createContact(event) {
   }}
 
 }
+
+function closeContactInfoResponsive(){
+  document.getElementById("contentright").style.display = "none";
+}

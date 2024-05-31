@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', setupContactClickEvents);
  */
 async function setupContactClickEvents() {
     const contactCards = document.querySelectorAll('.contactCard');
+    const contentRight = document.getElementById('contentright');
 
     contactCards.forEach(function (card) {
         card.addEventListener('click', function () {
@@ -22,6 +23,10 @@ async function setupContactClickEvents() {
             const contactDetailsDiv = document.querySelector('.contactdetails-right');
             contactDetailsDiv.innerHTML = generateContactDetailsHTML(name, email, phone, randomColor, initials);
 
+            if (window.innerWidth < 1100) {
+                contentRight.style.display = 'flex';
+            }
+
             const editButton = contactDetailsDiv.querySelector('.edit-div');
             editButton.addEventListener('click', function () {
                 openEditContactOverlay(name, email, phone, randomColor, initials);
@@ -33,6 +38,9 @@ async function setupContactClickEvents() {
                     await deleteContactFromFirebase(email);
                     card.remove();
                     contactDetailsDiv.innerHTML = '';
+                    if (window.innerWidth < 1100) {
+                        contentRight.style.display = 'none';
+                    }
                 } catch (error) {
                     console.error("Fehler beim Löschen des Kontakts:", error);
                 }
@@ -324,12 +332,14 @@ function closeEditContact() {
     const mainSectionOverlay2 = document.querySelector(".mainSectionOverlay2");
     if (overlay) {
         mainSectionOverlay2.classList.add("overlay-closed2");
-        setTimeout(function () {
-            mainSectionOverlay2.classList.remove('overlay-closed2');
-            overlay.classList.add('d-none');
-        }, 850);
     }
+    setTimeout(function () {
+        mainSectionOverlay2.classList.remove('overlay-closed2');
+        mainSectionOverlay2.classList.remove('overlay-closed-responsive');
+        overlay.classList.add('d-none');
+    }, 850);
 }
+
 
 /** 
  * Updates a contact's information based on the form input.
@@ -371,7 +381,7 @@ async function updateContact(event) {
  * Author: Elias
  */
 async function updateContactInFirebase(contactId, updatedContact, userId) {
-    let response = await putData(`users/${userId}/contacts/${contactId}`, updatedContact);
+    let response = await putData(`users/` + userId + `/contacts/` + contactId, updatedContact);
     if (!response.ok) {
         throw new Error('Fehler beim Aktualisieren des Kontakts: ' + response.statusText);
     }
