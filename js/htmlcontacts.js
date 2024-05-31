@@ -238,7 +238,7 @@ function editContactHTML(randomColor, initials, name, email, phone) {
     globalEmail = email;
     return `
         <div class="overlayForEdit" id="editOverlay">
-            <div class="mainSectionOverlay">  
+            <div class="mainSectionOverlay2">  
                 <div class="overlay-content">
                     <div class="contentleft">
                         <div class="contentleft2">
@@ -292,6 +292,11 @@ function editContactHTML(randomColor, initials, name, email, phone) {
  * Author: Elias
  */
 function openEditContactOverlay(name, email, phone, randomColor, initials) {
+    const existingOverlay = document.querySelector('#editOverlay');
+    if (existingOverlay) {
+        existingOverlay.remove();
+    }
+
     const overlayHTML = editContactHTML(randomColor, initials, name, email, phone);
     document.body.insertAdjacentHTML('beforeend', overlayHTML);
 
@@ -316,11 +321,13 @@ function openEditContactOverlay(name, email, phone, randomColor, initials) {
  */
 function closeEditContact() {
     const overlay = document.getElementById('editOverlay');
+    const mainSectionOverlay2 = document.querySelector(".mainSectionOverlay2");
     if (overlay) {
-      overlay.classList.add('editOverlayClosed');
-      setTimeout(function() {
-        overlay.remove();
-      }, 450);
+        mainSectionOverlay2.classList.add("overlay-closed2");
+        setTimeout(function () {
+            mainSectionOverlay2.classList.remove('overlay-closed2');
+            overlay.classList.add('d-none');
+        }, 850);
     }
 }
 
@@ -345,7 +352,7 @@ async function updateContact(event) {
         };
         console.log(updatedContact, contactId, userId);
         await updateContactInFirebase(contactId, updatedContact, userId);
-        
+
         const actualUsers = await loadData(`users/${userId}/contacts`);
         const sortedContacts = await sortContacts(actualUsers);
         await displayContacts(sortedContacts);
@@ -357,16 +364,15 @@ async function updateContact(event) {
 
 /** 
  * Updates a contact's information in Firebase.
+ * 
  * @param {string} contactId - The ID of the contact to update.
  * @param {Object} updatedContact - The updated contact object containing name, email, and phone.
- * @returns {Promise<Object>} - The response JSON from Firebase after updating the contact.
+ * 
  * Author: Elias
  */
 async function updateContactInFirebase(contactId, updatedContact, userId) {
     let response = await putData(`users/${userId}/contacts/${contactId}`, updatedContact);
-
     if (!response.ok) {
         throw new Error('Fehler beim Aktualisieren des Kontakts: ' + response.statusText);
     }
-    return await response.json();
 }

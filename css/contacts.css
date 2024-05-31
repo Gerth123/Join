@@ -1,3 +1,7 @@
+body {
+  background-color: rgb(246, 247, 248);
+}
+
 p {
   margin-block-start: 0em;
   margin-block-end: 0em;
@@ -57,7 +61,8 @@ p {
 .contacts {
   width: 29vw;
   height: 74vh;
-  position: relative;;
+  position: relative;
+  ;
   display: flex;
   overflow-y: auto;
 }
@@ -82,7 +87,7 @@ p {
   width: 80vw;
   display: flex;
   animation-name: slideIn;
-  animation-duration: 0.5s;
+  animation-duration: 0.9s;
   animation-timing-function: ease-in-out;
 }
 
@@ -96,14 +101,53 @@ p {
   }
 }
 
+.mainSectionOverlay2 {
+  position: absolute;
+  transform: translate(0, 0);
+  height: 75vh;
+  width: 80vw;
+  display: flex;
+  animation-name: slideIn2;
+  animation-duration: 0.9s;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes slideIn2 {
+  from {
+    left: 150vw;
+  }
+
+  to {
+    left: 10vw;
+  }
+}
+
+.overlay-closed2 {
+  animation-name: slideOut2;
+  animation-duration: 0.9s;
+  transition: transform 0.9s ease;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes slideOut2 {
+  from {
+    left: 10vw;
+  }
+
+  to {
+    left: 150vw;
+  }
+}
+
 .overlay {
-  transition: transform 0.3s ease;
+  transition: transform 0.9s ease;
 }
 
 .overlay-closed {
   animation-name: slideOut;
-  animation-duration: 0.5s;
-  background-color: unset;
+  animation-duration: 0.9s;
+  transition: transform 0.9s ease;
+  animation-timing-function: ease-in-out;
 }
 
 @keyframes slideOut {
@@ -165,6 +209,13 @@ p {
   justify-content: center;
   background-color: #2a3647;
   border-radius: 30px 0 0 30px;
+  gap: 20px;
+}
+
+.overlayText {
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
 }
 
 .divider-vertical {
@@ -218,31 +269,7 @@ p {
   margin-top: -1vh;
 }
 
-#contactName {
-  width: 30vw;
-  padding-left: 10px;
-  height: 8vh;
-  border-radius: 10px;
-  border: 1px solid #d1d1d1;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 24px;
-  color: #000000;
-}
-
-#contactEmail {
-  width: 30vw;
-  padding-left: 10px;
-  height: 8vh;
-  border-radius: 10px;
-  border: 1px solid #d1d1d1;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 24px;
-  color: #000000;
-}
-
-#contactPhone {
+.input-divs input {
   width: 30vw;
   padding-left: 10px;
   height: 8vh;
@@ -333,7 +360,7 @@ p {
 
 .contacts::-webkit-scrollbar {
   width: 8px;
-  color: rgb(168,168,168);
+  color: rgb(168, 168, 168);
 }
 
 .contacts::-webkit-scrollbar-track {
@@ -564,7 +591,7 @@ p {
   font-size: 16px;
   font-weight: 400;
   line-height: 19.2px;
-  color: rgb(0,163,242);
+  color: rgb(0, 163, 242);
 }
 
 .profilePicture {
@@ -586,8 +613,9 @@ p {
 }
 
 .largeProfilePicture {
-  min-width: 110px;
-  height: 110px;
+  min-width: 110px !important;
+  min-height: 110px !important;
+  /* height: 110px; */
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -673,6 +701,7 @@ p {
 }
 
 .overlayForEdit {
+  background-color: rgba(0, 0, 0, 0.229);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -692,8 +721,8 @@ p {
   position: absolute;
   cursor: pointer;
   border-radius: 100px;
-  top: 48px;
-  right: 68px;
+  top: 3vh;
+  right: 2vw;
 }
 
 .imgcloseOverlay2:hover {
@@ -704,15 +733,12 @@ p {
   background-color: #fff;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 72px;
-  flex: 1;
-  padding-right: 48px;
-  padding-left: 16px;
+  justify-content: space-evenly;
   border-top-right-radius: 30px;
   border-bottom-right-radius: 30px;
-  width: 40vw;
-  height: 80vh;
+  width: 47vw;
+  height: 75vh;
+  padding-left: 3vw;
 }
 
 .divider-vertical2 {
@@ -721,8 +747,6 @@ p {
   width: 90px;
   align-self: self-start;
   background-color: #29abe2;
-  margin-top: -30px;
-  margin-bottom: 30px;
 }
 
 .createButton2 {
@@ -767,21 +791,18 @@ p {
 }
 
 .imgsinput0-1 {
-  position: absolute;
-  margin-top: 15px;
-  margin-left: -50px;
+  height: 30px;
+  margin-left: -3vw;
 }
 
 .imgsinput1-2 {
-  position: absolute;
-  margin-top: 15px;
-  margin-left: -50px;
+  height: 30px;
+  margin-left: -3vw;
 }
 
 .imgsinput2-3 {
-  position: absolute;
-  margin-top: 15px;
-  margin-left: -50px;
+  height: 30px;
+  margin-left: -3vw;
 }
 
 @media (max-width: 1210px) {
@@ -817,7 +838,7 @@ p {
     justify-content: flex-end;
     height: 10vh;
   }
-  
+
   .addContactButton {
     border-radius: 30px;
     width: 5vw;
@@ -844,7 +865,7 @@ p {
   .contacts-list-letter {
     min-width: 290px;
   }
-  
+
   .seperator-contacts-list {
     min-width: 320px;
   }

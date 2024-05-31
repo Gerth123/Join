@@ -15,29 +15,33 @@ document.addEventListener("DOMContentLoaded", function () {
   const closeImage = document.querySelector(".imgcloseOverlay");
   const cancelButton = document.querySelector(".clearButton");
 
+
   addContactButton.addEventListener("click", function (event) {
     event.stopPropagation();
     overlay.style.display = "flex";
-    overlay.classList.remove("overlay-closed");
+    mainSectionOverlay.classList.remove("overlay-closed");
   });
 
   document.addEventListener("click", function (event) {
-    if (overlay.style.display === "block" && !mainSectionOverlay.contains(event.target)) {
+    if (overlay.style.display === "flex" && !mainSectionOverlay.contains(event.target)) {
       overlay.style.display = "none";
     }
   });
 
   closeImage.addEventListener("click", function (event) {
     event.stopPropagation();
-    overlay.classList.add("overlay-closed");
-    setTimeout(function() {
+    mainSectionOverlay.classList.add("overlay-closed");
+    setTimeout(function () {
       overlay.style.display = "none";
-    }, 450);
+    }, 850);
   });
 
   cancelButton.addEventListener("click", function (event) {
     event.stopPropagation();
-    overlay.style.display = "none";
+    mainSectionOverlay.classList.add("overlay-closed");
+    setTimeout(function () {
+      overlay.style.display = "none";
+    }, 850);
     clearInputFields();
   });
 
@@ -48,7 +52,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
-
 
 /**
  * This function clears the text in the input fields for contact name, email, and phone.
