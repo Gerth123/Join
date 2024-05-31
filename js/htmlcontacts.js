@@ -171,7 +171,8 @@ async function deleteContact(contactId) {
  */
 async function deleteContactFromFirebase(email) {
     const baseUrl = 'https://join-ca44d-default-rtdb.europe-west1.firebasedatabase.app/';
-    const userId = '-NyQZIrDvTgyGwkges5f';
+    let urlParams = new URLSearchParams(window.location.search);
+    let userId = urlParams.get('actualUsersNumber');
 
     const url = `${baseUrl}users/${userId}/contacts.json`;
     const response = await fetch(url);
