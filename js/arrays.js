@@ -153,6 +153,23 @@ let testTasks = [
           { checked: true, task: "Start Page Layout" },
         ],
       },
+      {
+        id: 9876,
+        category: "Bug Fix",
+        title: "Fix Responsive Layout Issues",
+        description: "Resolve layout issues on mobile devices.",
+        assigned: [
+          { color: "", name: "Stefan Meier" },
+          { color: "", name: "David Eisenberg" },
+        ],
+        date: "10/06/2025",
+        priority: "high",
+        subtasks: [
+          { checked: false, task: "Identify Issues" },
+          { checked: false, task: "Fix CSS Bugs" },
+          { checked: false, task: "Test on Devices" },
+        ],
+      },
     ],
   },
   {
