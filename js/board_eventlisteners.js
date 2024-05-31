@@ -193,6 +193,10 @@ function addTaskBtnSmall(contentIdAdd) {
 async function getAddAssgined() {
   let data = await getData("tasks");
   let contacts = await getData("contacts");
+  let contactsData = []
+  for(let i = 0; i < contacts.length; i++) {
+    if(contacts[i] != null)  contactsData.push(contacts[i])
+  }
   let assignedUsers = [];
   for (let column of data) {
     if (column.id == contentId) {
@@ -205,7 +209,7 @@ async function getAddAssgined() {
       }
     }
   }
-  getAssignedUsersAddCard(assignedUsers, contacts);
+  getAssignedUsersAddCard(assignedUsers, contactsData);
 }
 
 /**
@@ -399,10 +403,14 @@ async function saveEditData() {
   let actualUsersNumber = urlParams.get("actualUsersNumber");
   let data = await getData("tasks");
   let contacts = await getData("contacts");
+  let contactsData = []
+  for(let i = 0; i < contacts.length; i++) {
+    if(contacts[i] != null)  contactsData.push(contacts[i])
+  }
   for (let listItem of data) {
     if (listItem.id == contentId) {
       for (let item of listItem.items) {
-        item = setEditItems(item, contacts);
+        item = setEditItems(item, contactsData);
         await putData(`users/${actualUsersNumber}/tasks/`, data);
       }
     }

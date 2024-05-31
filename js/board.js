@@ -25,11 +25,38 @@ async function getIcons() {
  */
 async function initBoard() {
   data = await getData("tasks");
+  let contacts = await getData("contacts");
+  for(let i = 0; i < data.length; i++) {
+   data[i] = await getAssignedKeyByName(data[i], contacts)
+  }
   icons = await getIcons();
   renderBoards(data);
   getEventListeners();
   getDropZones();
   await fillHeaderInitials();
+}
+
+/**
+ * Retrieves the assigned key by name from the given data object using the contacts array.
+ *
+ * @param {Object} data - The data object containing items with assigned names.
+ * @param {Array} contacts - The array of contacts.
+ * @return {Object} The modified data object with any invalid assigned names removed.
+ */
+function getAssignedKeyByName(data, contacts) {
+  for (const item of data.items) {
+    let i = 0
+    for(i = 0; i< item.assigned.length; i++) {
+      let assigned = item.assigned[i];
+      const contactExists = contacts.some(contact => contact && contact.name == assigned.name);
+      if(!contactExists) {
+          const index = item.assigned.findIndex(assign => assign.name == item.assigned[i].name )
+          item.assigned.splice(index, 1)
+          i = -1
+      }
+    }
+  }
+  return data;
 }
 
 /**
