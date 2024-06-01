@@ -54,11 +54,21 @@ label {
 .board-container {
     padding: 48px 40px 48px 40px;
   /* width: 30vw; */
-  height: 93%;
-  overflow-y: scroll;
+  height: 60vh;
+  /* overflow-y: scroll; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.board-container-fullsize {
+  /* padding: 48px 40px 48px 40px; */
+/* width: 30vw; */
+height: 60vh;
+overflow-y: scroll;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
 }
 
 .board-header-section {
