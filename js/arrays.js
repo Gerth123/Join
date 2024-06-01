@@ -83,7 +83,7 @@ let testTasks = [
     items: [
       {
         id: 7955,
-        category: "User Story",
+        category: "user story",
         title: "Kochwelt Page & Recipe Recommender",
         description: "Build start page with recipe recommendation.",
         assigned: [
@@ -100,7 +100,7 @@ let testTasks = [
       },
       {
         id: 2453,
-        category: "Technical Task",
+        category: "technical task",
         title: "HTML Base Template Creation",
         description: "Create reusable HTML base templates...",
         assigned: [
@@ -117,7 +117,7 @@ let testTasks = [
       },
       {
         id: 8945,
-        category: "User Story",
+        category: "user story",
         title: "Daily Kochwelt Recipe",
         description: "Implement daily recipe and portion calculator...",
         assigned: [
@@ -139,7 +139,7 @@ let testTasks = [
     items: [
       {
         id: 7489,
-        category: "Technical Task",
+        category: "technical task",
         title: "CSS Architecture Planning",
         description: "Define CSS naming conventions and structure...",
         assigned: [
@@ -155,7 +155,7 @@ let testTasks = [
       },
       {
         id: 9876,
-        category: "Bug Fix",
+        category: "technical task",
         title: "Fix Responsive Layout Issues",
         description: "Resolve layout issues on mobile devices.",
         assigned: [

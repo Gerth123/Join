@@ -1,5 +1,8 @@
 .full-size-container {
-  position: absolute;
+
+  position: fixed;
+  top:0;
+  left:0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,26 +12,103 @@
 }
 
 .full-size-board {
-  width: 445px;
-  height: 890px;
-  padding: 48px 40px 48px 40px;
+  position: absolute;
+  transform: translate(0, 0);
+  width: 40vw;
+  /* height: 790px; */
+  /* padding: 48px 40px 48px 40px; */
+  overflow: hidden;
   border-radius: 30px;
   background-color: #fff;
   box-shadow: 0px 0px 4px 0px #00000029;
+  animation-name: slideIn;
+  animation-duration: 0.9s;
+  animation-timing-function: ease-in-out;
+}
+
+.full-size-edit-board {
+  position: absolute;
+  width: 40vw;
+  /* height: 60vh; */
+  /* padding: 48px 40px 48px 40px; */
+  overflow: hidden;
+  border-radius: 30px;
+  background-color: #fff;
+}
+
+
+.overlay-closed {
+  animation-name: slideOut;
+  animation-duration: 0.9s;
+  transition: transform 0.9s ease;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes slideOut {
+  from {
+    left: 10vw;
+  }
+
+  to {
+    left: 150vw;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    left: 150vw;
+  }
+
+  to {
+    left: 30vw;
+  }
 }
 
 .full-size-add-board {
-  width: 100%;
-  max-width: 890px;
-  min-height: 620px;
-  /* padding: 48px 40px 48px 40px; */
-  padding-top: 48px;
-  padding-bottom: 48px;
-  padding-left: min(40px, 5%);
-  padding-right: min(40px, 5%);
+  position: absolute;
+  transform: translate(0, 0);
+  width: 60vw;
+  /* max-width: 890px; */
+  /* min-height: 620px; */
+  /* padding-top: 48px;
+  padding-bottom: 48px; */
+  /* padding-left: min(40px, 5%);
+  padding-right: min(40px, 5%); */
+  overflow: hidden;
+  /* height: 790px; */
   border-radius: 30px;
   background-color: #fff;
   box-shadow: 0px 0px 4px 0px #00000029;
+  animation-name: slideInAdd;
+  animation-duration: 0.9s;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes slideInAdd {
+  from {
+    left: 150vw;
+  }
+
+  to {
+    left: 20vw;
+  }
+}
+
+@keyframes slideOutAdd {
+  from {
+    left: 20vw;
+  }
+
+  to {
+    left: 150vw;
+  }
+}
+
+.overlay-closed-add-board {
+  animation-name: slideOutAdd;
+  animation-duration: 0.9s;
+  transition: transform 0.9s ease;
+  animation-timing-function: ease-in-out;
 }
 
 .full-size-add-form {
@@ -43,10 +123,17 @@
   justify-content: space-between;
 }
 
+.full-size-edit-header {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .full-size-title {
   margin-top: 24px;
   font-size: 61px;
   font-weight: bold;
+  word-break:break-all;
+  /* width: 100%; */
 }
 
 .full-size-description {
@@ -161,6 +248,17 @@
 @media screen and (max-width: 1100px) {
   .full-size-add-board {
     /* padding: 48px 40px 48px 40px; */
+    /* padding-top: 24px;
+    padding-bottom: 24px;
+    padding-left: 16px;
+    padding-right: 16px; */
+  }
+
+  .full-size-title{
+    font-size: 40px;
+  }
+
+  .board-container {
     padding-top: 24px;
     padding-bottom: 24px;
     padding-left: 16px;
@@ -169,26 +267,47 @@
 }
 
 @media screen and (max-width: 767px) {
-  .full-size-container {
-    align-items: flex-start;
-  }
 
   .full-size-board {
-    width: 100%;
-    max-width: 396px;
-    height: 640px;
+width: 40vw;
+    /* height: 640px; */
   }
 
-  .full-size-add-board {
-    width: 90%;
-    max-width: 600px;
-    padding: 24px 20px 24px 20px;
+  .full-size-title{
+    font-size: 32px;
   }
+
+
+  /* .full-size-add-board {
+    width: 60vw
+  } */
 }
 
 @media screen and (max-width: 510px) {
-  .full-size-add-board {
+  /* .full-size-add-board {
     max-width: 400px;
+    padding: 12px 10px 12px 10px;
+  } */
+
+  .full-size-board {
+    width: 80vw;
+  }
+
+  .full-size-edit-board {
+    width: 80vw;
+  }
+
+  @keyframes slideIn {
+    from {
+      left: 150vw;
+    }
+  
+    to {
+      left: 10vw;
+    }
+  }
+
+  .board-container{
     padding: 12px 10px 12px 10px;
   }
 }
