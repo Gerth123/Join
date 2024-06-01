@@ -62,7 +62,7 @@ label {
 }
 
 .board-container-fullsize {
-  /* padding: 48px 40px 48px 40px; */
+  padding: 48px 40px 48px 40px;
 /* width: 30vw; */
 height: 60vh;
 overflow-y: scroll;
