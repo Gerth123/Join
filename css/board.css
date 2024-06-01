@@ -28,20 +28,6 @@ label {
   font-size: 12px;
 }
 
-.full-size-label {
-  font-size: 20px;
-}
-
-.full-size-input {
-  margin-top: 8px;
-  margin-bottom: 32px;
-  padding: 12px 21px 12px 21px;
-  border: 1px solid #d1d1d1;
-  border-radius: 10px;
-  font-size: 20px;
-  min-height: 24px;
-}
-
 .headerAndOpenedContainer {
   overflow-y: scroll;
   background-color: #f6f7f8;
@@ -49,26 +35,6 @@ label {
 
 .wholeJoinContainer {
   position: relative;
-}
-
-.board-container {
-    padding: 48px 40px 48px 40px;
-  /* width: 30vw; */
-  height: 60vh;
-  /* overflow-y: scroll; */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.board-container-fullsize {
-  padding: 48px 40px 48px 40px;
-/* width: 30vw; */
-height: 60vh;
-overflow-y: scroll;
-display: flex;
-flex-direction: column;
-justify-content: space-between;
 }
 
 .board-header-section {
