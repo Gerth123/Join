@@ -4,48 +4,56 @@
  */
 document.addEventListener('DOMContentLoaded', setupContactClickEvents);
 
-/** 
- * Sets up click events for each contact card.
+/**
+ * Initializes contact click events.
  * Author: Elias
  */
 async function setupContactClickEvents() {
     const contactCards = document.querySelectorAll('.contactCard');
     const contentRight = document.getElementById('contentright');
+    
+    contactCards.forEach(card => {
+        card.addEventListener('click', () => handleCardClick(card, contentRight));
+    });
+}
 
-    contactCards.forEach(function (card) {
-        card.addEventListener('click', function () {
-            const name = card.querySelector('.NameContact').textContent;
-            const email = card.querySelector('.EmailContact').textContent;
-            const phone = card.getAttribute('data-phone');
-            const randomColor = generateRandomColor(name);
-            const initials = getInitials(name);
+/**
+ * Handles the click event for a contact card.
+ * @param {HTMLElement} card - The clicked contact card element.
+ * @param {HTMLElement} contentRight - The element with the ID 'contentright'.
+ * Author: Elias
+ */
+function handleCardClick(card, contentRight) {
+    const name = card.querySelector('.NameContact').textContent;
+    const email = card.querySelector('.EmailContact').textContent;
+    const phone = card.getAttribute('data-phone');
+    const randomColor = generateRandomColor(name);
+    const initials = getInitials(name);
 
-            const contactDetailsDiv = document.querySelector('.contactdetails-right');
-            contactDetailsDiv.innerHTML = generateContactDetailsHTML(name, email, phone, randomColor, initials);
+    const contactDetailsDiv = document.querySelector('.contactdetails-right');
+    contactDetailsDiv.innerHTML = generateContactDetailsHTML(name, email, phone, randomColor, initials);
 
-            if (window.innerWidth < 1100) {
-                contentRight.style.display = 'flex';
-            }
+    if (window.innerWidth < 1100) contentRight.style.display = 'flex';
 
-            const editButton = contactDetailsDiv.querySelector('.edit-div');
-            editButton.addEventListener('click', function () {
-                openEditContactOverlay(name, email, phone, randomColor, initials);
-            });
+    setupEditAndDeleteButtons(contactDetailsDiv, card, name, email, phone, randomColor, initials, contentRight);
+}
 
-            const deleteButton = contactDetailsDiv.querySelector('.delete-div');
-            deleteButton.addEventListener('click', async function () {
-                try {
-                    await deleteContactFromFirebase(email);
-                    card.remove();
-                    contactDetailsDiv.innerHTML = '';
-                    if (window.innerWidth < 1100) {
-                        contentRight.style.display = 'none';
-                    }
-                } catch (error) {
-                    console.error("Fehler beim Löschen des Kontakts:", error);
-                }
-            });
-        });
+/**
+ * Sets up edit and delete buttons.
+ * Author: Elias
+ */
+function setupEditAndDeleteButtons(contactDetailsDiv, card, name, email, phone, randomColor, initials, contentRight) {
+    contactDetailsDiv.querySelector('.edit-div').addEventListener('click', () => 
+        openEditContactOverlay(name, email, phone, randomColor, initials));
+    contactDetailsDiv.querySelector('.delete-div').addEventListener('click', async () => {
+        try {
+            await deleteContactFromFirebase(email);
+            card.remove();
+            contactDetailsDiv.innerHTML = '';
+            if (window.innerWidth < 1100) contentRight.style.display = 'none';
+        } catch (error) {
+            console.error("Fehler beim Löschen des Kontakts:", error);
+        }
     });
 }
 
@@ -290,37 +298,70 @@ function editContactHTML(randomColor, initials, name, email, phone) {
     `;
 }
 
-/** 
- * Opens the edit contact overlay with the given contact information.
- * @param {string} name - The contact's name.
- * @param {string} email - The contact's email.
- * @param {string} phone - The contact's phone number.
- * @param {string} randomColor - The random color for the contact's profile picture.
- * @param {string} initials - The initials of the contact's name.
+/**
+ * Opens the edit contact overlay.
  * Author: Elias
  */
 function openEditContactOverlay(name, email, phone, randomColor, initials) {
+    removeExistingOverlay();
+    createOverlayHTML(randomColor, initials, name, email, phone);
+    setupDeleteButton(email);
+}
+
+/**
+ * Removes existing overlay if present.
+ * Author: Elias
+ */
+function removeExistingOverlay() {
     const existingOverlay = document.querySelector('#editOverlay');
     if (existingOverlay) {
         existingOverlay.remove();
     }
+}
 
+/**
+ * Creates and inserts the overlay HTML.
+ * Author: Elias
+ */
+function createOverlayHTML(randomColor, initials, name, email, phone) {
     const overlayHTML = editContactHTML(randomColor, initials, name, email, phone);
     document.body.insertAdjacentHTML('beforeend', overlayHTML);
+}
 
+/**
+ * Sets up the delete button event listener.
+ * Author: Elias
+ */
+function setupDeleteButton(email) {
     const deleteButton = document.querySelector('.deleteButton');
     deleteButton.addEventListener('click', async function () {
-        try {
-            await deleteContactFromFirebase(email);
-            closeEditContact();
-            const contactCard = document.querySelector(`.contactCard[data-id="${email}"]`);
-            if (contactCard) {
-                contactCard.remove();
-            }
-        } catch (error) {
-            console.error("Fehler beim Löschen des Kontakts:", error);
-        }
+        await handleDeleteContact(email);
     });
+}
+
+/**
+ * Handles contact deletion.
+ * Author: Elias
+ */
+async function handleDeleteContact(email) {
+    try {
+        await deleteContactFromFirebase(email);
+        closeEditContact();
+        removeContactCard(email);
+    } catch (error) {
+        console.error("Fehler beim Löschen des Kontakts:", error);
+    }
+}
+
+/**
+ * Removes contact card from the DOM.
+ * Author: Elias
+ */
+function removeContactCard(email) {
+    const contactCard = document.querySelector(`.contactCard[data-id="${email}"]`);
+    if (contactCard) {
+        contactCard.remove();
+    }
 }
 
 /** 
@@ -340,37 +381,59 @@ function closeEditContact() {
     }, 850);
 }
 
-
-/** 
- * Updates a contact's information based on the form input.
- * @param {Event} event - The submit event from the form.
+/**
+ * Updates a contact with new information.
  * Author: Elias
  */
 async function updateContact(event) {
     event.preventDefault();
-    let name = document.getElementById('contactName' + globalEmail).value;
-    let newEmail = document.getElementById('contactEmail' + globalEmail).value;
-    let phone = document.getElementById('contactPhone' + globalEmail).value;
+    let name = getInputValue('contactName' + globalEmail);
+    let newEmail = getInputValue('contactEmail' + globalEmail);
+    let phone = getInputValue('contactPhone' + globalEmail);
     let contactId = await findContactIdByEmail(globalEmail);
     let userId = getUserIdFormUrl();
     try {
-        let updatedContact = {
-            mail: newEmail,
-            name: name,
-            phone: phone,
-            color: await loadData(`users/` + userId + `/contacts/` + contactId + `/color`),
-        };
+        let updatedContact = await createUpdatedContact(userId, contactId, name, newEmail, phone);
         console.log(updatedContact, contactId, userId);
         await updateContactInFirebase(contactId, updatedContact, userId);
-
-        const actualUsers = await loadData(`users/${userId}/contacts`);
-        const sortedContacts = await sortContacts(actualUsers);
-        await displayContacts(sortedContacts);
+        await refreshAndDisplayContacts(userId);
         closeEditContact();
     } catch (error) {
         console.error("Fehler beim Aktualisieren des Kontakts:", error);
     }
 }
+
+/**
+ * Retrieves the input value by ID.
+ * Author: Elias
+ */
+function getInputValue(id) {
+    return document.getElementById(id).value;
+}
+
+/**
+ * Creates an updated contact object.
+ * Author: Elias
+ */
+async function createUpdatedContact(userId, contactId, name, newEmail, phone) {
+    return {
+        mail: newEmail,
+        name: name,
+        phone: phone,
+        color: await loadData(`users/${userId}/contacts/${contactId}/color`),
+    };
+}
+
+/**
+ * Refreshes and displays sorted contacts.
+ * Author: Elias
+ */
+async function refreshAndDisplayContacts(userId) {
+    const actualUsers = await loadData(`users/${userId}/contacts`);
+    const sortedContacts = await sortContacts(actualUsers);
+    await displayContacts(sortedContacts);
+}
+
 
 /** 
  * Updates a contact's information in Firebase.
