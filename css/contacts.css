@@ -102,6 +102,8 @@ p {
 
 .closeContactResponsive {
   display: none;
+  z-index: 1;
+  justify-content: flex-end;
 }
 
 .mainSectionOverlay2 {
@@ -410,6 +412,15 @@ p {
   padding-left: 5vw;
 }
 
+.contentrightResponsive {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
 .h1contact {
   padding-top: 10vh;
   width: 45vw;
@@ -478,6 +489,21 @@ p {
   font-weight: 500;
   font-size: 43px;
   line-height: 56.4px;
+}
+
+.openEditandDeleteResponsive {
+  position: absolute;
+  bottom: 4vh;
+  right: 3.5vw;
+  height: 10vh;
+  width: 10vh;
+  background-color: rgb(42, 54, 71);
+  border-radius: 30px;
+  z-index: 1;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 .editDelete-div {
@@ -707,7 +733,7 @@ p {
 }
 
 .contacts::-webkit-scrollbar-thumb {
-  background: #2a3647;
+  background: rgb(168, 168, 168);
   border-radius: 5px;
 }
 
@@ -1000,12 +1026,12 @@ p {
     transition: transform 0.9s ease;
     animation-timing-function: ease-in-out;
   }
-  
+
   @keyframes slideOut2 {
     from {
       top: 10vh;
     }
-  
+
     to {
       top: 150vh;
     }
@@ -1015,7 +1041,7 @@ p {
     from {
       top: 10vh;
     }
-  
+
     to {
       top: 150vh;
     }
@@ -1038,6 +1064,63 @@ p {
     height: 80vh;
     width: 52vw;
   }
+
+  .openEditandDeleteResponsive {
+    display: flex;
+  }
+
+  .editDelete-div {
+    display: none;
+    z-index: 2;
+    position: absolute;
+    bottom: 2vh;
+    right: -5vw;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    box-sizing: border-box;
+    background-color: white;
+    border-radius: 20px 20px 0px 20px;
+    width: 12vw;
+    padding-left: 3vw;
+    min-width: 120px;
+    height: 15vh;
+    box-shadow: -1px 3px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding-top: 0;
+    animation-name: slideInEditDelete;
+    animation-duration: 0.7s;
+    animation-timing-function: ease-in-out;
+    transform: translate(0, 0);
+  }
+
+  @keyframes slideInEditDelete {
+    from {
+      right: -100vw;
+    }
+
+    to {
+      right: -5vw;
+    }
+  }
+
+  .editDelete-div-closed-responsive {
+    animation-name: slideOutEditDelete;
+    animation-duration: 0.7s;
+    transition: transform 0.7s ease;
+    animation-timing-function: ease-in-out;
+    transform: translate(0, 0);
+  }
+
+  @keyframes slideOutEditDelete {
+    from {
+      right: -5vw;
+    } 
+
+    to {
+      right: -100vw;
+    }
+  }
 }
 
 @media (max-width: 800px) {
@@ -1052,9 +1135,35 @@ p {
     display: flex;
     align-items: center;
   }
+
+  .closeContactResponsive {
+    width: unset;
+  }
+
+  .h1-div-contact {
+    gap: 20px;
+  }
+
+  .editDelete-div {
+    padding-left: 30px;
+  }
 }
 
-@media (max-width: 620px) {
+@media (max-width: 650px) {
+  .editDelete-div {
+    bottom: -13vh;
+  }
+
+  .seperatorResponsive {
+    display: flex;
+    min-height: 3px;
+    width: 90px;
+    height: unset;
+    border-radius: 3px;
+    background-color: #29abe2;
+    margin-top: 1px;
+  }
+
   .contacts {
     width: 60vw;
   }
@@ -1062,6 +1171,66 @@ p {
   .contacts-list-letter {
     width: 87.5%;
   }
+
+  .h1contact {
+    padding-top: 4vh;
+    align-items: flex-start;
+    height: 20vh;
+  }
+
+  .h1-div-contact {
+    padding-top: 1vh;
+    flex-direction: column;
+    height: auto;
+    gap: 5px;
+    align-items: flex-start;
+  }
+
+  .P-contact {
+    font-size: 45px;
+  }
+
+  .P-contact-right {
+    font-size: 22px;
+  }
+
+  .seperator {
+    display: none;
+  }
+
+  .contactdetails-right {
+    height: 40vh;
+    gap: 0;
+  }
+
+  .profil-user {
+    height: auto;
+    padding: 10px 0;
+  }
+
+  .largeProfilePicture {
+    min-width: 0 !important;
+    min-height: 0 !important;
+    width: 70px;
+    height: 70px;
+    font-size: 28px;
+  }
+  
+  .profil-user-right {
+    height: auto;
+  }
+
+  .contact-name {
+    font-size: 37px;
+    font-weight: bold;
+  }
+
+  .h2Contactinfo {
+    font-size: 18px;
+    margin-block-start: 0.5em;
+    margin-block-end: 0.3em;
+  }
+
 }
 
 @media (max-width: 510px) {
@@ -1075,10 +1244,6 @@ p {
 }
 
 @media (max-width: 450px) {
-  body {
-    font-size: smaller;
-  }
-
   .contacts {
     width: 90vw;
     padding-left: 0vw;
@@ -1093,5 +1258,17 @@ p {
 
   .seperator-contacts-list {
     width: 90%;
+  }
+
+  .h1contact {
+    width: 95vw;
+  }
+
+  .contactdetails-right {
+    width: 95vw;
+  }
+
+  .editDelete-div {
+    right: 0vw;
   }
 }

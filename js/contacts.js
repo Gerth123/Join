@@ -20,9 +20,9 @@ function setupAddContactButton() {
   const mainSectionOverlay = document.querySelector(".mainSectionOverlay");
 
   addContactButton.addEventListener("click", function (event) {
-      event.stopPropagation();
-      overlay.style.display = "flex";
-      mainSectionOverlay.classList.remove("overlay-closed");
+    event.stopPropagation();
+    overlay.style.display = "flex";
+    mainSectionOverlay.classList.remove("overlay-closed");
   });
 }
 
@@ -35,9 +35,9 @@ function setupDocumentClickListener() {
   const mainSectionOverlay = document.querySelector(".mainSectionOverlay");
 
   document.addEventListener("click", function (event) {
-      if (overlay.style.display === "flex" && !mainSectionOverlay.contains(event.target)) {
-          overlay.style.display = "none";
-      }
+    if (overlay.style.display === "flex" && !mainSectionOverlay.contains(event.target)) {
+      overlay.style.display = "none";
+    }
   });
 }
 
@@ -51,11 +51,11 @@ function setupCloseImageListener() {
   const mainSectionOverlay = document.querySelector(".mainSectionOverlay");
 
   closeImage.addEventListener("click", function (event) {
-      event.stopPropagation();
-      mainSectionOverlay.classList.add("overlay-closed");
-      setTimeout(function () {
-          overlay.style.display = "none";
-      }, 850);
+    event.stopPropagation();
+    mainSectionOverlay.classList.add("overlay-closed");
+    setTimeout(function () {
+      overlay.style.display = "none";
+    }, 850);
   });
 }
 
@@ -69,12 +69,12 @@ function setupCancelButtonListener() {
   const mainSectionOverlay = document.querySelector(".mainSectionOverlay");
 
   cancelButton.addEventListener("click", function (event) {
-      event.stopPropagation();
-      mainSectionOverlay.classList.add("overlay-closed");
-      setTimeout(function () {
-          overlay.style.display = "none";
-      }, 850);
-      clearInputFields();
+    event.stopPropagation();
+    mainSectionOverlay.classList.add("overlay-closed");
+    setTimeout(function () {
+      overlay.style.display = "none";
+    }, 850);
+    clearInputFields();
   });
 }
 
@@ -85,9 +85,9 @@ function setupCancelButtonListener() {
 function setupContactsAListener() {
   const contactsADiv = document.querySelector('.contactsA');
   if (contactsADiv) {
-      contactsADiv.addEventListener('click', () => {
-          contactsADiv.classList.toggle('active');
-      });
+    contactsADiv.addEventListener('click', () => {
+      contactsADiv.classList.toggle('active');
+    });
   }
 }
 
@@ -175,8 +175,8 @@ async function displayContacts(contacts) {
   if (!contactsContainer) return;
 
   if (!contacts || contacts.length === 0) {
-      console.error("Keine Kontakte gefunden.");
-      return;
+    console.error("Keine Kontakte gefunden.");
+    return;
   }
 
   clearContactsContainer(contactsContainer);
@@ -192,7 +192,7 @@ async function displayContacts(contacts) {
 function getContactsContainer() {
   const contactsContainer = document.getElementById('contacts-container');
   if (!contactsContainer) {
-      console.error("Das Container-Element für Kontakte wurde nicht gefunden.");
+    console.error("Das Container-Element für Kontakte wurde nicht gefunden.");
   }
   return contactsContainer;
 }
@@ -215,15 +215,15 @@ function clearContactsContainer(container) {
 async function populateContacts(contacts, container) {
   let currentLetter = '';
   for (const contact of contacts) {
-      if (contact && contact.name) {
-          const contactLetter = contact.name.charAt(0).toUpperCase();
-          if (contactLetter !== currentLetter) {
-              currentLetter = contactLetter;
-              addLetterHeader(container, currentLetter);
-          }
-          const contactHTML = await generateContactHTML(contact);
-          container.innerHTML += contactHTML;
+    if (contact && contact.name) {
+      const contactLetter = contact.name.charAt(0).toUpperCase();
+      if (contactLetter !== currentLetter) {
+        currentLetter = contactLetter;
+        addLetterHeader(container, currentLetter);
       }
+      const contactHTML = await generateContactHTML(contact);
+      container.innerHTML += contactHTML;
+    }
   }
 }
 
@@ -280,7 +280,7 @@ async function saveContact(name, mail, phone, userId) {
   const response = await saveContactToFirebase(baseUrl, userId, newContactId, contactData);
 
   if (!response.ok) {
-      throw new Error('Error saving contact: ' + response.statusText);
+    throw new Error('Error saving contact: ' + response.statusText);
   }
 
   return await response.json();
@@ -295,7 +295,7 @@ function generateRandomColor() {
   const letters = '0123456789ABCDEF';
   let color = '#';
   for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
+    color += letters[Math.floor(Math.random() * 16)];
   }
   return color;
 }
@@ -310,10 +310,10 @@ function generateRandomColor() {
 */
 function createContactData(name, mail, phone) {
   return {
-      name,
-      mail,
-      phone,
-      color: generateRandomColor()
+    name,
+    mail,
+    phone,
+    color: generateRandomColor()
   };
 }
 
@@ -326,7 +326,7 @@ function createContactData(name, mail, phone) {
 async function loadData(path) {
   const response = await fetch(`${baseUrl}${path}.json`);
   if (!response.ok) {
-      throw new Error('Error loading data: ' + response.statusText);
+    throw new Error('Error loading data: ' + response.statusText);
   }
   return await response.json();
 }
@@ -341,7 +341,7 @@ async function findFirstMissingId(userId) {
   const contacts = await loadData(`users/${userId}/contacts`);
   let id = 0;
   while (contacts.hasOwnProperty(id)) {
-      id++;
+    id++;
   }
   return id;
 }
@@ -357,11 +357,11 @@ async function findFirstMissingId(userId) {
 */
 async function saveContactToFirebase(baseUrl, userId, contactId, contactData) {
   return await fetch(`${baseUrl}users/${userId}/contacts/${contactId}.json`, {
-      method: 'PUT',
-      headers: {
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(contactData)
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(contactData)
   });
 }
 
@@ -374,8 +374,8 @@ async function saveContactToFirebase(baseUrl, userId, contactId, contactData) {
 async function findFirstMissingId(userId) {
   const contacts = await loadData(`users/${userId}/contacts`);
   if (contacts === null) {
-      console.error("Es wurden keine Kontakte gefunden.");
-      return 1;
+    console.error("Es wurden keine Kontakte gefunden.");
+    return 1;
   }
   const ids = getContactIds(contacts);
   ids.sort((a, b) => a - b);
@@ -390,8 +390,8 @@ async function findFirstMissingId(userId) {
 */
 function getContactIds(contacts) {
   return contacts
-      .filter(contact => contact && typeof contact.id === 'number' && !isNaN(contact.id))
-      .map(contact => contact.id);
+    .filter(contact => contact && typeof contact.id === 'number' && !isNaN(contact.id))
+    .map(contact => contact.id);
 }
 
 /**
@@ -403,10 +403,10 @@ function getContactIds(contacts) {
 function findMissingId(ids) {
   let missingId = 1;
   for (const id of ids) {
-      if (id !== missingId) {
-          break;
-      }
-      missingId++;
+    if (id !== missingId) {
+      break;
+    }
+    missingId++;
   }
   return missingId;
 }
@@ -437,18 +437,18 @@ async function createContact(event) {
   let userId = await getUserIdFormUrl();
   let contacts = await getData("contacts");
   let alreadyExist = contacts.find(contact => contact && contact.mail == mail);
-  
+
   if (alreadyExist) {
-      alert("The contact already exists!");
+    alert("The contact already exists!");
   } else {
-      try {
-          const newContact = await saveContact(name, mail, phone, userId);
-          clearInputFields();
-          updatePageUrl(userId);
-          await handleLoadedContacts(userId);
-      } catch (error) {
-          console.error('Error saving contact:', error);
-      }
+    try {
+      const newContact = await saveContact(name, mail, phone, userId);
+      clearInputFields();
+      updatePageUrl(userId);
+      await handleLoadedContacts(userId);
+    } catch (error) {
+      console.error('Error saving contact:', error);
+    }
   }
 }
 
@@ -472,10 +472,10 @@ async function handleLoadedContacts(userId) {
   console.log("Loaded Contacts:", actualUsers);
 
   if (actualUsers) {
-      const sortedContacts = sortContacts(actualUsers);
-      displayContacts(sortedContacts);
+    const sortedContacts = sortContacts(actualUsers);
+    displayContacts(sortedContacts);
   } else {
-      console.error("No contacts found for the loaded user.");
+    console.error("No contacts found for the loaded user.");
   }
 }
 
@@ -483,6 +483,22 @@ async function handleLoadedContacts(userId) {
  * Hides the contact information section in a responsive manner.
  * Author: Elias
  */
-function closeContactInfoResponsive(){
+function closeContactInfoResponsive() {
   document.getElementById("contentright").style.display = "none";
+}
+
+function openEditAndDeleteResponsive() {
+  document.body.style.overflow = 'hidden';
+  document.getElementById('editDelete-div').classList.remove('editDelete-div-closed-responsive');
+  document.getElementById("editDelete-div").style.display = "flex";
+}
+
+function closeEditAndDeleteResponsive() {
+  const editDeleteDiv = document.getElementById("editDelete-div");
+  if (window.innerWidth <= 1100) {
+    document.getElementById('editDelete-div').classList.add('editDelete-div-closed-responsive');
+    setTimeout(function () {
+      editDeleteDiv.style.display = "none";
+    }, 650);
+  }
 }

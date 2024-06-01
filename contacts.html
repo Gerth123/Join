@@ -21,13 +21,13 @@
     <div class="wholeJoinContainer">
       <section class="headerAndOpenedContainer">
         <header>
-          <img class="logoResponsive" src="assets/img/logo.svg" alt="Logo">
+          <img class="logoResponsive" src="assets/img/logo.svg" alt="Logo" />
           <div class="headlineContainer">
             <span class="headline">Kanban Project Management Tool</span>
           </div>
           <div class="helpAndUserContainer">
-            <img src="assets/img/help.svg" alt="Help" class="helpIcon" onclick="changeHtmlPage('help.html')"/>
-            <div class="initials"  id="headerInitials"></div>
+            <img src="assets/img/help.svg" alt="Help" class="helpIcon" onclick="changeHtmlPage('help.html')" />
+            <div class="initials" id="headerInitials"></div>
             <div class="menu" id="menu">
               <a onclick="changeHtmlPage('help.html')" class="helpAtNavBar">Help</a>
               <a onclick="changeHtmlPage('legal_notice.html')">Legal Notice</a>
@@ -49,15 +49,28 @@
             </div>
           </section>
           <section class="contentright" id="contentright">
-            <div class="h1contact">
-              <div class="h1-div-contact">
-                <p class="P-contact">Contacts</p>
-                <div class="seperator"></div>
-                <p class="P-contact-right">Better with a team</p>
+            <div class="contentrightResponsive" onclick="closeEditAndDeleteResponsive()">
+              <div class="h1contact">
+                <div class="h1-div-contact">
+                  <p class="P-contact">Contacts</p>
+                  <div class="seperator"></div>
+                  <p class="P-contact-right">Better with a team</p>
+                  <div class="seperatorResponsive"></div>
+                </div>
+                <div class="closeContactResponsive">
+                  <img
+                    src="assets/img/arrowLeft.svg"
+                    alt="Get Back"
+                    class="closeContactInfoResponsiveImg"
+                    onclick="closeContactInfoResponsive()"
+                  />
+                </div>
               </div>
-              <div class="closeContactResponsive"><img src="assets/img/arrowLeft.svg" alt="Get Back" class="closeContactInfoResponsiveImg" onclick="closeContactInfoResponsive()"></div>
+              <div class="contactdetails-right"></div>
             </div>
-            <div class="contactdetails-right"></div>
+            <div class="openEditandDeleteResponsive" onclick="openEditAndDeleteResponsive()">
+              <img src="assets/img/openEditAndDelete.svg" alt="Open Edit and Delete Image" />
+            </div>
           </section>
         </div>
       </section>
@@ -120,15 +133,15 @@
           <form class="inputSection" id="contactForm" onsubmit="createContact(event)">
             <div class="input-divs">
               <input required id="contactName" placeholder="Name" />
-              <img src="assets/img/person.svg" class="imgsinput">
+              <img src="assets/img/person.svg" class="imgsinput" />
             </div>
             <div class="input-divs">
               <input required id="contactEmail" placeholder="Email" pattern=".*@.*\..*" type="email" title="An @ is required" />
-              <img src="assets/img/mail.svg" class="imgsinput1">
+              <img src="assets/img/mail.svg" class="imgsinput1" />
             </div>
             <div class="input-divs">
               <input required id="contactPhone" placeholder="Phone" type="tel" title="Only numbers allowed" />
-              <img src="assets/img/call.svg" class="imgsinput2">
+              <img src="assets/img/call.svg" class="imgsinput2" />
             </div>
             <div class="overlayButtons">
               <div class="clearButton">

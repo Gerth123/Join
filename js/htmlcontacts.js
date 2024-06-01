@@ -75,7 +75,7 @@ function generateContactDetailsHTML(name, email, phone, randomColor, initials) {
             </div>
             <div class="profil-user-right">
                 <p class="contact-name">${name}</p>
-                <div class="editDelete-div">
+                <div class="editDelete-div" id="editDelete-div">
                     <div class="edit-div" data-id="1">
                         <img class="contact-img1" src="assets/img/edit.svg"/>
                         <img class="contact-img2" src="assets/img/edit (1).svg"/>
