@@ -1,5 +1,18 @@
-.full-size-container {
+.full-size-label {
+  font-size: 20px;
+}
 
+.full-size-input {
+  margin-top: 8px;
+  margin-bottom: 32px;
+  padding: 12px 21px 12px 21px;
+  border: 1px solid #d1d1d1;
+  border-radius: 10px;
+  font-size: 20px;
+  min-height: 24px;
+}
+
+.full-size-container {
   position: fixed;
   top:0;
   left:0;
@@ -14,7 +27,7 @@
 .full-size-board {
   position: absolute;
   transform: translate(0, 0);
-  width: 40vw;
+  width: 30vw;
   /* height: 790px; */
   /* padding: 48px 40px 48px 40px; */
   overflow: hidden;
@@ -28,7 +41,7 @@
 
 .full-size-edit-board {
   position: absolute;
-  width: 40vw;
+  width: 30vw;
   /* height: 60vh; */
   /* padding: 48px 40px 48px 40px; */
   overflow: hidden;
@@ -46,7 +59,7 @@
 
 @keyframes slideOut {
   from {
-    left: 10vw;
+    left: 20vw;
   }
 
   to {
@@ -60,7 +73,7 @@
   }
 
   to {
-    left: 30vw;
+    left: 35vw;
   }
 }
 
@@ -245,6 +258,30 @@
   overflow-y: scroll;
 }
 
+.board-container {
+  padding: 48px 40px 48px 40px;
+/* width: 30vw; */
+height: 60vh;
+/* overflow-y: scroll; */
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+}
+
+.board-container-fullsize {
+padding: 48px 40px 48px 40px;
+/* width: 30vw; */
+height: 60vh;
+overflow-y: scroll;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+}
+
+.board-container-content {
+  overflow-y: scroll;
+}
+
 @media screen and (max-width: 1100px) {
   .full-size-add-board {
     /* padding: 48px 40px 48px 40px; */
@@ -311,3 +348,4 @@ width: 40vw;
     padding: 12px 10px 12px 10px;
   }
 }
+
