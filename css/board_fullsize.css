@@ -283,12 +283,17 @@ justify-content: space-between;
 }
 
 @media screen and (max-width: 1100px) {
-  .full-size-add-board {
-    /* padding: 48px 40px 48px 40px; */
-    /* padding-top: 24px;
-    padding-bottom: 24px;
-    padding-left: 16px;
-    padding-right: 16px; */
+
+  .full-size-board {
+    width: 50vw;
+  }
+
+  .full-size-edit-board {
+    width: 50vw;
+  }
+
+  .board-container-fullsize {
+        padding: 24px 20px 24px 20px;
   }
 
   .full-size-title{
@@ -306,32 +311,25 @@ justify-content: space-between;
 @media screen and (max-width: 767px) {
 
   .full-size-board {
-width: 40vw;
-    /* height: 640px; */
+    width: 60vw;
+  }
+
+  .full-size-edit-board {
+    width: 60vw;
   }
 
   .full-size-title{
     font-size: 32px;
   }
-
-
-  /* .full-size-add-board {
-    width: 60vw
-  } */
 }
 
 @media screen and (max-width: 510px) {
-  /* .full-size-add-board {
-    max-width: 400px;
-    padding: 12px 10px 12px 10px;
-  } */
-
   .full-size-board {
-    width: 80vw;
+    width: 90vw;
   }
 
   .full-size-edit-board {
-    width: 80vw;
+    width: 90vw;
   }
 
   @keyframes slideIn {
