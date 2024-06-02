@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', setupContactClickEvents);
 async function setupContactClickEvents() {
     const contactCards = document.querySelectorAll('.contactCard');
     const contentRight = document.getElementById('contentright');
-    
+
     contactCards.forEach(card => {
         card.addEventListener('click', () => handleCardClick(card, contentRight));
     });
@@ -43,7 +43,7 @@ function handleCardClick(card, contentRight) {
  * Author: Elias
  */
 function setupEditAndDeleteButtons(contactDetailsDiv, card, name, email, phone, randomColor, initials, contentRight) {
-    contactDetailsDiv.querySelector('.edit-div').addEventListener('click', () => 
+    contactDetailsDiv.querySelector('.edit-div').addEventListener('click', () =>
         openEditContactOverlay(name, email, phone, randomColor, initials));
     contactDetailsDiv.querySelector('.delete-div').addEventListener('click', async () => {
         try {
@@ -75,7 +75,7 @@ function generateContactDetailsHTML(name, email, phone, randomColor, initials) {
             </div>
             <div class="profil-user-right">
                 <p class="contact-name">${name}</p>
-                <div class="editDelete-div">
+                <div class="editDelete-div" id="editDelete-div">
                     <div class="edit-div" data-id="1">
                         <img class="contact-img1" src="assets/img/edit.svg"/>
                         <img class="contact-img2" src="assets/img/edit (1).svg"/>
@@ -267,7 +267,9 @@ function editContactHTML(randomColor, initials, name, email, phone) {
                     </div>
                     <div class="overlay-contentright2">
                         <img class="imgcloseOverlay2" src="assets/img/Close.svg" onclick="closeEditContact()" />
-                        <div class="profilePicture largeProfilePicture" style="background-color: ${randomColor};">${initials}</div>
+                        <div class="profilePictureEditResponsive">
+                            <div class="profilePicture largeProfilePicture" style="background-color: ${randomColor};">${initials}</div>
+                        </div>
                         <form class="inputSection" id="contactForm${email}" onsubmit="updateContact(event)">
                             <div class="input-divs">
                                 <input required id="contactName${email}" value="${name}" placeholder="Name"/>
