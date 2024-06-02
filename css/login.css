@@ -20,6 +20,8 @@ h1 {
     display: flex;
     justify-content: center;
     padding-bottom: 10px;
+    padding-top: 2vh;
+    padding-top: 2svh;
 }
 
 p {
@@ -38,8 +40,10 @@ footer {
     justify-content: center;
     gap: 30px;
     align-items: center;
-    padding-top: 3vh;
-    font-size: 0.8em;
+    position: absolute;
+    bottom: 3vh;
+    bottom: 3svh;
+    font-size: 0.9em;
 }
 
 .d-none {
@@ -50,6 +54,7 @@ footer {
     position: absolute;
     width: 100vw;
     height: 100vh;
+    height: 100svh;
     display: flex;
     top: 42%;
     left: 44%;
@@ -58,22 +63,26 @@ footer {
 
 .logoContainerSlideImg {
     height: 30vh;
+    height: 30svh;
     animation: logoSlideOut 1s ease-in-out;
 }
 
 @keyframes logoSlideOut {
     0% {
         height: 30vh;
+        height: 30svh;
     }
 
     100% {
         height: 12vh;
+        height: 12svh;
     }
 }
 
 .logoContainerSlideImgWhite {
     display: none;
     height: 30vh;
+    height: 30svh;
 }
 
 .logoContainerSlideLoaded {
@@ -100,6 +109,7 @@ footer {
 .wholeLoginContainer {
     display: flex;
     height: 100vh;
+    height: 100svh;
     width: 100vw;
     align-items: center;
     flex-direction: column;
@@ -115,6 +125,7 @@ footer {
 .signUpContainer {
     width: 80vw;
     height: 10vh;
+    height: 10svh;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -145,14 +156,16 @@ footer {
     align-items: center;
     justify-content: center;
     background-color: rgb(255, 255, 255);
-    border-radius: 15px;
+    border-radius: 30px;
     height: 55vh;
+    height: 55svh;
     width: 35vw;
     max-width: 550px;
     min-width: 400px;
-    max-height: 400px;
+    max-height: 380px;
     box-shadow: 0px 0px 5px 0px rgb(0, 0, 0, 0.1);
     margin: 12.5vh 0;
+    margin: 12.5svh 0;
 }
 
 .underline {
@@ -170,7 +183,10 @@ footer {
     flex-direction: column;
     align-items: center;
     height: 30vh;
-    gap: 20px;
+    height: 30svh;
+    justify-content: space-evenly;
+    padding-top: -1vh;
+    padding-top: -1svh;
 }
 
 .logInInputFields {
@@ -231,6 +247,7 @@ footer {
     height: 20px;
     width: 20px;
     margin-left: -5vh;
+    margin-left: -5svh;
 }
 
 .logInFormImgPassword:hover {
@@ -424,13 +441,13 @@ footer {
     position: absolute;
     background-color: rgb(246, 247, 248, 0.65);
     height: 100vh;
+    height: -100svh;
     width: 100vw;
     z-index: 999;
     top: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* padding-top: 19.5vh; */
 }
 
 .msgBox {
@@ -464,6 +481,7 @@ footer {
         align-items: center;
         gap: 0px;
         padding-bottom: 2vh;
+        padding-bottom: -2svh;
     }
 
     .signUpContainer {
@@ -483,6 +501,7 @@ footer {
 
     .loginContainer {
         margin: 21vh 0 4vh 0;
+        margin: 21svh 0 4svh 0;
     }
 
     .logoContainerSlideLoaded {
@@ -502,16 +521,19 @@ footer {
         from {
             opacity: 1;
             height: 30vh;
+            height: 30svh;
         }
 
         to {
             opacity: 1;
             height: 12vh;
+            height: 12svh;
         }
     }
 
     .logoContainerSlideWhite {
         height: 100vh;
+        height: 100svh;
         width: 100vw;
         display: flex;
         position: absolute;
@@ -522,7 +544,9 @@ footer {
     .logoContainerSlideImgWhite {
         position: fixed;
         height: 30vh;
+        height: 30svh;
         top: 35vh;
+        top: 35svh;
         display: unset;
         animation: showAndHide 0.2s forwards;
         opacity: 0;
@@ -550,6 +574,7 @@ footer {
     @keyframes slide-out {
         0% {
             top: 35vh;
+            top: 35svh;
             left: 33vw;
         }
 
@@ -561,6 +586,7 @@ footer {
 
     .responsiveBackgroundForSlide {
         height: 100vh;
+        height: 100svh;
         width: 100vw;
         background-color: rgb(42, 54, 71);
         animation: changeColor 0.5s forwards;
@@ -588,12 +614,19 @@ footer {
         min-width: 300px;
         justify-content: center;
         height: 57vh;
-        justify-content: flex-start;
+        height: 57svh;
         margin: 22vh 0 4vh 0;
+        margin: 22svh 0 4svh 0;
     }
 
     .logInInputFields {
-        width: 85vw;
+        width: 90vw;
+        align-items: center;
+    }
+
+    .logInFormInputAndImgContainer {
+        width: 70vw;
+        padding-right: 30px;
     }
 
     .logInButtons {
@@ -602,10 +635,12 @@ footer {
 
     h1 {
         padding-top: 1vh;
+        padding-top: 1svh;
     }
 
     footer {
         padding-top: 1.5vh;
+        padding-top: 1.5svh;
     }
 
     .userLogInButton {

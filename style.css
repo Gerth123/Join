@@ -334,6 +334,7 @@ header {
 
   header {
     height: 10vh;
+    height: 10svh;
   }
 
   .headlineContainer {
@@ -357,6 +358,7 @@ header {
   .menu {
     font-size: small;
     top: 9vh;
+    top: 9svh;
     height: 150px;
     width: 140px;
     right: 1vw;
@@ -392,9 +394,11 @@ header {
 
   .sideBarContainer {
     flex-direction: row;
+    height: 10svh;
     height: 10vh;
     width: 100vw;
     top: 90vh;
+    top: 90svh;
     position: fixed;
   }
 
@@ -415,6 +419,7 @@ header {
     justify-content: center;
     gap: 5px;
     height: 10vh;
+    height: 10svh;
     width: 20vw;
     min-width: 75px;
     border-radius: 15px;
@@ -430,6 +435,7 @@ header {
     justify-content: center;
     gap: 5px;
     height: 10vh;
+    height: 10svh;
     width: 20vw;
     min-width: 70px;
     border-radius: 15px;
@@ -437,6 +443,7 @@ header {
 
   .summaryContainer:hover {
     height: 10vh;
+    height: 10svh;
   }
 
   .addTaskContainer {
@@ -445,6 +452,7 @@ header {
     justify-content: center;
     gap: 5px;
     height: 10vh;
+    height: 10svh;
     width: 20vw;
     min-width: 70px;
     border-radius: 15px;
@@ -452,6 +460,7 @@ header {
 
   .addTaskContainer:hover {
     height: 10vh;
+    height: 10svh;
   }
 
   .boardContainer {
@@ -460,6 +469,7 @@ header {
     justify-content: center;
     gap: 5px;
     height: 10vh;
+    height: 10svh;
     width: 20vw;
     min-width: 70px;
     border-radius: 15px;
@@ -467,6 +477,7 @@ header {
 
   .boardContainer:hover {
     height: 10vh;
+    height: 10svh;
   }
 
   .contactsContainer {
@@ -475,6 +486,7 @@ header {
     justify-content: center;
     gap: 5px;
     height: 10vh;
+    height: 10svh;
     width: 20vw;
     min-width: 70px;
     border-radius: 15px;
@@ -482,6 +494,7 @@ header {
 
   .contactsContainer:hover {
     height: 10vh;
+    height: 10svh;
   }
 
   .privacyPolicyAndLegalNoticeContainer {
