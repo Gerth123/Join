@@ -487,12 +487,23 @@ function closeContactInfoResponsive() {
   document.getElementById("contentright").style.display = "none";
 }
 
+/**
+ * Opens the edit and delete section in a responsive manner.
+ * 
+ * @author Robin
+ */
+
 function openEditAndDeleteResponsive() {
   document.body.style.overflow = 'hidden';
   document.getElementById('editDelete-div').classList.remove('editDelete-div-closed-responsive');
   document.getElementById("editDelete-div").style.display = "flex";
 }
 
+/**
+ * Closes the edit and delete section in a responsive manner.
+ * 
+ * @author Robin
+ */
 function closeEditAndDeleteResponsive() {
   const editDeleteDiv = document.getElementById("editDelete-div");
   if (window.innerWidth <= 1100) {
