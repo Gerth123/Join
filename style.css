@@ -22,6 +22,7 @@ button {
 
 textarea {
   outline: none;
+  font-family: "PTSans", sans-serif;
 }
 
 .d-none {

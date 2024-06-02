@@ -30,10 +30,22 @@ async function getEditBoard(id, contentId) {
 function toggleSelectBtn() {
   const selectBtns = document.querySelectorAll("#select-btn-editCard");
   selectBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", (e) => {
       btn.classList.toggle("open");
+
     });
   });
+
+  document.addEventListener("click", (e) => {
+    console.log(e.target);
+
+    if(!e.target.closest("#select-btn-editCard") && !e.target.closest(".assigned-item")) {
+      selectBtns.forEach((btn) => {
+        btn.classList.remove("open");
+      });
+    }
+    
+  } )
 }
 
 /**
