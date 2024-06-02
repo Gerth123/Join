@@ -332,6 +332,10 @@ justify-content: space-between;
     width: 90vw;
   }
 
+  .full-size-add-board {
+    width: 90vw;
+  }
+
   @keyframes slideIn {
     from {
       left: 150vw;
