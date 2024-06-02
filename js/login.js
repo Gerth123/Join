@@ -1,17 +1,17 @@
 /**
- * This function is used to set a timeout and show the Login Container with changed CSS when the animation is finished.
+ * This function is used to show an animation with the join logo, to set a timeout and show the Login Container with changed CSS when the animation is finished.
  * 
  * @author: Robin
  */
-function init() {
+document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('logoContainerSlide').classList.remove('logoContainerSlide');
     document.getElementById('logoContainerSlide').classList.add('logoContainerSlideLoaded');
     setTimeout(function () {
         document.getElementById('wholeLoginContainer').classList.remove('d-none');
         document.getElementById('logoContainerSlideImg').style.height = '12vh';
-    }, 850);
+    }, 900);
     loadUserData();
-}
+});
 
 /**
  * This function is used to toggle the visibility of the password input field, if the mouse moves over the lock image.

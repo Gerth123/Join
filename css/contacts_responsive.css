@@ -8,10 +8,12 @@
   @media (max-width: 1100px) {
     .headerAndOpenedContainer {
       height: 90vh;
+      height: 90svh;
     }
   
     .mainContent {
       height: 80vh;
+      height: 80svh;
       width: 100vw;
       display: flex;
       align-items: center;
@@ -20,6 +22,7 @@
   
     .openContactsContainer {
       height: 80vh;
+      height: 80svh;
       width: 100vw;
       display: flex;
       flex-direction: row-reverse;
@@ -28,6 +31,7 @@
     .addContact {
       width: unset;
       height: 75vh;
+      height: 75svh;
       display: flex;
       align-items: flex-end;
       padding-left: 5vw;
@@ -47,12 +51,14 @@
       padding-left: 10vw;
       width: 38vw;
       height: 79vh;
+      height: 79svh;
       padding-right: 0;
     }
   
     .contacts-container {
       width: unset;
       max-height: 78vh;
+      max-height: 78svh;
       padding-bottom: 0vh;
     }
   
@@ -98,7 +104,9 @@
       position: absolute;
       width: 100vw;
       top: 10vh;
+      top: 10svh;
       height: 80vh;
+      height: 80svh;
       z-index: 9;
       padding-left: unset;
       max-width: unset;
@@ -109,7 +117,9 @@
     .h1contact {
       width: 85vw;
       padding-top: 1vh;
+      padding-top: 1svh;
       padding-bottom: 1vh;
+      padding-bottom : 1svh;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -124,6 +134,7 @@
   
     .mainSectionOverlay {
       height: 80vh;
+      height: 80svh;
       width: 90vw;
     }
   
@@ -155,11 +166,13 @@
   
     .overlay-contentright {
       height: 80vh;
+      height: 80svh;
       width: 52vw;
     }
   
     .inputSection {
       height: 45vh;
+      height: 45svh;
     }
   
     .input-divs input {
@@ -186,6 +199,7 @@
       position: absolute;
       transform: translate(0, 0);
       height: 80vh;
+      height: 80svh;
       width: 90vw;
       display: flex;
       animation-name: slideIn2;
@@ -196,20 +210,24 @@
     @keyframes slideIn2 {
       from {
         top: 150vh;
+        top: 150svh;
       }
   
       to {
         top: 10vh;
+        top: 10svh;
       }
     }
   
     @keyframes slideIn {
       from {
         top: 150vh;
+        top: 150svh;
       }
   
       to {
         top: 10vh;
+        top: 10svh;
       }
     }
   
@@ -223,20 +241,24 @@
     @keyframes slideOut2 {
       from {
         top: 10vh;
+        top: 10svh;
       }
   
       to {
         top: 150vh;
+        top: 150svh;
       }
     }
   
     @keyframes slideOut {
       from {
         top: 10vh;
+        top: 10svh;
       }
   
       to {
         top: 150vh;
+        top: 150svh;
       }
     }
   
@@ -250,11 +272,13 @@
   
     .contentleft {
       height: 80vh;
+      height: 80svh;
       width: 33vw;
     }
   
     .overlay-contentright2 {
       height: 80vh;
+      height: 80svh;
       width: 52vw;
     }
   
@@ -267,6 +291,7 @@
       z-index: 2;
       position: absolute;
       bottom: 2vh;
+      bottom: 2svh;
       right: -5vw;
       justify-content: center;
       align-items: flex-start;
@@ -278,6 +303,7 @@
       padding-left: 3vw;
       min-width: 120px;
       height: 15vh;
+      height: 15svh;
       box-shadow: -1px 3px 3px rgba(0, 0, 0, 0.1);
       border: 1px solid rgba(0, 0, 0, 0.1);
       padding-top: 0;
@@ -329,6 +355,7 @@
       padding-left: 0;
       width: 90vw;
       height: 35vh;
+      height: 35svh;
       border-radius: 30px 30px 0 0;
       align-items: center;
       justify-content: center;
@@ -338,6 +365,7 @@
     .contentleft2 {
       width: 50vw;
       height: 32vh;
+      height: 32svh;
       border-radius: 30px 30px 0 0;
       align-items: flex-start;
     }
@@ -362,6 +390,7 @@
     .overlay-contentright {
       width: 90vw;
       height: 48vh;
+      height: 48svh;
       border-radius: 0 0 30px 30px;
       flex-direction: column;
       justify-content: center;
@@ -370,6 +399,7 @@
     .overlay-contentright2 {
       width: 90vw;
       height: 48vh;
+      height: 48svh;
       border-radius: 0 0 30px 30px;
       flex-direction: column;
       justify-content: center;
@@ -378,11 +408,14 @@
   
     .imgAddContact {
       margin-top: -12vh;
+      margin-top: -12svh;
     }
   
     .profilePictureEditResponsive {
       margin-top: -16vh;
+      margin-top: -16svh;
       padding-bottom: 2vh;
+      padding-bottom: 2svh;
     }
   
     .profilePictureEditResponsive div {
@@ -394,17 +427,20 @@
   
     .inputSection {
       height: 32vh;
+      height: 32svh;
       width: 80vw;
     }
   
     .input-divs {
       width: 80vw;
       height: 9vh;
+      height: 9svh;
     }
   
     .input-divs input {
       width: 50vw;
       height: 6vh;
+      height: 6svh;
       padding-right: 6vw;
     }
   
@@ -414,6 +450,7 @@
   
     .overlayButtons {
       padding-top: 2vh;
+      padding-top: 2svh;
       display: flex;
       justify-content: center;
     }
@@ -465,6 +502,7 @@
   @media (max-width: 650px) {
     .editDelete-div {
       bottom: -13vh;
+      bottom: -13svh;
     }
   
     .seperatorResponsive {
@@ -487,12 +525,15 @@
   
     .h1contact {
       padding-top: 4vh;
+      padding-top: 4svh;
       align-items: flex-start;
       height: 20vh;
+      height: 20svh;
     }
   
     .h1-div-contact {
       padding-top: 1vh;
+      padding-top: 1svh;
       flex-direction: column;
       height: auto;
       gap: 5px;
@@ -513,6 +554,7 @@
   
     .contactdetails-right {
       height: 40vh;
+      height: 40svh;
       gap: 0;
     }
   
@@ -617,6 +659,7 @@
       padding-left: 0.5vw;
       padding-right: 1vw;
       height: 79vh;
+      height: 79svh;
     }
   
     .seperator-contacts-list {
