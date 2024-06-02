@@ -292,6 +292,16 @@ justify-content: space-between;
     width: 50vw;
   }
 
+  @keyframes slideIn {
+    from {
+      left: 150vw;
+    }
+  
+    to {
+      left: 25vw;
+    }
+  }
+
   .board-container-fullsize {
         padding: 24px 20px 24px 20px;
   }
@@ -321,6 +331,16 @@ justify-content: space-between;
   .full-size-title{
     font-size: 32px;
   }
+
+  @keyframes slideIn {
+    from {
+      left: 150vw;
+    }
+  
+    to {
+      left: 20vw;
+    }
+  }
 }
 
 @media screen and (max-width: 510px) {
@@ -342,7 +362,7 @@ justify-content: space-between;
     }
   
     to {
-      left: 10vw;
+      left: 5vw;
     }
   }
 
