@@ -167,9 +167,3 @@ select {
   align-items: center;
   position: relative;
 }
-
-.assigned-user-too-much {
-  display: flex;
-  align-items: center;
-  position: absolute;
-}
