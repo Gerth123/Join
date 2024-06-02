@@ -166,6 +166,10 @@ input:focus {
   cursor: pointer;
 }
 
+.board-card:hover {
+  transform: rotate(5deg);
+}
+
 .board-category {
   margin-bottom: 24px;
 }
