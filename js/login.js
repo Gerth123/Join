@@ -109,9 +109,10 @@ function saveUserData(email, password) {
  * @author: Robin
  */
 function loadUserData() {
+    let rememberMe = document.getElementById('checkbox').checked;
     let storedEmail = localStorage.getItem('email');
     let storedPassword = localStorage.getItem('password');
-    if (storedEmail && storedPassword) {
+    if (rememberMe && storedEmail && storedPassword) {
         document.getElementById('email').value = storedEmail;
         document.getElementById('password').value = storedPassword;
         document.getElementById('checkbox').checked = true;
