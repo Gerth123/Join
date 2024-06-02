@@ -155,8 +155,7 @@
   margin-top: 24px;
   font-size: 61px;
   font-weight: bold;
-  word-break:break-all;
-  /* width: 100%; */
+  overflow-wrap: break-word;
 }
 
 .full-size-description {
