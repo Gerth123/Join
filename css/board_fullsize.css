@@ -12,6 +12,16 @@
   min-height: 24px;
 }
 
+.full-size-textarea {
+  margin-top: 8px;
+  margin-bottom: 32px;
+  padding: 12px 21px 12px 21px;
+  border: 1px solid #d1d1d1;
+  border-radius: 10px;
+  font-size: 20px;
+  min-height: 120px;
+}
+
 .full-size-container {
   position: fixed;
   top:0;
