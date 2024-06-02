@@ -201,11 +201,19 @@ function getAssigned(assigned, id) {
   const boardUser = content.querySelector("#board-users");
 
   if (assigned != "") {
+    let i = 0;
     assigned.forEach((user) => {
       let name = getInitials(user["name"]);
-      boardUser.innerHTML += /*html*/ `
-      <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}</div>`;
+      if(i < 3) {
+        boardUser.innerHTML += /*html*/ `
+        <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}</div>`;
+      }
+      i++
     });
+    if(i > 3) {
+      boardUser.innerHTML += /*html*/ `
+      <div id="board-user" class="board-user" style="background-color:#2A3647">+${i-3}</div>`;
+    }
   }
 }
 
