@@ -17,32 +17,9 @@ function getEventListeners() {
   onClickCloseFullSize(fullsize);
   onClickAddTaskBoard(fullsize, board, editBoard, addBoard);
   getEditEventListeners(board, editBoard, addBoard);
-  onClickAddCategory();
   deleteFullSizeBoard();
   cancelAddCard(fullsize);
   searchCard();
-}
-
-/**
- * Attaches a click event listener to each category item. When a category item is clicked,
- * it selects the corresponding select button and updates its text content with the clicked
- * item's text content.
- *
- * @return {void} This function does not return anything.
- * @author Hanbit Chang
- */
-function onClickAddCategory() {
-  const categoryItems = document.querySelectorAll(".category-item");
-  categoryItems.forEach((item) => {
-    item.addEventListener("click", () => {
-      const selectButton = document.querySelector("#select-btn-addCard");
-      const btnText = document.querySelector(".category-addCard .btn-text-category");
-      if (selectButton) {
-        selectButton.classList.remove("open");
-        btnText.textContent = item.textContent;
-      }
-    });
-  });
 }
 
 /**
@@ -144,6 +121,13 @@ function onClickAddTaskBoard(fullsize, board, editBoard, addBoard) {
       onClickAddSubTasks();
       getAddAssgined();
     });
+  });
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest("#select-btn-addCard") && !e.target.closest(".assigned-item")) {
+      selectBtns.forEach((btns) => {
+        btns.classList.remove("open");
+      });
+    }
   });
 }
 

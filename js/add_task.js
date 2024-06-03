@@ -11,9 +11,15 @@ function initAddTask() {
   });
   onClickAddSubTasks();
   getAddAssgined();
-  onClickAddCategory();
   fillHeaderInitials();
   oneCheckBox();
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest("#select-btn-addCard") && !e.target.closest(".assigned-item")) {
+      selectBtns.forEach((btns) => {
+        btns.classList.remove("open");
+      });
+    }
+  });
 }
 
 function oneCheckBox() {
