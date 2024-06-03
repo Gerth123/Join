@@ -159,6 +159,7 @@
 }
 
 .full-size-description {
+  overflow-wrap: break-word;
   margin-top: 24px;
 }
 
