@@ -1,3 +1,4 @@
+let dataId;
 /**
  * Initializes contact click events after the DOM is fully loaded.
  * Author: Elias
@@ -10,10 +11,13 @@ document.addEventListener("DOMContentLoaded", setupContactClickEvents);
  */
 async function setupContactClickEvents() {
   const contactCards = document.querySelectorAll(".contactCard");
-  const contentRight = document.getElementById("contentright");
+  // const contentRight = document.getElementById("contentright");
 
   contactCards.forEach((card) => {
-    card.addEventListener("click", () => handleCardClick(card, contentRight));
+    card.addEventListener("click", () => {
+      handleCardClick(card);
+      dataId = card.getAttribute("data-id");
+    });
   });
 }
 
@@ -23,13 +27,17 @@ async function setupContactClickEvents() {
  * @param {HTMLElement} contentRight - The element with the ID 'contentright'.
  * Author: Elias
  */
-function handleCardClick(card, contentRight) {
+async function handleCardClick(card) {
+  console.log("this should be card", card);
+  const contentRight = document.getElementById("contentright");
   const name = card.querySelector(".NameContact").textContent;
   const email = card.querySelector(".EmailContact").textContent;
   const phone = card.getAttribute("data-phone");
   const randomColor = generateRandomColor(name);
   const initials = getInitials(name);
 
+  console.log("this is name", name);
+  console.log("this is initials", initials);
   const contactDetailsDiv = document.querySelector(".contactdetails-right");
   contactDetailsDiv.innerHTML = generateContactDetailsHTML(name, email, phone, randomColor, initials);
 
@@ -43,9 +51,11 @@ function handleCardClick(card, contentRight) {
  * Author: Elias
  */
 function setupEditAndDeleteButtons(contactDetailsDiv, card, name, email, phone, randomColor, initials, contentRight) {
-  contactDetailsDiv
-    .querySelector(".edit-div")
-    .addEventListener("click", () => openEditContactOverlay(name, email, phone, randomColor, initials));
+  let contactDetails = contactDetailsDiv.querySelectorAll(".edit-div");
+  contactDetails.forEach((contactDetail) => {
+    contactDetail.addEventListener("click", () => openEditContactOverlay(name, email, phone, randomColor, initials));
+  });
+
   contactDetailsDiv.querySelector(".delete-div").addEventListener("click", async () => {
     try {
       await deleteContactFromFirebase(email);
@@ -398,11 +408,29 @@ async function updateContact(event) {
   let phone = getInputValue("contactPhone" + globalEmail);
   let contactId = await findContactIdByEmail(globalEmail);
   let userId = getUserIdFormUrl();
+  let randomColor = generateRandomColor(name);
+  let initials = getInitials(name);
+
+  console.log("name", name);
+  console.log("newEmail", newEmail);
+  console.log("phone", phone);
+  console.log("contactId", contactId);
+  console.log("initials", initials);
+  console.log("dataId", dataId);
+
   try {
     let updatedContact = await createUpdatedContact(userId, contactId, name, newEmail, phone);
-    console.log(updatedContact, contactId, userId);
+    const contentRight = document.getElementById("contentright");
+    console.log("updatedContact", updatedContact);
+    console.log("contactId", contactId);
+    console.log("userId", userId);
     await updateContactInFirebase(contactId, updatedContact, userId);
     await refreshAndDisplayContacts(userId);
+    const contactDetailsDiv = document.querySelector(".contactdetails-right");
+    contactDetailsDiv.innerHTML = generateContactDetailsHTML(name, newEmail, phone, randomColor, initials);
+    let card = document.querySelector(`.contactCard[data-id="${dataId}"]`);
+    console.log(card);
+    setupEditAndDeleteButtons(contactDetailsDiv, card, name, newEmail, phone, randomColor, initials, contentRight);
     closeEditContact();
   } catch (error) {
     console.error("Fehler beim Aktualisieren des Kontakts:", error);
@@ -450,7 +478,7 @@ async function refreshAndDisplayContacts(userId) {
  */
 async function updateContactInFirebase(contactId, updatedContact, userId) {
   let response = await putData(`users/` + userId + `/contacts/` + contactId, updatedContact);
-  if (!response.ok) {
-    throw new Error("Fehler beim Aktualisieren des Kontakts: " + response.statusText);
-  }
+  // if (!response.ok) {
+  //   throw new Error("Fehler beim Aktualisieren des Kontakts: " + response.statusText);
+  // }
 }

@@ -445,21 +445,18 @@ async function createContact(event) {
   let userId = await getUserIdFormUrl();
   let contacts = await getData("contacts");
   let alreadyExist = contacts.find((contact) => contact && contact.mail == mail);
-  // console.log(name);
-  // console.log(mail);
-  // console.log(phone);
-  // if (alreadyExist) {
-  //   alert("The contact already exists!");
-  // } else {
-  console.log("hello");
-  try {
-    const newContact = await saveContact(name, mail, phone, userId);
-    console.log(newContact);
-    clearInputFields();
-    updatePageUrl(userId);
-    await handleLoadedContacts(userId);
-  } catch (error) {
-    console.error("Error saving contact:", error);
+  if (alreadyExist) {
+    alert("The contact already exists!");
+  } else {
+    try {
+      const newContact = await saveContact(name, mail, phone, userId);
+      console.log(newContact);
+      clearInputFields();
+      updatePageUrl(userId);
+      await handleLoadedContacts(userId);
+    } catch (error) {
+      console.error("Error saving contact:", error);
+    }
   }
 }
 
