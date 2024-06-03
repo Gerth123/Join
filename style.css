@@ -18,6 +18,11 @@ a:hover {
 
 input {
   border: unset;
+  font-family: "PTSans", sans-serif;
+}
+
+.date-input {
+  color: #757575
 }
 
 button {
@@ -26,6 +31,10 @@ button {
 
 textarea {
   outline: none;
+  font-family: "PTSans", sans-serif;
+}
+
+span {
   font-family: "PTSans", sans-serif;
 }
 
