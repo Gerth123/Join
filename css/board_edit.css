@@ -1,3 +1,9 @@
+h1 {
+  font-size: 50px;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+}
+
 .full-size-input-container {
   display: flex;
   align-items: center;
@@ -76,10 +82,6 @@ p {
 
 .d-none {
   display: none;
-}
-
-h1 {
-  color: green;
 }
 
 .multipleSelection {

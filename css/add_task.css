@@ -37,8 +37,10 @@
 }
 
 .addTaskContent {
-  margin-top: 110px;
-  margin-left: 96px;
+  margin-top: 6vw;
+  margin-left: 6vw;
+  margin-right: 6vw;
+  margin-bottom: 4vw;
   max-width: 1200px;
 }
 
