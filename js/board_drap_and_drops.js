@@ -88,6 +88,7 @@ function doSetData(e, id) {
  */
 async function doDrop(e) {
   e.preventDefault();
+  e.target.classList.remove("board-card-dropzone--active");
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
   let draggableId = e.dataTransfer.getData("text/plain");
@@ -102,7 +103,8 @@ async function doDrop(e) {
   let itemId = Number(e.dataTransfer.getData("text/plain"));
   const droppedItemElement = document.querySelector(`[id="${itemId}"]`);
   let insertAfter = task.parentElement.classList.contains("board-card") ? task.parentElement : task;
-
+  let removeCard = document.getElementById(`${itemId}`);
+  removeCard.classList.add("d-none");
   if (droppedItemElement.contains(task)) return;
   if (itemsIndex < droppedIndex && closestClickedContentID == closestDroppedContentID) droppedIndex--;
 
@@ -111,6 +113,7 @@ async function doDrop(e) {
     contentId,
     position: droppedIndex,
   });
+
   initBoard();
 }
 
