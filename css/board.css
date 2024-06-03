@@ -39,8 +39,8 @@ label {
   flex-direction: column;
   justify-content: space-between;
   height: 70px;
-  padding-top: 80px;
-  padding-left: min(5%, 64px);
+  padding-top: 6vw;
+  padding-left: 6vw;
 }
 
 .board-header-top {
@@ -148,7 +148,7 @@ input:focus {
   flex-wrap: wrap;
   /* width: 100%; */
   max-width: 1200px;
-  padding-left: min(5%, 64px);
+  padding-left: 6vw;
 }
 
 .board-card-content {
