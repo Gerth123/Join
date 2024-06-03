@@ -48,13 +48,7 @@
                   <label class="full-size-label" for="title-addCard">Title</label>
                   <input class="full-size-input" id="title-addCard" type="text" placeholder="Enter a title" required />
                   <label class="full-size-label" for="description-addCard">Description</label>
-                  <textarea
-                    class="full-size-textarea"
-                    id="description-addCard"
-                    type="text"
-                    placeholder="Enter a description"
-                    required
-                  ></textarea>
+                  <textarea class="full-size-textarea" id="description-addCard" type="text" placeholder="Enter a description"></textarea>
                   <div class="full-size-label">Assigned to</div>
                   <div class="assigned-addCard">
                     <div id="select-btn-addCard" class="select-btn">
@@ -84,7 +78,7 @@
                       <label for="radio-btn-4" class="btn1"></label>
                     </div>
                   </div>
-                  <div class="full-size-label" for="category-addCard">Category</div>
+                  <!-- <div class="full-size-label" for="category-addCard">Category</div>
                   <div id="category-addCard" class="category-addCard">
                     <div id="select-btn-addCard" class="select-btn">
                       <span class="btn-text-category">Select task category</span>
@@ -98,13 +92,13 @@
                         <span class="item-text-category">technical task</span>
                       </li>
                     </ul>
-                  </div>
-
-                  <!-- <label class="full-size-label" for="cars">Category</label>
-                  <select name="cars" id="cars" required>
-                    <option class="item-text-category" value="volvo"><span class="item-text-category">user story</span></option>
-                    <option value="saab"><span class="item-text-category">technical task</span></option>
-                  </select> -->
+                  </div> -->
+                  <label class="full-size-label" for="add-task-categories">Category</label>
+                  <select name="add-task-categories" id="add-task-categories" required>
+                    <option disabled selected value="">Select task category</option>
+                    <option value="user story">user story</option>
+                    <option value="technical task">technical task</option>
+                  </select>
                   <div class="full-size-label" for="subtasks">Subtasks</div>
                   <div class="full-size-input-container">
                     <input class="subtasks-input" id="subtasks-input-addCard" type="text" placeholder="Add new subtask" />

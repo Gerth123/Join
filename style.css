@@ -1,4 +1,4 @@
-html{
+html {
   overflow-y: overlay;
 }
 
@@ -40,7 +40,7 @@ input {
 }
 
 .date-input {
-  color: #757575
+  color: #757575;
 }
 
 button {
@@ -54,6 +54,24 @@ textarea {
 
 span {
   font-family: "PTSans", sans-serif;
+}
+
+select {
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: transparent;
+  background-image: url("/assets/icons/board/assigned/arrow_drop_down.svg");
+  background-repeat: no-repeat;
+  background-position: right 15px top 50%;
+  background-color: #fff;
+  border: 1px solid #dfdfdf;
+  border-radius: 10px;
+  font-size: 20px;
+  padding: 12px 21px 12px 21px;
+  margin-top: 8px;
+  margin-bottom: 32px;
+  cursor: pointer;
 }
 
 h1 {
@@ -97,7 +115,7 @@ h2 {
   height: 48px;
   align-items: center;
   justify-content: center;
-  color: rgb(165,168,172);
+  color: rgb(165, 168, 172);
 }
 
 .menu a:hover {

@@ -445,9 +445,11 @@ function addAssignedValue(contacts) {
  * @author Hanbit Chang
  */
 function addCategory() {
-  let newCategory = document.querySelector(".btn-text-category");
-  const stripped = newCategory.textContent.replace(/\s+/g, " ").trim();
-  return stripped;
+  let newCategory = document.getElementById("add-task-categories");
+  // let newCategory = document.querySelector(".btn-text-category");
+  // const stripped = newCategory.textContent.replace(/\s+/g, " ").trim();
+  console.log(newCategory.value);
+  return newCategory.value;
 }
 
 /**
