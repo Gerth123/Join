@@ -13,4 +13,23 @@ function initAddTask() {
   getAddAssgined();
   onClickAddCategory();
   fillHeaderInitials();
+  oneCheckBox();
+}
+
+function oneCheckBox() {
+  const firstCheckedBox = document.querySelector('input[type="checkbox"][name="priority-button"][id="radio-btn-5"]');
+  firstCheckedBox.checked = true;
+  const checkboxes = document.querySelectorAll('input[type="checkbox"][name="priority-button"]');
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("change", function () {
+      8;
+      if (this.checked) {
+        checkboxes.forEach((box) => {
+          if (box !== this) {
+            box.checked = false;
+          }
+        });
+      }
+    });
+  });
 }

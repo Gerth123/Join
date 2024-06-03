@@ -10,11 +10,11 @@
   width: 150px;
 }
 
-input[type="radio"] {
+.priority-button {
   display: none;
 }
 
-input[type="radio"] + label.btn1 {
+.priority-button + label.btn1 {
   width: 100%;
   max-width: 136px;
   height: 56px;
@@ -30,7 +30,7 @@ input[type="radio"] + label.btn1 {
   cursor: pointer;
 }
 
-input[type="radio"] + label.btn2 {
+.priority-button + label.btn2 {
   width: 100%;
   max-width: 136px;
   height: 56px;
@@ -46,7 +46,7 @@ input[type="radio"] + label.btn2 {
   cursor: pointer;
 }
 
-input[type="radio"] + label.btn3 {
+.priority-button + label.btn3 {
   width: 100%;
   max-width: 136px;
   height: 56px;
@@ -62,33 +62,33 @@ input[type="radio"] + label.btn3 {
   cursor: pointer;
 }
 
-input[type="radio"] + label.btn1:hover {
+.priority-button + label.btn1:hover {
   background-image: url("/assets/icons/board/priority/low_button_hover.svg");
 }
 
-input[type="radio"] + label.btn2:hover {
+.priority-button + label.btn2:hover {
   background-image: url("/assets/icons/board/priority/medium_button_hover.svg");
 }
 
-input[type="radio"] + label.btn3:hover {
+.priority-button + label.btn3:hover {
   background-image: url("/assets/icons/board/priority/urgent_button_hover.svg");
 }
 
-input[type="radio"]:checked + label.btn1 {
+.priority-button:checked + label.btn1 {
   background-image: url("/assets/icons/board/priority/low_button_clicked.svg");
   width: 100%;
   max-width: 136px;
   height: 50px;
 }
 
-input[type="radio"]:checked + label.btn2 {
+.priority-button:checked + label.btn2 {
   background-image: url("/assets/icons/board/priority/medium_button_clicked.svg");
   width: 100%;
   max-width: 136px;
   height: 50px;
 }
 
-input[type="radio"]:checked + label.btn3 {
+.priority-button:checked + label.btn3 {
   background-image: url("/assets/icons/board/priority/urgent_button_clicked.svg");
   width: 100%;
   max-width: 136px;
