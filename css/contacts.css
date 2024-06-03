@@ -423,7 +423,7 @@ p {
 
 .h1contact {
   padding-top: 10vh;
-  width: 45vw;
+  /* width: 45vw; */
   height: 15vh;
   display: flex;
   align-items: center;
@@ -701,7 +701,6 @@ p {
   background-color: #d1d1d1;
   margin: 1vh 0;
 }
-
 
 .imginput {
   width: 24px;
