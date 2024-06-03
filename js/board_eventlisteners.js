@@ -265,10 +265,19 @@ function checkedUsers(contacts) {
   if (checked && checked.length > 0) {
     btnText.innerText = `${checked.length} Selected`;
     checkedUsers.innerHTML = "";
+    let i = 0;
     userNames.forEach((userName) => {
       const personWithName = contacts.find((person) => person.name == userName.innerHTML);
-      if (personWithName) checkedUsers.innerHTML += getAssignedUser(personWithName);
+      if (personWithName)  {
+        if(i < 3) {
+          checkedUsers.innerHTML += getAssignedUser(personWithName)
+        }
+        i++
+      };
     });
+    checkedUsers.innerHTML += /*html*/`<div class="assigned-user">
+      <div id="board-user" class="board-user-editCard" style="background-color: #2A3647">+${i-3}</div>
+    </div> `;
   } else {
     btnText.innerText = "Select contacts to assign";
     checkedUsers.innerHTML = "";

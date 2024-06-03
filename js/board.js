@@ -148,9 +148,9 @@ function getBoardContents(contents, id) {
       let card = contents[i]
       content.innerHTML += /*html*/ `
       <div id='${card["id"]}' class="board-card" draggable="true" ondragstart='doSetData(event, ${card["id"]})'>
-        <img id="board-category" class="board-category">
-        <div class="board-title">${card["title"]}</div>
-        <div class="board-description">${card["description"]}</div> 
+        <img draggable="false" ondragstart="e.preventDefault()" id="board-category" class="board-category">
+        <div draggable="false" class="board-title">${card["title"]}</div>
+        <div draggable="false" class="board-description">${card["description"]}</div> 
         <div class="board-progress-bar-container">
           <progress id="progress-bar" value="0" max="100"></progress>
           <label for="progress-bar"></label>
@@ -168,11 +168,6 @@ function getBoardContents(contents, id) {
       getProgressBar(card["subtasks"], card["id"]);
     }
     });
-    console.log(contents)
-    console.log(i)
-
-
-
   }
 }
 

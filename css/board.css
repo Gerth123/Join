@@ -2,30 +2,12 @@ body {
   background-color: #f6f7f8;
 }
 
-::-webkit-scrollbar {
-  width: 8px;
-  padding: 4px;
-}
-
-::-webkit-scrollbar-track {
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #a8a8a8;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;
-}
-
 label {
   font-size: 12px;
 }
 
 .headerAndOpenedContainer {
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   background-color: #f6f7f8;
 }
 
@@ -39,8 +21,8 @@ label {
   flex-direction: column;
   justify-content: space-between;
   height: 70px;
-  padding-top: 80px;
-  padding-left: min(5%, 64px);
+  padding-top: 6vw;
+  padding-left: 6vw;
 }
 
 .board-header-top {
@@ -148,7 +130,7 @@ input:focus {
   flex-wrap: wrap;
   /* width: 100%; */
   max-width: 1200px;
-  padding-left: min(5%, 64px);
+  padding-left: 6vw;
 }
 
 .board-card-content {
@@ -166,9 +148,7 @@ input:focus {
   cursor: pointer;
 }
 
-.board-card:hover {
-  transform: rotate(5deg);
-}
+
 
 /* .rotate {
   transform: rotate(5deg);
@@ -383,6 +363,8 @@ progress[value]::-moz-progress-bar {
 .d-none {
   display: none;
 }
+
+
 
 .jc-fe {
   justify-content: flex-end;

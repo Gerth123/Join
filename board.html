@@ -7,15 +7,15 @@
     <title>Join Board</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="css/board.css" />
-    <link rel="stylesheet" href="css/board_drag_and_drops.css" />
+    <!-- <link rel="stylesheet" href="css/board_drag_and_drops.css" />
     <link rel="stylesheet" href="css/board_priority.css" />
     <link rel="stylesheet" href="css/board_edit.css" />
     <link rel="stylesheet" href="css/board_assigned_category.css" />
-    <link rel="stylesheet" href="css/board_fullsize.css" />
+    <link rel="stylesheet" href="css/board_fullsize.css" /> -->
     <link rel="icon" href="assets/img/logo.png" type="image/x-icon" />
-    <link rel="stylesheet" href="fonts/PTSans-Regular.ttf" />
+    <!-- <link rel="stylesheet" href="fonts/PTSans-Regular.ttf" />
     <link rel="stylesheet" href="fonts/PTSans-Bold.ttf" />
-    <link rel="stylesheet" href="fonts/PTSans-Italic.ttf" />
+    <link rel="stylesheet" href="fonts/PTSans-Italic.ttf" /> -->
   </head>
   <body onload="initBoard()">
     <div class="wholeJoinContainer">
@@ -40,7 +40,7 @@
           <section class="board-header-section">
             <div class="board-header-top">
               <div class="header-row wd-100 mb-40">
-                <div class="board-header-title">Board</div>
+                <h1 class="board-header-title">Board</h1>
                 <div
                   id="board-header-add-btn-small"
                   onclick="changeHtmlPage('add_task.html')"
@@ -158,7 +158,7 @@
               <label class="full-size-label" for="description-editCard">Description</label>
               <textarea class="full-size-textarea" id="description-editCard" type="text" placeholder="Enter a description"></textarea>
               <label class="full-size-label" for="date-editCard">Due date</label>
-              <input class="full-size-input" id="date-editCard" type="date" placeholder="Date" />
+              <input class="full-size-input date-input" id="date-editCard" type="date" placeholder="Date" />
               <label class="full-size-label" for="date-editCard">Priority</label>
               <div class="full-size-priority-container">
                 <div class="priority-button-container">
@@ -330,7 +330,13 @@
       </div>
     </div>
     <!-- <script src="/js/board_API.js"></script> -->
+
     <script src="/js/board.js"></script>
+    <link rel="stylesheet" href="css/board_drag_and_drops.css" />
+    <link rel="stylesheet" href="css/board_priority.css" />
+    <link rel="stylesheet" href="css/board_edit.css" />
+    <link rel="stylesheet" href="css/board_assigned_category.css" />
+    <link rel="stylesheet" href="css/board_fullsize.css" />
     <script src="/js/board_eventlisteners.js"></script>
     <script src="/js/board_edit_eventlisteners.js"></script>
     <script src="/js/board_drap_and_drops.js"></script>

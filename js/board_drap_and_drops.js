@@ -27,6 +27,17 @@ function getDropZones() {
     doDragOver(task);
     doDragLeave(task);
   });
+
+  const elements = document.querySelectorAll(".board-card");
+  elements.forEach((element) => {
+    element.addEventListener("drag", (e) => {
+      e.target.classList.add("dragging");
+    })
+
+    element.addEventListener("dragend", (e) => {
+      e.target.classList.remove("dragging");
+    })
+  })
 }
 
 /**
@@ -38,7 +49,6 @@ function getDropZones() {
  */
 function doDragOver(task) {
   task.addEventListener("dragenter", () => {
-    console.log("dragenter")
     task.classList.add("board-card-dropzone--active");
   });
 }
@@ -77,29 +87,31 @@ function doSetData(e, id) {
  */
 async function doDrop(e) {
   e.preventDefault();
-  let urlParams = new URLSearchParams(window.location.search);
-  let actualUsersNumber = urlParams.get("actualUsersNumber");
-  let draggableId = e.dataTransfer.getData("text/plain");
-  let [closestClickedContentID, itemsIndex] = getClosestContent(draggableId);
   let task = e.target;
   task.classList.remove("board-card-dropzone--active");
+  let draggableId = e.dataTransfer.getData("text/plain");
+  let [closestClickedContentID, itemsIndex] = getClosestContent(draggableId);
   const closestTask = task.closest(".board-card-content");
   let closestDroppedContentID = closestTask.id;
   let contentId = Number(closestTask.id);
   let dropZonesInColumn = Array.from(closestTask.querySelectorAll(".board-card-dropzone"));
   let droppedIndex = dropZonesInColumn.indexOf(task);
   let itemId = Number(e.dataTransfer.getData("text/plain"));
-  const droppedItemElement = document.querySelector(`[id="${itemId}"]`);
   let insertAfter = task.parentElement.classList.contains("board-card") ? task.parentElement : task;
-
+  let removeCard = document.getElementById(`${itemId}`);
+  removeCard.classList.add("d-none");
+  const droppedItemElement = document.querySelector(`[id="${itemId}"]`);
   if (droppedItemElement.contains(task)) return;
   if (itemsIndex < droppedIndex && closestClickedContentID == closestDroppedContentID) droppedIndex--;
 
   insertAfter.after(droppedItemElement);
+  let urlParams = new URLSearchParams(window.location.search);
+  let actualUsersNumber = urlParams.get("actualUsersNumber");
   await updateItem(`users/${actualUsersNumber}/tasks/`, itemId, {
     contentId,
     position: droppedIndex,
   });
+
   initBoard();
 }
 
