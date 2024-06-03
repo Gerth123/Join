@@ -1,10 +1,14 @@
 html {
-  overflow-y: overlay;
+  overflow-y: scroll;
 }
 
 body {
   margin: 0;
   font-family: "PTSans", sans-serif;
+}
+
+.red-star {
+  color: #ff8090;
 }
 
 ::-webkit-scrollbar {

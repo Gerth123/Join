@@ -24,8 +24,8 @@
 
 .full-size-container {
   position: fixed;
-  top:0;
-  left:0;
+  top: 0;
+  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -58,7 +58,6 @@
   border-radius: 30px;
   background-color: #fff;
 }
-
 
 .overlay-closed {
   animation-name: slideOut;
@@ -139,7 +138,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-top: 4vw
+  padding-top: 2vw;
 }
 
 .full-size-header {
@@ -204,9 +203,16 @@
   align-items: center;
 }
 
+.full-size-footer-add-board {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
 .full-size-footer {
   display: flex;
   justify-content: flex-end;
+  align-items: flex-end;
 }
 
 .full-size-button {
@@ -253,7 +259,7 @@
 .full-size-add-task {
   font-size: 61px;
   font-weight: bold;
-  margin-bottom: 32px;
+  /* margin-bottom: 32px; */
 }
 
 .full-size-line {
@@ -271,30 +277,33 @@
 
 .board-container {
   padding: 48px 40px 48px 40px;
-/* width: 30vw; */
-height: 60vh;
-/* overflow-y: scroll; */
-display: flex;
-flex-direction: column;
-justify-content: space-between;
+  /* width: 30vw; */
+  height: 60vh;
+  /* overflow-y: scroll; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .board-container-fullsize {
-padding: 48px 40px 48px 40px;
-/* width: 30vw; */
-height: 60vh;
-overflow-y: scroll;
-display: flex;
-flex-direction: column;
-justify-content: space-between;
+  padding: 48px 40px 48px 40px;
+  /* width: 30vw; */
+  height: 60vh;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .board-container-content {
   overflow-y: scroll;
 }
 
-@media screen and (max-width: 1100px) {
+.btn-row {
+  display: flex;
+}
 
+@media screen and (max-width: 1100px) {
   .full-size-board {
     width: 50vw;
   }
@@ -307,17 +316,17 @@ justify-content: space-between;
     from {
       left: 150vw;
     }
-  
+
     to {
       left: 25vw;
     }
   }
 
   .board-container-fullsize {
-        padding: 24px 20px 24px 20px;
+    padding: 24px 20px 24px 20px;
   }
 
-  .full-size-title{
+  .full-size-title {
     font-size: 40px;
   }
 
@@ -330,7 +339,6 @@ justify-content: space-between;
 }
 
 @media screen and (max-width: 767px) {
-
   .full-size-board {
     width: 60vw;
   }
@@ -339,7 +347,7 @@ justify-content: space-between;
     width: 60vw;
   }
 
-  .full-size-title{
+  .full-size-title {
     font-size: 32px;
   }
 
@@ -347,7 +355,7 @@ justify-content: space-between;
     from {
       left: 150vw;
     }
-  
+
     to {
       left: 20vw;
     }
@@ -371,14 +379,13 @@ justify-content: space-between;
     from {
       left: 150vw;
     }
-  
+
     to {
       left: 5vw;
     }
   }
 
-  .board-container{
+  .board-container {
     padding: 12px 10px 12px 10px;
   }
 }
-

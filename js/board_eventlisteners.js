@@ -62,7 +62,8 @@ function onClickFullSizeBoard(fullsize, board, editBoard, addBoard) {
       editBoard.classList.add("d-none");
       addBoard.classList.add("d-none");
       id = card.id;
-      contentId = card.parentNode.id;
+      contentId = card.parentNode.parentNode.id;
+      console.log(contentId);
       getFullSizeBoard(id, contentId);
     })
   );
@@ -385,7 +386,8 @@ async function saveAddData() {
   if (content.items == "") content.items = [];
   content.items.push(obj);
   await putData(`users/${actualUsersNumber}/tasks/`, data);
-  location.reload();
+  changeHtmlPage("board.html");
+  // location.reload();
 }
 
 /**

@@ -474,6 +474,26 @@ fieldset {
     background-size: contain;
   }
 
+  .board-card-section {
+    overflow-y: scroll;
+  }
+
+  .board-card-direction {
+    width: 90vw;
+    display: flex;
+    overflow-x: scroll;
+    /* overflow: hidden; */
+  }
+
+  .board-card-direction::-webkit-scrollbar {
+    display: none;
+  }
+
+  .board-card-direction {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
   .wd-100 {
     width: 100%;
   }

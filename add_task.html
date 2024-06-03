@@ -41,11 +41,11 @@
         </header>
         <section class="addTaskOpenedContainer">
           <div class="addTaskContent">
-            <h1 class="board-header-title pb-40">Add Task</h1>
-            <form class="full-size-add-form" action="" onsubmit="saveAddData(); return false">
+            <h1 class="board-header-title">Add Task</h1>
+            <form class="add-form" action="" onsubmit="saveAddData(); return false">
               <div class="row">
                 <div class="column wd-45 wd-100">
-                  <label class="full-size-label" for="title-addCard">Title</label>
+                  <label class="full-size-label" for="title-addCard">Title<span class="red-star">*</span></label>
                   <input class="full-size-input" id="title-addCard" type="text" placeholder="Enter a title" required />
                   <label class="full-size-label" for="description-addCard">Description</label>
                   <textarea class="full-size-textarea" id="description-addCard" type="text" placeholder="Enter a description"></textarea>
@@ -61,7 +61,7 @@
                 </div>
                 <div class="add-line"></div>
                 <div class="column wd-45 wd-100">
-                  <label class="full-size-label due-date" for="date-addCard">Due date</label>
+                  <label class="full-size-label due-date" for="date-addCard">Due date<span class="red-star">*</span></label>
                   <input class="full-size-input date-input" id="date-addCard" type="date" required />
                   <div class="full-size-label">Priority</div>
                   <div class="full-size-priority-container">
@@ -78,22 +78,7 @@
                       <label for="radio-btn-4" class="btn1"></label>
                     </div>
                   </div>
-                  <!-- <div class="full-size-label" for="category-addCard">Category</div>
-                  <div id="category-addCard" class="category-addCard">
-                    <div id="select-btn-addCard" class="select-btn">
-                      <span class="btn-text-category">Select task category</span>
-                      <div class="arrow-down"></div>
-                    </div>
-                    <ul class="category-list-items">
-                      <li class="category-item">
-                        <span class="item-text-category">user story</span>
-                      </li>
-                      <li class="category-item">
-                        <span class="item-text-category">technical task</span>
-                      </li>
-                    </ul>
-                  </div> -->
-                  <label class="full-size-label" for="add-task-categories">Category</label>
+                  <label class="full-size-label" for="add-task-categories">Category<span class="red-star">*</span></label>
                   <select name="add-task-categories" id="add-task-categories" required>
                     <option disabled selected value="">Select task category</option>
                     <option value="user story">user story</option>
@@ -118,15 +103,18 @@
                   <ul id="subtasks-list-addCard"></ul>
                 </div>
               </div>
-              <div class="full-size-footer">
-                <div class="button cancel-button">
-                  Cancel
-                  <div class="cancel-button-img"></div>
+              <div class="full-size-footer-addCard">
+                <div><span class="red-star">*</span><span>This fields are required</span></div>
+                <div class="btn-row">
+                  <div class="button cancel-button">
+                    Cancel
+                    <div class="cancel-button-img"></div>
+                  </div>
+                  <button type="submit" class="button ok-button">
+                    Create Task
+                    <img src="/assets/icons/board/fullsize/check.svg" alt="" />
+                  </button>
                 </div>
-                <button type="submit" class="button ok-button">
-                  Create Task
-                  <img src="/assets/icons/board/fullsize/check.svg" alt="" />
-                </button>
               </div>
             </form>
           </div>
