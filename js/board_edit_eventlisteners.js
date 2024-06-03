@@ -9,7 +9,26 @@
  */
 function getEditEventListeners(board, editBoard, addBoard) {
   onClickEditCategory();
-  onClickEditBoard(board, editBoard, addBoard)
+  onClickEditBoard(board, editBoard, addBoard);
+  oneCheckBox();
+}
+
+function oneCheckBox() {
+  const firstCheckedBox = document.querySelector('input[type="checkbox"][name="priority-button"][id="radio-btn-5"]');
+  firstCheckedBox.checked = true;
+  const checkboxes = document.querySelectorAll('input[type="checkbox"][name="priority-button"]');
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("change", function () {
+      8;
+      if (this.checked) {
+        checkboxes.forEach((box) => {
+          if (box !== this) {
+            box.checked = false;
+          }
+        });
+      }
+    });
+  });
 }
 
 /**
@@ -52,7 +71,6 @@ function onClickEditBoard(board, editBoard, addBoard) {
     onClickEditSubtasks();
   });
 }
-
 
 /**
  * Onclick subtasks are modified
@@ -104,9 +122,9 @@ async function saveEditData() {
   let actualUsersNumber = urlParams.get("actualUsersNumber");
   let data = await getData("tasks");
   let contacts = await getData("contacts");
-  let contactsData = []
-  for(let i = 0; i < contacts.length; i++) {
-    if(contacts[i] != null)  contactsData.push(contacts[i])
+  let contactsData = [];
+  for (let i = 0; i < contacts.length; i++) {
+    if (contacts[i] != null) contactsData.push(contacts[i]);
   }
   for (let listItem of data) {
     if (listItem.id == contentId) {

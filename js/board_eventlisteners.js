@@ -12,6 +12,7 @@ function getEventListeners() {
   const board = document.getElementById("board");
   const editBoard = document.getElementById("edit-board");
   const addBoard = document.getElementById("add-board");
+
   onClickFullSizeBoard(fullsize, board, editBoard, addBoard);
   onClickCloseFullSize(fullsize);
   onClickAddTaskBoard(fullsize, board, editBoard, addBoard);
