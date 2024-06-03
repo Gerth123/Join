@@ -15,7 +15,7 @@ function getEventListeners() {
   onClickFullSizeBoard(fullsize, board, editBoard, addBoard);
   onClickCloseFullSize(fullsize);
   onClickAddTaskBoard(fullsize, board, editBoard, addBoard);
-  getEditEventListeners(board, editBoard, addBoard)
+  getEditEventListeners(board, editBoard, addBoard);
   onClickAddCategory();
   deleteFullSizeBoard();
   cancelAddCard(fullsize);
@@ -88,10 +88,10 @@ function onClickCloseFullSize(fullsize) {
       location.reload();
     }
     if (e.target.matches("#close-btn-img-add")) {
-      let addboard = document.getElementById("add-board")
-      // addboard.classList.add("overlay-closed-add-board") 
+      let addboard = document.getElementById("add-board");
+      // addboard.classList.add("overlay-closed-add-board")
       fullsize.classList.add("d-none");
-    };
+    }
   });
 }
 
@@ -175,9 +175,9 @@ function addTaskBtnSmall(contentIdAdd) {
 async function getAddAssgined() {
   let data = await getData("tasks");
   let contacts = await getData("contacts");
-  let contactsData = []
-  for(let i = 0; i < contacts.length; i++) {
-    if(contacts[i] != null)  contactsData.push(contacts[i])
+  let contactsData = [];
+  for (let i = 0; i < contacts.length; i++) {
+    if (contacts[i] != null) contactsData.push(contacts[i]);
   }
   let assignedUsers = [];
   for (let column of data) {
@@ -268,16 +268,18 @@ function checkedUsers(contacts) {
     let i = 0;
     userNames.forEach((userName) => {
       const personWithName = contacts.find((person) => person.name == userName.innerHTML);
-      if (personWithName)  {
-        if(i < 3) {
-          checkedUsers.innerHTML += getAssignedUser(personWithName)
+      if (personWithName) {
+        if (i < 3) {
+          checkedUsers.innerHTML += getAssignedUser(personWithName);
         }
-        i++
-      };
+        i++;
+      }
     });
-    checkedUsers.innerHTML += /*html*/`<div class="assigned-user">
-      <div id="board-user" class="board-user-editCard" style="background-color: #2A3647">+${i-3}</div>
+    if (i > 3) {
+      checkedUsers.innerHTML += /*html*/ `<div class="assigned-user">
+      <div id="board-user" class="board-user-editCard" style="background-color: #2A3647">+${i - 3}</div>
     </div> `;
+    }
   } else {
     btnText.innerText = "Select contacts to assign";
     checkedUsers.innerHTML = "";

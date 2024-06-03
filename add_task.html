@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="css/board_priority.css" />
     <link rel="stylesheet" href="css/board_edit.css" />
     <link rel="stylesheet" href="css/add_task.css" />
-    <link rel="stylesheet" href="css/board_fullsize.css">
+    <link rel="stylesheet" href="css/board_fullsize.css" />
     <link rel="icon" href="assets/img/logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="fonts/PTSans-Regular.ttf" />
     <link rel="stylesheet" href="fonts/PTSans-Bold.ttf" />
@@ -46,9 +46,15 @@
               <div class="row">
                 <div class="column wd-45 wd-100">
                   <label class="full-size-label" for="title-addCard">Title</label>
-                  <input class="full-size-input" id="title-addCard" type="text" placeholder="Enter a title" required/>
+                  <input class="full-size-input" id="title-addCard" type="text" placeholder="Enter a title" required />
                   <label class="full-size-label" for="description-addCard">Description</label>
-                  <textarea class="full-size-textarea" id="description-addCard" type="text" placeholder="Enter a description" required></textarea>
+                  <textarea
+                    class="full-size-textarea"
+                    id="description-addCard"
+                    type="text"
+                    placeholder="Enter a description"
+                    required
+                  ></textarea>
                   <div class="full-size-label">Assigned to</div>
                   <div class="assigned-addCard">
                     <div id="select-btn-addCard" class="select-btn">
@@ -62,19 +68,19 @@
                 <div class="add-line"></div>
                 <div class="column wd-45 wd-100">
                   <label class="full-size-label due-date" for="date-addCard">Due date</label>
-                  <input class="full-size-input date-input" id="date-addCard" type="date" required/>
+                  <input class="full-size-input date-input" id="date-addCard" type="date" required />
                   <div class="full-size-label">Priority</div>
                   <div class="full-size-priority-container">
                     <div class="priority-button-container">
-                      <input type="radio" id="radio-btn-6" name="radio-btnss" />
+                      <input type="checkbox" class="priority-button" id="radio-btn-6" name="radio-btnss" />
                       <label for="radio-btn-6" class="btn3"></label>
                     </div>
                     <div class="priority-button-container">
-                      <input type="radio" id="radio-btn-5" name="radio-btnss" />
+                      <input type="checkbox" class="priority-button" id="radio-btn-5" name="radio-btnss" />
                       <label for="radio-btn-5" class="btn2"></label>
                     </div>
                     <div class="priority-button-container">
-                      <input type="radio" id="radio-btn-4" name="radio-btnss" />
+                      <input type="checkbox" class="priority-button" id="radio-btn-4" name="radio-btnss" />
                       <label for="radio-btn-4" class="btn1"></label>
                     </div>
                   </div>
