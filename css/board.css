@@ -2,24 +2,6 @@ body {
   background-color: #f6f7f8;
 }
 
-::-webkit-scrollbar {
-  width: 8px;
-  padding: 4px;
-}
-
-::-webkit-scrollbar-track {
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #a8a8a8;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;
-}
-
 label {
   font-size: 12px;
 }

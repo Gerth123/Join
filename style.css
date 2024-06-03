@@ -7,6 +7,24 @@ body {
   font-family: "PTSans", sans-serif;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+  padding: 4px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #a8a8a8;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
 a {
   text-decoration: none;
   color: white;
