@@ -37,7 +37,8 @@ function getDropZones() {
  * @author Hanbit Chang
  */
 function doDragOver(task) {
-  task.addEventListener("dragover", () => {
+  task.addEventListener("dragenter", () => {
+    console.log("dragenter")
     task.classList.add("board-card-dropzone--active");
   });
 }

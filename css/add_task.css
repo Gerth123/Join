@@ -42,10 +42,6 @@
   max-width: 1200px;
 }
 
-.h-120 {
-  min-height: 120px;
-}
-
 .full-size-footer {
   display: flex;
   justify-content: flex-end;

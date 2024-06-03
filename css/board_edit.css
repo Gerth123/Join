@@ -128,6 +128,7 @@ input[type="date"] {
 }
 
 .assigned-users-editCard {
+  position: relative;
   display: flex;
   align-items: center;
 }

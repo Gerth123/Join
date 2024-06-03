@@ -165,4 +165,5 @@ select {
 .assigned-user {
   display: flex;
   align-items: center;
+  position: relative;
 }

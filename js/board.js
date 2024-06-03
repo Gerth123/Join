@@ -94,6 +94,8 @@ function getBoardSection(data) {
     if (items == "") {
       let containerElement = document.getElementById(`${id}`);
       let container = containerElement.querySelector("#no-content-img");
+      let dropzone = containerElement.querySelector("#dropzone")
+      dropzone.classList.add("big-zone");
       container.classList.remove("d-none");
     }
     // getBoardContents(data[i]["items"], id);
@@ -133,13 +135,44 @@ function getBoardContents(contents, id) {
   let content = document.getElementById(`${id}`);
 
   if (contents != "") {
-    contents.forEach(function (card) {
-      content.innerHTML += getBoardCard(card);
+    let i = 0;
+    contents.forEach(function(card) {
+      if(i < contents.length-1) {
+        content.innerHTML += getBoardCard(card);
+        getCategory(card["category"], card["id"]);
+        getPriority(card["priority"], card["id"]);
+        getAssigned(card["assigned"], card["id"]);
+        getProgressBar(card["subtasks"], card["id"]);
+        i++;
+      }else {
+      let card = contents[i]
+      content.innerHTML += /*html*/ `
+      <div id='${card["id"]}' class="board-card" draggable="true" ondragstart='doSetData(event, ${card["id"]})'>
+        <img id="board-category" class="board-category">
+        <div class="board-title">${card["title"]}</div>
+        <div class="board-description">${card["description"]}</div> 
+        <div class="board-progress-bar-container">
+          <progress id="progress-bar" value="0" max="100"></progress>
+          <label for="progress-bar"></label>
+        </div>
+        <div class="board-bottom-container">
+          <div id="board-users" class="board-user-container">
+          </div>
+          <img id='board-priority' alt="">
+        </div>
+      </div> 
+      <div  id="dropzone" ondragover="allowDrop(event)" ondrop="doDrop(event)" class="board-card-dropzone big-zone"></div>`;
       getCategory(card["category"], card["id"]);
       getPriority(card["priority"], card["id"]);
       getAssigned(card["assigned"], card["id"]);
       getProgressBar(card["subtasks"], card["id"]);
+    }
     });
+    console.log(contents)
+    console.log(i)
+
+
+
   }
 }
 
@@ -201,11 +234,19 @@ function getAssigned(assigned, id) {
   const boardUser = content.querySelector("#board-users");
 
   if (assigned != "") {
+    let i = 0;
     assigned.forEach((user) => {
       let name = getInitials(user["name"]);
-      boardUser.innerHTML += /*html*/ `
-      <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}</div>`;
+      if(i < 3) {
+        boardUser.innerHTML += /*html*/ `
+        <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}</div>`;
+      }
+      i++
     });
+    if(i > 3) {
+      boardUser.innerHTML += /*html*/ `
+      <div id="board-user" class="board-user" style="background-color:#2A3647">+${i-3}</div>`;
+    }
   }
 }
 

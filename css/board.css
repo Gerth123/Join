@@ -52,7 +52,7 @@ label {
 }
 
 .board-header-title {
-  font-size: 61px;
+  /* font-size: 61px; */
   font-weight: bold;
 }
 
@@ -75,7 +75,6 @@ label {
   display: flex;
   justify-content: space-between;
   margin-top: 48px;
-  margin-bottom: 8px;
 }
 
 .add-btn-container {
@@ -161,12 +160,19 @@ input:focus {
   width: 220px;
   min-height: 145px;
   padding: 16px;
-  margin-bottom: 16px;
   border-radius: 24px;
   background-color: #ffffff;
   box-shadow: 0px 0px 10px 3px #00000014;
   cursor: pointer;
 }
+
+.board-card:hover {
+  transform: rotate(5deg);
+}
+
+/* .rotate {
+  transform: rotate(5deg);
+} */
 
 .board-category {
   margin-bottom: 24px;
@@ -378,10 +384,6 @@ progress[value]::-moz-progress-bar {
   display: none;
 }
 
-.h-120 {
-  min-height: 120px;
-}
-
 .jc-fe {
   justify-content: flex-end;
 }
@@ -415,6 +417,7 @@ fieldset {
 
 .no-content-img {
   width: 255px;
+  margin-top: 12px;
 }
 
 .header-row {
