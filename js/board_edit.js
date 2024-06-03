@@ -37,8 +37,6 @@ function toggleSelectBtn() {
   });
 
   document.addEventListener("click", (e) => {
-    console.log(e.target);
-
     if(!e.target.closest("#select-btn-editCard") && !e.target.closest(".assigned-item")) {
       selectBtns.forEach((btn) => {
         btn.classList.remove("open");
@@ -170,7 +168,6 @@ function checkUsers(contacts) {
   if (checked && checked.length > 0) {
     btnText.innerText = `${checked.length} Selected`;
     checkedUsers.innerHTML = "";
-    console.log("userNames", userNames);
     let i = 0
     userNames.forEach((userName) => {
       const personWithName = contacts.find((person) => person.name == userName.innerHTML);

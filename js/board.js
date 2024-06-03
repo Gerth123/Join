@@ -168,11 +168,6 @@ function getBoardContents(contents, id) {
       getProgressBar(card["subtasks"], card["id"]);
     }
     });
-    console.log(contents)
-    console.log(i)
-
-
-
   }
 }
 
