@@ -91,7 +91,7 @@ let testTasks = [
           { color: generateRandomColor(), name: "Marcel Bauer" },
           { color: generateRandomColor(), name: "Tatjana Wolf" },
         ],
-        date: "10/05/2025",
+        date: "2024-06-15",
         priority: "medium",
         subtasks: [
           { checked: false, task: "Implement Recipe Recommendation" },
@@ -108,7 +108,7 @@ let testTasks = [
           { color: generateRandomColor(), name: "Benedikt Ziegler" },
           { color: generateRandomColor(), name: "Anton Mayer" },
         ],
-        date: "10/05/2025",
+        date: "2024-06-15",
         priority: "low",
         subtasks: [
           { checked: false, task: "Implement Recipe Recommendation" },
@@ -125,7 +125,7 @@ let testTasks = [
           { color: generateRandomColor(), name: "Anton Mayer" },
           { color: generateRandomColor(), name: "Tatjana Wolf" },
         ],
-        date: "10/05/2025",
+        date: "2024-06-15",
         priority: "medium",
         subtasks: [
           { checked: false, task: "Implement Recipe Recommendation" },
@@ -146,7 +146,7 @@ let testTasks = [
           { color: generateRandomColor(), name: "Stefan Meier" },
           { color: generateRandomColor(), name: "Benedikt Ziegler" },
         ],
-        date: "10/05/2025",
+        date: "2024-06-15",
         priority: "urgent",
         subtasks: [
           { checked: false, task: "Implement Recipe Recommendation" },
@@ -162,7 +162,7 @@ let testTasks = [
           { color: generateRandomColor(), name: "Stefan Meier" },
           { color: generateRandomColor(), name: "David Eisenberg" },
         ],
-        date: "10/06/2025",
+        date: "2024-06-15",
         priority: "urgent",
         subtasks: [
           { checked: false, task: "Identify Issues" },

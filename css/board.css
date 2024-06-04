@@ -2,30 +2,12 @@ body {
   background-color: #f6f7f8;
 }
 
-::-webkit-scrollbar {
-  width: 8px;
-  padding: 4px;
-}
-
-::-webkit-scrollbar-track {
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #a8a8a8;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;
-}
-
 label {
   font-size: 12px;
 }
 
 .headerAndOpenedContainer {
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   background-color: #f6f7f8;
 }
 
@@ -39,8 +21,8 @@ label {
   flex-direction: column;
   justify-content: space-between;
   height: 70px;
-  padding-top: 80px;
-  padding-left: min(5%, 64px);
+  padding-top: 6vw;
+  padding-left: 6vw;
 }
 
 .board-header-top {
@@ -52,7 +34,7 @@ label {
 }
 
 .board-header-title {
-  font-size: 61px;
+  /* font-size: 61px; */
   font-weight: bold;
 }
 
@@ -75,7 +57,6 @@ label {
   display: flex;
   justify-content: space-between;
   margin-top: 48px;
-  margin-bottom: 8px;
 }
 
 .add-btn-container {
@@ -149,7 +130,7 @@ input:focus {
   flex-wrap: wrap;
   /* width: 100%; */
   max-width: 1200px;
-  padding-left: min(5%, 64px);
+  padding-left: 6vw;
 }
 
 .board-card-content {
@@ -161,12 +142,15 @@ input:focus {
   width: 220px;
   min-height: 145px;
   padding: 16px;
-  margin-bottom: 16px;
   border-radius: 24px;
   background-color: #ffffff;
   box-shadow: 0px 0px 10px 3px #00000014;
   cursor: pointer;
 }
+
+/* .rotate {
+  transform: rotate(5deg);
+} */
 
 .board-category {
   margin-bottom: 24px;
@@ -261,7 +245,7 @@ progress[value]::-moz-progress-bar {
   background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='10' ry='10' stroke='%23A8A8A8FF' stroke-width='2' stroke-dasharray='1%2c 6' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
   border-radius: 10px;
 }
-
+/* 
 [type="checkbox"] {
   display: none;
 }
@@ -292,7 +276,7 @@ progress[value]::-moz-progress-bar {
   width: 18px;
   height: 18px;
   background: url("/assets/icons/board/fullsize/checkbox_checked.svg") no-repeat;
-}
+} */
 
 .button {
   cursor: pointer;
@@ -378,10 +362,6 @@ progress[value]::-moz-progress-bar {
   display: none;
 }
 
-.h-120 {
-  min-height: 120px;
-}
-
 .jc-fe {
   justify-content: flex-end;
 }
@@ -391,7 +371,7 @@ progress[value]::-moz-progress-bar {
 }
 
 .column {
-  position:relative;
+  position: relative;
   display: flex;
   flex-direction: column;
 }
@@ -415,6 +395,7 @@ fieldset {
 
 .no-content-img {
   width: 255px;
+  margin-top: 12px;
 }
 
 .header-row {
@@ -491,6 +472,26 @@ fieldset {
     background-image: url("/assets/icons/board/board-header-btn-sml-hover.svg");
     background-repeat: no-repeat;
     background-size: contain;
+  }
+
+  .board-card-section {
+    overflow-y: scroll;
+  }
+
+  .board-card-direction {
+    width: 90vw;
+    display: flex;
+    overflow-x: scroll;
+    /* overflow: hidden; */
+  }
+
+  .board-card-direction::-webkit-scrollbar {
+    display: none;
+  }
+
+  .board-card-direction {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
   .wd-100 {

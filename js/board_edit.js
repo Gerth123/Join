@@ -30,9 +30,17 @@ async function getEditBoard(id, contentId) {
 function toggleSelectBtn() {
   const selectBtns = document.querySelectorAll("#select-btn-editCard");
   selectBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", (e) => {
       btn.classList.toggle("open");
     });
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest("#select-btn-editCard") && !e.target.closest(".assigned-item")) {
+      selectBtns.forEach((btn) => {
+        btn.classList.remove("open");
+      });
+    }
   });
 }
 
@@ -80,9 +88,9 @@ function getCheckedUsers(assignedUsers, contactName) {
  */
 async function getEditAssigned() {
   let contacts = await getData("contacts");
-  let contactsData = []
-  for(let i = 0; i < contacts.length; i++) {
-    if(contacts[i] != null)  contactsData.push(contacts[i])
+  let contactsData = [];
+  for (let i = 0; i < contacts.length; i++) {
+    if (contacts[i] != null) contactsData.push(contacts[i]);
   }
   let data = await getData("tasks");
   let assignedUsers = [];
@@ -111,8 +119,6 @@ async function getEditAssigned() {
 function getEditContacts(assignedUsers, contacts) {
   const contactList = document.getElementById("assigned-list-items");
   contactList.innerHTML = "";
-
-  console.log(contacts)
   contacts.forEach((contact) => {
     let name = getInitials(contact["name"]);
     contactList.innerHTML += /*html*/ `
@@ -123,7 +129,7 @@ function getEditContacts(assignedUsers, contacts) {
         </div>
         <div class="check-img"></div>
       </li>`;
-  })
+  });
 
   // contacts.forEach((contact) => {
   // });
@@ -160,13 +166,23 @@ function checkUsers(contacts) {
   if (checked && checked.length > 0) {
     btnText.innerText = `${checked.length} Selected`;
     checkedUsers.innerHTML = "";
+    let i = 0;
     userNames.forEach((userName) => {
       const personWithName = contacts.find((person) => person.name == userName.innerHTML);
       if (personWithName) {
         let name = getInitials(personWithName["name"]);
-        checkedUsers.innerHTML += getEditAssignedUser(personWithName["color"], name);
+        if (i < 3) {
+          checkedUsers.innerHTML += getEditAssignedUser(personWithName["color"], name);
+        }
+        i++;
       }
     });
+    if (i > 3) {
+      checkedUsers.innerHTML += /*html*/ `
+      <div class="assigned-user">
+        <div id="board-user" class="board-user-editCard" style="background-color: #2A3647">+${i - 3}</div>
+      </div>`;
+    }
   } else {
     btnText.innerText = "Select contacts to assign";
     checkedUsers.innerHTML = "";

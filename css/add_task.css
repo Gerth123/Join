@@ -3,6 +3,14 @@
   flex-direction: column;
 }
 
+.add-form {
+  min-height: 550px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 4vw;
+}
+
 .addTaskOpened {
   display: flex;
   flex-direction: column;
@@ -37,25 +45,37 @@
 }
 
 .addTaskContent {
-  margin-top: 110px;
-  margin-left: 96px;
+  margin-top: 6vw;
+  margin-left: 6vw;
+  margin-right: 6vw;
+  margin-bottom: 4vw;
   max-width: 1200px;
 }
 
-.h-120 {
-  min-height: 120px;
-}
-
-.full-size-footer {
+.full-size-footer-addCard {
+  width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: flex-end;
 }
 
 .cancel-button {
   margin-right: 16px;
 }
 
+.assigned-users-addCard {
+  display: flex;
+}
+
+.btn-row {
+  display: flex;
+}
+
 @media screen and (max-width: 1100px) {
+  html {
+    overflow-y: hidden;
+  }
+
   .addTaskOpenedContainer {
     width: 100%;
     height: 90vh;
@@ -73,14 +93,19 @@
 
   .row {
     flex-direction: column;
+    height: 55vh;
+    overflow-y: scroll;
+  }
+
+  .full-size-footer-addCard {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
   }
 
   .add-line {
     display: none;
-  }
-
-  .pb-40 {
-    padding-bottom: 40px;
   }
 
   .wd-100 {
@@ -91,13 +116,13 @@
     display: none;
   }
 
-  .full-size-footer {
-    display: flex;
-    justify-content: flex-end;
-    padding-bottom: 16px;
-  }
-
   .due-date {
     margin-top: 32px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .row {
+    height: 60vh;
   }
 }
