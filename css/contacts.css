@@ -83,6 +83,9 @@ p {
   position: absolute;
   transform: translate(0, 0);
   height: 75vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 80vw;
   display: flex;
   animation-name: slideIn;
@@ -112,6 +115,8 @@ p {
   height: 75vh;
   width: 80vw;
   display: flex;
+  justify-content: center;
+  align-items: center;
   animation-name: slideIn2;
   animation-duration: 0.9s;
   animation-timing-function: ease-in-out;
@@ -187,12 +192,16 @@ p {
   border-radius: 0px 30px 30px 0px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   height: 75vh;
+  max-height: 592px;
+  max-width: 759px;
   width: 40vw;
 }
 
 .contentleft {
   padding-left: 2vw;
   width: 28vw;
+  max-width: 453px;
+  max-height: 592px;
   height: 75vh;
   background-color: #2a3647;
   border-radius: 30px 0 0 30px;
@@ -224,6 +233,8 @@ p {
 .contentleft2 {
   padding-left: 2vw;
   width: 28vw;
+  max-width: 453px;
+  max-height: 592px;
   height: 75vh;
   display: flex;
   flex-direction: column;
@@ -261,12 +272,20 @@ p {
   width: 100px;
 }
 
+.imgCloseOverlayContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 30vw;
+  max-width: 422px;
+  padding-bottom: 3vh;
+  margin-top: -3vh;
+}
+
 .imgcloseOverlay {
-  position: absolute;
-  top: 4vh;
-  right: 3vw;
   cursor: pointer;
   border-radius: 100px;
+  margin-right: -10px;
 }
 
 .imgcloseOverlay:hover {
@@ -274,27 +293,29 @@ p {
 }
 
 .inputSection {
-  height: 50vh;
+  height: 75%;
   display: flex;
-  width: 30vw;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-evenly;
+  align-items: flex-start;
   flex-direction: column;
 }
 
 .input-divs {
   width: 30vw;
+  max-width: 422px;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 14vh;
   margin-top: -1vh;
+  max-height: 100px;
 }
 
 .input-divs input {
   width: 30vw;
   padding-left: 10px;
   height: 8vh;
+  max-height: 50px;
   border-radius: 10px;
   border: 1px solid #d1d1d1;
   font-weight: 400;
@@ -498,7 +519,7 @@ p {
   height: 10vh;
   width: 10vh;
   background-color: rgb(42, 54, 71);
-  border-radius: 40px;
+  border-radius: 50px;
   z-index: 1;
   display: none;
   align-items: center;
@@ -759,15 +780,26 @@ p {
 
 .overlay-content {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1212px;
+  max-height: 592px;
+}
+
+.imgCloseOverlay2Container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 30vw;
+  max-width: 422px;
+  padding-bottom: 3vh;
+  margin-top: -3vh;
 }
 
 .imgcloseOverlay2 {
   cursor: pointer;
-  position: absolute;
-  cursor: pointer;
   border-radius: 100px;
-  top: 3vh;
-  right: 2vw;
+  margin-right: -10px;
 }
 
 .imgcloseOverlay2:hover {
@@ -782,8 +814,9 @@ p {
   border-top-right-radius: 30px;
   border-bottom-right-radius: 30px;
   width: 47vw;
+  max-height: 592px;
+  max-width: 759px;
   height: 75vh;
-  padding-left: 3vw;
 }
 
 .divider-vertical2 {

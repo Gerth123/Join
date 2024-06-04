@@ -101,6 +101,17 @@
 
   .contentright {
     display: none;
+    position: absolute;
+    width: 100vw;
+    top: 10vh;
+    top: 10svh;
+    height: 80vh;
+    height: 80svh;
+    z-index: 9;
+    padding-left: unset;
+    max-width: unset;
+    align-items: center;
+    justify-content: flex-start;
   }
 
   .h1contact {
@@ -125,6 +136,7 @@
     height: 80vh;
     height: 80svh;
     width: 90vw;
+    flex-direction: column;
   }
 
   .contentleft {
@@ -257,6 +269,8 @@
 
   .overlay-content {
     width: 90vw;
+    max-height: unset;
+    max-width: unset;
   }
 
   .contentleft {
@@ -265,14 +279,16 @@
     width: 33vw;
   }
 
+  .openEditandDeleteResponsive {
+    display: flex;
+    max-width: 70px;
+    max-height: 70px;
+  }
+
   .overlay-contentright2 {
     height: 80vh;
     height: 80svh;
     width: 52vw;
-  }
-
-  .openEditandDeleteResponsive {
-    display: flex;
   }
 
   .editDelete-div {
@@ -293,6 +309,7 @@
     min-width: 120px;
     height: 15vh;
     height: 15svh;
+    max-height: 95px;
     box-shadow: -1px 3px 3px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(0, 0, 0, 0.1);
     padding-top: 0;
@@ -329,12 +346,6 @@
       right: -100vw;
     }
   }
-}
-
-@media (max-width: 880px) {
-  .mainSectionOverlay {
-    flex-direction: column;
-  }
 
   .overlay-content {
     flex-direction: column;
@@ -349,6 +360,8 @@
     align-items: center;
     justify-content: center;
     display: flex;
+    max-width: none;
+    max-height: none;
   }
 
   .contentleft2 {
@@ -366,10 +379,16 @@
 
   .imgcloseOverlay {
     filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+    position: absolute;
+    top: 30px;
+    right: 30px;
   }
 
   .imgcloseOverlay2 {
     filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+    position: absolute;
+    top: 30px;
+    right: 30px;
   }
 
   .logoAddContact {
@@ -380,29 +399,35 @@
     width: 90vw;
     height: 48vh;
     height: 48svh;
+    max-width: none;
+    max-height: none;
     border-radius: 0 0 30px 30px;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
   }
 
   .overlay-contentright2 {
     width: 90vw;
-    height: 48vh;
-    height: 48svh;
+    height: 45vh;
+    height: 45svh;
     border-radius: 0 0 30px 30px;
     flex-direction: column;
     justify-content: center;
     padding-left: 0;
+    max-width: unset;
+    max-height: unset;
   }
 
   .imgAddContact {
-    margin-top: -12vh;
-    margin-top: -12svh;
+    margin-top: -13vh;
+    margin-top: -13svh;
   }
 
   .profilePictureEditResponsive {
-    margin-top: -16vh;
-    margin-top: -16svh;
+    margin-top: -10vh;
+    margin-top: -10svh;
+
     padding-bottom: 2vh;
     padding-bottom: 2svh;
   }
@@ -418,6 +443,7 @@
     height: 32vh;
     height: 32svh;
     width: 80vw;
+    align-items: center;
   }
 
   .input-divs {
@@ -605,6 +631,18 @@
     width: 85%;
   }
 
+  .contentleft {
+    width: 100vw;
+  }
+
+  .overlay-contentright {
+    width: 100vw;
+  }
+
+  .overlay-contentright2 {
+    width: 100vw;
+  }
+
   .contentleft2 {
     width: 80vw;
   }
@@ -630,6 +668,16 @@
 
   .createButton2 {
     width: 40vw;
+  }
+
+  .imgcloseOverlay {
+    top: 20px;
+    right: 15px;
+  }
+
+  .imgcloseOverlay2 {
+    top: 20px;
+    right: 15px;
   }
 }
 
