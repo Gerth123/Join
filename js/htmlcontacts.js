@@ -288,7 +288,7 @@ function editContactHTML(randomColor, initials, name, email, phone) {
                                 <img src="assets/img/person.svg" class="imgsinput0-1">
                             </div>
                             <div class="input-divs">
-                                <input required id="contactEmail${email}" value="${email}" placeholder="Email" pattern=".*@.*\..*" type="email" maxlength="30" title="An @ is required" />
+                                <input required id="contactEmail${email}" value="${email}" placeholder="Email" pattern=".*@.*\..*" type="email" maxlength="25" title="An @ is required" />
                                 <img src="assets/img/mail.svg" class="imgsinput1-2">
                             </div>
                             <div class="input-divs">

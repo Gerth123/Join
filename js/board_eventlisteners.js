@@ -433,7 +433,7 @@ function addAssignedValue(contacts) {
  * @author Hanbit Chang
  */
 function addCategory() {
-  let newCategory = document.getElementById("add-task-categories");
+  const newCategory = document.getElementById("add-task-categories");
   return newCategory.value;
 }
 
@@ -466,7 +466,7 @@ function addPriorityValue() {
  * @author Hanbit Chang
  */
 function addSubTasks() {
-  let newSubtasks = document.querySelectorAll(".subtasks-li-text");
+  const newSubtasks = document.querySelectorAll(".subtasks-li-text");
   let temp = [];
   newSubtasks.forEach((task) => {
     temp.push({ checked: false, task: task.textContent });
@@ -511,32 +511,5 @@ function cancelAddCard(fullsize) {
   const cancel = document.querySelector(".cancel-button");
   cancel.addEventListener("click", () => {
     fullsize.classList.add("d-none");
-  });
-}
-
-/**
- * Attaches a keydown event listener to the search input element and performs a search on the board cards.
- *
- * @return {void} This function does not return anything.
- * @author Hanbit Chang
- */
-function searchCard() {
-  const search = document.getElementById("board-header-search-input");
-  const boardCards = document.querySelectorAll(".board-card");
-  search.addEventListener("keydown", () => {
-    let serachValue = search.value.toLowerCase();
-    if (search.value.length > 1) {
-      boardCards.forEach((boardCard) => {
-        let title = boardCard.querySelector(".board-title");
-        let titleValue = title.innerHTML.toLowerCase();
-        if (!titleValue.includes(serachValue)) {
-          boardCard.classList.add("d-none");
-        }
-      });
-    } else {
-      boardCards.forEach((boardCard) => {
-        boardCard.classList.remove("d-none");
-      });
-    }
   });
 }
