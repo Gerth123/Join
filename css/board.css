@@ -435,6 +435,20 @@ fieldset {
 }
 
 @media screen and (max-width: 510px) {
+  .board-card {
+    box-shadow: none;
+    margin: 8px;
+    z-index: 0;
+  }
+
+  .board-card-content {
+    width: 100%;
+  }
+
+  .board-header-task {
+    width: 100%;
+  }
+
   .board-header-title {
     font-size: 47px;
   }
@@ -476,13 +490,15 @@ fieldset {
 
   .board-card-section {
     overflow-y: scroll;
+    padding-right: 6vw;
   }
 
   .board-card-direction {
+    position: relative;
     width: 90vw;
     display: flex;
     overflow-x: scroll;
-    /* overflow: hidden; */
+    align-items: flex-start;
   }
 
   .board-card-direction::-webkit-scrollbar {
@@ -492,6 +508,10 @@ fieldset {
   .board-card-direction {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+
+  .no-content-img {
+    width: 100%;
   }
 
   .wd-100 {
