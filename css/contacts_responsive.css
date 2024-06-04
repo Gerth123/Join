@@ -79,7 +79,7 @@
   }
 
   .name-mailDiv {
-    min-width: 160px
+    min-width: 160px;
   }
 
   .closeContactResponsive {
@@ -285,6 +285,12 @@
     max-height: 70px;
   }
 
+  .overlay-contentright2 {
+    height: 80vh;
+    height: 80svh;
+    width: 52vw;
+  }
+
   .editDelete-div {
     display: none;
     z-index: 2;
@@ -421,6 +427,7 @@
   .profilePictureEditResponsive {
     margin-top: -10vh;
     margin-top: -10svh;
+
     padding-bottom: 2vh;
     padding-bottom: 2svh;
   }
