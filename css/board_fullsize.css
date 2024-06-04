@@ -203,6 +203,14 @@
   align-items: center;
 }
 
+label {
+  word-wrap: break-word;
+}
+
+.full-size-p {
+  width: 90%;
+}
+
 .full-size-footer-add-board {
   display: flex;
   justify-content: space-between;

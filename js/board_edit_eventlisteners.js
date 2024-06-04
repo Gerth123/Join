@@ -8,7 +8,6 @@
  * @author Hanbit Chang
  */
 function getEditEventListeners(board, editBoard, addBoard) {
-  onClickEditCategory();
   onClickEditBoard(board, editBoard, addBoard);
   oneCheckBox();
 }
@@ -26,28 +25,6 @@ function oneCheckBox() {
             box.checked = false;
           }
         });
-      }
-    });
-  });
-}
-
-/**
- * Attaches a click event listener to each category item. When a category item is clicked,
- * it selects the corresponding select button and updates its text content with the clicked
- * item's text content.
- *
- * @return {void} This function does not return anything.
- * @author Hanbit Chang
- */
-function onClickEditCategory() {
-  const categoryItems = document.querySelectorAll(".category-item");
-  categoryItems.forEach((item) => {
-    item.addEventListener("click", () => {
-      const selectButton = document.querySelector("#select-btn-editCard");
-      const btnText = document.querySelector(".btn-text-category");
-      if (selectButton) {
-        selectButton.classList.remove("open");
-        btnText.textContent = item.textContent;
       }
     });
   });
@@ -150,7 +127,6 @@ function setEditItems(item, contacts) {
   const description = document.getElementById("description-editCard");
   const date = document.getElementById("date-editCard");
   if (item.id == id) {
-    item.category = editCategory(item.category);
     item.title = title.value;
     item.description = description.value;
     item.date = date.value;
@@ -183,19 +159,6 @@ function editAssignedValue(contacts) {
   });
   if (assigned.length == 0) return "";
   return assigned;
-}
-
-/**
- * Returns category in edit card
- * @param {string} category
- * @returns string
- * @author Hanbit Chang
- */
-function editCategory(category) {
-  const newCategory = document.querySelector(".btn-text-category");
-  const stripped = newCategory.textContent.replace(/\s+/g, " ").trim();
-  if (newCategory.textContent == "Select task category") return category;
-  if (newCategory.textContent != "Select task category") return stripped;
 }
 
 /**

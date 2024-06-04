@@ -25,7 +25,7 @@ function checkAddSubtasks() {
  */
 function getAddSubtaskListHTML(subtaskInputValue) {
   return /*html*/ `
-  <li id="subtasks-li">
+  <li id="subtasks-li" class="subtasks-li-content">
     <div class="subtasks-li-container">
       <p class="subtasks-li-text" contenteditable=false>${subtaskInputValue}</p>
       <div class="row" id="subtask-first-btns">

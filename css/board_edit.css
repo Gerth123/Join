@@ -33,9 +33,9 @@ h1 {
 }
 
 .subtasks-li-text {
-  display: flex;
-  justify-content: space-between;
-  height: 24px;
+  width: 80%;
+  word-wrap: break-word;
+  min-height: 24px;
 }
 
 p {
