@@ -439,6 +439,7 @@ fieldset {
 
   .board-card-content {
     width: 100%;
+    margin-bottom: 10px;
   }
 
   .board-header-task {
@@ -487,6 +488,7 @@ fieldset {
   .board-card-section {
     overflow-y: scroll;
     padding-right: 6vw;
+    padding-bottom: 10vh;
   }
 
   .board-card-direction {
