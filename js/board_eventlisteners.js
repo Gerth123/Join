@@ -40,7 +40,6 @@ function onClickFullSizeBoard(fullsize, board, editBoard, addBoard) {
       addBoard.classList.add("d-none");
       id = card.id;
       contentId = card.parentNode.parentNode.id;
-      console.log(contentId);
       getFullSizeBoard(id, contentId);
     })
   );
@@ -411,7 +410,6 @@ function addAssignedValue(contacts) {
 
   let assigned = [];
   assignedUsers.forEach((assignedUser) => {
-    console.log(contacts);
     for (let contact of contacts) {
       if (contact != null) {
         if (contact.name == assignedUser.textContent) {
@@ -436,9 +434,6 @@ function addAssignedValue(contacts) {
  */
 function addCategory() {
   let newCategory = document.getElementById("add-task-categories");
-  // let newCategory = document.querySelector(".btn-text-category");
-  // const stripped = newCategory.textContent.replace(/\s+/g, " ").trim();
-  console.log(newCategory.value);
   return newCategory.value;
 }
 
