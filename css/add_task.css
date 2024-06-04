@@ -59,7 +59,7 @@
   align-items: flex-end;
 }
 
-.cancel-button {
+.clear-button {
   margin-right: 16px;
 }
 
@@ -112,7 +112,7 @@
     width: 100%;
   }
 
-  .cancel-button {
+  .clear-button {
     display: none;
   }
 

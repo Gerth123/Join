@@ -87,6 +87,7 @@ async function getItemById(id, contentId) {
 function getBoardSection(data) {
   const boardSection = document.getElementById("board-card-section");
   boardSection.innerHTML = "";
+  boardSection.innerHTML = '<div id="no-search-results" class="no-search-results d-none"><h1>No search results</h1></div>';
   for (let i = 0; i < data.length; i++) {
     const id = data[i]["id"];
     const items = data[i]["items"];

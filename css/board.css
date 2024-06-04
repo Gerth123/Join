@@ -6,6 +6,12 @@ label {
   font-size: 12px;
 }
 
+.no-search-results {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
 .headerAndOpenedContainer {
   /* overflow-y: scroll; */
   background-color: #f6f7f8;
@@ -56,7 +62,6 @@ label {
   padding-right: 4px;
   display: flex;
   justify-content: space-between;
-  margin-top: 48px;
 }
 
 .add-btn-container {
@@ -131,6 +136,7 @@ input:focus {
   /* width: 100%; */
   max-width: 1200px;
   padding-left: 6vw;
+  margin-top: 48px;
 }
 
 .board-card-content {
@@ -245,38 +251,6 @@ progress[value]::-moz-progress-bar {
   background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='10' ry='10' stroke='%23A8A8A8FF' stroke-width='2' stroke-dasharray='1%2c 6' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
   border-radius: 10px;
 }
-/* 
-[type="checkbox"] {
-  display: none;
-}
-
-[type="checkbox"] + label {
-  position: relative;
-  padding-left: 30px;
-  cursor: pointer;
-  display: inline-block;
-  line-height: 25px;
-}
-
-[type="checkbox"] + label::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 18px;
-  height: 18px;
-  background: url("/assets/icons/board/fullsize/checkbox.svg") no-repeat;
-}
-
-[type="checkbox"]:checked + label::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 18px;
-  height: 18px;
-  background: url("/assets/icons/board/fullsize/checkbox_checked.svg") no-repeat;
-} */
 
 .button {
   cursor: pointer;
@@ -296,7 +270,8 @@ progress[value]::-moz-progress-bar {
   font-weight: bold;
 }
 
-.cancel-button {
+.cancel-button,
+.clear-button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -317,6 +292,11 @@ progress[value]::-moz-progress-bar {
   color: #29abe2;
 }
 
+.clear-button:hover {
+  border: 2px solid #29abe2;
+  color: #29abe2;
+}
+
 .cancel-button-img {
   width: 25px;
   height: 25px;
@@ -325,7 +305,23 @@ progress[value]::-moz-progress-bar {
   background-size: cover;
 }
 
+.clear-button-img {
+  width: 25px;
+  height: 25px;
+  background-image: url("/assets/icons/board/fullsize/cancel_small.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .cancel-button:hover .cancel-button-img {
+  width: 25px;
+  height: 25px;
+  background-image: url("/assets/icons/board/fullsize/cancel_small_hover.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.clear-button:hover .clear-button-img {
   width: 25px;
   height: 25px;
   background-image: url("/assets/icons/board/fullsize/cancel_small_hover.svg");
