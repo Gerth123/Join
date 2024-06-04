@@ -14,7 +14,7 @@ h1 {
   border: 1px solid #d1d1d1;
   border-radius: 10px;
   font-size: 20px;
-  height: 24px;
+  min-height: 24px;
   background-color: #fff;
 }
 
@@ -33,9 +33,16 @@ h1 {
 }
 
 .subtasks-li-text {
+  display: inline-block;
   width: 80%;
-  word-wrap: break-word;
   min-height: 24px;
+  margin-bottom: 0;
+  word-wrap: break-word;
+}
+
+.subtasks-li-content {
+  height: fit-content;
+  padding-bottom: 8px;
 }
 
 p {
@@ -147,4 +154,8 @@ input[type="date"] {
   color: #fff;
   font-size: 12px;
   margin: 8px 4px 24px 4px;
+}
+
+.subtasks-row {
+  display: flex;
 }
