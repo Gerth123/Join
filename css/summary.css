@@ -14,8 +14,6 @@
   align-items: center;
   justify-content: space-between;
   padding-left: 6vw;
-  padding-top: 6vw;
-  /* padding-bottom: 4vw; */
 }
 
 .joinSuh1 {
@@ -338,8 +336,8 @@
     justify-content: flex-end;
     align-items: center;
     gap: 0;
-    height: 15vh;
-    height: 15svh;
+    height: 10vh;
+    height: 10svh;
   }
 
   .joinSuh1 {
@@ -453,7 +451,7 @@
     height: 13vh;
     height: 13svh;
   }
-  
+
   .toDo {
     height: 13vh;
     height: 13svh;
@@ -477,102 +475,102 @@
 
 
 
-  @media (max-width: 420px) {
-    .joinSuh1 {
-      width: 90vw;
-    }
-
-    .h2KeyMet {
-      width: 90vw;
-    }
-
-    .seperatorResponsiveContainer {
-      width: 90vw;
-    }
-
-    .container1 {
-      width: 90vw;
-    }
-
-    .toDo {
-      width: 43.5vw;
-    }
-
-    .done {
-      width: 43.5vw;
-    }
-
-    .container2 {
-      width: 90vw;
-    }
-
-    .task-container {
-      width: 90vw;
-      gap: 3vw;
-    }
-
-    .tasks {
-      width: 27vw;
-    }
+@media (max-width: 420px) {
+  .joinSuh1 {
+    width: 90vw;
   }
 
-  @media (max-width: 370px) {
-    .joinSuh1 {
-      font-size: 2.5em;
-    }
-
-    .h2KeyMet {
-      font-size: 1.0em;
-    }
-
-    .seperatorResponsive {
-      width: 60px;
-    }
-
-    img {
-      max-height: 8vh;
-      max-height: 8svh;
-    }
-
-    .toDo {
-      font-size: 0.7em;
-    }
-
-    .text-ToDo {
-      font-size: 14px;
-    }
-
-    .done {
-      font-size: 0.7em;
-    }
-
-    .text-done {
-      font-size: 14px;
-    }
-
-    .container2 {
-      font-size: 0.7em;
-    }
-
-    .text-urgent {
-      font-size: 14px;
-    }
-
-    .urgent-date {
-      font-size: 17px;
-      line-height: unset;
-    }
-
-    .text-urgent2 {
-      font-size: 14px;
-    }
-
-    .task-container {
-      font-size: 0.7em;
-    }
-
-    .text-task {
-      font-size: 14px;
-      padding: 0 10px;
-    }
+  .h2KeyMet {
+    width: 90vw;
   }
+
+  .seperatorResponsiveContainer {
+    width: 90vw;
+  }
+
+  .container1 {
+    width: 90vw;
+  }
+
+  .toDo {
+    width: 43.5vw;
+  }
+
+  .done {
+    width: 43.5vw;
+  }
+
+  .container2 {
+    width: 90vw;
+  }
+
+  .task-container {
+    width: 90vw;
+    gap: 3vw;
+  }
+
+  .tasks {
+    width: 27vw;
+  }
+}
+
+@media (max-width: 370px) {
+  .joinSuh1 {
+    font-size: 2.5em;
+  }
+
+  .h2KeyMet {
+    font-size: 1.0em;
+  }
+
+  .seperatorResponsive {
+    width: 60px;
+  }
+
+  img {
+    max-height: 8vh;
+    max-height: 8svh;
+  }
+
+  .toDo {
+    font-size: 0.7em;
+  }
+
+  .text-ToDo {
+    font-size: 14px;
+  }
+
+  .done {
+    font-size: 0.7em;
+  }
+
+  .text-done {
+    font-size: 14px;
+  }
+
+  .container2 {
+    font-size: 0.7em;
+  }
+
+  .text-urgent {
+    font-size: 14px;
+  }
+
+  .urgent-date {
+    font-size: 17px;
+    line-height: unset;
+  }
+
+  .text-urgent2 {
+    font-size: 14px;
+  }
+
+  .task-container {
+    font-size: 0.7em;
+  }
+
+  .text-task {
+    font-size: 14px;
+    padding: 0 10px;
+  }
+}
