@@ -284,15 +284,15 @@ function editContactHTML(randomColor, initials, name, email, phone) {
                                 <img class="imgcloseOverlay2" src="assets/img/Close.svg" onclick="closeEditContact()" />
                             </div>
                             <div class="input-divs">
-                                <input required id="contactName${email}" value="${name}" placeholder="Name"/>
+                                <input required id="contactName${email}" value="${name}" placeholder="Name" minlength="5" maxlength="20"/>
                                 <img src="assets/img/person.svg" class="imgsinput0-1">
                             </div>
                             <div class="input-divs">
-                                <input required id="contactEmail${email}" value="${email}" placeholder="Email" pattern=".*@.*\..*" type="email" title="An @ is required" />
+                                <input required id="contactEmail${email}" value="${email}" placeholder="Email" pattern=".*@.*\..*" type="email" maxlength="30" title="An @ is required" />
                                 <img src="assets/img/mail.svg" class="imgsinput1-2">
                             </div>
                             <div class="input-divs">
-                                <input required id="contactPhone${email}" value="${phone}" placeholder="Phone" type="tel" title="Only numbers allowed" />
+                                <input required id="contactPhone${email}" value="${phone}" placeholder="Phone" maxlength="15" type="text"/>
                                 <img src="assets/img/call.svg" class="imgsinput2-3">
                             </div>
                             <div class="overlayButtons">

@@ -135,15 +135,23 @@
               <img class="imgcloseOverlay" src="assets/img/Close.svg" id="closeOverlay" />
             </div>
             <div class="input-divs">
-              <input required id="contactName" placeholder="Name" />
+              <input required id="contactName" placeholder="Name" minlength="5" maxlength="20" />
               <img src="assets/img/person.svg" class="imgsinput" />
             </div>
             <div class="input-divs">
-              <input required id="contactEmail" placeholder="Email" pattern=".*@.*\..*" type="email" title="An @ is required" />
+              <input
+                required
+                id="contactEmail"
+                placeholder="Email"
+                pattern=".*@.*\..*"
+                type="email"
+                title="An @ is required"
+                maxlength="30"
+              />
               <img src="assets/img/mail.svg" class="imgsinput1" />
             </div>
             <div class="input-divs">
-              <input required id="contactPhone" placeholder="Phone" type="tel" title="Only numbers allowed" />
+              <input required id="contactPhone" placeholder="Phone" type="tel" pattern="^[+0][\d]{0,15}$" maxlength="15" />
               <img src="assets/img/call.svg" class="imgsinput2" />
             </div>
             <div class="overlayButtons">
