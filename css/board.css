@@ -508,6 +508,16 @@ fieldset {
     scrollbar-width: none;
   }
 
+  .ok-button {
+    padding: min(16px, 5%);
+    gap: 4px;
+    border-radius: 10px;
+    background: #2a3647;
+    color: #fff;
+    font-size: 21px;
+    font-weight: bold;
+  }
+
   .no-content-img {
     width: 100%;
   }

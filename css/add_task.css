@@ -125,4 +125,9 @@
   .row {
     height: 60vh;
   }
+
+  .add-form {
+    min-height: 0;
+    height: 65vh;
+  }
 }

@@ -457,8 +457,10 @@ header {
     height: 10svh;
     height: 10vh;
     width: 100vw;
-    top: 90vh;
-    top: 90svh;
+    /* top: 90vh;
+    top: 90svh; */
+    top: auto;
+    bottom: 0;
     position: fixed;
   }
 
