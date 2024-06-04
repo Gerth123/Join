@@ -124,7 +124,7 @@ function getBoardContainer(id, header) {
       </div>
       <div id="board-card-direction" class="board-card-direction">
         <img id="no-content-img" class="no-content-img d-none" src="/assets/icons/no-tasks-todo.svg">
-        <div id="dropzone" ondragover="allowDrop(event)" ondrop="doDrop(event)" class="board-card-dropzone"></div>
+        <div id="dropzone" ondragover="allowDrop(event)" ondrop="doDrop(event)" class="board-card-dropzone first-dropzone-mobile"></div>
       </div>
     </div>`;
 }
