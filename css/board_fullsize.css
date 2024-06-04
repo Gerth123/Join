@@ -159,8 +159,9 @@
 }
 
 .full-size-description {
-  overflow-wrap: break-word;
   margin-top: 24px;
+  word-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 .full-size-date {
@@ -201,6 +202,14 @@
 .full-size-subtask-li {
   display: flex;
   align-items: center;
+}
+
+label {
+  word-wrap: break-word;
+}
+
+.full-size-p {
+  width: 90%;
 }
 
 .full-size-footer-add-board {

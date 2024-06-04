@@ -40,7 +40,6 @@ function onClickFullSizeBoard(fullsize, board, editBoard, addBoard) {
       addBoard.classList.add("d-none");
       id = card.id;
       contentId = card.parentNode.parentNode.id;
-      console.log(contentId);
       getFullSizeBoard(id, contentId);
     })
   );
@@ -296,15 +295,15 @@ function getAssignedUser(personWithName) {
  */
 function getSubtaskListHTML(subtaskInputValue) {
   return /*html*/ `
-  <li id="subtasks-li">
+  <li id="subtasks-li" class="subtasks-li-content">
     <div class="subtasks-li-container">
       <p class="subtasks-li-text" contenteditable=false>${subtaskInputValue}</p>
-      <div class="row" id="subtask-first-btns">
+      <div class="subtasks-row" id="subtask-first-btns">
         <img class="subtasks-btn-none" id="subtasks-edit" src="/assets/icons/board/edit/edit_button.svg" alt="">
         <div class="subtasks-line-none"></div>
         <img class="subtasks-btn-none" id="subtasks-trash" src="/assets/icons/board/edit/trash_button.svg" alt="">
       </div>
-      <div class="row d-none" id="subtask-second-btns">
+      <div class="subtasks-row d-none" id="subtask-second-btns">
         <img class="subtasks-btn-none" id="subtasks-trash" src="/assets/icons/board/edit/trash_button.svg" alt="">
         <div class="subtasks-line-none"></div>
         <img class="subtasks-btn-none" id="subtasks-checker" src="./assets/icons/board/edit/check_button.svg" alt="" />
@@ -411,7 +410,6 @@ function addAssignedValue(contacts) {
 
   let assigned = [];
   assignedUsers.forEach((assignedUser) => {
-    console.log(contacts);
     for (let contact of contacts) {
       if (contact != null) {
         if (contact.name == assignedUser.textContent) {
@@ -435,10 +433,7 @@ function addAssignedValue(contacts) {
  * @author Hanbit Chang
  */
 function addCategory() {
-  let newCategory = document.getElementById("add-task-categories");
-  // let newCategory = document.querySelector(".btn-text-category");
-  // const stripped = newCategory.textContent.replace(/\s+/g, " ").trim();
-  console.log(newCategory.value);
+  const newCategory = document.getElementById("add-task-categories");
   return newCategory.value;
 }
 
@@ -471,7 +466,7 @@ function addPriorityValue() {
  * @author Hanbit Chang
  */
 function addSubTasks() {
-  let newSubtasks = document.querySelectorAll(".subtasks-li-text");
+  const newSubtasks = document.querySelectorAll(".subtasks-li-text");
   let temp = [];
   newSubtasks.forEach((task) => {
     temp.push({ checked: false, task: task.textContent });
@@ -516,32 +511,5 @@ function cancelAddCard(fullsize) {
   const cancel = document.querySelector(".cancel-button");
   cancel.addEventListener("click", () => {
     fullsize.classList.add("d-none");
-  });
-}
-
-/**
- * Attaches a keydown event listener to the search input element and performs a search on the board cards.
- *
- * @return {void} This function does not return anything.
- * @author Hanbit Chang
- */
-function searchCard() {
-  const search = document.getElementById("board-header-search-input");
-  const boardCards = document.querySelectorAll(".board-card");
-  search.addEventListener("keydown", () => {
-    let serachValue = search.value.toLowerCase();
-    if (search.value.length > 1) {
-      boardCards.forEach((boardCard) => {
-        let title = boardCard.querySelector(".board-title");
-        let titleValue = title.innerHTML.toLowerCase();
-        if (!titleValue.includes(serachValue)) {
-          boardCard.classList.add("d-none");
-        }
-      });
-    } else {
-      boardCards.forEach((boardCard) => {
-        boardCard.classList.remove("d-none");
-      });
-    }
   });
 }
