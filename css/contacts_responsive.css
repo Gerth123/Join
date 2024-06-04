@@ -624,6 +624,18 @@
     width: 85%;
   }
 
+  .contentleft {
+    width: 100vw;
+  }
+
+  .overlay-contentright {
+    width: 100vw;
+  }
+
+  .overlay-contentright2 {
+    width: 100vw;
+  }
+
   .contentleft2 {
     width: 80vw;
   }
@@ -649,6 +661,16 @@
 
   .createButton2 {
     width: 40vw;
+  }
+
+  .imgcloseOverlay {
+    top: 20px;
+    right: 15px;
+  }
+
+  .imgcloseOverlay2 {
+    top: 20px;
+    right: 15px;
   }
 }
 
