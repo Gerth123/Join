@@ -408,14 +408,18 @@ function getAddObj(contacts) {
  */
 function addAssignedValue(contacts) {
   const assignedUsers = document.querySelectorAll(".checked .item-text");
+
   let assigned = [];
   assignedUsers.forEach((assignedUser) => {
+    console.log(contacts);
     for (let contact of contacts) {
-      if (contact.name == assignedUser.textContent) {
-        assigned.push({
-          color: contact["color"],
-          name: contact["name"],
-        });
+      if (contact != null) {
+        if (contact.name == assignedUser.textContent) {
+          assigned.push({
+            color: contact["color"],
+            name: contact["name"],
+          });
+        }
       }
     }
   });

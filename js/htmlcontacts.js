@@ -28,16 +28,12 @@ async function setupContactClickEvents() {
  * Author: Elias
  */
 async function handleCardClick(card) {
-  console.log("this should be card", card);
   const contentRight = document.getElementById("contentright");
   const name = card.querySelector(".NameContact").textContent;
   const email = card.querySelector(".EmailContact").textContent;
   const phone = card.getAttribute("data-phone");
   const randomColor = generateRandomColor(name);
   const initials = getInitials(name);
-
-  console.log("this is name", name);
-  console.log("this is initials", initials);
   const contactDetailsDiv = document.querySelector(".contactdetails-right");
   contactDetailsDiv.innerHTML = generateContactDetailsHTML(name, email, phone, randomColor, initials);
 
@@ -411,25 +407,14 @@ async function updateContact(event) {
   let randomColor = generateRandomColor(name);
   let initials = getInitials(name);
 
-  console.log("name", name);
-  console.log("newEmail", newEmail);
-  console.log("phone", phone);
-  console.log("contactId", contactId);
-  console.log("initials", initials);
-  console.log("dataId", dataId);
-
   try {
     let updatedContact = await createUpdatedContact(userId, contactId, name, newEmail, phone);
     const contentRight = document.getElementById("contentright");
-    console.log("updatedContact", updatedContact);
-    console.log("contactId", contactId);
-    console.log("userId", userId);
     await updateContactInFirebase(contactId, updatedContact, userId);
     await refreshAndDisplayContacts(userId);
     const contactDetailsDiv = document.querySelector(".contactdetails-right");
     contactDetailsDiv.innerHTML = generateContactDetailsHTML(name, newEmail, phone, randomColor, initials);
     let card = document.querySelector(`.contactCard[data-id="${dataId}"]`);
-    console.log(card);
     setupEditAndDeleteButtons(contactDetailsDiv, card, name, newEmail, phone, randomColor, initials, contentRight);
     closeEditContact();
   } catch (error) {

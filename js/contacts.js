@@ -276,9 +276,7 @@ function createSeparatorDiv() {
 async function saveContact(name, mail, phone, userId) {
   const baseUrl = "https://join-ca44d-default-rtdb.europe-west1.firebasedatabase.app/";
   const contactData = createContactData(name, mail, phone);
-  console.log("this is contactData", contactData);
   const newContactId = await findFirstMissingId(userId);
-  console.log("this is newContactId", newContactId);
   const response = await saveContactToFirebase(baseUrl, userId, newContactId, contactData);
 
   if (!response.ok) {
@@ -381,7 +379,6 @@ async function findFirstMissingId(userId) {
     return 0;
   }
   const ids = getContactIds(contacts);
-  console.log("those are ids", ids);
   ids.sort((a, b) => a - b);
 
   if (ids.length == 0) {
@@ -398,7 +395,6 @@ async function findFirstMissingId(userId) {
  * @returns {Array<number>} - The array of contact IDs.
  */
 function getContactIds(contacts) {
-  console.log(contacts);
   return contacts.map((value, index) => (value === null ? index : -1)).filter((index) => index !== -1);
 }
 
@@ -450,7 +446,6 @@ async function createContact(event) {
   } else {
     try {
       const newContact = await saveContact(name, mail, phone, userId);
-      console.log(newContact);
       clearInputFields();
       updatePageUrl(userId);
       await handleLoadedContacts(userId);
@@ -477,8 +472,6 @@ function updatePageUrl(userId) {
  */
 async function handleLoadedContacts(userId) {
   const actualUsers = await loadData(`users/${userId}/contacts`);
-  console.log("Loaded Contacts:", actualUsers);
-
   if (actualUsers) {
     const sortedContacts = sortContacts(actualUsers);
     displayContacts(sortedContacts);
