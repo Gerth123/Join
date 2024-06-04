@@ -266,11 +266,13 @@ function editContactHTML(randomColor, initials, name, email, phone) {
                         </div>
                     </div>
                     <div class="overlay-contentright2">
-                        <img class="imgcloseOverlay2" src="assets/img/Close.svg" onclick="closeEditContact()" />
                         <div class="profilePictureEditResponsive">
                             <div class="profilePicture largeProfilePicture" style="background-color: ${randomColor};">${initials}</div>
                         </div>
                         <form class="inputSection" id="contactForm${email}" onsubmit="updateContact(event)">
+                            <div class="imgCloseOverlay2Container">
+                                <img class="imgcloseOverlay2" src="assets/img/Close.svg" onclick="closeEditContact()" />
+                            </div>
                             <div class="input-divs">
                                 <input required id="contactName${email}" value="${name}" placeholder="Name"/>
                                 <img src="assets/img/person.svg" class="imgsinput0-1">
