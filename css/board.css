@@ -154,10 +154,6 @@ input:focus {
   cursor: pointer;
 }
 
-/* .rotate {
-  transform: rotate(5deg);
-} */
-
 .board-category {
   margin-bottom: 24px;
 }

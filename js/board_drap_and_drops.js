@@ -32,12 +32,12 @@ function getDropZones() {
   elements.forEach((element) => {
     element.addEventListener("drag", (e) => {
       e.target.classList.add("dragging");
-    })
+    });
 
     element.addEventListener("dragend", (e) => {
       e.target.classList.remove("dragging");
-    })
-  })
+    });
+  });
 }
 
 /**
