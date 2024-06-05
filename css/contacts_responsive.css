@@ -66,9 +66,9 @@
     width: 100%;
   }
 
-  .seperator-contacts-list {
+  /* .seperator-contacts-list {
     width: 95%;
-  }
+  } */
 
   .profilePicture {
     min-width: 50px;
@@ -520,11 +520,10 @@
 
   .contacts {
     width: 80vw;
-    /* padding: 5vw; */
   }
 
   .contacts-container {
-    width: 80vw;
+    width: 100vw;
   }
 
   .h1contact {
@@ -674,9 +673,9 @@
     gap: 15px;
   }
 
-  .seperator-contacts-list {
+  /* .seperator-contacts-list {
     width: 90%;
-  }
+  } */
 
   .h1contact {
     width: 95vw;

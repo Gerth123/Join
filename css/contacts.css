@@ -715,7 +715,7 @@ p {
 }
 
 .seperator-contacts-list {
-  width: 80%;
+  width: 100%;
   min-height: 1px;
   background-color: #d1d1d1;
   margin: 1vh 0;
