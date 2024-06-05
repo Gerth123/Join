@@ -431,6 +431,10 @@ fieldset {
 }
 
 @media screen and (max-width: 510px) {
+  ul {
+    padding: 0;
+  }
+
   .board-card {
     box-shadow: none;
     margin: 8px;
@@ -440,6 +444,7 @@ fieldset {
   .board-card-content {
     width: 100%;
     margin-bottom: 10px;
+    margin-right: 0;
   }
 
   .board-header-task {
@@ -457,6 +462,7 @@ fieldset {
   }
 
   .board-header-search {
+    width: 95%;
     max-width: 470px;
     padding: 4px 0px 4px 8px;
     margin-right: 0;
@@ -493,7 +499,7 @@ fieldset {
 
   .board-card-direction {
     position: relative;
-    width: 90vw;
+    /* width: 90vw; */
     display: flex;
     overflow-x: scroll;
     align-items: flex-start;

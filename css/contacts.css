@@ -25,15 +25,14 @@ p {
 }
 
 .addContact {
-  width: 29vw;
-  height: 12vh;
+  width: 100%;
+  margin-bottom: 20px;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 
 .addContactButton {
-  width: 352px;
+  padding: 15px;
   height: 56px;
   border-radius: 10px;
   background-color: #2a3647;
@@ -707,7 +706,7 @@ p {
   display: flex;
   align-items: center;
   width: 28vw;
-  padding-left: 3vw;
+  padding-left: 40px;
   padding-top: 2vh;
   padding-bottom: 2vh;
   height: 58px;

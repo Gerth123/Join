@@ -237,7 +237,7 @@
 .number-task {
   color: #2a3647;
   font-size: 2.8em;
-  font-weight: bold
+  font-weight: bold;
 }
 
 .text-task {
@@ -336,8 +336,7 @@
     justify-content: flex-end;
     align-items: center;
     gap: 0;
-    height: 10vh;
-    height: 10svh;
+    height: 15vh;
   }
 
   .joinSuh1 {
@@ -473,8 +472,6 @@
   }
 }
 
-
-
 @media (max-width: 420px) {
   .joinSuh1 {
     width: 90vw;
@@ -520,7 +517,7 @@
   }
 
   .h2KeyMet {
-    font-size: 1.0em;
+    font-size: 1em;
   }
 
   .seperatorResponsive {

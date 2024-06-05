@@ -28,16 +28,11 @@
     flex-direction: row-reverse;
   }
 
-  .addContact {
-    width: unset;
-    height: 75vh;
-    height: 75svh;
-    display: flex;
-    align-items: flex-end;
-    padding-left: 5vw;
-  }
-
   .addContactButton {
+    position: absolute;
+    bottom: 12vh;
+    right: 3vw;
+    z-index: 1;
     border-radius: 30px;
     width: 5vw;
     min-width: 56px;
@@ -47,30 +42,37 @@
     display: none;
   }
 
+  .addContact {
+    width: 0;
+  }
+
   .contacts {
-    padding-left: 10vw;
-    width: 38vw;
+    /* padding-left: 10vw; */
+    width: 60vw;
     height: 79vh;
     height: 79svh;
     padding-right: 0;
   }
 
   .contacts-container {
-    width: unset;
+    display: flex;
+    width: 60vw;
     max-height: 78vh;
     max-height: 78svh;
     padding-bottom: 0vh;
+    align-items: flex-start;
   }
 
   .contacts-list-letter {
-    width: 90%;
-  }
-
-  .seperator-contacts-list {
-    width: 95%;
+    width: 100%;
+    padding-left: 3vw;
   }
 
   .contact {
+    width: 100%;
+  }
+
+  .seperator-contacts-list {
     width: 95%;
   }
 
@@ -489,13 +491,6 @@
 }
 
 @media (max-width: 800px) {
-  .contacts {
-    width: 50vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
   .contacts-container {
     display: flex;
     align-items: center;
@@ -511,6 +506,10 @@
 
   .editDelete-div {
     padding-left: 30px;
+  }
+
+  .contacts-list-letter {
+    padding-left: 20px;
   }
 }
 
@@ -531,11 +530,21 @@
   }
 
   .contacts {
-    width: 60vw;
+    width: 80vw;
+    /* padding: 5vw; */
   }
+
+  .contacts-container {
+    width: 80vw;
+  }
+
+  /* .contact {
+    width: 75vw;
+  } */
 
   .contacts-list-letter {
     width: 87.5%;
+    padding-left: 10px;
   }
 
   .h1contact {
@@ -624,11 +633,13 @@
   }
 
   .contacts {
-    width: 70vw;
+    width: 80vw;
+    /* padding-left: 5vw; */
   }
 
   .contacts-list-letter {
     width: 85%;
+    padding-left: 15px;
   }
 
   .contentleft {
@@ -684,19 +695,12 @@
 @media (max-width: 450px) {
   .contacts {
     width: 90vw;
-    padding-left: 0vw;
+    /* padding-left: 0vw; */
     overflow-x: hidden;
   }
 
   .contact {
     gap: 15px;
-  }
-
-  .addContact {
-    padding-left: 0.5vw;
-    padding-right: 1vw;
-    height: 79vh;
-    height: 79svh;
   }
 
   .seperator-contacts-list {
