@@ -23,6 +23,7 @@ function onClickClearBtn() {
   clearBtn.addEventListener("click", () => {
     clearAddTaskInputs();
     setCheckBoxes();
+    setAssigned();
   });
 }
 
@@ -31,7 +32,6 @@ function onClickClearBtn() {
  *
  * @return {void} This function does not return anything.
  */
-
 function clearAddTaskInputs() {
   const title = document.getElementById("title-addCard");
   const description = document.getElementById("description-addCard");
@@ -39,6 +39,22 @@ function clearAddTaskInputs() {
   const categories = document.getElementById("add-task-categories");
   const subtasksInput = document.getElementById("subtasks-input-addCard");
   const subtasks = document.getElementById("subtasks-list-addCard");
+
+  title.value = "";
+  description.value = "";
+  date.value = "";
+  categories.value = "";
+  subtasksInput.value = "";
+  subtasks.innerHTML = "";
+}
+
+/**
+ * Resets the assigned users in the add task form by removing the "checked" class from all assigned items,
+ * clearing the assigned users container, and updating the assigned button text to "Select contacts to assign".
+ *
+ * @return {void} This function does not return anything.
+ */
+function setAssigned() {
   const assignedUsers = document.getElementById("assigned-users-addCard");
   const assignedItems = document.querySelectorAll(".assigned-item");
   const assignedBtnText = document.querySelector(".btn-text-addCard");
@@ -48,14 +64,17 @@ function clearAddTaskInputs() {
   });
   assignedUsers.innerHTML = "";
   assignedBtnText.innerHTML = "Select contacts to assign";
-  title.value = "";
-  description.value = "";
-  date.value = "";
-  categories.value = "";
-  subtasksInput.value = "";
-  subtasks.innerHTML = "";
 }
 
+/**
+ * Sets the initial state of the checkboxes for the priority buttons.
+ *
+ * This function finds the first, remove, and remove2 checkboxes by their IDs
+ * and sets their checked state. The first checkbox is checked, while the
+ * remove and remove2 checkboxes are unchecked.
+ *
+ * @return {void} This function does not return anything.
+ */
 function setCheckBoxes() {
   const firstCheckedBox = document.querySelector('input[type="checkbox"][name="priority-button"][id="radio-btn-5"]');
   const removeCheckedBox = document.querySelector('input[type="checkbox"][name="priority-button"][id="radio-btn-6"]');
@@ -94,12 +113,9 @@ function oneCheckBox() {
   const checkboxes = document.querySelectorAll('input[type="checkbox"][name="priority-button"]');
   checkboxes.forEach((checkbox) => {
     checkbox.addEventListener("change", function () {
-      8;
       if (this.checked) {
         checkboxes.forEach((box) => {
-          if (box !== this) {
-            box.checked = false;
-          }
+          if (box !== this) box.checked = false;
         });
       }
     });
