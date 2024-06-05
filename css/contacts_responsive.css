@@ -585,6 +585,7 @@
   .profil-user {
     height: auto;
     padding: 10px 0;
+    width: 60%;
   }
 
   .largeProfilePicture {
@@ -595,13 +596,9 @@
     font-size: 28px;
   }
 
-  .profil-user-right {
-    height: auto;
-  }
-
   .contact-name {
     font-size: 37px;
-    font-weight: bold;
+    word-wrap: break-word;
   }
 
   .h2Contactinfo {
@@ -716,7 +713,7 @@
   }
 
   .contact-name {
-    font-size: 32px;
+    font-size: 24px;
   }
 
   .editDelete-div {

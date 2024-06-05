@@ -433,12 +433,10 @@ p {
 }
 
 .contentrightResponsive {
-  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
 }
 
 .h1contact {
@@ -506,7 +504,7 @@ p {
 }
 
 .contact-name {
-  font-weight: 500;
+  font-weight: bold;
   font-size: 43px;
   line-height: 56.4px;
 }
@@ -599,16 +597,16 @@ p {
 .div-P {
   display: flex;
   flex-direction: column;
-  padding-bottom: 2vh;
-  padding-top: 1vh;
+  /* padding-bottom: 2vh; */
+  /* padding-top: 1vh; */
   gap: 1vh;
 }
 
 .Phone-div {
   display: flex;
   flex-direction: column;
-  padding-bottom: 2vh;
-  padding-top: 1vh;
+  /* padding-bottom: 2vh;
+  padding-top: 1vh; */
   gap: 1vh;
 }
 
@@ -696,8 +694,6 @@ p {
   justify-content: center;
   align-items: flex-start;
   height: 20vh;
-  width: 32vw;
-  min-width: 370px;
   padding-left: 2vw;
 }
 
