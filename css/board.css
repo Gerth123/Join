@@ -431,6 +431,10 @@ fieldset {
 }
 
 @media screen and (max-width: 510px) {
+  ul {
+    padding: 0;
+  }
+
   .board-card {
     box-shadow: none;
     margin: 8px;
