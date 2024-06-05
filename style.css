@@ -203,7 +203,7 @@ h2 {
 }
 
 .openedDarkBackground:hover {
-  cursor: default;
+  cursor: pointer;
 }
 
 .addTaskContainer {
