@@ -66,10 +66,6 @@
     width: 100%;
   }
 
-  /* .seperator-contacts-list {
-    width: 95%;
-  } */
-
   .profilePicture {
     min-width: 50px;
   }
@@ -291,8 +287,8 @@
     display: none;
     z-index: 2;
     position: absolute;
-    bottom: 2vh;
-    bottom: 2svh;
+    bottom: 0.5vh;
+    bottom: 0.5svh;
     right: -5vw;
     justify-content: center;
     align-items: flex-start;
@@ -504,8 +500,8 @@
 
 @media (max-width: 650px) {
   .editDelete-div {
-    bottom: -13vh;
-    bottom: -13svh;
+    bottom: -21vh;
+    bottom: -21svh;
   }
 
   .seperatorResponsive {
