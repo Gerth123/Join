@@ -201,20 +201,6 @@ function createContactData(name, mail, phone) {
 }
 
 /**
- * Loads contact data from Firebase.
- * Author: Elias
- * @param {string} path - The path to the data in Firebase.
- * @returns {Promise<Object>} - The loaded contact data.
- */
-// async function loadData(path) {
-//   const response = await fetch(`${baseUrl}${path}.json`);
-//   if (!response.ok) {
-//     throw new Error("Error loading data: " + response.statusText);
-//   }
-//   return await response.json();
-// }
-
-/**
  * Saves a contact to Firebase.
  * Author: Elias
  * @param {string} baseUrl - The base URL of the Firebase database.
