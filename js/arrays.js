@@ -1,6 +1,21 @@
+let colors = [
+  generateRandomColor(),
+  generateRandomColor(),
+  generateRandomColor(),
+  generateRandomColor(),
+  generateRandomColor(),
+  generateRandomColor(),
+  generateRandomColor(),
+  generateRandomColor(),
+  generateRandomColor(),
+  generateRandomColor(),
+  generateRandomColor(),
+  generateRandomColor(),
+];
+
 /**
  * This variable contains the data for the contacts that automatically appear in the contacts HTML.
- * 
+ *
  * @author Robin
  */
 let testContacts = [
@@ -8,73 +23,73 @@ let testContacts = [
     name: "Anton Mayer",
     mail: "antom@gmail.com",
     phone: "+491234567890",
-    color: generateRandomColor(),
+    color: colors[0],
   },
   {
     name: "Hans Mueller",
     mail: "hans@gmail.com",
     phone: "+491234567890",
-    color: generateRandomColor(),
+    color: colors[1],
   },
   {
     name: "Benedikt Ziegler",
     mail: "benedikt@gmail.com",
     phone: "+491234567890",
-    color: generateRandomColor(),
+    color: colors[2],
   },
   {
     name: "David Eisenberg",
     mail: "davidberg@gmail.com",
     phone: "+491234567890",
-    color: generateRandomColor(),
+    color: colors[3],
   },
   {
     name: "Eva Fischer",
     mail: "eva@gmail.com",
     phone: "+491234567890",
-    color: generateRandomColor(),
+    color: colors[4],
   },
   {
     name: "Emmanuel Mauer",
     mail: "emmanuelma@gmail.com",
     phone: "+491234567890",
-    color: generateRandomColor(),
+    color: colors[5],
   },
   {
     name: "Marcel Bauer",
     mail: "bauer@gmail.com",
     phone: "+491234567890",
-    color: generateRandomColor(),
+    color: colors[6],
   },
   {
     name: "Tatjana Wolf",
     mail: "wolf@gmail.com",
     phone: "+491234567890",
-    color: generateRandomColor(),
+    color: colors[7],
   },
   {
     name: "Klaus Werner",
     mail: "klausw@gmail.com",
     phone: "+491234567890",
-    color: generateRandomColor(),
+    color: colors[8],
   },
   {
     name: "Peter Hahn",
     mail: "peterhahn@gmail.com",
     phone: "+491234567890",
-    color: generateRandomColor(),
+    color: colors[9],
   },
   {
     name: "Stefan Meier",
     mail: "stefanMeier@gmail.com",
     phone: "+491213212390",
-    color: generateRandomColor(),
+    color: colors[10],
   },
 ];
 
 /**
  * This variable contains the data for the tasks that automatically appear in the tasks HTML.
- * 
+ *
  * @author Robin
  */
 let testTasks = [
@@ -87,9 +102,9 @@ let testTasks = [
         title: "Kochwelt Page & Recipe Recommender",
         description: "Build start page with recipe recommendation.",
         assigned: [
-          { color: generateRandomColor(), name: "Emmanuel Mauer" },
-          { color: generateRandomColor(), name: "Marcel Bauer" },
-          { color: generateRandomColor(), name: "Tatjana Wolf" },
+          { color: colors[5], name: "Emmanuel Mauer" },
+          { color: colors[6], name: "Marcel Bauer" },
+          { color: colors[7], name: "Tatjana Wolf" },
         ],
         date: "2024-06-15",
         priority: "medium",
@@ -104,9 +119,9 @@ let testTasks = [
         title: "HTML Base Template Creation",
         description: "Create reusable HTML base templates...",
         assigned: [
-          { color: generateRandomColor(), name: "David Eisenberg" },
-          { color: generateRandomColor(), name: "Benedikt Ziegler" },
-          { color: generateRandomColor(), name: "Anton Mayer" },
+          { color: colors[3], name: "David Eisenberg" },
+          { color: colors[2], name: "Benedikt Ziegler" },
+          { color: colors[0], name: "Anton Mayer" },
         ],
         date: "2024-06-15",
         priority: "low",
@@ -121,9 +136,9 @@ let testTasks = [
         title: "Daily Kochwelt Recipe",
         description: "Implement daily recipe and portion calculator...",
         assigned: [
-          { color: generateRandomColor(), name: "Emmanuel Mauer" },
-          { color: generateRandomColor(), name: "Anton Mayer" },
-          { color: generateRandomColor(), name: "Tatjana Wolf" },
+          { color: colors[5], name: "Emmanuel Mauer" },
+          { color: colors[0], name: "Anton Mayer" },
+          { color: colors[7], name: "Tatjana Wolf" },
         ],
         date: "2024-06-15",
         priority: "medium",
@@ -143,8 +158,8 @@ let testTasks = [
         title: "CSS Architecture Planning",
         description: "Define CSS naming conventions and structure...",
         assigned: [
-          { color: generateRandomColor(), name: "Stefan Meier" },
-          { color: generateRandomColor(), name: "Benedikt Ziegler" },
+          { color: colors[10], name: "Stefan Meier" },
+          { color: colors[2], name: "Benedikt Ziegler" },
         ],
         date: "2024-06-15",
         priority: "urgent",
@@ -159,8 +174,8 @@ let testTasks = [
         title: "Fix Responsive Layout Issues",
         description: "Resolve layout issues on mobile devices.",
         assigned: [
-          { color: generateRandomColor(), name: "Stefan Meier" },
-          { color: generateRandomColor(), name: "David Eisenberg" },
+          { color: colors[10], name: "Stefan Meier" },
+          { color: colors[3], name: "David Eisenberg" },
         ],
         date: "2024-06-15",
         priority: "urgent",
