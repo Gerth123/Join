@@ -636,7 +636,6 @@ p {
   max-height: 68vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
   position: relative;
   padding-bottom: 10vh;
 }
@@ -698,17 +697,19 @@ p {
 }
 
 .contacts-list-letter {
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  width: 28vw;
-  padding-left: 40px;
-  padding-top: 2vh;
-  padding-bottom: 2vh;
-  height: 58px;
   font-size: 24px;
   font-weight: normal;
   color: #2a3647;
+}
+
+.contacts-list-letter-container {
+  display: flex;
+  width: 48px;
+  justify-content: center;
+  align-items: center;
+  padding-left: 2vw;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
 }
 
 .seperator-contacts-list {

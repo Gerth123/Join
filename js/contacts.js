@@ -248,10 +248,14 @@ function addLetterHeader(container, letter) {
  * @returns {HTMLElement} - The letter div element.
  */
 function createLetterDiv(letter) {
-  const letterDiv = document.createElement("div");
+  const letterContainer = document.createElement("div");
+  const letterDiv = document.createElement("h2");
+  letterContainer.classList.add("contacts-list-letter-container");
   letterDiv.classList.add("contacts-list-letter");
   letterDiv.textContent = letter;
-  return letterDiv;
+  letterContainer.appendChild(letterDiv);
+
+  return letterContainer;
 }
 
 /**
@@ -337,15 +341,14 @@ async function loadData(path) {
  * @param {string} userId - The user ID under which the contacts are stored.
  * @returns {Promise<number>} - The first missing ID.
  */
-// async function findFirstMissingId(userId) {
-//   const contacts = await loadData(`users/${userId}/contacts`);
-//   let id = 0;
-//   while (contacts.hasOwnProperty(id)) {
-//     id++;
-//   }
-//   console.log("this is missing id", id);
-//   return id;
-// }
+async function findFirstMissingId(userId) {
+  const contacts = await loadData(`users/${userId}/contacts`);
+  let id = 0;
+  while (contacts.hasOwnProperty(id)) {
+    id++;
+  }
+  return id;
+}
 
 /**
  * Saves a contact to Firebase.
@@ -376,16 +379,11 @@ async function findFirstMissingId(userId) {
   const contacts = await loadData(`users/${userId}/contacts`);
   if (contacts === null) {
     console.error("Es wurden keine Kontakte gefunden.");
-    return 0;
+    return 1;
   }
   const ids = getContactIds(contacts);
   ids.sort((a, b) => a - b);
-
-  if (ids.length == 0) {
-    return contacts.length;
-  }
-  let minId = Math.min(...ids);
-  return minId;
+  return findMissingId(ids);
 }
 
 /**
@@ -395,7 +393,7 @@ async function findFirstMissingId(userId) {
  * @returns {Array<number>} - The array of contact IDs.
  */
 function getContactIds(contacts) {
-  return contacts.map((value, index) => (value === null ? index : -1)).filter((index) => index !== -1);
+  return contacts.filter((contact) => contact && typeof contact.id === "number" && !isNaN(contact.id)).map((contact) => contact.id);
 }
 
 /**
@@ -405,7 +403,7 @@ function getContactIds(contacts) {
  * @returns {number} - The first missing ID.
  */
 function findMissingId(ids) {
-  let missingId = 0;
+  let missingId = 1;
   for (const id of ids) {
     if (id !== missingId) {
       break;
@@ -441,6 +439,7 @@ async function createContact(event) {
   let userId = await getUserIdFormUrl();
   let contacts = await getData("contacts");
   let alreadyExist = contacts.find((contact) => contact && contact.mail == mail);
+
   if (alreadyExist) {
     alert("The contact already exists!");
   } else {
@@ -472,6 +471,8 @@ function updatePageUrl(userId) {
  */
 async function handleLoadedContacts(userId) {
   const actualUsers = await loadData(`users/${userId}/contacts`);
+  console.log("Loaded Contacts:", actualUsers);
+
   if (actualUsers) {
     const sortedContacts = sortContacts(actualUsers);
     displayContacts(sortedContacts);

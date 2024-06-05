@@ -55,17 +55,11 @@
   }
 
   .contacts-container {
-    display: flex;
     width: 60vw;
     max-height: 78vh;
     max-height: 78svh;
     padding-bottom: 0vh;
     align-items: flex-start;
-  }
-
-  .contacts-list-letter {
-    width: 100%;
-    padding-left: 3vw;
   }
 
   .contact {
@@ -493,7 +487,6 @@
 @media (max-width: 800px) {
   .contacts-container {
     display: flex;
-    align-items: center;
   }
 
   .closeContactResponsive {
@@ -506,10 +499,6 @@
 
   .editDelete-div {
     padding-left: 30px;
-  }
-
-  .contacts-list-letter {
-    padding-left: 20px;
   }
 }
 
@@ -536,15 +525,6 @@
 
   .contacts-container {
     width: 80vw;
-  }
-
-  /* .contact {
-    width: 75vw;
-  } */
-
-  .contacts-list-letter {
-    width: 87.5%;
-    padding-left: 10px;
   }
 
   .h1contact {
@@ -634,11 +614,6 @@
     /* padding-left: 5vw; */
   }
 
-  .contacts-list-letter {
-    width: 85%;
-    padding-left: 15px;
-  }
-
   .contentleft {
     width: 100vw;
   }
@@ -691,8 +666,7 @@
 
 @media (max-width: 450px) {
   .contacts {
-    width: 90vw;
-    /* padding-left: 0vw; */
+    width: 100vw;
     overflow-x: hidden;
   }
 
