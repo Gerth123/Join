@@ -138,6 +138,9 @@ function onClickAddTaskBoard(fullsize, board, editBoard, addBoard) {
  * @author Hanbit Chang
  */
 function addTaskBtnSmall(contentIdAdd) {
+  if (window.innerWidth < 480) {
+    changeHtmlPage("add_task.html");
+  }
   const fullsize = document.getElementById("full-size-container");
   const board = document.getElementById("board");
   const editBoard = document.getElementById("edit-board");

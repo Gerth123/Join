@@ -159,3 +159,12 @@ input[type="date"] {
 .subtasks-row {
   display: flex;
 }
+
+@media screen and (max-width: 1100px) {
+  .subtasks-btn-none {
+    display: block;
+  }
+  .subtasks-li-text {
+    width: 70%;
+  }
+}

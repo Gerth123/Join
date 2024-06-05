@@ -438,7 +438,7 @@ fieldset {
   }
 
   .board-card-content {
-    width: 100%;
+    width: 95%;
     margin-bottom: 10px;
   }
 
@@ -457,6 +457,7 @@ fieldset {
   }
 
   .board-header-search {
+    width: 95%;
     max-width: 470px;
     padding: 4px 0px 4px 8px;
     margin-right: 0;
@@ -493,7 +494,7 @@ fieldset {
 
   .board-card-direction {
     position: relative;
-    width: 90vw;
+    /* width: 90vw; */
     display: flex;
     overflow-x: scroll;
     align-items: flex-start;
