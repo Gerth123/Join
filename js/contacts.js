@@ -16,7 +16,6 @@ function clearInputFields() {
   const contactNameInput = document.getElementById("contactName");
   const contactEmailInput = document.getElementById("contactEmail");
   const contactPhoneInput = document.getElementById("contactPhone");
-
   contactNameInput.value = "";
   contactEmailInput.value = "";
   contactPhoneInput.value = "";
@@ -59,7 +58,6 @@ function sortContacts(contacts) {
 async function displayContacts(contacts) {
   const contactsContainer = getContactsContainer();
   if (!contactsContainer) return;
-
   if (!contacts || contacts.length === 0) {
     console.error("Keine Kontakte gefunden.");
     return;
@@ -121,7 +119,6 @@ async function populateContacts(contacts, container) {
 function addLetterHeader(container, letter) {
   const letterDiv = createLetterDiv(letter);
   container.appendChild(letterDiv);
-
   const separatorDiv = createSeparatorDiv();
   container.appendChild(separatorDiv);
 }
@@ -139,7 +136,6 @@ function createLetterDiv(letter) {
   letterDiv.classList.add("contacts-list-letter");
   letterDiv.textContent = letter;
   letterContainer.appendChild(letterDiv);
-
   return letterContainer;
 }
 
@@ -293,19 +289,47 @@ async function createContact(event) {
   let userId = await getUserIdFormUrl();
   let contacts = await getData("contacts");
   let alreadyExist = contacts.find((contact) => contact && contact.mail == mail);
+  await checkIfContactAlreadyExists(alreadyExist, userId, phone, name, mail);
+}
 
+/**
+ * This function checks if a contact already exists.
+ * 
+ * @param {boolean} alreadyExist - If the contact already exists.
+ * @param {string} userId - The user ID.
+ * @param {string} phone - The phone number of the contact.
+ * @param {string} name - The name of the contact.
+ * @param {string} mail - The email of the contact.
+ * 
+ * @author Robin 
+ */
+async function checkIfContactAlreadyExists(alreadyExist, userId, phone, name, mail) {
   if (alreadyExist) {
     alert("The contact already exists!");
   } else {
     try {
-      const newContact = await saveContact(name, mail, phone, userId);
+      await saveContact(name, mail, phone, userId);
       clearInputFields();
       updatePageUrl(userId);
       await handleLoadedContacts(userId);
+      closeAddContact();
     } catch (error) {
       console.error("Error saving contact:", error);
     }
   }
+}
+
+/**
+ * This function closes the add contact overlay.
+ * 
+ * @author Robin
+ */
+function closeAddContact() {
+  const mainSectionOverlay = document.querySelector(".mainSectionOverlay");
+  mainSectionOverlay.classList.add("overlay-closed");
+  setTimeout(function () {
+    overlay.style.display = "none";
+  }, 850);
 }
 
 /**
@@ -325,8 +349,6 @@ function updatePageUrl(userId) {
  */
 async function handleLoadedContacts(userId) {
   const actualUsers = await loadData(`users/${userId}/contacts`);
-  console.log("Loaded Contacts:", actualUsers);
-
   if (actualUsers) {
     const sortedContacts = sortContacts(actualUsers);
     displayContacts(sortedContacts);
