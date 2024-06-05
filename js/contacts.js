@@ -1,97 +1,4 @@
 /**
- * Sets up event listeners for the contact management interface.
- * Author: Elias
- */
-document.addEventListener("DOMContentLoaded", function () {
-  setupAddContactButton();
-  setupDocumentClickListener();
-  setupCloseImageListener();
-  setupCancelButtonListener();
-  setupContactsAListener();
-});
-
-/**
- * Sets up the event listener for the add contact button.
- * Author: Elias
- */
-function setupAddContactButton() {
-  const addContactButton = document.querySelector(".addContactButton");
-  const overlay = document.getElementById("overlay");
-  const mainSectionOverlay = document.querySelector(".mainSectionOverlay");
-
-  addContactButton.addEventListener("click", function (event) {
-    event.stopPropagation();
-    overlay.style.display = "flex";
-    mainSectionOverlay.classList.remove("overlay-closed");
-  });
-}
-
-/**
- * Sets up the event listener for clicks on the document.
- * Author: Elias
- */
-function setupDocumentClickListener() {
-  const overlay = document.getElementById("overlay");
-  const mainSectionOverlay = document.querySelector(".mainSectionOverlay");
-
-  document.addEventListener("click", function (event) {
-    if (overlay.style.display === "flex" && !mainSectionOverlay.contains(event.target)) {
-      overlay.style.display = "none";
-    }
-  });
-}
-
-/**
- * Sets up the event listener for the close image.
- * Author: Elias
- */
-function setupCloseImageListener() {
-  const closeImage = document.querySelector(".imgcloseOverlay");
-  const overlay = document.getElementById("overlay");
-  const mainSectionOverlay = document.querySelector(".mainSectionOverlay");
-
-  closeImage.addEventListener("click", function (event) {
-    event.stopPropagation();
-    mainSectionOverlay.classList.add("overlay-closed");
-    setTimeout(function () {
-      overlay.style.display = "none";
-    }, 850);
-  });
-}
-
-/**
- * Sets up the event listener for the cancel button.
- * Author: Elias
- */
-function setupCancelButtonListener() {
-  const cancelButton = document.querySelector(".clearButton");
-  const overlay = document.getElementById("overlay");
-  const mainSectionOverlay = document.querySelector(".mainSectionOverlay");
-
-  cancelButton.addEventListener("click", function (event) {
-    event.stopPropagation();
-    mainSectionOverlay.classList.add("overlay-closed");
-    setTimeout(function () {
-      overlay.style.display = "none";
-    }, 850);
-    clearInputFields();
-  });
-}
-
-/**
- * Sets up the event listener for the contactsA div.
- * Author: Elias
- */
-function setupContactsAListener() {
-  const contactsADiv = document.querySelector(".contactsA");
-  if (contactsADiv) {
-    contactsADiv.addEventListener("click", () => {
-      contactsADiv.classList.toggle("active");
-    });
-  }
-}
-
-/**
  * Clears input fields in the contact form.
  * Author: Elias
  */
@@ -114,27 +21,6 @@ function clearInputFields() {
   contactEmailInput.value = "";
   contactPhoneInput.value = "";
 }
-
-/**
- * Fetches and displays sorted user contacts from Firebase when the DOM is fully loaded.
- *
- * Author: Elias
- */
-document.addEventListener("DOMContentLoaded", async function () {
-  try {
-    let userId = await getUserIdFormUrl();
-    const actualUsers = await loadData(`users/${userId}/contacts`);
-
-    if (actualUsers) {
-      const sortedContacts = sortContacts(actualUsers);
-      displayContacts(sortedContacts);
-    } else {
-      console.error("Keine Kontakte im geladenen Benutzer gefunden.");
-    }
-  } catch (error) {
-    console.error("Fehler beim Laden der Daten:", error);
-  }
-});
 
 /**
  * Sorts contacts alphabetically by name.
@@ -178,7 +64,6 @@ async function displayContacts(contacts) {
     console.error("Keine Kontakte gefunden.");
     return;
   }
-
   clearContactsContainer(contactsContainer);
   await populateContacts(contacts, contactsContainer);
   setupContactClickEvents();
@@ -282,11 +167,9 @@ async function saveContact(name, mail, phone, userId) {
   const contactData = createContactData(name, mail, phone);
   const newContactId = await findFirstMissingId(userId);
   const response = await saveContactToFirebase(baseUrl, userId, newContactId, contactData);
-
   if (!response.ok) {
     throw new Error("Error saving contact: " + response.statusText);
   }
-
   return await response.json();
 }
 
@@ -319,35 +202,6 @@ function createContactData(name, mail, phone) {
     phone,
     color: generateRandomColor(),
   };
-}
-
-/**
- * Loads contact data from Firebase.
- * Author: Elias
- * @param {string} path - The path to the data in Firebase.
- * @returns {Promise<Object>} - The loaded contact data.
- */
-async function loadData(path) {
-  const response = await fetch(`${baseUrl}${path}.json`);
-  if (!response.ok) {
-    throw new Error("Error loading data: " + response.statusText);
-  }
-  return await response.json();
-}
-
-/**
- * Finds the first missing ID for a new contact.
- * Author: Elias
- * @param {string} userId - The user ID under which the contacts are stored.
- * @returns {Promise<number>} - The first missing ID.
- */
-async function findFirstMissingId(userId) {
-  const contacts = await loadData(`users/${userId}/contacts`);
-  let id = 0;
-  while (contacts.hasOwnProperty(id)) {
-    id++;
-  }
-  return id;
 }
 
 /**
@@ -494,7 +348,6 @@ function closeContactInfoResponsive() {
  *
  * @author Robin
  */
-
 function openEditAndDeleteResponsive() {
   document.body.style.overflow = "hidden";
   document.getElementById("editDelete-div").classList.remove("editDelete-div-closed-responsive");
@@ -514,4 +367,16 @@ function closeEditAndDeleteResponsive() {
       editDeleteDiv.style.display = "none";
     }, 650);
   }
+}
+
+/**
+ * Updates a contact's information in Firebase.
+ *
+ * @param {string} contactId - The ID of the contact to update.
+ * @param {Object} updatedContact - The updated contact object containing name, email, and phone.
+ *
+ * Author: Elias
+ */
+async function updateContactInFirebase(contactId, updatedContact, userId) {
+  await putData(`users/` + userId + `/contacts/` + contactId, updatedContact);
 }
