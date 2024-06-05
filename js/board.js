@@ -135,9 +135,8 @@ function getBoardContainer(id, header) {
  * @param {number} id
  */
 function getBoardContents(contents, id) {
-  let contentDirection = document.getElementById(`${id}`);
-  // console.log(contentId.querySelector("#board-card-direction"));
-  let content = contentDirection.querySelector("#board-card-direction");
+  const contentDirection = document.getElementById(`${id}`);
+  const content = contentDirection.querySelector("#board-card-direction");
 
   if (contents != "") {
     let i = 0;
