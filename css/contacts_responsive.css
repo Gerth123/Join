@@ -55,7 +55,6 @@
   }
 
   .contacts-container {
-    display: flex;
     width: 60vw;
     max-height: 78vh;
     max-height: 78svh;
@@ -63,18 +62,13 @@
     align-items: flex-start;
   }
 
-  .contacts-list-letter {
-    width: 100%;
-    padding-left: 3vw;
-  }
-
   .contact {
     width: 100%;
   }
 
-  .seperator-contacts-list {
+  /* .seperator-contacts-list {
     width: 95%;
-  }
+  } */
 
   .profilePicture {
     min-width: 50px;
@@ -493,7 +487,6 @@
 @media (max-width: 800px) {
   .contacts-container {
     display: flex;
-    align-items: center;
   }
 
   .closeContactResponsive {
@@ -506,10 +499,6 @@
 
   .editDelete-div {
     padding-left: 30px;
-  }
-
-  .contacts-list-letter {
-    padding-left: 20px;
   }
 }
 
@@ -531,20 +520,10 @@
 
   .contacts {
     width: 80vw;
-    /* padding: 5vw; */
   }
 
   .contacts-container {
-    width: 80vw;
-  }
-
-  /* .contact {
-    width: 75vw;
-  } */
-
-  .contacts-list-letter {
-    width: 87.5%;
-    padding-left: 10px;
+    width: 100vw;
   }
 
   .h1contact {
@@ -585,6 +564,7 @@
   .profil-user {
     height: auto;
     padding: 10px 0;
+    width: 60%;
   }
 
   .largeProfilePicture {
@@ -595,13 +575,9 @@
     font-size: 28px;
   }
 
-  .profil-user-right {
-    height: auto;
-  }
-
   .contact-name {
     font-size: 37px;
-    font-weight: bold;
+    word-wrap: break-word;
   }
 
   .h2Contactinfo {
@@ -635,11 +611,6 @@
   .contacts {
     width: 80vw;
     /* padding-left: 5vw; */
-  }
-
-  .contacts-list-letter {
-    width: 85%;
-    padding-left: 15px;
   }
 
   .contentleft {
@@ -694,8 +665,7 @@
 
 @media (max-width: 450px) {
   .contacts {
-    width: 90vw;
-    /* padding-left: 0vw; */
+    width: 100vw;
     overflow-x: hidden;
   }
 
@@ -703,9 +673,9 @@
     gap: 15px;
   }
 
-  .seperator-contacts-list {
+  /* .seperator-contacts-list {
     width: 90%;
-  }
+  } */
 
   .h1contact {
     width: 95vw;
@@ -716,7 +686,7 @@
   }
 
   .contact-name {
-    font-size: 32px;
+    font-size: 24px;
   }
 
   .editDelete-div {
