@@ -367,13 +367,11 @@ async function saveAddData() {
   let contacts = await getData("contacts");
   if (contentId == undefined) contentId = 1;
   const content = data.find((content) => content.id == contentId);
-  // console.log(content);
   const obj = getAddObj(contacts);
   if (content.items == "") content.items = [];
   content.items.push(obj);
   await putData(`users/${actualUsersNumber}/tasks/`, data);
   changeHtmlPage("board.html");
-  // location.reload();
 }
 
 /**
