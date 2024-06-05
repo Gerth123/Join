@@ -441,8 +441,6 @@ p {
 
 .h1contact {
   padding-top: 10vh;
-  /* width: 45vw; */
-  height: 15vh;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -501,6 +499,7 @@ p {
 .profil-user {
   display: flex;
   align-items: center;
+  margin-top: 30px;
 }
 
 .contact-name {
@@ -694,7 +693,6 @@ p {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  height: 20vh;
   padding-left: 2vw;
 }
 
