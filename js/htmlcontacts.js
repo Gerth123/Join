@@ -1,26 +1,3 @@
-let dataId;
-/**
- * Initializes contact click events after the DOM is fully loaded.
- * Author: Elias
- */
-document.addEventListener("DOMContentLoaded", setupContactClickEvents);
-
-/**
- * Initializes contact click events.
- * Author: Elias
- */
-async function setupContactClickEvents() {
-  const contactCards = document.querySelectorAll(".contactCard");
-  // const contentRight = document.getElementById("contentright");
-
-  contactCards.forEach((card) => {
-    card.addEventListener("click", () => {
-      handleCardClick(card);
-      dataId = card.getAttribute("data-id");
-    });
-  });
-}
-
 /**
  * Handles the click event for a contact card.
  * @param {HTMLElement} card - The clicked contact card element.
@@ -31,37 +8,21 @@ async function handleCardClick(card) {
   const contentRight = document.getElementById("contentright");
   const name = card.querySelector(".NameContact").textContent;
   const email = card.querySelector(".EmailContact").textContent;
-  const phone = card.getAttribute("data-phone");
-  const randomColor = generateRandomColor(name);
+  const phone = card.getAttribute("data-phone"); 
   const initials = getInitials(name);
+  let actualRandomColor = await findContactsRandomColor(email);
   const contactDetailsDiv = document.querySelector(".contactdetails-right");
-  contactDetailsDiv.innerHTML = generateContactDetailsHTML(name, email, phone, randomColor, initials);
-
+  contactDetailsDiv.innerHTML = generateContactDetailsHTML(name, email, phone, actualRandomColor, initials);
   if (window.innerWidth < 1100) contentRight.style.display = "flex";
-
-  setupEditAndDeleteButtons(contactDetailsDiv, card, name, email, phone, randomColor, initials, contentRight);
+  setupEditAndDeleteButtons(contactDetailsDiv, card, name, email, phone, actualRandomColor, initials, contentRight);
 }
 
-/**
- * Sets up edit and delete buttons.
- * Author: Elias
- */
-function setupEditAndDeleteButtons(contactDetailsDiv, card, name, email, phone, randomColor, initials, contentRight) {
-  let contactDetails = contactDetailsDiv.querySelectorAll(".edit-div");
-  contactDetails.forEach((contactDetail) => {
-    contactDetail.addEventListener("click", () => openEditContactOverlay(name, email, phone, randomColor, initials));
-  });
-
-  contactDetailsDiv.querySelector(".delete-div").addEventListener("click", async () => {
-    try {
-      await deleteContactFromFirebase(email);
-      card.remove();
-      contactDetailsDiv.innerHTML = "";
-      if (window.innerWidth < 1100) contentRight.style.display = "none";
-    } catch (error) {
-      console.error("Fehler beim Löschen des Kontakts:", error);
-    }
-  });
+async function findContactsRandomColor(email) {
+  let actualContact = await findContactIdByEmail(email);
+  let urlParams = new URLSearchParams(window.location.search);
+  let userId = urlParams.get("actualUsersNumber");
+  let actualRandomColor = await loadData(`users/` + userId + `/contacts/` + actualContact + `/color`);
+  return actualRandomColor;
 }
 
 /**
@@ -143,7 +104,7 @@ async function findContactIdByEmail(email) {
  * Author: Elias
  */
 async function generateContactHTML(contact) {
-  const randomColor = await generateRandomColor(contact.name);
+  const randomColor = await findContactsRandomColor(contact.mail);
   const initials = await getInitials(contact.name);
   let userId = await findContactIdByEmail(contact.mail);
   return `
@@ -156,28 +117,6 @@ async function generateContactHTML(contact) {
         </div>
     `;
 }
-
-/**
- * Generates a random color based on a seed string.
- *
- * @param {string} seed - The seed string used to generate the color.
- * @returns {string} - A hex color code generated from the seed.
- *
- * Author: Elias
- */
-// function generateRandomColor(seed) {
-//     var hash = 0;
-//     for (var i = 0; i < seed.length; i++) {
-//         hash = seed.charCodeAt(i) + ((hash << 5) - hash);
-//     }
-
-//     var color = "#";
-//     for (var j = 0; j < 3; j++) {
-//         var value = (hash >> (j * 8)) & 255;
-//         color += value.toString(16).padStart(2, '0');
-//     }
-//     return color;
-// }
 
 /**
  * Generates initials from a name string.
@@ -343,17 +282,6 @@ function createOverlayHTML(randomColor, initials, name, email, phone) {
 }
 
 /**
- * Sets up the delete button event listener.
- * Author: Elias
- */
-function setupDeleteButton(email) {
-  const deleteButton = document.querySelector(".deleteButton");
-  deleteButton.addEventListener("click", async function () {
-    await handleDeleteContact(email);
-  });
-}
-
-/**
  * Handles contact deletion.
  * Author: Elias
  */
@@ -453,19 +381,4 @@ async function refreshAndDisplayContacts(userId) {
   const actualUsers = await loadData(`users/${userId}/contacts`);
   const sortedContacts = await sortContacts(actualUsers);
   await displayContacts(sortedContacts);
-}
-
-/**
- * Updates a contact's information in Firebase.
- *
- * @param {string} contactId - The ID of the contact to update.
- * @param {Object} updatedContact - The updated contact object containing name, email, and phone.
- *
- * Author: Elias
- */
-async function updateContactInFirebase(contactId, updatedContact, userId) {
-  let response = await putData(`users/` + userId + `/contacts/` + contactId, updatedContact);
-  // if (!response.ok) {
-  //   throw new Error("Fehler beim Aktualisieren des Kontakts: " + response.statusText);
-  // }
 }
