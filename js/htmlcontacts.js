@@ -8,7 +8,7 @@ async function handleCardClick(card) {
   const contentRight = document.getElementById("contentright");
   const name = card.querySelector(".NameContact").textContent;
   const email = card.querySelector(".EmailContact").textContent;
-  const phone = card.getAttribute("data-phone"); 
+  const phone = card.getAttribute("data-phone");
   const initials = getInitials(name);
   let actualRandomColor = await findContactsRandomColor(email);
   const contactDetailsDiv = document.querySelector(".contactdetails-right");
@@ -334,8 +334,8 @@ async function updateContact(event) {
   let phone = getInputValue("contactPhone" + globalEmail);
   let contactId = await findContactIdByEmail(globalEmail);
   let userId = getUserIdFormUrl();
-  let randomColor = generateRandomColor(name);
   let initials = getInitials(name);
+  let randomColor = await findContactsRandomColor(globalEmail);
 
   try {
     let updatedContact = await createUpdatedContact(userId, contactId, name, newEmail, phone);
