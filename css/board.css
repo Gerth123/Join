@@ -438,8 +438,9 @@ fieldset {
   }
 
   .board-card-content {
-    width: 95%;
+    width: 100%;
     margin-bottom: 10px;
+    margin-right: 0;
   }
 
   .board-header-task {
