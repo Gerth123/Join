@@ -83,13 +83,29 @@ function fillDates(actualUsersNumber, actualUsers) {
   let actualUser = actualUsers[actualUsersNumber];
   getElementById("tasksToDo").innerHTML = `${actualUser["tasks"][0]["items"].length}`;
   getElementById("tasksDone").innerHTML = `${actualUser["tasks"][3]["items"].length}`;
-  getElementById("tasksInBoard").innerHTML = `${actualUser["tasks"].length}`;
+  let tasksInBoard = actualTasksInBoard(actualUser);
+  getElementById("tasksInBoard").innerHTML = `${tasksInBoard}`;
   getElementById("tasksInProgress").innerHTML = `${actualUser["tasks"][1]["items"].length}`;
   getElementById("tasksAwaitingFeedback").innerHTML = `${actualUser["tasks"][2]["items"].length}`;
   let urgentDates = [];
   fillUrgentTask(actualUser, urgentDates);
   fillUrgentDate(urgentDates);
   getElementById("greetingName").innerHTML = `${actualUsers[actualUsersNumber]["name"]}`;
+}
+
+/**
+ * This function is used to get the number of the urgent tasks.
+ * 
+ * @param {object} actualUser - The object of the user.
+ * 
+ * @author: Robin
+ */
+function actualTasksInBoard(actualUser) {
+  let tasksInBoard = 0;
+  for (let actualTasksStatusIndex = 0; actualTasksStatusIndex < actualUser["tasks"].length; actualTasksStatusIndex++) {
+    tasksInBoard += actualUser["tasks"][actualTasksStatusIndex]["items"].length;
+  }
+  return tasksInBoard;
 }
 
 /**

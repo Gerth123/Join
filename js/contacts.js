@@ -7,22 +7,6 @@ function clearInputFields() {
 }
 
 /**
- * This function clears the text in the input fields for contact name, email, and phone.
- * It retrieves the input elements by their respective IDs and sets their values to an empty string.
- *
- * Author: Elias
- */
-function clearInputFields() {
-  const contactNameInput = document.getElementById("contactName");
-  const contactEmailInput = document.getElementById("contactEmail");
-  const contactPhoneInput = document.getElementById("contactPhone");
-
-  contactNameInput.value = "";
-  contactEmailInput.value = "";
-  contactPhoneInput.value = "";
-}
-
-/**
  * Sorts contacts alphabetically by name.
  *
  * @param {Array<Object>} contacts - Array of contact objects.
@@ -32,20 +16,12 @@ function clearInputFields() {
  */
 function sortContacts(contacts) {
   contacts.sort((a, b) => {
-    if (a !== null && b !== null) {
-      const nameA = a.name.toUpperCase();
-      const nameB = b.name.toUpperCase();
-      if (nameA < nameB) {
-        return -1;
-      }
-      if (nameA > nameB) {
-        return 1;
-      }
-    } else if (a === null && b !== null) {
-      return 1;
-    } else if (a !== null && b === null) {
-      return -1;
-    }
+    if (a === null) return 1;
+    if (b === null) return -1;
+    const nameA = a.name.toUpperCase();
+    const nameB = b.name.toUpperCase();
+    if (nameA < nameB) return -1;
+    if (nameA > nameB) return 1;
     return 0;
   });
   return contacts;
@@ -59,7 +35,6 @@ function sortContacts(contacts) {
 async function displayContacts(contacts) {
   const contactsContainer = getContactsContainer();
   if (!contactsContainer) return;
-
   if (!contacts || contacts.length === 0) {
     console.error("Keine Kontakte gefunden.");
     return;
@@ -68,6 +43,13 @@ async function displayContacts(contacts) {
   await populateContacts(contacts, contactsContainer);
   setupContactClickEvents();
 }
+
+async function addContactToDOM(contact, contacts) {
+  const contactsNew = [...contacts, contact];
+  sortContacts(contactsNew);
+  displayContacts(contactsNew);
+}
+
 
 /**
  * Gets the contacts container element.
@@ -110,6 +92,7 @@ async function populateContacts(contacts, container) {
       container.innerHTML += contactHTML;
     }
   }
+  removeEmptyLetterHeaders();
 }
 
 /**
@@ -121,7 +104,6 @@ async function populateContacts(contacts, container) {
 function addLetterHeader(container, letter) {
   const letterDiv = createLetterDiv(letter);
   container.appendChild(letterDiv);
-
   const separatorDiv = createSeparatorDiv();
   container.appendChild(separatorDiv);
 }
@@ -139,7 +121,6 @@ function createLetterDiv(letter) {
   letterDiv.classList.add("contacts-list-letter");
   letterDiv.textContent = letter;
   letterContainer.appendChild(letterDiv);
-
   return letterContainer;
 }
 
@@ -154,6 +135,18 @@ function createSeparatorDiv() {
   return separatorDiv;
 }
 
+// Dummy generateContactHTML function for demonstration purposes
+async function generateContactHTML(contact) {
+  return `
+    <div class="contact">
+      <h2>${contact.name}</h2>
+      <p>Phone: ${contact.phone}</p>
+      <p>Email: ${contact.email}</p>
+    </div>
+  `;
+}
+
+
 /**
  * Saves a contact in Firebase under a sequential ID and adds a randomly generated color.
  * Author: Elias
@@ -163,14 +156,10 @@ function createSeparatorDiv() {
  * @param {string} userId - The user ID under which the contact is saved.
  */
 async function saveContact(name, mail, phone, userId) {
-  const baseUrl = "https://join-ca44d-default-rtdb.europe-west1.firebasedatabase.app/";
   const contactData = createContactData(name, mail, phone);
-  const newContactId = await findFirstMissingId(userId);
-  const response = await saveContactToFirebase(baseUrl, userId, newContactId, contactData);
-  if (!response.ok) {
-    throw new Error("Error saving contact: " + response.statusText);
-  }
-  return await response.json();
+  const newContactId = await findMissingId(userId);
+  let path = `users/` + userId + `/contacts/` + newContactId;
+  await putData(path, contactData);
 }
 
 /**
@@ -205,62 +194,17 @@ function createContactData(name, mail, phone) {
 }
 
 /**
- * Saves a contact to Firebase.
- * Author: Elias
- * @param {string} baseUrl - The base URL of the Firebase database.
- * @param {string} userId - The user ID under which the contact is saved.
- * @param {number} contactId - The ID of the new contact.
- * @param {Object} contactData - The contact data to save.
- * @returns {Promise<Response>} - The response from the fetch request.
- */
-async function saveContactToFirebase(baseUrl, userId, contactId, contactData) {
-  return await fetch(`${baseUrl}users/${userId}/contacts/${contactId}.json`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(contactData),
-  });
-}
-
-/**
- * Finds the first missing ID for a new contact.
- * Author: Elias
- * @param {string} userId - The user ID under which the contacts are stored.
- * @returns {Promise<number>} - The first missing ID.
- */
-async function findFirstMissingId(userId) {
-  const contacts = await loadData(`users/${userId}/contacts`);
-  if (contacts === null) {
-    console.error("Es wurden keine Kontakte gefunden.");
-    return 1;
-  }
-  const ids = getContactIds(contacts);
-  ids.sort((a, b) => a - b);
-  return findMissingId(ids);
-}
-
-/**
- * Retrieves contact IDs from an array of contacts.
- * Author: Elias
- * @param {Array<Object>} contacts - The array of contacts.
- * @returns {Array<number>} - The array of contact IDs.
- */
-function getContactIds(contacts) {
-  return contacts.filter((contact) => contact && typeof contact.id === "number" && !isNaN(contact.id)).map((contact) => contact.id);
-}
-
-/**
  * Finds the first missing ID in an array of IDs.
  * Author: Elias
- * @param {Array<number>} ids - The array of IDs.
+ * @param {string} userId - The user ID.
  * @returns {number} - The first missing ID.
  */
-function findMissingId(ids) {
-  let missingId = 1;
-  for (const id of ids) {
-    if (id !== missingId) {
-      break;
+async function findMissingId(userId) {
+  let contacts = await loadData(`users/${userId}/contacts`);
+  let missingId = 0;
+  for (contact of contacts) {
+    if (contact === null) {
+      break
     }
     missingId++;
   }
@@ -293,15 +237,29 @@ async function createContact(event) {
   let userId = await getUserIdFormUrl();
   let contacts = await getData("contacts");
   let alreadyExist = contacts.find((contact) => contact && contact.mail == mail);
+  await checkIfContactAlreadyExists(alreadyExist, userId, phone, name, mail, contacts);
+}
 
+/**
+ * This function checks if a contact already exists.
+ * 
+ * @param {boolean} alreadyExist - If the contact already exists.
+ * @param {string} userId - The user ID.
+ * @param {string} phone - The phone number of the contact.
+ * @param {string} name - The name of the contact.
+ * @param {string} mail - The email of the contact.
+ * 
+ * @author Robin 
+ */
+async function checkIfContactAlreadyExists(alreadyExist, userId, phone, name, mail, contacts) {
   if (alreadyExist) {
     alert("The contact already exists!");
   } else {
     try {
-      const newContact = await saveContact(name, mail, phone, userId);
+      await saveContact(name, mail, phone, userId);
       clearInputFields();
-      updatePageUrl(userId);
-      await handleLoadedContacts(userId);
+      closeAddContact();
+      addContactToDOM({ name, mail, phone }, contacts);
     } catch (error) {
       console.error("Error saving contact:", error);
     }
@@ -309,13 +267,16 @@ async function createContact(event) {
 }
 
 /**
- * Updates the page URL with the actualUsersNumber parameter.
- * Author: Elias
- * @param {string} userId - The user ID.
+ * This function closes the add contact overlay.
+ * 
+ * @author Robin
  */
-function updatePageUrl(userId) {
-  const newUrl = `/contacts.html?msg=welcome&actualUsersNumber=${userId}`;
-  history.pushState(null, "", newUrl);
+function closeAddContact() {
+  const mainSectionOverlay = document.querySelector(".mainSectionOverlay");
+  mainSectionOverlay.classList.add("overlay-closed");
+  setTimeout(function () {
+    overlay.style.display = "none";
+  }, 850);
 }
 
 /**
@@ -325,8 +286,6 @@ function updatePageUrl(userId) {
  */
 async function handleLoadedContacts(userId) {
   const actualUsers = await loadData(`users/${userId}/contacts`);
-  console.log("Loaded Contacts:", actualUsers);
-
   if (actualUsers) {
     const sortedContacts = sortContacts(actualUsers);
     displayContacts(sortedContacts);

@@ -25,13 +25,12 @@ function setupAddContactButton() {
     const overlay = document.getElementById("overlay");
     const mainSectionOverlay = document.querySelector(".mainSectionOverlay");
 
-    addContactButton.addEventListener("click", function (event) {
+    addContactButton.onclick = function (event) {
         event.stopPropagation();
         overlay.style.display = "flex";
         mainSectionOverlay.classList.remove("overlay-closed");
-    });
+    };
 }
-
 
 /**
 * Sets up the event listener for clicks on the document.
@@ -40,12 +39,11 @@ function setupAddContactButton() {
 function setupDocumentClickListener() {
     const overlay = document.getElementById("overlay");
     const mainSectionOverlay = document.querySelector(".mainSectionOverlay");
-
-    document.addEventListener("click", function (event) {
+    document.onclick = function (event) {
         if (overlay.style.display === "flex" && !mainSectionOverlay.contains(event.target)) {
             overlay.style.display = "none";
         }
-    });
+    };
 }
 
 /**
@@ -56,14 +54,13 @@ function setupCloseImageListener() {
     const closeImage = document.querySelector(".imgcloseOverlay");
     const overlay = document.getElementById("overlay");
     const mainSectionOverlay = document.querySelector(".mainSectionOverlay");
-
-    closeImage.addEventListener("click", function (event) {
+    closeImage.onclick = function (event) {
         event.stopPropagation();
         mainSectionOverlay.classList.add("overlay-closed");
         setTimeout(function () {
             overlay.style.display = "none";
         }, 850);
-    });
+    };
 }
 
 /**
@@ -75,14 +72,14 @@ function setupCancelButtonListener() {
     const overlay = document.getElementById("overlay");
     const mainSectionOverlay = document.querySelector(".mainSectionOverlay");
 
-    cancelButton.addEventListener("click", function (event) {
+    cancelButton.onclick = function (event) {
         event.stopPropagation();
         mainSectionOverlay.classList.add("overlay-closed");
         setTimeout(function () {
             overlay.style.display = "none";
         }, 850);
         clearInputFields();
-    });
+    };
 }
 
 /**
@@ -92,9 +89,9 @@ function setupCancelButtonListener() {
 function setupContactsAListener() {
     const contactsADiv = document.querySelector(".contactsA");
     if (contactsADiv) {
-        contactsADiv.addEventListener("click", () => {
+        contactsADiv.onclick = () => {
             contactsADiv.classList.toggle("active");
-        });
+        };
     }
 }
 
@@ -107,7 +104,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     try {
         let userId = await getUserIdFormUrl();
         const actualUsers = await loadData(`users/${userId}/contacts`);
-
         if (actualUsers) {
             const sortedContacts = sortContacts(actualUsers);
             displayContacts(sortedContacts);
@@ -128,13 +124,11 @@ let dataId;
  */
 async function setupContactClickEvents() {
     const contactCards = document.querySelectorAll(".contactCard");
-    // const contentRight = document.getElementById("contentright");
-
     contactCards.forEach((card) => {
-        card.addEventListener("click", () => {
+        card.onclick = () => {
             handleCardClick(card);
             dataId = card.getAttribute("data-id");
-        });
+        };
     });
 }
 
@@ -145,19 +139,20 @@ async function setupContactClickEvents() {
 function setupEditAndDeleteButtons(contactDetailsDiv, card, name, email, phone, randomColor, initials, contentRight) {
     let contactDetails = contactDetailsDiv.querySelectorAll(".edit-div");
     contactDetails.forEach((contactDetail) => {
-        contactDetail.addEventListener("click", () => openEditContactOverlay(name, email, phone, randomColor, initials));
+        contactDetail.onclick = () => openEditContactOverlay(name, email, phone, randomColor, initials);
     });
 
-    contactDetailsDiv.querySelector(".delete-div").addEventListener("click", async () => {
+    contactDetailsDiv.querySelector(".delete-div").onclick = async () => {
         try {
-            await deleteContactFromFirebase(email);
             card.remove();
+            await deleteContactFromFirebase(email); 
+            removeEmptyLetterHeaders();
             contactDetailsDiv.innerHTML = "";
             if (window.innerWidth < 1100) contentRight.style.display = "none";
         } catch (error) {
             console.error("Fehler beim Löschen des Kontakts:", error);
         }
-    });
+    };
 }
 
 /**
@@ -166,7 +161,7 @@ function setupEditAndDeleteButtons(contactDetailsDiv, card, name, email, phone, 
 */
 function setupDeleteButton(email) {
     const deleteButton = document.querySelector(".deleteButton");
-    deleteButton.addEventListener("click", async function () {
+    deleteButton.onclick = async function () {
         await handleDeleteContact(email);
-    });
+    };
 }
