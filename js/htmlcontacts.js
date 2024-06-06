@@ -60,7 +60,9 @@ async function findContactsRandomColor(email) {
   let userId = urlParams.get("actualUsersNumber");
   let actualRandomColor = await loadData(`users/` + userId + `/contacts/` + actualContact + `/color`);
   return actualRandomColor;
+}
 
+  /**
  * Updates the contact details in the UI.
  * @param {HTMLElement} contentRight - The content right section element.
  * @param {string} name - The contact's name.
@@ -75,7 +77,6 @@ function updateContactDetails(contentRight, name, email, phone, initials) {
     if (window.innerWidth < 1100) contentRight.style.display = "flex";
     setupEditAndDeleteButtons(contactDetailsDiv, lastClickedCard, name, email, phone, actualRandomColor, initials, contentRight);
   });
-
 }
 
 /**
@@ -512,13 +513,15 @@ async function renderContacts() {
  */
 async function findContactsRandomColor(email) {
   let userId = await getUserIdFormUrl();
-  let actualUsers = await loadData(`users/${userId}/contacts`);
+  let actualUsers = await loadData(`users/${userId}/contacts/`);
   for (let contactId in actualUsers) {
+    if (actualUsers[contactId] === null) {
+      continue;
+    }
     if (actualUsers[contactId].mail === email) {
       return actualUsers[contactId].color;
     }
   }
-
   return generateRandomColor();
 }
 
