@@ -93,20 +93,9 @@ function onClickFullSizeBoard(fullsize, board, editBoard, addBoard) {
  * @author Hanbit Chang
  */
 function onClickCloseFullSize(fullsize) {
-  // document.addEventListener("click", async (e) => {
-  //   if (e.target.matches("#close-btn-img-add")) {
-  //     let addboard = document.getElementById("add-board");
-  //     // addboard.classList.add("overlay-closed-add-board")
-  //     fullsize.classList.add("d-none");
-  //   }
-  // });
-
-  let closeBtnAdds = document.querySelectorAll("#close-btn-img-add");
+  const closeBtnAdds = document.querySelectorAll("#close-btn-img-add");
   closeBtnAdds.forEach((closeBtnAdd) => {
     closeBtnAdd.onclick = async () => {
-      // console.log("close-btn-img-add clicked");
-      // let addboard = document.getElementById("add-board");
-      // addboard.classList.add("overlay-closed-add-board")
       clearAddTaskInputs();
       setCheckBoxes();
       setAssignedAddTask();
@@ -114,16 +103,7 @@ function onClickCloseFullSize(fullsize) {
     };
   });
 
-  // document.onclick = async (e) => {
-  //   if (e.target.matches("#close-btn-img-add")) {
-  //     console.log("close-btn-img-add clicked");
-  //     let addboard = document.getElementById("add-board");
-  //     // addboard.classList.add("overlay-closed-add-board")
-  //     fullsize.classList.add("d-none");
-  //   }
-  // };
-
-  let closeBtns = document.querySelectorAll("#close-btn-img");
+  const closeBtns = document.querySelectorAll("#close-btn-img");
   closeBtns.forEach((closeBtn) => {
     closeBtn.onclick = async () => {
       fullsize.classList.add("d-none");
@@ -162,7 +142,6 @@ function resetPriority() {
 async function updateSubtaskCheck(subtasks) {
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
-  // let data = await getData("tasks");
   for (let column of data) {
     if (column.id == contentId) {
       for (let item of column.items) {
@@ -192,16 +171,6 @@ function onClickAddTaskBoard(fullsize, board, editBoard, addBoard) {
   });
   const addTaskBtn = document.querySelectorAll("#board-header-add-btn");
   addTaskBtn.forEach((btn) => {
-    // btn.addEventListener("click", () => {
-    //   fullsize.classList.remove("d-none");
-    //   board.classList.add("d-none");
-    //   editBoard.classList.add("d-none");
-    //   addBoard.classList.remove("d-none");
-    //   contentId = 1;
-    //   onClickAddSubTasks();
-    //   getAddAssgined();
-    // });
-
     btn.onclick = () => {
       fullsize.classList.remove("d-none");
       board.classList.add("d-none");
@@ -214,13 +183,6 @@ function onClickAddTaskBoard(fullsize, board, editBoard, addBoard) {
       oneCheckBox();
     };
   });
-  // document.addEventListener("click", (e) => {
-  //   if (!e.target.closest("#select-btn-addCard") && !e.target.closest(".assigned-item")) {
-  //     selectBtns.forEach((btns) => {
-  //       btns.classList.remove("open");
-  //     });
-  //   }
-  // });
 
   document.onclick = async (e) => {
     if (!e.target.closest("#select-btn-addCard") && !e.target.closest(".assigned-item")) {
@@ -236,14 +198,6 @@ function oneCheckBox() {
   firstCheckedBox.checked = true;
   const checkboxes = document.querySelectorAll('input[type="checkbox"][name="priority-button"]');
   checkboxes.forEach((checkbox) => {
-    // checkbox.addEventListener("change", function () {
-    //   if (this.checked) {
-    //     checkboxes.forEach((box) => {
-    //       if (box !== this) box.checked = false;
-    //     });
-    //   }
-    // });
-
     checkbox.onchange = function () {
       if (this.checked) {
         checkboxes.forEach((box) => {
@@ -355,11 +309,6 @@ function assignedItemEventListener(contacts) {
   const assignedItems = document.querySelectorAll(".assigned-item");
 
   assignedItems.forEach((item) => {
-    // item.addEventListener("click", () => {
-    //   item.classList.toggle("checked");
-    //   checkedUsers(contacts);
-    // });
-
     item.onclick = () => {
       item.classList.toggle("checked");
       checkedUsers(contacts);
@@ -473,19 +422,11 @@ function onClickAddSubTasks() {
   const subtaskContainer = document.getElementById("subtasks-btn-container-addCard");
   const subtaskDelBtn = document.getElementById("subtasks-del-addCard");
   const subtaskInput = document.getElementById("subtasks-input-addCard");
-  // subtaskAddBtn.addEventListener("click", () => {
-  //   subtaskAddBtn.classList.add("d-none");
-  //   subtaskContainer.classList.remove("d-none");
-  // });
 
   subtaskAddBtn.onclick = () => {
     subtaskAddBtn.classList.add("d-none");
     subtaskContainer.classList.remove("d-none");
   };
-
-  // subtaskDelBtn.addEventListener("click", () => {
-  //   subtaskInput.value = "";
-  // });
 
   subtaskDelBtn.onclick = () => {
     subtaskInput.value = "";
@@ -503,8 +444,6 @@ function onClickAddSubTasks() {
 async function saveAddData() {
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
-  // let data = await getData("tasks");
-  // let contacts = await getData("contacts");
   if (contentId == undefined) contentId = 1;
   const content = data.find((content) => content.id == contentId);
   const obj = getAddObj(contacts);
@@ -560,7 +499,6 @@ function setAssignedAddTask() {
   assignedItems.forEach((item) => {
     item.classList.remove("checked");
   });
-  // console.log("setAssigned");
   assignedUsers.innerHTML = "";
   assignedBtnText.innerHTML = "Select contacts to assign";
 }
@@ -694,23 +632,7 @@ function addSubTasks() {
  * @author Hanbit Chang
  */
 function deleteFullSizeBoard() {
-  // document.addEventListener("click", async (e) => {
-  //   // let data = await getData("tasks");
-  //   if (e.target.matches(".full-size-button-delete")) {
-  //     let urlParams = new URLSearchParams(window.location.search);
-  //     let actualUsersNumber = urlParams.get("actualUsersNumber");
-  //     for (let column of data) {
-  //       if (column.items == "") column.items = [];
-  //       let item = column.items.find((item) => item.id == id);
-  //       if (item) column.items.splice(column.items.indexOf(item), 1);
-  //       if (column.items.length == 0) column.items = "";
-  //     }
-  //     await putData(`users/${actualUsersNumber}/tasks/`, data);
-  //     location.reload();
-  //   }
-  // });
-
-  let delBtn = document.querySelector(".full-size-button-delete");
+  const delBtn = document.querySelector(".full-size-button-delete");
   delBtn.onclick = async () => {
     let urlParams = new URLSearchParams(window.location.search);
     let actualUsersNumber = urlParams.get("actualUsersNumber");
@@ -723,30 +645,11 @@ function deleteFullSizeBoard() {
     renderBoards(data);
     getEventListeners();
     getDropZones();
-    let fullSize = document.getElementById("full-size-container");
+    const fullSize = document.getElementById("full-size-container");
     fullSize.classList.add("d-none");
     await putData(`users/${actualUsersNumber}/tasks/`, data);
     // location.reload();
   };
-  // document.onclick = async (e) => {
-  //   if (e.target.matches(".full-size-button-delete")) {
-  //     let urlParams = new URLSearchParams(window.location.search);
-  //     let actualUsersNumber = urlParams.get("actualUsersNumber");
-  //     for (let column of data) {
-  //       if (column.items == "") column.items = [];
-  //       let item = column.items.find((item) => item.id == id);
-  //       if (item) column.items.splice(column.items.indexOf(item), 1);
-  //       if (column.items.length == 0) column.items = "";
-  //     }
-  //     renderBoards(data);
-  //     getEventListeners();
-  //     getDropZones();
-  //     let fullSize = document.getElementById("full-size-container");
-  //     fullSize.classList.add("d-none");
-  //     await putData(`users/${actualUsersNumber}/tasks/`, data);
-  //     // location.reload();
-  //   }
-  // };
 }
 
 /**
@@ -758,15 +661,10 @@ function deleteFullSizeBoard() {
  */
 function cancelAddCard(fullsize) {
   const cancel = document.querySelector(".cancel-button");
-  // cancel.addEventListener("click", () => {
-  //   fullsize.classList.add("d-none");
-  // });
-
   cancel.onclick = () => {
     fullsize.classList.add("d-none");
     clearAddTaskInputs();
     setCheckBoxes();
     setAssignedAddTask();
-    // console.log("setCancel");
   };
 }
