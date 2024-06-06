@@ -1,5 +1,6 @@
 let icons;
 let data;
+let contacts;
 let header = ["To do", "In progress", "Await feedback", "Done"];
 
 /**
@@ -25,7 +26,7 @@ async function getIcons() {
  */
 async function initBoard() {
   data = await getData("tasks");
-  let contacts = await getData("contacts");
+  contacts = await getData("contacts");
   for (let i = 0; i < data.length; i++) {
     data[i] = await getAssignedKeyByName(data[i], contacts);
   }

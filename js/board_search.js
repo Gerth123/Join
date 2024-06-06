@@ -7,13 +7,38 @@
 function searchCard() {
   const search = document.getElementById("board-header-search-input");
   const boardCards = document.querySelectorAll(".board-card");
-  search.addEventListener("keydown", () => {
+  // search.addEventListener("keydown", () => {
+  //   let serachValue = search.value.toLowerCase();
+  //   if (search.value.length > 1) {
+  //     boardCards.forEach((boardCard) => {
+  //       const title = boardCard.querySelector(".board-title");
+  //       let titleValue = title.innerHTML.toLowerCase();
+  //       if (!titleValue.includes(serachValue)) {
+  //         setNoResults(boardCard);
+  //       }
+  //     });
+  //   } else {
+  //     boardCards.forEach((boardCard) => {
+  //       boardCard.classList.remove("d-none");
+  //       const boardCardContent = document.querySelectorAll(".board-card-content");
+  //       boardCardContent.forEach((content) => {
+  //         content.classList.remove("d-none");
+  //       });
+  //       const noSearchResults = document.getElementById("no-search-results");
+  //       noSearchResults.classList.add("d-none");
+  //     });
+  //   }
+  // });
+
+  search.onkeydown = () => {
     let serachValue = search.value.toLowerCase();
     if (search.value.length > 1) {
       boardCards.forEach((boardCard) => {
         const title = boardCard.querySelector(".board-title");
+        const document = boardCard.querySelector(".board-description");
         let titleValue = title.innerHTML.toLowerCase();
-        if (!titleValue.includes(serachValue)) {
+        let documentValue = document.innerHTML.toLowerCase();
+        if (!titleValue.includes(serachValue) && !documentValue.includes(serachValue)) {
           setNoResults(boardCard);
         }
       });
@@ -28,7 +53,7 @@ function searchCard() {
         noSearchResults.classList.add("d-none");
       });
     }
-  });
+  };
 }
 
 /**
