@@ -206,6 +206,7 @@ function addTaskBtnSmall(contentIdAdd) {
   addBoard.classList.remove("d-none");
   onClickAddSubTasks();
   getAddAssgined();
+  setAddCard();
 }
 
 /**
