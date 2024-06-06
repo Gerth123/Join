@@ -14,12 +14,27 @@ async function getEditBoard(id, contentId) {
   title.value = `${itemData["title"]}`;
   description.value = `${itemData["description"]}`;
   date.value = `${itemData["date"]}`;
+
   toggleSelectBtn();
+  oneCheckBoxEdit();
   getEditPriority(itemData["priority"]);
   getEditSubtasks(itemData["subtasks"]);
   await getEditAssigned();
   getSubtasksEventListeners();
   getEditDate(itemData["date"]);
+}
+
+function oneCheckBoxEdit() {
+  const checkboxes = document.querySelectorAll('input[type="checkbox"][name="priority-button"]');
+  checkboxes.forEach((checkbox) => {
+    checkbox.onchange = function () {
+      if (this.checked) {
+        checkboxes.forEach((box) => {
+          if (box !== this) box.checked = false;
+        });
+      }
+    };
+  });
 }
 
 /**
@@ -30,18 +45,18 @@ async function getEditBoard(id, contentId) {
 function toggleSelectBtn() {
   const selectBtns = document.querySelectorAll("#select-btn-editCard");
   selectBtns.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
+    btn.onclick = function () {
       btn.classList.toggle("open");
-    });
+    };
   });
 
-  document.addEventListener("click", (e) => {
-    if (!e.target.closest("#select-btn-editCard") && !e.target.closest(".assigned-item")) {
+  document.onclick = function (event) {
+    if (!event.target.closest("#select-btn-editCard") && !event.target.closest(".assigned-item")) {
       selectBtns.forEach((btn) => {
         btn.classList.remove("open");
       });
     }
-  });
+  };
 }
 
 /**
@@ -92,7 +107,6 @@ async function getEditAssigned() {
   for (let i = 0; i < contacts.length; i++) {
     if (contacts[i] != null) contactsData.push(contacts[i]);
   }
-  let data = await getData("tasks");
   let assignedUsers = [];
   for (let column of data) {
     if (column.id == contentId) {
@@ -130,9 +144,6 @@ function getEditContacts(assignedUsers, contacts) {
         <div class="check-img"></div>
       </li>`;
   });
-
-  // contacts.forEach((contact) => {
-  // });
 }
 
 /**
@@ -145,10 +156,10 @@ function toggleCheckUsers(contacts) {
   const assignedItems = document.querySelectorAll(".assigned-item");
   assignedItems.forEach((item) => {
     checkUsers(contacts);
-    item.addEventListener("click", () => {
+    item.onclick = () => {
       item.classList.toggle("checked");
       checkUsers(contacts);
-    });
+    };
   });
 }
 
@@ -274,12 +285,12 @@ function getEditSubtasksList(task) {
 function onClickTrash() {
   const trashes = document.querySelectorAll("#subtasks-trash");
   trashes.forEach((trash) => {
-    trash.addEventListener("click", () => {
+    trash.onclick = () => {
       let parentLi = trash.closest("#subtasks-li");
       if (parentLi) {
         parentLi.remove();
       }
-    });
+    };
   });
 }
 
@@ -297,7 +308,7 @@ function onClickTrash() {
 function onClickEditing() {
   const edits = document.querySelectorAll("#subtasks-edit");
   edits.forEach((edit) => {
-    edit.addEventListener("click", () => {
+    edit.onclick = () => {
       const parentContent = edit.closest(".subtasks-li-container");
       const subtaskElement = parentContent.querySelector(".subtasks-li-text");
       const subtaskFirstBtns = parentContent.querySelector("#subtask-first-btns");
@@ -305,7 +316,7 @@ function onClickEditing() {
       subtaskFirstBtns.classList.add("d-none");
       subtaskSecondBtns.classList.remove("d-none");
       subtaskElement.contentEditable = true;
-    });
+    };
   });
 }
 
@@ -323,7 +334,7 @@ function onClickEditing() {
 function onClickChecker() {
   const checkers = document.querySelectorAll("#subtasks-checker");
   checkers.forEach((checker) => {
-    checker.addEventListener("click", () => {
+    checker.onclick = () => {
       const parentContent = checker.closest(".subtasks-li-container");
       const subtaskElement = parentContent.querySelector(".subtasks-li-text");
       const subtaskFirstBtns = parentContent.querySelector("#subtask-first-btns");
@@ -331,7 +342,7 @@ function onClickChecker() {
       subtaskFirstBtns.classList.remove("d-none");
       subtaskSecondBtns.classList.add("d-none");
       subtaskElement.contentEditable = false;
-    });
+    };
   });
 }
 

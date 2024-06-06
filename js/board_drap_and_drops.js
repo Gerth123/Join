@@ -30,13 +30,13 @@ function getDropZones() {
 
   const elements = document.querySelectorAll(".board-card");
   elements.forEach((element) => {
-    element.addEventListener("drag", (e) => {
+    element.ondrag = function (e) {
       e.target.classList.add("dragging");
-    });
+    };
 
-    element.addEventListener("dragend", (e) => {
+    element.ondragend = function (e) {
       e.target.classList.remove("dragging");
-    });
+    };
   });
 }
 
@@ -48,9 +48,9 @@ function getDropZones() {
  * @author Hanbit Chang
  */
 function doDragOver(task) {
-  task.addEventListener("dragenter", () => {
+  task.ondragenter = () => {
     task.classList.add("board-card-dropzone--active");
-  });
+  };
 }
 
 /**
@@ -61,9 +61,9 @@ function doDragOver(task) {
  * @author Hanbit Chang
  */
 function doDragLeave(task) {
-  task.addEventListener("dragleave", () => {
+  task.ondragleave = () => {
     task.classList.remove("board-card-dropzone--active");
-  });
+  };
 }
 
 /**
@@ -107,12 +107,16 @@ async function doDrop(e) {
   insertAfter.after(droppedItemElement);
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
-  await updateItem(`users/${actualUsersNumber}/tasks/`, itemId, {
+  updateItem(itemId, {
     contentId,
     position: droppedIndex,
   });
 
-  initBoard();
+  renderBoards(data);
+  getEventListeners();
+  getDropZones();
+
+  await putData(`users/${actualUsersNumber}/tasks/`, data);
 }
 
 /**
@@ -139,8 +143,7 @@ function getClosestContent(draggableId) {
  * @param {*} newProps
  * @author Hanbit Chang
  */
-async function updateItem(path = "", itemId, newProps) {
-  let data = await getData("tasks");
+async function updateItem(itemId, newProps) {
   let [item, currentColumn] = (() => {
     for (let column of data) {
       if (column.items == "") column.items = [];
@@ -162,6 +165,4 @@ async function updateItem(path = "", itemId, newProps) {
     targetColumn.items.splice(newProps.position, 0, item);
     if (targetColumn.items.length == 0) targetColumn.items = "";
   }
-
-  await putData(path, data);
 }

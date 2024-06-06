@@ -9,25 +9,6 @@
  */
 function getEditEventListeners(board, editBoard, addBoard) {
   onClickEditBoard(board, editBoard, addBoard);
-  oneCheckBox();
-}
-
-function oneCheckBox() {
-  const firstCheckedBox = document.querySelector('input[type="checkbox"][name="priority-button"][id="radio-btn-5"]');
-  firstCheckedBox.checked = true;
-  const checkboxes = document.querySelectorAll('input[type="checkbox"][name="priority-button"]');
-  checkboxes.forEach((checkbox) => {
-    checkbox.addEventListener("change", function () {
-      8;
-      if (this.checked) {
-        checkboxes.forEach((box) => {
-          if (box !== this) {
-            box.checked = false;
-          }
-        });
-      }
-    });
-  });
 }
 
 /**
@@ -40,13 +21,22 @@ function oneCheckBox() {
 function onClickEditBoard(board, editBoard, addBoard) {
   const editBtn = document.getElementById("edit-btn");
 
-  editBtn.addEventListener("click", async () => {
+  // editBtn.addEventListener("click", async () => {
+  //   board.classList.add("d-none");
+  //   editBoard.classList.remove("d-none");
+  //   addBoard.classList.add("d-none");
+  //   await getEditBoard(id, contentId);
+  //   onClickEditSubtasks();
+  // });
+
+  editBtn.onclick = async () => {
     board.classList.add("d-none");
     editBoard.classList.remove("d-none");
     addBoard.classList.add("d-none");
+
     await getEditBoard(id, contentId);
     onClickEditSubtasks();
-  });
+  };
 }
 
 /**
@@ -59,14 +49,23 @@ function onClickEditSubtasks() {
   const subtaskDelBtn = document.getElementById("subtasks-del");
   const subtaskInput = document.getElementById("subtasks-input");
 
-  subtaskAddBtn.addEventListener("click", () => {
+  // subtaskAddBtn.addEventListener("click", () => {
+  //   subtaskAddBtn.classList.add("d-none");
+  //   subtaskContainer.classList.remove("d-none");
+  // });
+
+  subtaskAddBtn.onclick = () => {
     subtaskAddBtn.classList.add("d-none");
     subtaskContainer.classList.remove("d-none");
-  });
+  };
 
-  subtaskDelBtn.addEventListener("click", () => {
+  // subtaskDelBtn.addEventListener("click", () => {
+  //   subtaskInput.value = "";
+  // });
+
+  subtaskDelBtn.onclick = () => {
     subtaskInput.value = "";
-  });
+  };
 }
 
 /**
@@ -97,8 +96,8 @@ function checkEditSubtasks() {
 async function saveEditData() {
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
-  let data = await getData("tasks");
-  let contacts = await getData("contacts");
+  // let data = await getData("tasks");
+  // let contacts = await getData("contacts");
   let contactsData = [];
   for (let i = 0; i < contacts.length; i++) {
     if (contacts[i] != null) contactsData.push(contacts[i]);
@@ -111,7 +110,11 @@ async function saveEditData() {
       }
     }
   }
-  location.reload();
+  let fullsize = document.getElementById("full-size-container");
+  fullsize.classList.add("d-none");
+  renderBoards(data);
+  getEventListeners();
+  getDropZones();
 }
 
 /**
@@ -217,4 +220,16 @@ function updateChecked(temp, Oldtask) {
     return matchingTask ? { ...item, checked: matchingTask.checked } : item;
   });
   return updatedTemp;
+}
+
+function setAssignedEditTask() {
+  const assignedUsers = document.getElementById("assigned-users-editCard");
+  const assignedItems = document.querySelectorAll(".assigned-item");
+  const assignedBtnText = document.querySelector(".btn-text");
+
+  assignedItems.forEach((item) => {
+    item.classList.remove("checked");
+  });
+  assignedUsers.innerHTML = "";
+  assignedBtnText.innerHTML = "Select contacts to assign";
 }

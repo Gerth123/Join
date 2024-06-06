@@ -396,6 +396,10 @@ fieldset {
   align-items: center;
 }
 
+.mt-32 {
+  margin-top: 32px;
+}
+
 @media screen and (max-width: 768px) {
   .board-header-top {
     flex-direction: column;
