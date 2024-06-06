@@ -21,14 +21,6 @@ function getEditEventListeners(board, editBoard, addBoard) {
 function onClickEditBoard(board, editBoard, addBoard) {
   const editBtn = document.getElementById("edit-btn");
 
-  // editBtn.addEventListener("click", async () => {
-  //   board.classList.add("d-none");
-  //   editBoard.classList.remove("d-none");
-  //   addBoard.classList.add("d-none");
-  //   await getEditBoard(id, contentId);
-  //   onClickEditSubtasks();
-  // });
-
   editBtn.onclick = async () => {
     board.classList.add("d-none");
     editBoard.classList.remove("d-none");
@@ -49,19 +41,10 @@ function onClickEditSubtasks() {
   const subtaskDelBtn = document.getElementById("subtasks-del");
   const subtaskInput = document.getElementById("subtasks-input");
 
-  // subtaskAddBtn.addEventListener("click", () => {
-  //   subtaskAddBtn.classList.add("d-none");
-  //   subtaskContainer.classList.remove("d-none");
-  // });
-
   subtaskAddBtn.onclick = () => {
     subtaskAddBtn.classList.add("d-none");
     subtaskContainer.classList.remove("d-none");
   };
-
-  // subtaskDelBtn.addEventListener("click", () => {
-  //   subtaskInput.value = "";
-  // });
 
   subtaskDelBtn.onclick = () => {
     subtaskInput.value = "";

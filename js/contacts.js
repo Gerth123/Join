@@ -44,12 +44,13 @@ async function displayContacts(contacts) {
   setupContactClickEvents();
 }
 
-async function addContactToDOM(contact, contacts) {
-  const contactsNew = [...contacts, contact];
+async function addContactToDOM(contact, contactsAdded) {
+  const contactsNew = [...contactsAdded, contact];
+  // contacts = contactsNew;
+  console.log("this is contactsNew", contactsNew);
   sortContacts(contactsNew);
   displayContacts(contactsNew);
 }
-
 
 /**
  * Gets the contacts container element.
@@ -136,16 +137,15 @@ function createSeparatorDiv() {
 }
 
 // Dummy generateContactHTML function for demonstration purposes
-async function generateContactHTML(contact) {
-  return `
-    <div class="contact">
-      <h2>${contact.name}</h2>
-      <p>Phone: ${contact.phone}</p>
-      <p>Email: ${contact.email}</p>
-    </div>
-  `;
-}
-
+// async function generateContactHTML(contact) {
+//   return `
+//     <div class="contact">
+//       <h2>${contact.name}</h2>
+//       <p>Phone: ${contact.phone}</p>
+//       <p>Email: ${contact.email}</p>
+//     </div>
+//   `;
+// }
 
 /**
  * Saves a contact in Firebase under a sequential ID and adds a randomly generated color.
@@ -200,11 +200,11 @@ function createContactData(name, mail, phone) {
  * @returns {number} - The first missing ID.
  */
 async function findMissingId(userId) {
-  let contacts = await loadData(`users/${userId}/contacts`);
+  // let contacts = await loadData(`users/${userId}/contacts`);
   let missingId = 0;
   for (contact of contacts) {
     if (contact === null) {
-      break
+      break;
     }
     missingId++;
   }
@@ -235,21 +235,21 @@ async function createContact(event) {
   const mail = document.getElementById("contactEmail").value;
   const phone = document.getElementById("contactPhone").value;
   let userId = await getUserIdFormUrl();
-  let contacts = await getData("contacts");
+  // contacts = await getData("contacts");
   let alreadyExist = contacts.find((contact) => contact && contact.mail == mail);
   await checkIfContactAlreadyExists(alreadyExist, userId, phone, name, mail, contacts);
 }
 
 /**
  * This function checks if a contact already exists.
- * 
+ *
  * @param {boolean} alreadyExist - If the contact already exists.
  * @param {string} userId - The user ID.
  * @param {string} phone - The phone number of the contact.
  * @param {string} name - The name of the contact.
  * @param {string} mail - The email of the contact.
- * 
- * @author Robin 
+ *
+ * @author Robin
  */
 async function checkIfContactAlreadyExists(alreadyExist, userId, phone, name, mail, contacts) {
   if (alreadyExist) {
@@ -268,7 +268,7 @@ async function checkIfContactAlreadyExists(alreadyExist, userId, phone, name, ma
 
 /**
  * This function closes the add contact overlay.
- * 
+ *
  * @author Robin
  */
 function closeAddContact() {

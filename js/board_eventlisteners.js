@@ -50,28 +50,17 @@ function onClickSelectBtn() {
  */
 function onClickFullSizeBoard(fullsize, board, editBoard, addBoard) {
   const boardCard = document.querySelectorAll(".board-card");
-  boardCard.forEach(
-    (card) => {
-      card.onclick = () => {
-        fullsize.classList.remove("d-none");
-        board.classList.remove("d-none");
-        editBoard.classList.add("d-none");
-        addBoard.classList.add("d-none");
-        id = card.id;
-        contentId = card.parentNode.parentNode.id;
-        getFullSizeBoard(id, contentId);
-      };
-    }
-    // card.addEventListener("click", () => {
-    //   fullsize.classList.remove("d-none");
-    //   board.classList.remove("d-none");
-    //   editBoard.classList.add("d-none");
-    //   addBoard.classList.add("d-none");
-    //   id = card.id;
-    //   contentId = card.parentNode.parentNode.id;
-    //   getFullSizeBoard(id, contentId);
-    // })
-  );
+  boardCard.forEach((card) => {
+    card.onclick = () => {
+      fullsize.classList.remove("d-none");
+      board.classList.remove("d-none");
+      editBoard.classList.add("d-none");
+      addBoard.classList.add("d-none");
+      id = card.id;
+      contentId = card.parentNode.parentNode.id;
+      getFullSizeBoard(id, contentId);
+    };
+  });
 }
 
 /**

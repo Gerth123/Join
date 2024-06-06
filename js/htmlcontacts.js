@@ -6,6 +6,7 @@ let lastClickedCard = null;
  * Author: Elias
  */
 function handleCardClick(card) {
+  console.log("handleCardClicked");
   resetLastClickedCard();
   updateCardStyle(card);
   lastClickedCard = card;
@@ -62,7 +63,7 @@ async function findContactsRandomColor(email) {
   return actualRandomColor;
 }
 
-  /**
+/**
  * Updates the contact details in the UI.
  * @param {HTMLElement} contentRight - The content right section element.
  * @param {string} name - The contact's name.
@@ -135,6 +136,8 @@ async function findContactIdByEmail(email) {
   try {
     let userId = await getUserIdFormUrl();
     let actualUsers = await loadData("users/" + userId + "/contacts");
+    console.log("actualUsers", actualUsers);
+    console.log("contacts", contacts);
     for (let userId in actualUsers) {
       if (actualUsers[userId] === null) {
         continue;
@@ -236,17 +239,17 @@ function removeContactFromUI(contactId) {
 
 /**
  * Removes empty letter headers from the contacts container.
- * 
+ *
  * @author Robin
  */
 function removeEmptyLetterHeaders() {
   let container = getContactsContainer();
-  let separatorContainers = Array.from(container.querySelectorAll('.seperator-contacts-list'));
-  separatorContainers.forEach(separator => {
+  let separatorContainers = Array.from(container.querySelectorAll(".seperator-contacts-list"));
+  separatorContainers.forEach((separator) => {
     let hasContacts = false;
     let nextSibling = separator.nextElementSibling;
-    while (nextSibling && !nextSibling.classList.contains('contacts-list-letter-container')) {
-      if (nextSibling.classList.contains('contact')) {
+    while (nextSibling && !nextSibling.classList.contains("contacts-list-letter-container")) {
+      if (nextSibling.classList.contains("contact")) {
         hasContacts = true;
         break;
       }
@@ -258,18 +261,18 @@ function removeEmptyLetterHeaders() {
 
 /**
  * This function checks if there are contacts left in the container. If not, it removes the letter header.
- * 
+ *
  * @param {HTMLElement} separator - The separator element
  * @param {boolean} hasContacts - Whether there are contacts in the container
  * @param {HTMLElement} container - The container element
- * 
+ *
  * @author Robin
  */
 
 function checkContactsContainer(separator, hasContacts, container) {
   if (!hasContacts) {
     let letterContainer = separator.previousElementSibling;
-    if (letterContainer && letterContainer.classList.contains('contacts-list-letter-container')) {
+    if (letterContainer && letterContainer.classList.contains("contacts-list-letter-container")) {
       container.removeChild(letterContainer);
     }
     container.removeChild(separator);
@@ -434,6 +437,7 @@ async function updateContact(event) {
 
   try {
     let updatedContact = await createUpdatedContact(userId, contactId, name, newEmail, phone);
+    console.log("updatedContact", updatedContact);
     const contentRight = document.getElementById("contentright");
     await updateContactInFirebase(contactId, updatedContact, userId);
     await refreshAndDisplayContacts(userId);
@@ -483,21 +487,24 @@ async function refreshAndDisplayContacts(userId) {
  * Author: Elias
  */
 function initContactCardClickHandlers() {
-  const contactCards = document.querySelectorAll('.contactCard');
-  contactCards.forEach(card => {
-    card.addEventListener('click', () => handleCardClick(card));
+  const contactCards = document.querySelectorAll(".contactCard");
+  contactCards.forEach((card) => {
+    // card.addEventListener('click', () => handleCardClick(card));
+    card.onclick = () => {
+      handleCardClick(card);
+    };
   });
 }
 
 initContactCardClickHandlers();
 
 async function renderContacts() {
-  const contactsContainer = document.getElementById('contacts-container');
+  const contactsContainer = document.getElementById("contacts-container");
   if (contactsContainer) {
-    contactsContainer.innerHTML = ''; 
+    contactsContainer.innerHTML = "";
     const contacts = await fetchContacts();
     for (const contact of contacts) {
-      contactsContainer.innerHTML += await generateContactHTML(contact); 
+      contactsContainer.innerHTML += await generateContactHTML(contact);
     }
     initContactCardClickHandlers();
   } else {
@@ -525,11 +532,16 @@ async function findContactsRandomColor(email) {
   return generateRandomColor();
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  const contacts = document.querySelectorAll('.contact');
-  contacts.forEach(contact => {
-      contact.addEventListener('click', function() {
-          this.classList.toggle('clicked');
-      });
-  });
-});
+// document.addEventListener("DOMContentLoaded", function () {
+//   const contacts = document.querySelectorAll(".contact");
+//   contacts.forEach((contact) => {
+//     // contact.addEventListener("click", function () {
+//     //   this.classList.toggle("clicked");
+//     // });
+
+//     contact.onclick = () => {
+//       console.log("this is triggered?");
+//       this.classList.toggle("clicked");
+//     };
+//   });
+// });
