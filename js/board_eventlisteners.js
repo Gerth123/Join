@@ -52,9 +52,17 @@ function onClickFullSizeBoard(fullsize, board, editBoard, addBoard) {
  */
 function onClickCloseFullSize(fullsize) {
   document.addEventListener("click", async (e) => {
-    if (e.target.matches("#close-btn-img")) {
+    if (e.target.matches("#close-btn-img-add")) {
+      let addboard = document.getElementById("add-board");
+      // addboard.classList.add("overlay-closed-add-board")
       fullsize.classList.add("d-none");
+    }
+  });
 
+  let closeBtns = document.querySelectorAll("#close-btn-img");
+  closeBtns.forEach((closeBtn) => {
+    closeBtn.onclick = async () => {
+      fullsize.classList.add("d-none");
       let itemData = await getItemById(id, contentId);
       let subtasks = itemData["subtasks"];
       for (let i = 0; i < subtasks.length; i++) {
@@ -63,13 +71,12 @@ function onClickCloseFullSize(fullsize) {
         if (!check.checked) subtasks[i]["checked"] = false;
       }
       await updateSubtaskCheck(subtasks);
-      location.reload();
-    }
-    if (e.target.matches("#close-btn-img-add")) {
-      let addboard = document.getElementById("add-board");
-      // addboard.classList.add("overlay-closed-add-board")
-      fullsize.classList.add("d-none");
-    }
+      renderBoards(data);
+      getEventListeners();
+      getDropZones();
+      console.log("hello");
+      // location.reload();
+    };
   });
 }
 
@@ -485,7 +492,7 @@ function addSubTasks() {
  */
 function deleteFullSizeBoard() {
   document.addEventListener("click", async (e) => {
-    let data = await getData("tasks");
+    // let data = await getData("tasks");
     if (e.target.matches(".full-size-button-delete")) {
       let urlParams = new URLSearchParams(window.location.search);
       let actualUsersNumber = urlParams.get("actualUsersNumber");

@@ -14,6 +14,7 @@ async function getEditBoard(id, contentId) {
   title.value = `${itemData["title"]}`;
   description.value = `${itemData["description"]}`;
   date.value = `${itemData["date"]}`;
+
   toggleSelectBtn();
   getEditPriority(itemData["priority"]);
   getEditSubtasks(itemData["subtasks"]);
@@ -30,18 +31,20 @@ async function getEditBoard(id, contentId) {
 function toggleSelectBtn() {
   const selectBtns = document.querySelectorAll("#select-btn-editCard");
   selectBtns.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
+    btn.onclick = function () {
       btn.classList.toggle("open");
-    });
+      console.log("toggleBtnWork");
+    };
   });
 
-  document.addEventListener("click", (e) => {
-    if (!e.target.closest("#select-btn-editCard") && !e.target.closest(".assigned-item")) {
+  document.onclick = function (event) {
+    if (!event.target.closest("#select-btn-editCard") && !event.target.closest(".assigned-item")) {
       selectBtns.forEach((btn) => {
         btn.classList.remove("open");
+        console.log("editCardClosed");
       });
     }
-  });
+  };
 }
 
 /**
