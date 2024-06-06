@@ -47,7 +47,6 @@ function toggleSelectBtn() {
   selectBtns.forEach((btn) => {
     btn.onclick = function () {
       btn.classList.toggle("open");
-      // console.log("toggleBtnWork");
     };
   });
 
@@ -55,7 +54,6 @@ function toggleSelectBtn() {
     if (!event.target.closest("#select-btn-editCard") && !event.target.closest(".assigned-item")) {
       selectBtns.forEach((btn) => {
         btn.classList.remove("open");
-        // console.log("editCardClosed");
       });
     }
   };
@@ -109,7 +107,6 @@ async function getEditAssigned() {
   for (let i = 0; i < contacts.length; i++) {
     if (contacts[i] != null) contactsData.push(contacts[i]);
   }
-  // let data = await getData("tasks");
   let assignedUsers = [];
   for (let column of data) {
     if (column.id == contentId) {
@@ -147,9 +144,6 @@ function getEditContacts(assignedUsers, contacts) {
         <div class="check-img"></div>
       </li>`;
   });
-
-  // contacts.forEach((contact) => {
-  // });
 }
 
 /**
@@ -162,11 +156,6 @@ function toggleCheckUsers(contacts) {
   const assignedItems = document.querySelectorAll(".assigned-item");
   assignedItems.forEach((item) => {
     checkUsers(contacts);
-    // item.addEventListener("click", () => {
-    //   item.classList.toggle("checked");
-    //   checkUsers(contacts);
-    // });
-
     item.onclick = () => {
       item.classList.toggle("checked");
       checkUsers(contacts);
@@ -296,13 +285,6 @@ function getEditSubtasksList(task) {
 function onClickTrash() {
   const trashes = document.querySelectorAll("#subtasks-trash");
   trashes.forEach((trash) => {
-    // trash.addEventListener("click", () => {
-    //   let parentLi = trash.closest("#subtasks-li");
-    //   if (parentLi) {
-    //     parentLi.remove();
-    //   }
-    // });
-
     trash.onclick = () => {
       let parentLi = trash.closest("#subtasks-li");
       if (parentLi) {
@@ -326,16 +308,6 @@ function onClickTrash() {
 function onClickEditing() {
   const edits = document.querySelectorAll("#subtasks-edit");
   edits.forEach((edit) => {
-    // edit.addEventListener("click", () => {
-    //   const parentContent = edit.closest(".subtasks-li-container");
-    //   const subtaskElement = parentContent.querySelector(".subtasks-li-text");
-    //   const subtaskFirstBtns = parentContent.querySelector("#subtask-first-btns");
-    //   const subtaskSecondBtns = parentContent.querySelector("#subtask-second-btns");
-    //   subtaskFirstBtns.classList.add("d-none");
-    //   subtaskSecondBtns.classList.remove("d-none");
-    //   subtaskElement.contentEditable = true;
-    // });
-
     edit.onclick = () => {
       const parentContent = edit.closest(".subtasks-li-container");
       const subtaskElement = parentContent.querySelector(".subtasks-li-text");
@@ -362,16 +334,6 @@ function onClickEditing() {
 function onClickChecker() {
   const checkers = document.querySelectorAll("#subtasks-checker");
   checkers.forEach((checker) => {
-    // checker.addEventListener("click", () => {
-    //   const parentContent = checker.closest(".subtasks-li-container");
-    //   const subtaskElement = parentContent.querySelector(".subtasks-li-text");
-    //   const subtaskFirstBtns = parentContent.querySelector("#subtask-first-btns");
-    //   const subtaskSecondBtns = parentContent.querySelector("#subtask-second-btns");
-    //   subtaskFirstBtns.classList.remove("d-none");
-    //   subtaskSecondBtns.classList.add("d-none");
-    //   subtaskElement.contentEditable = false;
-    // });
-
     checker.onclick = () => {
       const parentContent = checker.closest(".subtasks-li-container");
       const subtaskElement = parentContent.querySelector(".subtasks-li-text");

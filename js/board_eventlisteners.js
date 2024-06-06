@@ -26,28 +26,15 @@ function getEventListeners() {
 function onClickSelectBtn() {
   const selectBtns = document.querySelectorAll("#select-btn-addCard");
   selectBtns.forEach((btn) => {
-    // btn.addEventListener("click", (e) => {
-    //   btn.classList.toggle("open");
-    // });
-
     btn.onclick = () => {
       btn.classList.toggle("open");
     };
   });
-  // document.addEventListener("click", (e) => {
-  //   if (!e.target.closest("#select-btn-addCard") && !e.target.closest(".assigned-item")) {
-  //     console.log("listen");
-  //     selectBtns.forEach((btns) => {
-  //       btns.classList.remove("open");
-  //     });
-  //   }
-  // });
 
   document.onclick = function (event) {
     if (!event.target.closest("#select-btn-addCard") && !event.target.closest(".assigned-item")) {
       selectBtns.forEach((btns) => {
         btns.classList.remove("open");
-        // console.log("addCardClosed");
       });
     }
   };

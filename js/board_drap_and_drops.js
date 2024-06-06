@@ -30,17 +30,9 @@ function getDropZones() {
 
   const elements = document.querySelectorAll(".board-card");
   elements.forEach((element) => {
-    // element.addEventListener("drag", (e) => {
-    //   e.target.classList.add("dragging");
-    // });
-
     element.ondrag = function (e) {
       e.target.classList.add("dragging");
     };
-
-    // element.addEventListener("dragend", (e) => {
-    //   e.target.classList.remove("dragging");
-    // });
 
     element.ondragend = function (e) {
       e.target.classList.remove("dragging");
@@ -56,10 +48,6 @@ function getDropZones() {
  * @author Hanbit Chang
  */
 function doDragOver(task) {
-  // task.addEventListener("dragenter", () => {
-  //   task.classList.add("board-card-dropzone--active");
-  // });
-
   task.ondragenter = () => {
     task.classList.add("board-card-dropzone--active");
   };
@@ -73,10 +61,6 @@ function doDragOver(task) {
  * @author Hanbit Chang
  */
 function doDragLeave(task) {
-  // task.addEventListener("dragleave", () => {
-  //   task.classList.remove("board-card-dropzone--active");
-  // });
-
   task.ondragleave = () => {
     task.classList.remove("board-card-dropzone--active");
   };
@@ -160,7 +144,6 @@ function getClosestContent(draggableId) {
  * @author Hanbit Chang
  */
 async function updateItem(itemId, newProps) {
-  // let data = await getData("tasks");
   let [item, currentColumn] = (() => {
     for (let column of data) {
       if (column.items == "") column.items = [];
@@ -182,7 +165,4 @@ async function updateItem(itemId, newProps) {
     targetColumn.items.splice(newProps.position, 0, item);
     if (targetColumn.items.length == 0) targetColumn.items = "";
   }
-
-  // return data;
-  // await putData(path, data);
 }

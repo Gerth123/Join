@@ -230,7 +230,6 @@ function setAssignedEditTask() {
   assignedItems.forEach((item) => {
     item.classList.remove("checked");
   });
-  // console.log("setAssigned");
   assignedUsers.innerHTML = "";
   assignedBtnText.innerHTML = "Select contacts to assign";
 }

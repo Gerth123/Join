@@ -7,7 +7,6 @@ async function getFullSizeBoard(id, contentId) {
   const title = document.querySelector(".full-size-title");
   const description = document.querySelector(".full-size-description");
   const date = document.querySelector("#full-size-due-date");
-  console.log(data);
   let itemData = await getItemById(id, contentId);
   title.textContent = `${itemData["title"]}`;
   description.textContent = `${itemData["description"]}`;
@@ -86,9 +85,4 @@ function getFullSizeSubtask(subtasks) {
     const check = document.getElementById(`subtask-${i}`);
     if (subtasks[i]["checked"]) check.checked = true;
   }
-
-  const subtaskList = document.querySelectorAll(".full-size-subtask-li");
-  const idElement = document.getElementById(`${id}`);
-  const progressBar = idElement.querySelector("#progress-bar");
-  const label = idElement.getElementsByTagName("LABEL");
 }
