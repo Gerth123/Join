@@ -485,7 +485,7 @@ async function refreshAndDisplayContacts(userId) {
 function initContactCardClickHandlers() {
   const contactCards = document.querySelectorAll('.contactCard');
   contactCards.forEach(card => {
-    card.addEventListener('click', () => handleCardClick(card));
+    card.onclick = () => handleCardClick(card);
   });
 }
 
@@ -524,12 +524,3 @@ async function findContactsRandomColor(email) {
   }
   return generateRandomColor();
 }
-
-document.addEventListener('DOMContentLoaded', function() {
-  const contacts = document.querySelectorAll('.contact');
-  contacts.forEach(contact => {
-      contact.addEventListener('click', function() {
-          this.classList.toggle('clicked');
-      });
-  });
-});

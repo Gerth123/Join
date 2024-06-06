@@ -57,6 +57,7 @@ function setupCloseImageListener() {
     closeImage.onclick = function (event) {
         event.stopPropagation();
         mainSectionOverlay.classList.add("overlay-closed");
+        clearInputFieldsAddContact();
         setTimeout(function () {
             overlay.style.display = "none";
         }, 850);
@@ -165,3 +166,17 @@ function setupDeleteButton(email) {
         await handleDeleteContact(email);
     };
 }
+
+/**
+* Sets up the contact click event listener.
+* 
+* Author: Elias
+*/
+document.addEventListener('DOMContentLoaded', function() {
+    const contacts = document.querySelectorAll('.contact');
+    contacts.forEach(contact => {
+        contact.onclick = function() {
+            this.classList.toggle('clicked');
+        };
+    });
+  });
