@@ -7,6 +7,7 @@ async function getFullSizeBoard(id, contentId) {
   const title = document.querySelector(".full-size-title");
   const description = document.querySelector(".full-size-description");
   const date = document.querySelector("#full-size-due-date");
+  console.log(data);
   let itemData = await getItemById(id, contentId);
   title.textContent = `${itemData["title"]}`;
   description.textContent = `${itemData["description"]}`;

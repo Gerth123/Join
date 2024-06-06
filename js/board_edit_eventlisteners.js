@@ -33,6 +33,7 @@ function onClickEditBoard(board, editBoard, addBoard) {
     board.classList.add("d-none");
     editBoard.classList.remove("d-none");
     addBoard.classList.add("d-none");
+
     await getEditBoard(id, contentId);
     onClickEditSubtasks();
   };
@@ -219,4 +220,17 @@ function updateChecked(temp, Oldtask) {
     return matchingTask ? { ...item, checked: matchingTask.checked } : item;
   });
   return updatedTemp;
+}
+
+function setAssignedEditTask() {
+  const assignedUsers = document.getElementById("assigned-users-editCard");
+  const assignedItems = document.querySelectorAll(".assigned-item");
+  const assignedBtnText = document.querySelector(".btn-text");
+
+  assignedItems.forEach((item) => {
+    item.classList.remove("checked");
+  });
+  // console.log("setAssigned");
+  assignedUsers.innerHTML = "";
+  assignedBtnText.innerHTML = "Select contacts to assign";
 }

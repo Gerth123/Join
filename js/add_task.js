@@ -22,12 +22,12 @@ function onClickClearBtn() {
   clearBtn.onclick = () => {
     clearAddTaskInputs();
     setCheckBoxes();
-    setAssigned();
+    setAssignedAddTask();
   };
   // clearBtn.addEventListener("click", () => {
   //   clearAddTaskInputs();
   //   setCheckBoxes();
-  //   setAssigned();
+  //   setAssignedAddTask();
   // });
 }
 
@@ -58,7 +58,7 @@ function onClickClearBtn() {
 //  *
 //  * @return {void} This function does not return anything.
 //  */
-// function setAssigned() {
+// function setAssignedAddTask() {
 //   const assignedUsers = document.getElementById("assigned-users-addCard");
 //   const assignedItems = document.querySelectorAll(".assigned-item");
 //   const assignedBtnText = document.querySelector(".btn-text-addCard");
@@ -137,4 +137,18 @@ function oneCheckBox() {
       }
     };
   });
+}
+
+async function saveAddTaskData() {
+  let urlParams = new URLSearchParams(window.location.search);
+  let actualUsersNumber = urlParams.get("actualUsersNumber");
+  let data = await getData("tasks");
+  let contacts = await getData("contacts");
+  if (contentId == undefined) contentId = 1;
+  const content = data.find((content) => content.id == contentId);
+  const obj = getAddObj(contacts);
+  if (content.items == "") content.items = [];
+  content.items.push(obj);
+  await putData(`users/${actualUsersNumber}/tasks/`, data);
+  changeHtmlPage("board.html");
 }

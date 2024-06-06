@@ -121,7 +121,7 @@ function getBoardContainer(id, header) {
     <div id="${id}" class="board-card-content">
       <div class="board-header-task">
         <div class="board-text">${header}</div>
-        <div class="board-add-btn button" onclick="addTaskBtnSmall(1)"></div>
+        <div class="board-add-btn button" onclick="addTaskBtnSmall(${id})"></div>
       </div>
       <div id="board-card-direction" class="board-card-direction">
         <img id="no-content-img" class="no-content-img d-none" src="/assets/icons/no-tasks-todo.svg">

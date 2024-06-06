@@ -16,11 +16,25 @@ async function getEditBoard(id, contentId) {
   date.value = `${itemData["date"]}`;
 
   toggleSelectBtn();
+  oneCheckBoxEdit();
   getEditPriority(itemData["priority"]);
   getEditSubtasks(itemData["subtasks"]);
   await getEditAssigned();
   getSubtasksEventListeners();
   getEditDate(itemData["date"]);
+}
+
+function oneCheckBoxEdit() {
+  const checkboxes = document.querySelectorAll('input[type="checkbox"][name="priority-button"]');
+  checkboxes.forEach((checkbox) => {
+    checkbox.onchange = function () {
+      if (this.checked) {
+        checkboxes.forEach((box) => {
+          if (box !== this) box.checked = false;
+        });
+      }
+    };
+  });
 }
 
 /**
@@ -33,7 +47,7 @@ function toggleSelectBtn() {
   selectBtns.forEach((btn) => {
     btn.onclick = function () {
       btn.classList.toggle("open");
-      console.log("toggleBtnWork");
+      // console.log("toggleBtnWork");
     };
   });
 
@@ -41,7 +55,7 @@ function toggleSelectBtn() {
     if (!event.target.closest("#select-btn-editCard") && !event.target.closest(".assigned-item")) {
       selectBtns.forEach((btn) => {
         btn.classList.remove("open");
-        console.log("editCardClosed");
+        // console.log("editCardClosed");
       });
     }
   };

@@ -47,7 +47,7 @@ function onClickSelectBtn() {
     if (!event.target.closest("#select-btn-addCard") && !event.target.closest(".assigned-item")) {
       selectBtns.forEach((btns) => {
         btns.classList.remove("open");
-        console.log("addCardClosed");
+        // console.log("addCardClosed");
       });
     }
   };
@@ -104,12 +104,12 @@ function onClickCloseFullSize(fullsize) {
   let closeBtnAdds = document.querySelectorAll("#close-btn-img-add");
   closeBtnAdds.forEach((closeBtnAdd) => {
     closeBtnAdd.onclick = async () => {
-      console.log("close-btn-img-add clicked");
+      // console.log("close-btn-img-add clicked");
       // let addboard = document.getElementById("add-board");
       // addboard.classList.add("overlay-closed-add-board")
       clearAddTaskInputs();
       setCheckBoxes();
-      setAssigned();
+      setAssignedAddTask();
       fullsize.classList.add("d-none");
     };
   });
@@ -135,13 +135,23 @@ function onClickCloseFullSize(fullsize) {
         if (!check.checked) subtasks[i]["checked"] = false;
       }
       await updateSubtaskCheck(subtasks);
+      resetPriority();
+      setAssignedEditTask();
+      setCheckBoxes();
       renderBoards(data);
       getEventListeners();
       getDropZones();
-      console.log("hello");
-      // location.reload();
     };
   });
+}
+
+function resetPriority() {
+  const priority3 = document.getElementById("radio-btn-3");
+  const priority2 = document.getElementById("radio-btn-2");
+  const priority1 = document.getElementById("radio-btn-1");
+  priority3.checked = false;
+  priority2.checked = false;
+  priority1.checked = false;
 }
 
 /**
@@ -200,6 +210,8 @@ function onClickAddTaskBoard(fullsize, board, editBoard, addBoard) {
       contentId = 1;
       onClickAddSubTasks();
       getAddAssgined();
+      setCheckBoxes();
+      oneCheckBox();
     };
   });
   // document.addEventListener("click", (e) => {
@@ -217,6 +229,29 @@ function onClickAddTaskBoard(fullsize, board, editBoard, addBoard) {
       });
     }
   };
+}
+
+function oneCheckBox() {
+  const firstCheckedBox = document.querySelector('input[type="checkbox"][name="priority-button"][id="radio-btn-5"]');
+  firstCheckedBox.checked = true;
+  const checkboxes = document.querySelectorAll('input[type="checkbox"][name="priority-button"]');
+  checkboxes.forEach((checkbox) => {
+    // checkbox.addEventListener("change", function () {
+    //   if (this.checked) {
+    //     checkboxes.forEach((box) => {
+    //       if (box !== this) box.checked = false;
+    //     });
+    //   }
+    // });
+
+    checkbox.onchange = function () {
+      if (this.checked) {
+        checkboxes.forEach((box) => {
+          if (box !== this) box.checked = false;
+        });
+      }
+    };
+  });
 }
 
 /**
@@ -298,7 +333,7 @@ function getAssignedItem(assignedUsers, contacts) {
   contacts.forEach((contact) => {
     let name = getInitials(contact["name"]);
     contactList.innerHTML += /*html*/ `
-      <li class="assigned-item ${getCheckedUsers(assignedUsers, contact["name"])}">
+      <li class="assigned-item">
         <div class="assigned-user">
           <div id="board-user" class="board-user" style="background-color:${contact["color"]}">${name}</div>
           <span class="item-text">${contact["name"]}</span>
@@ -329,7 +364,6 @@ function assignedItemEventListener(contacts) {
       item.classList.toggle("checked");
       checkedUsers(contacts);
     };
-    console.log("toggle working?");
   });
 }
 
@@ -469,32 +503,26 @@ function onClickAddSubTasks() {
 async function saveAddData() {
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
-  let data = await getData("tasks");
-  let contacts = await getData("contacts");
+  // let data = await getData("tasks");
+  // let contacts = await getData("contacts");
   if (contentId == undefined) contentId = 1;
   const content = data.find((content) => content.id == contentId);
   const obj = getAddObj(contacts);
   if (content.items == "") content.items = [];
   content.items.push(obj);
+  const fullsize = document.getElementById("full-size-container");
+  fullsize.classList.add("d-none");
+  renderBoards(data);
+  getEventListeners();
+  getDropZones();
+  setAddCard();
   await putData(`users/${actualUsersNumber}/tasks/`, data);
-  let addTaskPage = window.location.href.search("add_task.html");
-  console.log("this is addTaskPAge", addTaskPage);
-  if (addTaskPage != -1) {
-    changeHtmlPage("board.html");
-  } else {
-    renderBoards(data);
-    getEventListeners();
-    getDropZones();
-    setAddCard();
-    const fullsize = document.getElementById("full-size-container");
-    fullsize.classList.add("d-none");
-  }
 }
 
 function setAddCard() {
   clearAddTaskInputs();
   setCheckBoxes();
-  setAssigned();
+  setAssignedAddTask();
 }
 
 /**
@@ -524,7 +552,7 @@ function clearAddTaskInputs() {
  *
  * @return {void} This function does not return anything.
  */
-function setAssigned() {
+function setAssignedAddTask() {
   const assignedUsers = document.getElementById("assigned-users-addCard");
   const assignedItems = document.querySelectorAll(".assigned-item");
   const assignedBtnText = document.querySelector(".btn-text-addCard");
@@ -532,6 +560,7 @@ function setAssigned() {
   assignedItems.forEach((item) => {
     item.classList.remove("checked");
   });
+  // console.log("setAssigned");
   assignedUsers.innerHTML = "";
   assignedBtnText.innerHTML = "Select contacts to assign";
 }
@@ -737,6 +766,7 @@ function cancelAddCard(fullsize) {
     fullsize.classList.add("d-none");
     clearAddTaskInputs();
     setCheckBoxes();
-    setAssigned();
+    setAssignedAddTask();
+    // console.log("setCancel");
   };
 }
