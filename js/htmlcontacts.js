@@ -28,8 +28,10 @@ function resetLastClickedCard() {
  * @param {HTMLElement} card - The clicked contact card element.
  */
 function updateCardStyle(card) {
-  card.style.backgroundColor = "#2A3647";
-  card.querySelector(".NameContact").style.color = "white";
+  if (window.matchMedia("(min-width: 1100px)").matches) {
+      card.style.backgroundColor = "#2A3647";
+      card.querySelector(".NameContact").style.color = "white";
+  }
 }
 
 /**
