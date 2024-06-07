@@ -72,7 +72,6 @@ function setupCancelButtonListener() {
     const cancelButton = document.querySelector(".clearButton");
     const overlay = document.getElementById("overlay");
     const mainSectionOverlay = document.querySelector(".mainSectionOverlay");
-
     cancelButton.onclick = function (event) {
         event.stopPropagation();
         mainSectionOverlay.classList.add("overlay-closed");
@@ -142,18 +141,30 @@ function setupEditAndDeleteButtons(contactDetailsDiv, card, name, email, phone, 
     contactDetails.forEach((contactDetail) => {
         contactDetail.onclick = () => openEditContactOverlay(name, email, phone, randomColor, initials);
     });
-
     contactDetailsDiv.querySelector(".delete-div").onclick = async () => {
-        try {
-            card.remove();
-            await deleteContactFromFirebase(email); 
-            removeEmptyLetterHeaders();
-            contactDetailsDiv.innerHTML = "";
-            if (window.innerWidth < 1100) contentRight.style.display = "none";
-        } catch (error) {
-            console.error("Fehler beim Löschen des Kontakts:", error);
-        }
+        await deleteContactOnclick(card, email, contentRight, contactDetailsDiv);
     };
+}
+
+/**
+ * This function deletes a contact from the Firebase database.
+ * 
+ * @param {string} card - The card element.
+ * @param {string} email - The email of the contact.
+ * @param {string} contentRight - The content right section element.
+ * 
+ * @author Elias
+ */
+async function deleteContactOnclick(card, email, contentRight, contactDetailsDiv) {
+    try {
+        card.remove();
+        await deleteContactFromFirebase(email); 
+        removeEmptyLetterHeaders();
+        contactDetailsDiv.innerHTML = "";
+        if (window.innerWidth < 1100) contentRight.style.display = "none";
+    } catch (error) {
+        console.error("Fehler beim Löschen des Kontakts:", error);
+    }
 }
 
 /**
@@ -180,3 +191,16 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     });
   });
+
+  /**
+ * Initializes event listeners for contact cards.
+ * Author: Elias
+ */
+function initContactCardClickHandlers() {
+    const contactCards = document.querySelectorAll('.contactCard');
+    contactCards.forEach(card => {
+      card.onclick = () => handleCardClick(card);
+    });
+  }
+  
+  initContactCardClickHandlers();
