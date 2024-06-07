@@ -7,53 +7,49 @@
 function searchCard() {
   const search = document.getElementById("board-header-search-input");
   const boardCards = document.querySelectorAll(".board-card");
-  // search.addEventListener("keydown", () => {
-  //   let serachValue = search.value.toLowerCase();
-  //   if (search.value.length > 1) {
-  //     boardCards.forEach((boardCard) => {
-  //       const title = boardCard.querySelector(".board-title");
-  //       let titleValue = title.innerHTML.toLowerCase();
-  //       if (!titleValue.includes(serachValue)) {
-  //         setNoResults(boardCard);
-  //       }
-  //     });
-  //   } else {
-  //     boardCards.forEach((boardCard) => {
-  //       boardCard.classList.remove("d-none");
-  //       const boardCardContent = document.querySelectorAll(".board-card-content");
-  //       boardCardContent.forEach((content) => {
-  //         content.classList.remove("d-none");
-  //       });
-  //       const noSearchResults = document.getElementById("no-search-results");
-  //       noSearchResults.classList.add("d-none");
-  //     });
-  //   }
-  // });
-
   search.onkeydown = () => {
-    let serachValue = search.value.toLowerCase();
-    if (search.value.length > 1) {
-      boardCards.forEach((boardCard) => {
-        const title = boardCard.querySelector(".board-title");
-        const document = boardCard.querySelector(".board-description");
-        let titleValue = title.innerHTML.toLowerCase();
-        let documentValue = document.innerHTML.toLowerCase();
-        if (!titleValue.includes(serachValue) && !documentValue.includes(serachValue)) {
-          setNoResults(boardCard);
-        }
-      });
-    } else {
-      boardCards.forEach((boardCard) => {
-        boardCard.classList.remove("d-none");
-        const boardCardContent = document.querySelectorAll(".board-card-content");
-        boardCardContent.forEach((content) => {
-          content.classList.remove("d-none");
-        });
-        const noSearchResults = document.getElementById("no-search-results");
-        noSearchResults.classList.add("d-none");
-      });
-    }
+    let searchValue = search.value.toLowerCase();
+    if (search.value.length > 1) searchByTitleAndDescription(boardCards, searchValue);
+    else searchRender(boardCards);
   };
+}
+
+/**
+ * Renders the board cards by removing the "d-none" class from each board card and its content,
+ * and hiding the "no-search-results" element.
+ *
+ * @param {NodeList} boardCards - A list of board card elements.
+ * @return {void} This function does not return anything.
+ */
+function searchRender(boardCards) {
+  boardCards.forEach((boardCard) => {
+    boardCard.classList.remove("d-none");
+    const boardCardContent = document.querySelectorAll(".board-card-content");
+    boardCardContent.forEach((content) => {
+      content.classList.remove("d-none");
+    });
+    const noSearchResults = document.getElementById("no-search-results");
+    noSearchResults.classList.add("d-none");
+  });
+}
+
+/**
+ * Searches for board cards by title and description.
+ *
+ * @param {NodeList} boardCards - The list of board cards to search.
+ * @param {string} searchValue - The search value to look for.
+ * @return {void} This function does not return anything.
+ */
+function searchByTitleAndDescription(boardCards, searchValue) {
+  boardCards.forEach((boardCard) => {
+    const title = boardCard.querySelector(".board-title");
+    const document = boardCard.querySelector(".board-description");
+    let titleValue = title.innerHTML.toLowerCase();
+    let documentValue = document.innerHTML.toLowerCase();
+    if (!titleValue.includes(searchValue) && !documentValue.includes(searchValue)) {
+      setNoResults(boardCard);
+    }
+  });
 }
 
 /**
@@ -69,6 +65,15 @@ function setNoResults(boardCard) {
   noContentImg.forEach((img) => {
     img.classList.add("d-none");
   });
+  getNoResults();
+}
+
+/**
+ * Retrieves all board cards and checks if all of them are hidden. If so, hides all board card content and shows the "no search results" element.
+ *
+ * @return {void} This function does not return anything.
+ */
+function getNoResults() {
   const checkBoardCard = document.querySelectorAll(".board-card");
   const boardCardDnone = document.querySelectorAll(".board-card.d-none");
   if (checkBoardCard.length == boardCardDnone.length) {

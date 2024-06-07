@@ -94,14 +94,39 @@ function checkEditSubtasks() {
  * @author Hanbit Chang
  */
 async function saveEditData() {
-  let urlParams = new URLSearchParams(window.location.search);
-  let actualUsersNumber = urlParams.get("actualUsersNumber");
-  // let data = await getData("tasks");
-  // let contacts = await getData("contacts");
+  saveTheActualUser();
+  let fullsize = document.getElementById("full-size-container");
+  fullsize.classList.add("d-none");
+  renderBoards(data);
+  getEventListeners();
+  getDropZones();
+  setAssignedAddTask();
+}
+
+/**
+ * Returns an array of contacts data by filtering out any null values from the contacts array.
+ *
+ * @return {Array} An array of contact objects with no null values.
+ */
+function getContactsData() {
   let contactsData = [];
   for (let i = 0; i < contacts.length; i++) {
     if (contacts[i] != null) contactsData.push(contacts[i]);
   }
+  return contactsData;
+}
+
+/**
+ * Saves the actual user by retrieving the contacts data and the actual user number from the URL parameters.
+ * Then, iterates over the data array to find the item with the specified contentId.
+ * For each item, it sets the edited values using the setEditItems function and sends the updated data back to the server.
+ *
+ * @return {Promise<void>} A Promise that resolves when the data is saved and sent back to the server.
+ */
+async function saveTheActualUser() {
+  let contactsData = getContactsData();
+  let urlParams = new URLSearchParams(window.location.search);
+  let actualUsersNumber = urlParams.get("actualUsersNumber");
   for (let listItem of data) {
     if (listItem.id == contentId) {
       for (let item of listItem.items) {
@@ -110,11 +135,6 @@ async function saveEditData() {
       }
     }
   }
-  let fullsize = document.getElementById("full-size-container");
-  fullsize.classList.add("d-none");
-  renderBoards(data);
-  getEventListeners();
-  getDropZones();
 }
 
 /**

@@ -6,6 +6,10 @@ label {
   font-size: 12px;
 }
 
+input[type="checkbox"] {
+  cursor: pointer;
+}
+
 .no-search-results {
   display: flex;
   justify-content: center;
