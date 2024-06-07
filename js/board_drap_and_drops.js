@@ -27,13 +27,20 @@ function getDropZones() {
     doDragOver(task);
     doDragLeave(task);
   });
+  setDragBoard();
+}
 
+/**
+ * Sets the drag and drop functionality for elements with the class "board-card".
+ *
+ * @return {void}
+ */
+function setDragBoard() {
   const elements = document.querySelectorAll(".board-card");
   elements.forEach((element) => {
     element.ondrag = function (e) {
       e.target.classList.add("dragging");
     };
-
     element.ondragend = function (e) {
       e.target.classList.remove("dragging");
     };
@@ -111,11 +118,9 @@ async function doDrop(e) {
     contentId,
     position: droppedIndex,
   });
-
   renderBoards(data);
   getEventListeners();
   getDropZones();
-
   await putData(`users/${actualUsersNumber}/tasks/`, data);
 }
 
@@ -154,15 +159,20 @@ async function updateItem(itemId, newProps) {
   })();
 
   item.content = newProps.content === undefined ? item.content : newProps.content;
+  updateItemPosition(item, currentColumn, newProps);
+}
+
+function updateItemPosition(item, currentColumn, newProps) {
   if (newProps.contentId !== undefined && newProps.position !== undefined) {
     let targetColumn = data.find((column) => column.id == newProps.contentId);
 
-    if (currentColumn.items == "") currentColumn.items = [];
+    // Handle empty item arrays in current and target columns
+    if (currentColumn.items === "") currentColumn.items = [];
     currentColumn.items.splice(currentColumn.items.indexOf(item), 1);
-    if (currentColumn.items.length == 0) currentColumn.items = "";
+    if (currentColumn.items.length === 0) currentColumn.items = "";
 
-    if (targetColumn.items == "") targetColumn.items = [];
+    if (targetColumn.items === "") targetColumn.items = [];
     targetColumn.items.splice(newProps.position, 0, item);
-    if (targetColumn.items.length == 0) targetColumn.items = "";
+    if (targetColumn.items.length === 0) targetColumn.items = "";
   }
 }
