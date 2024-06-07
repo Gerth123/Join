@@ -55,7 +55,7 @@ async function addContactToDOM(contact, contactsAdded) {
   console.log("contactsAdded", contactsAdded);
   console.log("contacts", contacts);
   sortContacts(contacts);
-  console.log(contactsNew);
+  // console.log(contactsNew);
   displayContacts(contacts);
 }
 
