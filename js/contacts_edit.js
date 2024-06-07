@@ -52,12 +52,16 @@ function createContactCard(contactHTML) {
  * @param {string} contactLetter - The first letter of the contact's name.
  * @returns {Promise<boolean>} True if the special case was handled, otherwise false.
  */
-async function handleSpecialCase(contact, oldContacts, contacts, contactLetter) {
+async function handleSpecialCase(contact, oldContacts, contacts, contactLetter, existingContactLetter) {
     let letterExists = await checkIfLetterExists(contactLetter, contacts);
-    if (!letterExists && contactLetter === 'A') {
-        const contactsNew = [...oldContacts, contact];
-        handleLoadedContacts(contactsNew);
-        return true;
+    for (const existingContact of contacts) {
+        const existingContactName = existingContact.querySelector('.NameContact').innerText.toUpperCase();
+        const existingContactLetter = existingContactName.charAt(0);
+        if (!letterExists && contactLetter < existingContactLetter) {
+            const contactsNew = [...oldContacts, contact];
+            handleLoadedContacts(contactsNew);
+            return true;
+        }
     }
     return false;
 }
