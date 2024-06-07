@@ -49,15 +49,31 @@ function getAssignedKeyByName(data, contacts) {
     let i = 0;
     for (i = 0; i < item.assigned.length; i++) {
       let assigned = item.assigned[i];
-      const contactExists = contacts.some((contact) => contact && contact.name == assigned.name);
+      const contactExists = contactExist(contacts, assigned.name);
       if (!contactExists) {
         const index = item.assigned.findIndex((assign) => assign.name == item.assigned[i].name);
         item.assigned.splice(index, 1);
         i = -1;
       }
     }
+    if (item.assigned.length == 0) item.assigned = "";
   }
   return data;
+}
+
+/**
+ * Checks if a contact with the given name exists in the contacts array.
+ *
+ * @param {Object} contacts - The array of contacts.
+ * @param {string} name - The name of the contact to check.
+ * @return {boolean} - Returns true if a contact with the given name exists, otherwise false.
+ */
+function contactExist(contacts, name) {
+  for (let key in contacts) {
+    if (contacts[key] == null) continue;
+    if (contacts[key].name == name) return true;
+  }
+  return false;
 }
 
 /**
@@ -75,7 +91,6 @@ async function renderBoards(data) {
  * @returns item data
  */
 async function getItemById(id, contentId) {
-  // let data = await getData("tasks");
   let itemList = data.find((items) => items["id"] == contentId);
   let item = itemList["items"].find((items) => items["id"] == id);
   return item;
@@ -94,14 +109,22 @@ function getBoardSection(data) {
     const items = data[i]["items"];
     boardSection.innerHTML += getBoardContainer(id, header[i]);
     if (items == "") {
-      let containerElement = document.getElementById(`${id}`);
-      let container = containerElement.querySelector("#no-content-img");
-      let dropzone = containerElement.querySelector("#dropzone");
-      dropzone.classList.add("big-zone");
-      container.classList.remove("d-none");
+      getEmptyBoard(id);
     }
-    // getBoardContents(data[i]["items"], id);
   }
+}
+
+/**
+ * Retrieves the empty board container element and displays it by removing the "d-none" class from the container element.
+ *
+ * @return {void} This function does not return anything.
+ */
+function getEmptyBoard(id) {
+  const containerElement = document.getElementById(`${id}`);
+  const container = containerElement.querySelector("#no-content-img");
+  const dropzone = containerElement.querySelector("#dropzone");
+  dropzone.classList.add("big-zone");
+  container.classList.remove("d-none");
 }
 
 function getBoardContentsAll(data) {
@@ -151,22 +174,7 @@ function getBoardContents(contents, id) {
         i++;
       } else {
         let card = contents[i];
-        content.innerHTML += /*html*/ `
-      <div id='${card["id"]}' class="board-card" draggable="true" ondragstart='doSetData(event, ${card["id"]})'>
-        <img draggable="false" ondragstart="e.preventDefault()" id="board-category" class="board-category">
-        <div draggable="false" class="board-title">${card["title"]}</div>
-        <div draggable="false" class="board-description">${card["description"]}</div> 
-        <div class="board-progress-bar-container">
-          <progress id="progress-bar" value="0" max="100"></progress>
-          <label for="progress-bar"></label>
-        </div>
-        <div class="board-bottom-container">
-          <div id="board-users" class="board-user-container">
-          </div>
-          <img id='board-priority' alt="">
-        </div>
-      </div> 
-      <div  id="dropzone" ondragover="allowDrop(event)" ondrop="doDrop(event)" class="board-card-dropzone big-zone"></div>`;
+        content.innerHTML += getBoardCard(card, "big-zone");
         getCategory(card["category"], card["id"]);
         getPriority(card["priority"], card["id"]);
         getAssigned(card["assigned"], card["id"]);
@@ -181,7 +189,7 @@ function getBoardContents(contents, id) {
  * @param {Object} card
  * @returns html code
  */
-function getBoardCard(card) {
+function getBoardCard(card, zoneSize) {
   return /*html*/ `
   <div id='${card["id"]}' class="board-card" draggable="true" ondragstart='doSetData(event, ${card["id"]})'>
     <img id="board-category" class="board-category">
@@ -197,7 +205,7 @@ function getBoardCard(card) {
       <img id='board-priority' alt="">
     </div>
   </div> 
-  <div  id="dropzone" ondragover="allowDrop(event)" ondrop="doDrop(event)" class="board-card-dropzone"></div>`;
+  <div  id="dropzone" ondragover="allowDrop(event)" ondrop="doDrop(event)" class="board-card-dropzone ${zoneSize}"></div>`;
 }
 
 /**
