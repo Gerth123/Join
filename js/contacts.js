@@ -33,23 +33,30 @@ function sortContacts(contacts) {
  * @param {Array<Object>} contacts - Sorted contact objects.
  */
 async function displayContacts(contacts) {
+  console.log("given contacts", contacts);
   const contactsContainer = getContactsContainer();
   if (!contactsContainer) return;
   if (!contacts || contacts.length === 0) {
     console.error("Keine Kontakte gefunden.");
     return;
   }
+  // console.log(contactsContainer);
   clearContactsContainer(contactsContainer);
+  console.log("populate contacts", contacts);
   await populateContacts(contacts, contactsContainer);
   setupContactClickEvents();
 }
 
 async function addContactToDOM(contact, contactsAdded) {
-  const contactsNew = [...contactsAdded, contact];
+  // const contactsNew = [...contactsAdded, contact];
   // contacts = contactsNew;
-  console.log("this is contactsNew", contactsNew);
-  sortContacts(contactsNew);
-  displayContacts(contactsNew);
+  // console.log("this is contactsNew", contactsNew);
+  console.log("contact", contact);
+  console.log("contactsAdded", contactsAdded);
+  console.log("contacts", contacts);
+  sortContacts(contacts);
+  console.log(contactsNew);
+  displayContacts(contacts);
 }
 
 /**
@@ -84,6 +91,7 @@ async function populateContacts(contacts, container) {
   let currentLetter = "";
   for (const contact of contacts) {
     if (contact && contact.name) {
+      console.log("contact", contact);
       const contactLetter = contact.name.charAt(0).toUpperCase();
       if (contactLetter !== currentLetter) {
         currentLetter = contactLetter;
@@ -157,7 +165,14 @@ function createSeparatorDiv() {
  */
 async function saveContact(name, mail, phone, userId) {
   const contactData = createContactData(name, mail, phone);
+  // console.log("this is contactData", contactData);
   const newContactId = await findMissingId(userId);
+  // console.log("this is newContactId", newContactId);
+  if (contacts.length == newContactId) {
+    contacts.push(contactData);
+  } else {
+    contacts[newContactId] = contactData;
+  }
   let path = `users/` + userId + `/contacts/` + newContactId;
   await putData(path, contactData);
 }
@@ -279,20 +294,20 @@ function closeAddContact() {
   }, 850);
 }
 
-/**
- * Handles the display of contacts after a new contact is created.
- * Author: Elias
- * @param {string} userId - The user ID.
- */
-async function handleLoadedContacts(userId) {
-  const actualUsers = await loadData(`users/${userId}/contacts`);
-  if (actualUsers) {
-    const sortedContacts = sortContacts(actualUsers);
-    displayContacts(sortedContacts);
-  } else {
-    console.error("No contacts found for the loaded user.");
-  }
-}
+// /**
+//  * Handles the display of contacts after a new contact is created.
+//  * Author: Elias
+//  * @param {string} userId - The user ID.
+//  */
+// async function handleLoadedContacts(userId) {
+//   const actualUsers = await loadData(`users/${userId}/contacts`);
+//   if (actualUsers) {
+//     const sortedContacts = sortContacts(actualUsers);
+//     displayContacts(sortedContacts);
+//   } else {
+//     console.error("No contacts found for the loaded user.");
+//   }
+// }
 
 /**
  * Hides the contact information section in a responsive manner.
@@ -337,5 +352,7 @@ function closeEditAndDeleteResponsive() {
  * Author: Elias
  */
 async function updateContactInFirebase(contactId, updatedContact, userId) {
+  // console.log("this is updatedContact", updatedContact);
+  // console.log("this is contactId", contactId);
   await putData(`users/` + userId + `/contacts/` + contactId, updatedContact);
 }

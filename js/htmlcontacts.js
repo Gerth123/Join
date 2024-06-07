@@ -135,14 +135,14 @@ function generateContactDetailsHTML(name, email, phone, randomColor, initials) {
 async function findContactIdByEmail(email) {
   try {
     let userId = await getUserIdFormUrl();
-    let actualUsers = await loadData("users/" + userId + "/contacts");
-    console.log("actualUsers", actualUsers);
-    console.log("contacts", contacts);
-    for (let userId in actualUsers) {
-      if (actualUsers[userId] === null) {
+    // let actualUsers = await loadData("users/" + userId + "/contacts");
+    // console.log("actualUsers", actualUsers);
+    // console.log("contacts", contacts);
+    for (let userId in contacts) {
+      if (contacts[userId] === null) {
         continue;
       }
-      if (actualUsers[userId].mail === email) {
+      if (contacts[userId].mail === email) {
         return userId;
       }
     }
@@ -219,6 +219,12 @@ async function deleteContact(contactId) {
 async function deleteContactFromFirebase(email) {
   let userId = await getUserIdFormUrl();
   newContactId = await findContactIdByEmail(email);
+  if (contacts.length - 1 == parseInt(newContactId)) {
+    contacts.splice(newContactId, 1);
+  } else {
+    contacts[newContactId] = null;
+  }
+
   await deleteData(`users/` + userId + `/contacts/` + newContactId);
 }
 
@@ -438,7 +444,9 @@ async function updateContact(event) {
   try {
     let updatedContact = await createUpdatedContact(userId, contactId, name, newEmail, phone);
     console.log("updatedContact", updatedContact);
+
     const contentRight = document.getElementById("contentright");
+    contacts[contactId] = updatedContact;
     await updateContactInFirebase(contactId, updatedContact, userId);
     await refreshAndDisplayContacts(userId);
     const contactDetailsDiv = document.querySelector(".contactdetails-right");
@@ -496,21 +504,21 @@ function initContactCardClickHandlers() {
   });
 }
 
-initContactCardClickHandlers();
+// initContactCardClickHandlers();
 
-async function renderContacts() {
-  const contactsContainer = document.getElementById("contacts-container");
-  if (contactsContainer) {
-    contactsContainer.innerHTML = "";
-    const contacts = await fetchContacts();
-    for (const contact of contacts) {
-      contactsContainer.innerHTML += await generateContactHTML(contact);
-    }
-    initContactCardClickHandlers();
-  } else {
-    console.error('Element with id "contacts-container" not found.');
-  }
-}
+// async function renderContacts() {
+//   const contactsContainer = document.getElementById("contacts-container");
+//   if (contactsContainer) {
+//     contactsContainer.innerHTML = "";
+//     const contacts = await fetchContacts();
+//     for (const contact of contacts) {
+//       contactsContainer.innerHTML += await generateContactHTML(contact);
+//     }
+//     initContactCardClickHandlers();
+//   } else {
+//     console.error('Element with id "contacts-container" not found.');
+//   }
+// }
 
 /**
  * Finds or generates a random color for a contact based on the email.
@@ -520,13 +528,15 @@ async function renderContacts() {
  */
 async function findContactsRandomColor(email) {
   let userId = await getUserIdFormUrl();
-  let actualUsers = await loadData(`users/${userId}/contacts/`);
-  for (let contactId in actualUsers) {
-    if (actualUsers[contactId] === null) {
+  // let actualUsers = await loadData(`users/${userId}/contacts
+  // console.log("actualUsers", actualUsers);
+  // console.log("contacts", contacts);
+  for (let contactId in contacts) {
+    if (contacts[contactId] === null) {
       continue;
     }
-    if (actualUsers[contactId].mail === email) {
-      return actualUsers[contactId].color;
+    if (contacts[contactId].mail === email) {
+      return contacts[contactId].color;
     }
   }
   return generateRandomColor();

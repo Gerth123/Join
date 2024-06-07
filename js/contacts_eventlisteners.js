@@ -9,7 +9,6 @@ let contacts;
  * Author: Elias
  */
 document.addEventListener("DOMContentLoaded", async function () {
-  contacts = await getData("contacts");
   setupAddContactButton();
   setupDocumentClickListener();
   setupCloseImageListener();
@@ -102,6 +101,7 @@ function setupContactsAListener() {
  * Author: Elias
  */
 document.addEventListener("DOMContentLoaded", async function () {
+  contacts = await getData("contacts");
   try {
     let userId = await getUserIdFormUrl();
     const actualUsers = await loadData(`users/${userId}/contacts`);
