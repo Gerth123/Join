@@ -20,7 +20,6 @@ async function addContactToDOM(contact, contacts) {
 * @author Robin
 */
 async function insertContactCard(contact, oldContacts) {
-    debugger
     const container = getContactsContainer();
     const contactHTML = await generateContactHTML(contact);
     const newContactCard = createContactCard(contactHTML);
