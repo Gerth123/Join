@@ -330,3 +330,46 @@ function closeEditAndDeleteResponsive() {
 async function updateContactInFirebase(contactId, updatedContact, userId) {
   await putData(`users/` + userId + `/contacts/` + contactId, updatedContact);
 }
+
+/**
+ * Creates an updated contact object.
+ * Author: Elias
+ */
+async function createUpdatedContact(userId, contactId, name, newEmail, phone) {
+  return {
+    mail: newEmail,
+    name: name,
+    phone: phone,
+    color: await loadData(`users/${userId}/contacts/${contactId}/color`),
+  };
+}
+
+/**
+ * Refreshes and displays sorted contacts.
+ * Author: Elias
+ */
+async function refreshAndDisplayContacts(userId) {
+  const actualUsers = await loadData(`users/${userId}/contacts`);
+  const sortedContacts = await sortContacts(actualUsers);
+  await displayContacts(sortedContacts);
+}
+
+/**
+ * Finds or generates a random color for a contact based on the email.
+ * @param {string} email - The email address of the contact.
+ * @returns {Promise<string>} - A promise that resolves to a random color in hexadecimal format.
+ * Author: Elias
+ */
+async function findContactsRandomColor(email) {
+  let userId = await getUserIdFormUrl();
+  let actualUsers = await loadData(`users/${userId}/contacts/`);
+  for (let contactId in actualUsers) {
+    if (actualUsers[contactId] === null) {
+      continue;
+    }
+    if (actualUsers[contactId].mail === email) {
+      return actualUsers[contactId].color;
+    }
+  }
+  return generateRandomColor();
+}
