@@ -55,7 +55,7 @@ async function displayContacts(contacts) {
   }
   clearContactsContainer(contactsContainer);
   await populateContacts(contacts, contactsContainer);
-  setupContactClickEvents();
+  setupContactClickEvents(contacts);
 }
 
 /**
@@ -95,7 +95,7 @@ async function populateContacts(contacts, container) {
         currentLetter = contactLetter;
         addLetterHeader(container, currentLetter);
       }
-      const contactHTML = await generateContactHTML(contact);
+      const contactHTML = await generateContactHTML(contact, contacts);
       container.innerHTML += contactHTML;
     }
   }
@@ -149,12 +149,14 @@ function createSeparatorDiv() {
  * @param {string} mail - The email of the contact.
  * @param {string} phone - The phone number of the contact.
  * @param {string} userId - The user ID under which the contact is saved.
+ * @param {Object} contacts - The contacts object.
  */
-async function saveContact(name, mail, phone, userId) {
-  const contactData = createContactData(name, mail, phone);
-  const newContactId = await findMissingId(userId);
+async function saveContact(name, mail, phone, userId, contacts) {
+  const contactData = await createContactData(name, mail, phone);
+  const newContactId = await findMissingId(contacts);
   let path = `users/` + userId + `/contacts/` + newContactId;
   await putData(path, contactData);
+  return contactData;
 }
 
 /**
@@ -181,21 +183,20 @@ function generateRandomColor() {
  */
 function createContactData(name, mail, phone) {
   return {
-    name,
+    color: generateRandomColor(), 
     mail,
-    phone,
-    color: generateRandomColor(),
+    name,
+    phone,    
   };
 }
 
 /**
  * Finds the first missing ID in an array of IDs.
  * Author: Elias
- * @param {string} userId - The user ID.
+ * @param {Object} contacts - The contacts object.
  * @returns {number} - The first missing ID.
  */
-async function findMissingId(userId) {
-  let contacts = await loadData(`users/${userId}/contacts`);
+async function findMissingId(contacts) {
   contacts = Object.values(contacts);
   let missingId = 0;
   for (contact of contacts) {
@@ -232,7 +233,6 @@ async function createContact(event) {
   const phone = document.getElementById("contactPhone").value;
   let userId = await getUserIdFormUrl();
   let contacts = await getData("contacts");
-  contacts = Object.values(contacts);
   let alreadyExist = contacts.find((contact) => contact && contact.mail == mail);
   await checkIfContactAlreadyExists(alreadyExist, userId, phone, name, mail, contacts);
 }
@@ -245,6 +245,7 @@ async function createContact(event) {
  * @param {string} phone - The phone number of the contact.
  * @param {string} name - The name of the contact.
  * @param {string} mail - The email of the contact.
+ * @param {Object} contacts - The contacts object.
  * 
  * @author Robin 
  */
@@ -253,10 +254,12 @@ async function checkIfContactAlreadyExists(alreadyExist, userId, phone, name, ma
     alert("The contact already exists!");
   } else {
     try {
-      await saveContact(name, mail, phone, userId);
+      let contactData = await saveContact(name, mail, phone, userId, contacts);
       clearInputFields();
       closeAddContact();
-      addContactToDOM({ name, mail, phone }, contacts);
+      let contactId = await findMissingId(contacts);
+      let allContacts = { ...contacts, [contactId]: contactData,};
+      addContactToDOM({ name, mail, phone, color: contactData.color }, allContacts, contactId);
     } catch (error) {
       console.error("Error saving contact:", error);
     }
@@ -329,6 +332,7 @@ function closeEditAndDeleteResponsive() {
  *
  * @param {string} contactId - The ID of the contact to update.
  * @param {Object} updatedContact - The updated contact object containing name, email, and phone.
+ * @param {string} userId - The ID of the user who owns the contact.
  *
  * Author: Elias
  */
@@ -338,19 +342,24 @@ async function updateContactInFirebase(contactId, updatedContact, userId) {
 
 /**
  * Creates an updated contact object.
+ * @param {string} name - The name of the contact.
+ * @param {string} newEmail - The new email of the contact.
+ * @param {string} phone - The phone number of the contact.
+ * @param {string} randomColor - The random color of the contact.
  * Author: Elias
  */
-async function createUpdatedContact(userId, contactId, name, newEmail, phone) {
+async function createUpdatedContact(name, newEmail, phone, randomColor) {
   return {
     mail: newEmail,
     name: name,
     phone: phone,
-    color: await loadData(`users/${userId}/contacts/${contactId}/color`),
+    color: randomColor,
   };
 }
 
 /**
  * Refreshes and displays sorted contacts.
+ * @param {string} userId - The ID of the user who owns the contacts.
  * Author: Elias
  */
 async function refreshAndDisplayContacts(userId) {
@@ -362,18 +371,17 @@ async function refreshAndDisplayContacts(userId) {
 /**
  * Finds or generates a random color for a contact based on the email.
  * @param {string} email - The email address of the contact.
+ * @param {Object} contacts - The contacts object.
  * @returns {Promise<string>} - A promise that resolves to a random color in hexadecimal format.
  * Author: Elias
  */
-async function findContactsRandomColor(email) {
-  let userId = await getUserIdFormUrl();
-  let actualUsers = await loadData(`users/${userId}/contacts/`);
-  for (let contactId in actualUsers) {
-    if (actualUsers[contactId] === null) {
+async function findContactsRandomColor(email, contacts) {
+  for (let contactId in contacts) {
+    if (contacts[contactId] === null) {
       continue;
     }
-    if (actualUsers[contactId].mail === email) {
-      return actualUsers[contactId].color;
+    if (contacts[contactId].mail === email) {
+      return contacts[contactId].color;
     }
   }
   return generateRandomColor();
