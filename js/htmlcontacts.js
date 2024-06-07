@@ -121,6 +121,7 @@ async function findContactIdByEmail(email) {
   try {
     let userId = await getUserIdFormUrl();
     let actualUsers = await loadData("users/" + userId + "/contacts");
+    actualUsers = Object.values(actualUsers);
     for (let userId in actualUsers) {
       if (actualUsers[userId] === null) {
         continue;
