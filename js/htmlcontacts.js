@@ -1,16 +1,20 @@
+/**
+ * This variable stores the last clicked card.
+ */
 let lastClickedCard = null;
 
 /**
  * Handles the click event for a contact card.
  * @param {HTMLElement} card - The clicked contact card element.
+ * @param {Array<Object>} contacts - The contacts array.
  * Author: Elias
  */
-function handleCardClick(card) {
+function handleCardClick(card, contacts) {
   resetLastClickedCard();
   updateCardStyle(card);
   lastClickedCard = card;
   const { contentRight, name, email, phone, initials } = getCardDetails(card);
-  updateContactDetails(contentRight, name, email, phone, initials);
+  updateContactDetails(contentRight, name, email, phone, initials, contacts);
 }
 
 /**
@@ -55,13 +59,14 @@ function getCardDetails(card) {
  * @param {string} email - The contact's email.
  * @param {string} phone - The contact's phone number.
  * @param {string} initials - The initials of the contact's name.
+ * @param {Array<Object>} contacts - The contacts array.
  */
-function updateContactDetails(contentRight, name, email, phone, initials) {
-  findContactsRandomColor(email).then((actualRandomColor) => {
+function updateContactDetails(contentRight, name, email, phone, initials, contacts) {
+  findContactsRandomColor(email, contacts).then((actualRandomColor) => {
     const contactDetailsDiv = document.querySelector(".contactdetails-right");
     contactDetailsDiv.innerHTML = generateContactDetailsHTML(name, email, phone, actualRandomColor, initials);
     if (window.innerWidth < 1100) contentRight.style.display = "flex";
-    setupEditAndDeleteButtons(contactDetailsDiv, lastClickedCard, name, email, phone, actualRandomColor, initials, contentRight);
+    setupEditAndDeleteButtons(contactDetailsDiv, lastClickedCard, name, email, phone, actualRandomColor, initials, contentRight, contacts);
   });
 }
 
@@ -114,14 +119,12 @@ function generateContactDetailsHTML(name, email, phone, randomColor, initials) {
 /**
  * Finds the user ID based on the email address.
  * @param {string} email - The email address to search for.
+ * @param {Object} actualUsers - The actual users object.
  * @returns {string} - The user ID associated with the email address.
  * Author: Elias
  */
-async function findContactIdByEmail(email) {
+async function findContactIdByEmail(email, actualUsers) {
   try {
-    let userId = await getUserIdFormUrl();
-    let actualUsers = await loadData("users/" + userId + "/contacts");
-    actualUsers = Object.values(actualUsers);
     for (let userId in actualUsers) {
       if (actualUsers[userId] === null) {
         continue;
@@ -140,14 +143,15 @@ async function findContactIdByEmail(email) {
  * Generates HTML for a contact.
  *
  * @param {Object} contact - The contact object.
+ * @param {Array<Object>} contacts - The contacts array.
  * @returns {string} - The HTML string for the contact.
  *
  * Author: Elias
  */
-async function generateContactHTML(contact) {
-  const randomColor = await findContactsRandomColor(contact.mail);
+async function generateContactHTML(contact, contacts) {
+  const randomColor = await findContactsRandomColor(contact.mail, contacts);
   const initials = await getInitials(contact.name);
-  let userId = await findContactIdByEmail(contact.mail);
+  let userId = await findContactIdByEmail(contact.mail, contacts);
   return `
         <div class="contact contactCard" data-id="${userId}" data-phone="${contact.phone}">
             <div class="profilePicture" style="background-color: ${randomColor};">${initials}</div>
@@ -180,13 +184,13 @@ function getInitials(name) {
  * Deletes a contact from Firebase.
  *
  * @param {string} contactId - The ID of the contact to delete.
- * @returns {Promise<void>}
- *
+ * @param {Array<Object>} contacts - The contacts array.
+ * 
  * Author: Elias
  */
-async function deleteContactFromFirebase(email) {
+async function deleteContactFromFirebase(email, contacts) {
   let userId = await getUserIdFormUrl();
-  newContactId = await findContactIdByEmail(email);
+  newContactId = await findContactIdByEmail(email, contacts);
   await deleteData(`users/` + userId + `/contacts/` + newContactId);
 }
 
@@ -261,6 +265,11 @@ function editContactHTML(randomColor, initials, name, email, phone) {
 
 /**
  * Opens the edit contact overlay.
+ * @param {string} name - The contact's name.
+ * @param {string} email - The contact's email.
+ * @param {string} phone - The contact's phone number.
+ * @param {string} randomColor - The contact's random color.
+ * @param {string} initials - The contact's initials.
  * Author: Elias
  */
 function openEditContactOverlay(name, email, phone, randomColor, initials) {
@@ -282,6 +291,11 @@ function removeExistingOverlay() {
 
 /**
  * Creates and inserts the overlay HTML.
+ * @param {string} randomColor - The contact's random color.
+ * @param {string} initials - The contact's initials.
+ * @param {string} name - The contact's name.
+ * @param {string} email - The contact's email.
+ * @param {string} phone - The contact's phone number.
  * Author: Elias
  */
 function createOverlayHTML(randomColor, initials, name, email, phone) {
@@ -291,6 +305,7 @@ function createOverlayHTML(randomColor, initials, name, email, phone) {
 
 /**
  * Handles contact deletion.
+ * @param {string} email - The contact's email.
  * Author: Elias
  */
 async function handleDeleteContact(email) {
@@ -305,6 +320,7 @@ async function handleDeleteContact(email) {
 
 /**
  * Removes contact card from the DOM.
+ * @param {string} email - The contact's email.
  * Author: Elias
  */
 function removeContactCard(email) {
@@ -334,18 +350,20 @@ function closeEditContact() {
 
 /**
  * Updates a contact with new information.
+ * @param {string} event - The event object.
  * Author: Elias
  */
 async function updateContact(event) {
   event.preventDefault();
-  let name = getInputValue("contactName" + globalEmail);
-  let newEmail = getInputValue("contactEmail" + globalEmail);
-  let phone = getInputValue("contactPhone" + globalEmail);
-  let contactId = await findContactIdByEmail(globalEmail);
+  let name = document.getElementById("contactName" + globalEmail).value;
+  let newEmail = document.getElementById("contactEmail" + globalEmail).value;
+  let phone = document.getElementById("contactPhone" + globalEmail).value;
   let userId = getUserIdFormUrl();
   let initials = getInitials(name);
-  let randomColor = await findContactsRandomColor(globalEmail);
-  await controlAndUpdateTheDates(userId, contactId, name, newEmail, phone, initials, randomColor);
+  let contacts = await getData("contacts");
+  let contactId = await findContactIdByEmail(globalEmail, contacts);
+  let randomColor = await findContactsRandomColor(globalEmail, contacts);
+  await controlAndUpdateTheDates(userId, contactId, name, newEmail, phone, initials, randomColor, contacts);
 }
 
 /**
@@ -358,30 +376,22 @@ async function updateContact(event) {
  * @param {string} phone - The phone number of the contact.
  * @param {string} initials - The initials of the contact.
  * @param {string} randomColor - The random color of the contact.
+ * @param {Array<Object>} contacts - The contacts array.
  * 
  * @author Elias
  */
-async function controlAndUpdateTheDates(userId, contactId, name, newEmail, phone, initials, randomColor) {
+async function controlAndUpdateTheDates(userId, contactId, name, newEmail, phone, initials, randomColor, contacts) {
   try {
-    let updatedContact = await createUpdatedContact(userId, contactId, name, newEmail, phone);
+    let updatedContact = await createUpdatedContact(name, newEmail, phone, randomColor);
     const contentRight = document.getElementById("contentright");
     await updateContactInFirebase(contactId, updatedContact, userId);
     await refreshAndDisplayContacts(userId);
     const contactDetailsDiv = document.querySelector(".contactdetails-right");
     contactDetailsDiv.innerHTML = generateContactDetailsHTML(name, newEmail, phone, randomColor, initials);
     let card = document.querySelector(`.contactCard[data-id="${dataId}"]`);
-    setupEditAndDeleteButtons(contactDetailsDiv, card, name, newEmail, phone, randomColor, initials, contentRight);
+    setupEditAndDeleteButtons(contactDetailsDiv, card, name, newEmail, phone, randomColor, initials, contentRight, contacts);
     closeEditContact();
   } catch (error) {
     console.error("Fehler beim Aktualisieren des Kontakts:", error);
   }
 }
-
-/**
- * Retrieves the input value by ID.
- * Author: Elias
- */
-function getInputValue(id) {
-  return document.getElementById(id).value;
-}
-
