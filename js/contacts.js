@@ -51,9 +51,9 @@ async function addContactToDOM(contact, contactsAdded) {
   // const contactsNew = [...contactsAdded, contact];
   // contacts = contactsNew;
   // console.log("this is contactsNew", contactsNew);
-  console.log("contact", contact);
-  console.log("contactsAdded", contactsAdded);
-  console.log("contacts", contacts);
+  // console.log("contact", contact);
+  // console.log("contactsAdded", contactsAdded);
+  // console.log("contacts", contacts);
   sortContacts(contacts);
   // console.log(contactsNew);
   displayContacts(contacts);
