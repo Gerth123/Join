@@ -391,7 +391,7 @@ function deleteFullSizeBoard() {
       if (item) column.items.splice(column.items.indexOf(item), 1);
       if (column.items.length == 0) column.items = "";
     }
-    await deleteRender();
+    await deleteRender(actualUsersNumber);
   };
 }
 
@@ -403,7 +403,7 @@ function deleteFullSizeBoard() {
  * listeners, drop zones, and full-size container hiding are complete, and the
  * data is put to the server.
  */
-async function deleteRender() {
+async function deleteRender(actualUsersNumber) {
   renderBoards(data);
   getEventListeners();
   getDropZones();
