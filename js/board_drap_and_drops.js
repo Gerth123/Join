@@ -110,7 +110,20 @@ async function doDrop(e) {
   const droppedItemElement = document.querySelector(`[id="${itemId}"]`);
   if (droppedItemElement.contains(task)) return;
   if (itemsIndex < droppedIndex && closestClickedContentID == closestDroppedContentID) droppedIndex--;
+  doDropContents(droppedItemElement, insertAfter, itemId, contentId, droppedIndex);
+}
 
+/**
+ * Asynchronously handles the drop event for contents and performs necessary operations.
+ *
+ * @param {HTMLElement} droppedItemElement - The element being dropped.
+ * @param {HTMLElement} insertAfter - The element to insert the dropped element after.
+ * @param {number} itemId - The ID of the dropped item.
+ * @param {number} contentId - The ID of the content.
+ * @param {number} droppedIndex - The index of the dropped item.
+ * @return {Promise<void>} A promise that resolves when all operations are complete.
+ */
+async function doDropContents(droppedItemElement, insertAfter, itemId, contentId, droppedIndex) {
   insertAfter.after(droppedItemElement);
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
@@ -166,7 +179,6 @@ function updateItemPosition(item, currentColumn, newProps) {
   if (newProps.contentId !== undefined && newProps.position !== undefined) {
     let targetColumn = data.find((column) => column.id == newProps.contentId);
 
-    // Handle empty item arrays in current and target columns
     if (currentColumn.items === "") currentColumn.items = [];
     currentColumn.items.splice(currentColumn.items.indexOf(item), 1);
     if (currentColumn.items.length === 0) currentColumn.items = "";

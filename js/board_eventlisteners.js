@@ -41,87 +41,6 @@ function onClickSelectBtn() {
 }
 
 /**
- * Onclick gets the full-size board
- * @param {Element} fullsize
- * @param {Element} board
- * @param {Element} editBoard
- * @param {Element} addBoard
- * @author Hanbit Chang
- */
-function onClickFullSizeBoard(fullsize, board, editBoard, addBoard) {
-  const boardCard = document.querySelectorAll(".board-card");
-  boardCard.forEach(
-    (card) => {
-      card.onclick = () => {
-        fullsize.classList.remove("d-none");
-        board.classList.remove("d-none");
-        editBoard.classList.add("d-none");
-        addBoard.classList.add("d-none");
-        id = card.id;
-        contentId = card.parentNode.parentNode.id;
-        getFullSizeBoard(id, contentId);
-      };
-    }
-    // card.addEventListener("click", () => {
-    //   fullsize.classList.remove("d-none");
-    //   board.classList.remove("d-none");
-    //   editBoard.classList.add("d-none");
-    //   addBoard.classList.add("d-none");
-    //   id = card.id;
-    //   contentId = card.parentNode.parentNode.id;
-    //   getFullSizeBoard(id, contentId);
-    // })
-  );
-}
-
-/**
- * Onclick closes the full-size
- * @param {Element} fullsize
- * @author Hanbit Chang
- */
-function onClickCloseFullSize(fullsize) {
-  const closeBtnAdds = document.querySelectorAll("#close-btn-img-add");
-  closeBtnAdds.forEach((closeBtnAdd) => {
-    closeBtnAdd.onclick = async () => {
-      clearAddTaskInputs();
-      setCheckBoxes();
-      setAssignedAddTask();
-      fullsize.classList.add("d-none");
-    };
-  });
-
-  const closeBtns = document.querySelectorAll("#close-btn-img");
-  closeBtns.forEach((closeBtn) => {
-    closeBtn.onclick = async () => {
-      fullsize.classList.add("d-none");
-      let itemData = await getItemById(id, contentId);
-      let subtasks = itemData["subtasks"];
-      for (let i = 0; i < subtasks.length; i++) {
-        const check = document.getElementById(`subtask-${i}`);
-        if (check.checked) subtasks[i]["checked"] = true;
-        if (!check.checked) subtasks[i]["checked"] = false;
-      }
-      await updateSubtaskCheck(subtasks);
-      resetPriority();
-      setAssignedEditTask();
-      setCheckBoxes();
-      renderBoards(data);
-      getEventListeners();
-      getDropZones();
-    };
-  });
-}
-
-function resetPriority() {
-  const priority3 = document.getElementById("radio-btn-3");
-  const priority2 = document.getElementById("radio-btn-2");
-  const priority1 = document.getElementById("radio-btn-1");
-  priority3.checked = false;
-  priority2.checked = false;
-  priority1.checked = false;
-}
-
-/**
  * Update the subtasks check and reload
  * @param {Object} subtasks
  * @author Hanbit Chang
@@ -132,133 +51,11 @@ async function updateSubtaskCheck(subtasks) {
   for (let column of data) {
     if (column.id == contentId) {
       for (let item of column.items) {
-        if (item.id == id) {
-          item["subtasks"] = subtasks;
-        }
+        if (item.id == id) item["subtasks"] = subtasks;
       }
     }
   }
   await putData(`users/${actualUsersNumber}/tasks/`, data);
-}
-
-/**
- * Onclick gets add-task board
- * @param {Element} fullsize
- * @param {Element} board
- * @param {Element} editBoard
- * @param {Element} addBoard
- * @author Hanbit Chang
- */
-function onClickAddTaskBoard(fullsize, board, editBoard, addBoard) {
-  const selectBtns = document.querySelectorAll("#select-btn-addCard");
-  selectBtns.forEach((btn) => {
-    btn.onclick = () => {
-      btn.classList.toggle("open");
-    };
-  });
-  const addTaskBtn = document.querySelectorAll("#board-header-add-btn");
-  addTaskBtn.forEach((btn) => {
-    btn.onclick = () => {
-      fullsize.classList.remove("d-none");
-      board.classList.add("d-none");
-      editBoard.classList.add("d-none");
-      addBoard.classList.remove("d-none");
-      contentId = 1;
-      onClickAddSubTasks();
-      getAddAssgined();
-      setCheckBoxes();
-      oneCheckBox();
-    };
-  });
-
-  document.onclick = async (e) => {
-    if (!e.target.closest("#select-btn-addCard") && !e.target.closest(".assigned-item")) {
-      selectBtns.forEach((btns) => {
-        btns.classList.remove("open");
-      });
-    }
-  };
-}
-
-function oneCheckBox() {
-  const firstCheckedBox = document.querySelector('input[type="checkbox"][name="priority-button"][id="radio-btn-5"]');
-  firstCheckedBox.checked = true;
-  const checkboxes = document.querySelectorAll('input[type="checkbox"][name="priority-button"]');
-  checkboxes.forEach((checkbox) => {
-    checkbox.onchange = function () {
-      if (this.checked) {
-        checkboxes.forEach((box) => {
-          if (box !== this) box.checked = false;
-        });
-      }
-    };
-  });
-}
-
-/**
- * Adds a small task button to the board and opens the full-size container.
- *
- * @param {number} contentIdAdd - The ID of the content to add.
- * @return {void} This function does not return anything.
- * @author Hanbit Chang
- */
-function addTaskBtnSmall(contentIdAdd) {
-  if (window.innerWidth < 480) {
-    changeHtmlPage("add_task.html");
-  }
-  const fullsize = document.getElementById("full-size-container");
-  const board = document.getElementById("board");
-  const editBoard = document.getElementById("edit-board");
-  const addBoard = document.getElementById("add-board");
-  contentId = contentIdAdd;
-  fullsize.classList.remove("d-none");
-  board.classList.add("d-none");
-  editBoard.classList.add("d-none");
-  addBoard.classList.remove("d-none");
-  onClickAddSubTasks();
-  getAddAssgined();
-  setAddCard();
-}
-
-/**
- * Retrieves the assigned users for a specific task and updates the add card form with their names.
- *
- * @return {Promise<void>} A Promise that resolves when the assigned users have been retrieved and the add card form has been updated.
- * @author Hanbit Chang
- */
-async function getAddAssgined() {
-  let data = await getData("tasks");
-  let contacts = await getData("contacts");
-  let contactsData = [];
-  for (let i = 0; i < contacts.length; i++) {
-    if (contacts[i] != null) contactsData.push(contacts[i]);
-  }
-  let assignedUsers = [];
-  for (let column of data) {
-    if (column.id == contentId) {
-      for (let item of column.items) {
-        if (item.id == id) {
-          for (i = 0; i < item["assigned"].length; i++) {
-            assignedUsers.push(item["assigned"][i]["name"]);
-          }
-        }
-      }
-    }
-  }
-  getAssignedUsersAddCard(assignedUsers, contactsData);
-}
-
-/**
- * Generates the HTML list of contacts for the add card view, with checkboxes indicating which contacts are assigned.
- *
- * @param {Array} assignedUsers - An array of user names that are currently assigned to the task.
- * @param {Array} contacts - An array of contact objects, each containing a name and color property.
- * @return {void} This function does not return anything.
- * @author Hanbit Chang
- */
-function getAssignedUsersAddCard(assignedUsers, contacts) {
-  getAssignedItem(assignedUsers, contacts);
-  assignedItemEventListener(contacts);
 }
 
 /**
@@ -295,7 +92,6 @@ function getAssignedItem(assignedUsers, contacts) {
  */
 function assignedItemEventListener(contacts) {
   const assignedItems = document.querySelectorAll(".assigned-item");
-
   assignedItems.forEach((item) => {
     item.onclick = () => {
       item.classList.toggle("checked");
@@ -316,7 +112,6 @@ function checkedUsers(contacts) {
   const btnText = document.querySelector(".btn-text-addCard");
   const checkedUsers = document.getElementById("assigned-users-addCard");
   const userNames = document.querySelectorAll(".checked .item-text");
-
   if (checked && checked.length > 0) {
     btnText.innerText = `${checked.length} Selected`;
     checkedUsers.innerHTML = "";
@@ -324,21 +119,24 @@ function checkedUsers(contacts) {
     userNames.forEach((userName) => {
       const personWithName = contacts.find((person) => person.name == userName.innerHTML);
       if (personWithName) {
-        if (i < 3) {
-          checkedUsers.innerHTML += getAssignedUser(personWithName);
-        }
+        if (i < 3) checkedUsers.innerHTML += getAssignedUser(personWithName);
         i++;
       }
     });
-    if (i > 3) {
-      checkedUsers.innerHTML += /*html*/ `<div class="assigned-user">
-      <div id="board-user" class="board-user-editCard" style="background-color: #2A3647">+${i - 3}</div>
-    </div> `;
-    }
-  } else {
-    btnText.innerText = "Select contacts to assign";
-    checkedUsers.innerHTML = "";
-  }
+    checkedUsersConditionOverFlowed(i, checkedUsers);
+  } else emptyCheckedUsersAddCard();
+}
+
+/**
+ * Empties the checked users list and updates the UI for the add card feature.
+ *
+ * @return {void} This function does not return anything.
+ */
+function emptyCheckedUsersAddCard() {
+  const btnText = document.querySelector(".btn-text-addCard");
+  const checkedUsers = document.getElementById("assigned-users-addCard");
+  btnText.innerText = "Select contacts to assign";
+  checkedUsers.innerHTML = "";
 }
 
 /**
@@ -422,37 +220,6 @@ function onClickAddSubTasks() {
 }
 
 /**
- * Asynchronously saves the added data by retrieving the "tasks" and "contacts" data from the server,
- * adding a new object to the items array of the content with the specified id, and then sending the updated data back to
- * the server. After the data is saved, the page is reloaded.
- *
- * @return {Promise<void>} A Promise that resolves when the data is saved and the page is reloaded.
- * @author Hanbit Chang
- */
-async function saveAddData() {
-  let urlParams = new URLSearchParams(window.location.search);
-  let actualUsersNumber = urlParams.get("actualUsersNumber");
-  if (contentId == undefined) contentId = 1;
-  const content = data.find((content) => content.id == contentId);
-  const obj = getAddObj(contacts);
-  if (content.items == "") content.items = [];
-  content.items.push(obj);
-  const fullsize = document.getElementById("full-size-container");
-  fullsize.classList.add("d-none");
-  renderBoards(data);
-  getEventListeners();
-  getDropZones();
-  setAddCard();
-  await putData(`users/${actualUsersNumber}/tasks/`, data);
-}
-
-function setAddCard() {
-  clearAddTaskInputs();
-  setCheckBoxes();
-  setAssignedAddTask();
-}
-
-/**
  * Clears the input fields and reset the state of the add task form.
  *
  * @return {void} This function does not return anything.
@@ -531,7 +298,6 @@ function getAddObj(contacts) {
     priority: addPriorityValue(),
     subtasks: addSubTasks(),
   };
-
   return obj;
 }
 
@@ -544,16 +310,12 @@ function getAddObj(contacts) {
  */
 function addAssignedValue(contacts) {
   const assignedUsers = document.querySelectorAll(".checked .item-text");
-
   let assigned = [];
   assignedUsers.forEach((assignedUser) => {
     for (let contact of contacts) {
       if (contact != null) {
         if (contact.name == assignedUser.textContent) {
-          assigned.push({
-            color: contact["color"],
-            name: contact["name"],
-          });
+          assigned.push({ color: contact["color"], name: contact["name"] });
         }
       }
     }
@@ -608,7 +370,6 @@ function addSubTasks() {
   newSubtasks.forEach((task) => {
     temp.push({ checked: false, task: task.textContent });
   });
-
   if (temp.length == 0) return "";
   return temp;
 }
@@ -630,14 +391,25 @@ function deleteFullSizeBoard() {
       if (item) column.items.splice(column.items.indexOf(item), 1);
       if (column.items.length == 0) column.items = "";
     }
-    renderBoards(data);
-    getEventListeners();
-    getDropZones();
-    const fullSize = document.getElementById("full-size-container");
-    fullSize.classList.add("d-none");
-    await putData(`users/${actualUsersNumber}/tasks/`, data);
-    // location.reload();
+    await deleteRender();
   };
+}
+
+/**
+ * Asynchronously renders boards, sets up event listeners, sets up drop zones,
+ * hides the full-size container, and puts data to the server.
+ *
+ * @return {Promise<void>} A promise that resolves when the rendering, event
+ * listeners, drop zones, and full-size container hiding are complete, and the
+ * data is put to the server.
+ */
+async function deleteRender() {
+  renderBoards(data);
+  getEventListeners();
+  getDropZones();
+  const fullSize = document.getElementById("full-size-container");
+  fullSize.classList.add("d-none");
+  await putData(`users/${actualUsersNumber}/tasks/`, data);
 }
 
 /**

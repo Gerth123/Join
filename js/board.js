@@ -108,9 +108,7 @@ function getBoardSection(data) {
     const id = data[i]["id"];
     const items = data[i]["items"];
     boardSection.innerHTML += getBoardContainer(id, header[i]);
-    if (items == "") {
-      getEmptyBoard(id);
-    }
+    if (items == "") getEmptyBoard(id);
   }
 }
 
@@ -242,7 +240,6 @@ function getPriority(priority, id) {
 function getAssigned(assigned, id) {
   const content = document.getElementById(`${id}`);
   const boardUser = content.querySelector("#board-users");
-
   if (assigned != "") {
     let i = 0;
     assigned.forEach((user) => {

@@ -47,26 +47,43 @@ function getFullSizeAssigned(assigned) {
     let i = 0;
     assigned.forEach((user) => {
       let name = getInitials(user["name"]);
-      if (i < 3) {
-        fullSizeAssigned.innerHTML += /*html*/ `
-        <li class="full-size-assign-user">
-          <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}</div>
-          <div class="board-username">
-            ${user["name"]}
-          </div>
-        </li>`;
-      }
+      if (i < 3) fullSizeAssigned.innerHTML += assignedFullsize(user, name);
       i++;
     });
-
-    if (i > 3) {
-      fullSizeAssigned.innerHTML += /*html*/ `
-      <li class="full-size-assign-user">
-        <div id="board-user" class="board-user" style="background-color:#2A3647">+${i - 3}</div>
-      </li>`;
-    }
+    if (i > 3) fullSizeAssigned.innerHTML += assignedFullSizeOverFlowed(i);
   }
 }
+
+/**
+ * Generates the HTML for a full-size assigned user.
+ *
+ * @param {Object} user - The user object containing the user's color.
+ * @param {string} name - The name of the user.
+ * @return {string} The HTML string for the full-size assigned user.
+ */
+function assignedFullsize(user, name) {
+  return /*html*/ `
+  <li class="full-size-assign-user">
+    <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}</div>
+    <div class="board-username">
+      ${user["name"]}
+    </div>
+  </li>`;
+}
+
+/**
+ * Generates the HTML for a full-size assigned user with an overflow count.
+ *
+ * @param {number} i - The number of assigned users.
+ * @return {string} The HTML string for the full-size assigned user with an overflow count.
+ */
+function assignedFullSizeOverFlowed(i) {
+  return /*html*/ `
+  <li class="full-size-assign-user">
+    <div id="board-user" class="board-user" style="background-color:#2A3647">+${i - 3}</div>
+  </li>`;
+}
+
 /**
  * Gets the full size subtasks
  * @param {Object} subtasks

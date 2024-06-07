@@ -14,7 +14,6 @@ async function getEditBoard(id, contentId) {
   title.value = `${itemData["title"]}`;
   description.value = `${itemData["description"]}`;
   date.value = `${itemData["date"]}`;
-
   toggleSelectBtn();
   oneCheckBoxEdit();
   getEditPriority(itemData["priority"]);
@@ -49,7 +48,6 @@ function toggleSelectBtn() {
       btn.classList.toggle("open");
     };
   });
-
   document.onclick = function (event) {
     if (!event.target.closest("#select-btn-editCard") && !event.target.closest(".assigned-item")) {
       selectBtns.forEach((btn) => {
@@ -102,11 +100,22 @@ function getCheckedUsers(assignedUsers, contactName) {
  * @author Hanbit Chang
  */
 async function getEditAssigned() {
-  let contacts = await getData("contacts");
   let contactsData = [];
   for (let i = 0; i < contacts.length; i++) {
     if (contacts[i] != null) contactsData.push(contacts[i]);
   }
+  let assignedUsers = getAssignedUserElements();
+  getAssignedUserElements();
+  getEditContacts(assignedUsers, contactsData);
+  toggleCheckUsers(contactsData);
+}
+
+/**
+ * Retrieves the assigned user names for a specific task from the data array.
+ *
+ * @return {Array} An array of user names that are currently assigned to the task.
+ */
+function getAssignedUserElements() {
   let assignedUsers = [];
   for (let column of data) {
     if (column.id == contentId) {
@@ -119,8 +128,7 @@ async function getEditAssigned() {
       }
     }
   }
-  getEditContacts(assignedUsers, contactsData);
-  toggleCheckUsers(contactsData);
+  return assignedUsers;
 }
 
 /**
@@ -173,30 +181,48 @@ function checkUsers(contacts) {
   const checked = document.querySelectorAll(".checked");
   const btnText = document.querySelector(".btn-text");
   const checkedUsers = document.getElementById("assigned-users-editCard");
-  const userNames = document.querySelectorAll(".checked .item-text");
   if (checked && checked.length > 0) {
     btnText.innerText = `${checked.length} Selected`;
     checkedUsers.innerHTML = "";
+    const userNames = document.querySelectorAll(".checked .item-text");
     let i = 0;
     userNames.forEach((userName) => {
       const personWithName = contacts.find((person) => person.name == userName.innerHTML);
       if (personWithName) {
         let name = getInitials(personWithName["name"]);
-        if (i < 3) {
-          checkedUsers.innerHTML += getEditAssignedUser(personWithName["color"], name);
-        }
+        if (i < 3) checkedUsers.innerHTML += getEditAssignedUser(personWithName["color"], name);
         i++;
       }
     });
-    if (i > 3) {
-      checkedUsers.innerHTML += /*html*/ `
+    checkedUsersConditionOverFlowed(i, checkedUsers);
+  } else emptyCheckedUsers();
+}
+
+/**
+ * Empties the checked users list and updates the button text.
+ *
+ * @return {void}
+ */
+function emptyCheckedUsers() {
+  const btnText = document.querySelector(".btn-text");
+  const checkedUsers = document.getElementById("assigned-users-editCard");
+  btnText.innerText = "Select contacts to assign";
+  checkedUsers.innerHTML = "";
+}
+
+/**
+ * Checks if the number of checked users exceeds a certain limit and adds a new user to the checkedUsers element.
+ *
+ * @param {number} i - The number of checked users.
+ * @param {HTMLElement} checkedUsers - The element where the checked users are displayed.
+ * @return {void} This function does not return a value.
+ */
+function checkedUsersConditionOverFlowed(i, checkedUsers) {
+  if (i > 3) {
+    checkedUsers.innerHTML += /*html*/ `
       <div class="assigned-user">
         <div id="board-user" class="board-user-editCard" style="background-color: #2A3647">+${i - 3}</div>
       </div>`;
-    }
-  } else {
-    btnText.innerText = "Select contacts to assign";
-    checkedUsers.innerHTML = "";
   }
 }
 
@@ -212,8 +238,7 @@ function getEditAssignedUser(color, name) {
   return /*html*/ `
   <div class="assigned-user">
     <div id="board-user" class="board-user-editCard" style="background-color: ${color}">${name}</div>
-  </div>
-  `;
+  </div>`;
 }
 
 /**
@@ -287,9 +312,7 @@ function onClickTrash() {
   trashes.forEach((trash) => {
     trash.onclick = () => {
       let parentLi = trash.closest("#subtasks-li");
-      if (parentLi) {
-        parentLi.remove();
-      }
+      if (parentLi) parentLi.remove();
     };
   });
 }
