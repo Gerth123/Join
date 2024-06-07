@@ -26,9 +26,10 @@ function clearInputFieldsAddContact() {
  * Author: Elias
  */
 function sortContacts(contacts) {
+  contacts = Object.values(contacts);
   contacts.sort((a, b) => {
-    if (a === null) return 1;
-    if (b === null) return -1;
+    if (a === null || a.name === undefined) return 1;
+    if (b === null || b.name === undefined) return -1;
     const nameA = a.name.toUpperCase();
     const nameB = b.name.toUpperCase();
     if (nameA < nameB) return -1;
@@ -37,6 +38,8 @@ function sortContacts(contacts) {
   });
   return contacts;
 }
+
+
 
 /**
  * Displays sorted contacts in the HTML container, grouped by the first letter.
@@ -193,6 +196,7 @@ function createContactData(name, mail, phone) {
  */
 async function findMissingId(userId) {
   let contacts = await loadData(`users/${userId}/contacts`);
+  contacts = Object.values(contacts);
   let missingId = 0;
   for (contact of contacts) {
     if (contact === null) {
@@ -228,6 +232,7 @@ async function createContact(event) {
   const phone = document.getElementById("contactPhone").value;
   let userId = await getUserIdFormUrl();
   let contacts = await getData("contacts");
+  contacts = Object.values(contacts);
   let alreadyExist = contacts.find((contact) => contact && contact.mail == mail);
   await checkIfContactAlreadyExists(alreadyExist, userId, phone, name, mail, contacts);
 }
@@ -279,7 +284,7 @@ function closeAddContact() {
 async function handleLoadedContacts(contactsNew) {
   if (contactsNew) {
     const sortedContacts = sortContacts(contactsNew);
-    displayContacts(contactsNew);
+    displayContacts(sortedContacts);
   } else {
     console.error("No contacts found for the loaded user.");
   }

@@ -13,6 +13,7 @@ async function addContactToDOM(contact, contacts) {
 
 /**
 * Inserts a new contact card into the contacts container at the correct position.
+
 * @param {Object} contact - The contact object containing name, mail, phone, etc.
 * @param {Array} oldContacts - The list of old contacts.
 * @returns {Promise<void>}
@@ -181,7 +182,7 @@ async function handleRemainingInsertion(container, contacts, newContactCard, con
         for (const existingContact of contacts) {
             lastExistingContact = existingContact;
         }
-        insertNewLetterSection(container, newContactCard, contactLetter, lastExistingContact);
+        insertNewLetterSection(newContactCard, contactLetter, lastExistingContact);
     }
 }
 
@@ -213,6 +214,7 @@ function findLastLetterContact(contacts, contactLetter) {
  * @author Robin
  */
 function insertNewLetterSection(newContactCard, contactLetter, lastExistingContact) {
+    console.log(lastExistingContact);
     const letterDiv = createLetterDiv(contactLetter);
     const separatorDiv = createSeparatorDiv();
     lastExistingContact.insertAdjacentElement('afterend', letterDiv);
