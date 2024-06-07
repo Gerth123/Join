@@ -46,22 +46,6 @@ function getCardDetails(card) {
   return { contentRight, name, email, phone, initials };
 }
 
-/**
-
- * This function finds the random color of a contact.
- * @param {string} email - The email of the contact.
- * @returns {string} - The random color of the contact.
- * 
- * @author: Robin
- */
-async function findContactsRandomColor(email) {
-  let actualContact = await findContactIdByEmail(email);
-  let urlParams = new URLSearchParams(window.location.search);
-  let userId = urlParams.get("actualUsersNumber");
-  let actualRandomColor = await loadData(`users/` + userId + `/contacts/` + actualContact + `/color`);
-  return actualRandomColor;
-}
-
   /**
  * Updates the contact details in the UI.
  * @param {HTMLElement} contentRight - The content right section element.
@@ -190,22 +174,6 @@ function getInitials(name) {
 }
 
 /**
- * Deletes a contact from Firebase and updates the UI.
- *
- * @param {string} contactId - The ID of the contact to delete.
- *
- * Author: Elias
- */
-async function deleteContact(contactId) {
-  try {
-    removeContactFromUI(contactId);
-    await deleteContactFromFirebase(contactId);
-  } catch (error) {
-    console.error("Fehler beim Löschen des Kontakts:", error);
-  }
-}
-
-/**
  * Deletes a contact from Firebase.
  *
  * @param {string} contactId - The ID of the contact to delete.
@@ -217,63 +185,6 @@ async function deleteContactFromFirebase(email) {
   let userId = await getUserIdFormUrl();
   newContactId = await findContactIdByEmail(email);
   await deleteData(`users/` + userId + `/contacts/` + newContactId);
-}
-
-/**
- * Removes the contact element from the UI.
- *
- * @param {string} contactId - The ID of the contact to remove from the UI.
- *
- * Author: Elias
- */
-function removeContactFromUI(contactId) {
-  const contactCard = document.querySelector(`.contactCard[data-id="${contactId}"]`);
-  if (contactCard) {
-    contactCard.remove();
-    removeEmptyLetterHeaders();
-  }
-}
-
-/**
- * Removes empty letter headers from the contacts container.
- * 
- * @author Robin
- */
-function removeEmptyLetterHeaders() {
-  let container = getContactsContainer();
-  let separatorContainers = Array.from(container.querySelectorAll('.seperator-contacts-list'));
-  separatorContainers.forEach(separator => {
-    let hasContacts = false;
-    let nextSibling = separator.nextElementSibling;
-    while (nextSibling && !nextSibling.classList.contains('contacts-list-letter-container')) {
-      if (nextSibling.classList.contains('contact')) {
-        hasContacts = true;
-        break;
-      }
-      nextSibling = nextSibling.nextElementSibling;
-    }
-    checkContactsContainer(separator, hasContacts, container);
-  });
-}
-
-/**
- * This function checks if there are contacts left in the container. If not, it removes the letter header.
- * 
- * @param {HTMLElement} separator - The separator element
- * @param {boolean} hasContacts - Whether there are contacts in the container
- * @param {HTMLElement} container - The container element
- * 
- * @author Robin
- */
-
-function checkContactsContainer(separator, hasContacts, container) {
-  if (!hasContacts) {
-    let letterContainer = separator.previousElementSibling;
-    if (letterContainer && letterContainer.classList.contains('contacts-list-letter-container')) {
-      container.removeChild(letterContainer);
-    }
-    container.removeChild(separator);
-  }
 }
 
 /**
@@ -431,7 +342,23 @@ async function updateContact(event) {
   let userId = getUserIdFormUrl();
   let initials = getInitials(name);
   let randomColor = await findContactsRandomColor(globalEmail);
+  await controlAndUpdateTheDates(userId, contactId, name, newEmail, phone, initials, randomColor);
+}
 
+/**
+ * This function controls and updates the dates.
+ * 
+ * @param {string} userId - The user ID.
+ * @param {string} contactId - The contact ID.
+ * @param {string} name - The name of the contact.
+ * @param {string} newEmail - The new email of the contact.
+ * @param {string} phone - The phone number of the contact.
+ * @param {string} initials - The initials of the contact.
+ * @param {string} randomColor - The random color of the contact.
+ * 
+ * @author Elias
+ */
+async function controlAndUpdateTheDates(userId, contactId, name, newEmail, phone, initials, randomColor) {
   try {
     let updatedContact = await createUpdatedContact(userId, contactId, name, newEmail, phone);
     const contentRight = document.getElementById("contentright");
@@ -476,33 +403,6 @@ async function refreshAndDisplayContacts(userId) {
   const actualUsers = await loadData(`users/${userId}/contacts`);
   const sortedContacts = await sortContacts(actualUsers);
   await displayContacts(sortedContacts);
-}
-
-/**
- * Initializes event listeners for contact cards.
- * Author: Elias
- */
-function initContactCardClickHandlers() {
-  const contactCards = document.querySelectorAll('.contactCard');
-  contactCards.forEach(card => {
-    card.onclick = () => handleCardClick(card);
-  });
-}
-
-initContactCardClickHandlers();
-
-async function renderContacts() {
-  const contactsContainer = document.getElementById('contacts-container');
-  if (contactsContainer) {
-    contactsContainer.innerHTML = ''; 
-    const contacts = await fetchContacts();
-    for (const contact of contacts) {
-      contactsContainer.innerHTML += await generateContactHTML(contact); 
-    }
-    initContactCardClickHandlers();
-  } else {
-    console.error('Element with id "contacts-container" not found.');
-  }
 }
 
 /**

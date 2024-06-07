@@ -6,7 +6,6 @@ function clearInputFields() {
   document.querySelectorAll(".inputField").forEach((input) => (input.value = ""));
 }
 
-
 /**
  * Clears input fields in the add contact form.
  * 
@@ -54,159 +53,6 @@ async function displayContacts(contacts) {
   clearContactsContainer(contactsContainer);
   await populateContacts(contacts, contactsContainer);
   setupContactClickEvents();
-}
-
-async function addContactToDOM(contact, contacts) {
-  // const contactsNew = [...contacts, contact];
-  // sortContacts(contactsNew);
-  // displayContacts(contactsNew);
-  insertContactCard(contact, contacts);
-  clearInputFieldsAddContact();
-}
-
-/**
- * Inserts a new contact card into the contacts container at the correct position.
- * @param {Object} contact - The contact object containing name, mail, phone, etc.
- * @returns {Promise<void>}
- */
-async function insertContactCard(contact, oldContacts) {
-  const container = getContactsContainer();
-  const contactHTML = await generateContactHTML(contact);
-  const tempDiv = document.createElement('div');
-  tempDiv.innerHTML = contactHTML;
-  const newContactCard = tempDiv.firstElementChild;
-  const contacts = Array.from(container.querySelectorAll('.contact'));
-  const contactLetter = contact.name.charAt(0).toUpperCase();
-  let inserted = false;
-  let letterExists = await checkIfLetterExists(contactLetter, contacts);
-  for (const existingContact of contacts) {
-    const existingContactName = existingContact.querySelector('.NameContact').innerText.toUpperCase();
-    const existingContactLetter = existingContactName.charAt(0);
-    if (!letterExists && contactLetter === 'A') {
-      const contactsNew = [...oldContacts, contact];
-      sortContacts(contactsNew);
-      displayContacts(contactsNew);
-      return;
-    }
-    if (letterExists === true && existingContactLetter === contactLetter) {
-      if (contact.name.toUpperCase() < existingContactName) {
-        container.insertBefore(newContactCard, existingContact);
-        inserted = true;
-        break;
-      }
-    } else if (existingContactLetter > contactLetter && !letterExists) {
-      const letterDiv = createLetterDiv(contactLetter);
-      const separatorDiv = createSeparatorDiv();
-      const reversedContacts = [...contacts].reverse();
-      let reversedExistingContact = null;
-      for (const reversedContact of reversedContacts) {
-        const reversedContactName = reversedContact.querySelector('.NameContact').innerText.toUpperCase();
-        if (reversedContactName.charAt(0) < contactLetter) {
-          reversedExistingContact = reversedContact;
-          break;
-        }
-      }
-      if (reversedExistingContact) {
-        reversedExistingContact.insertAdjacentElement('afterend', letterDiv);
-        letterDiv.insertAdjacentElement('afterend', separatorDiv);
-        separatorDiv.insertAdjacentElement('afterend', newContactCard);
-        inserted = true;
-        break;
-      }
-    }
-
-  }
-  if (!inserted) {
-    if (letterExists) {
-      let lastLetterContact = null;
-      for (const existingContact of contacts) {
-        const existingContactName = existingContact.querySelector('.NameContact').innerText.toUpperCase();
-        if (existingContactName.charAt(0) === contactLetter) {
-          lastLetterContact = existingContact;
-        }
-      }
-      if (lastLetterContact) {
-        lastLetterContact.insertAdjacentElement('afterend', newContactCard);
-      }
-    } else {
-      const letterDiv = createLetterDiv(contactLetter);
-      const separatorDiv = createSeparatorDiv();
-      const firstElement = container.firstChild;
-      container.insertAdjacentElement('afterbegin', separatorDiv);
-      separatorDiv.insertAdjacentElement('beforebegin', letterDiv);
-      container.insertAdjacentElement('afterend', newContactCard);
-    }
-  }
-  setupContactClickEvents();
-  removeEmptyLetterHeaders();
-}
-
-/**
- * Checks if the given contact's letter already exists in the contacts container.
- * 
- * @param {string} contactLetter - The letter of the contact.
- * @param {Array<HTMLElement>} contacts - The contacts container.
- * 
- * @author Robin
- */
-function checkIfLetterExists(contactLetter, contacts) {
-  for (const existingContact of contacts) {
-    const existingContactName = existingContact.querySelector('.NameContact').innerText.toUpperCase();
-    const existingContactLetter = existingContactName.charAt(0);
-    console.log(existingContactLetter, contactLetter)
-    if (existingContactLetter === contactLetter) {
-      return true;
-    }
-  }
-  return false;
-}
-
-
-/**
- * Removes empty letter headers from the contacts container.
- */
-function removeEmptyLetterHeaders() {
-  let container = getContactsContainer();
-  let letterContainers = Array.from(container.querySelectorAll('.contacts-list-letter-container'));
-
-  letterContainers.forEach(letterContainer => {
-    let hasContacts = false;
-    let nextSibling = letterContainer.nextElementSibling;
-
-    // Check following siblings until we find another letter container or reach the end
-    while (nextSibling && !nextSibling.classList.contains('contacts-list-letter-container')) {
-      if (nextSibling.classList.contains('contact')) {
-        hasContacts = true;
-        break;
-      }
-      nextSibling = nextSibling.nextElementSibling;
-    }
-
-    // Remove the letter container and its following separator if no contacts are found
-    if (!hasContacts) {
-      let separator = letterContainer.nextElementSibling;
-      container.removeChild(letterContainer);
-      if (separator && separator.classList.contains('seperator-contacts-list')) {
-        container.removeChild(separator);
-      }
-    }
-  });
-}
-
-/**
- * Creates a letter div element.
- * Author: Elias
- * @param {string} letter - The letter to display.
- * @returns {HTMLElement} - The letter div element.
- */
-function createLetterDiv(letter) {
-  const letterContainer = document.createElement("div");
-  const letterDiv = document.createElement("h2");
-  letterContainer.classList.add("contacts-list-letter-container");
-  letterDiv.classList.add("contacts-list-letter");
-  letterDiv.textContent = letter;
-  letterContainer.appendChild(letterDiv);
-  return letterContainer;
 }
 
 /**
@@ -292,18 +138,6 @@ function createSeparatorDiv() {
   separatorDiv.classList.add("seperator-contacts-list");
   return separatorDiv;
 }
-
-// Dummy generateContactHTML function for demonstration purposes
-async function generateContactHTML(contact) {
-  return `
-    <div class="contact">
-      <h2>${contact.name}</h2>
-      <p>Phone: ${contact.phone}</p>
-      <p>Email: ${contact.email}</p>
-    </div>
-  `;
-}
-
 
 /**
  * Saves a contact in Firebase under a sequential ID and adds a randomly generated color.
@@ -440,13 +274,12 @@ function closeAddContact() {
 /**
  * Handles the display of contacts after a new contact is created.
  * Author: Elias
- * @param {string} userId - The user ID.
+ * @param {Array<Object>} contactsNew - The new contacts array.
  */
-async function handleLoadedContacts(userId) {
-  const actualUsers = await loadData(`users/${userId}/contacts`);
-  if (actualUsers) {
-    const sortedContacts = sortContacts(actualUsers);
-    displayContacts(sortedContacts);
+async function handleLoadedContacts(contactsNew) {
+  if (contactsNew) {
+    const sortedContacts = sortContacts(contactsNew);
+    displayContacts(contactsNew);
   } else {
     console.error("No contacts found for the loaded user.");
   }
