@@ -161,27 +161,29 @@ function getBoardContainer(id, header) {
 function getBoardContents(contents, id) {
   const contentDirection = document.getElementById(`${id}`);
   const content = contentDirection.querySelector("#board-card-direction");
-
   if (contents != "") {
     let i = 0;
     contents.forEach(function (card) {
       if (i < contents.length - 1) {
         content.innerHTML += getBoardCard(card);
-        getCategory(card["category"], card["id"]);
-        getPriority(card["priority"], card["id"]);
-        getAssigned(card["assigned"], card["id"]);
-        getProgressBar(card["subtasks"], card["id"]);
         i++;
-      } else {
-        let card = contents[i];
-        content.innerHTML += getBoardCard(card, "big-zone");
-        getCategory(card["category"], card["id"]);
-        getPriority(card["priority"], card["id"]);
-        getAssigned(card["assigned"], card["id"]);
-        getProgressBar(card["subtasks"], card["id"]);
-      }
+      } else content.innerHTML += getBoardCard(card, "big-zone");
+      getBoardCardValues(card);
     });
   }
+}
+
+/**
+ * Retrieves the values for the board card.
+ *
+ * @param {Object} card - The card object containing the category, priority, assigned, and subtasks.
+ * @return {void} This function does not return a value.
+ */
+function getBoardCardValues(card) {
+  getCategory(card["category"], card["id"]);
+  getPriority(card["priority"], card["id"]);
+  getAssigned(card["assigned"], card["id"]);
+  getProgressBar(card["subtasks"], card["id"]);
 }
 
 /**
@@ -245,16 +247,11 @@ function getAssigned(assigned, id) {
     let i = 0;
     assigned.forEach((user) => {
       let name = getInitials(user["name"]);
-      if (i < 3) {
-        boardUser.innerHTML += /*html*/ `
-        <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}</div>`;
-      }
+      if (i < 3)
+        boardUser.innerHTML += /*html*/ `<div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}</div>`;
       i++;
     });
-    if (i > 3) {
-      boardUser.innerHTML += /*html*/ `
-      <div id="board-user" class="board-user" style="background-color:#2A3647">+${i - 3}</div>`;
-    }
+    if (i > 3) boardUser.innerHTML += /*html*/ `<div id="board-user" class="board-user" style="background-color:#2A3647">+${i - 3}</div>`;
   }
 }
 
@@ -264,17 +261,26 @@ function getAssigned(assigned, id) {
  * @param {number} id
  */
 function getProgressBar(subtasks, id) {
+  let process = 0;
+  if (subtasks == "") subtasks = [];
+  for (let i = 0; i < subtasks.length; i++) {
+    if (subtasks[i]["checked"] == true) process++;
+  }
+  setProgressBar(subtasks, process, id);
+}
+
+/**
+ * Sets the progress bar based on the given subtasks, process, and id.
+ *
+ * @param {Array} subtasks - An array of subtasks.
+ * @param {number} process - The number of completed subtasks.
+ * @param {string} id - The id of the element to update the progress bar for.
+ * @return {void} This function does not return a value.
+ */
+function setProgressBar(subtasks, process, id) {
   const content = document.getElementById(`${id}`);
   const progressBar = content.querySelector("#progress-bar");
   const progressBarLabel = content.querySelector('label[for="progress-bar"]');
-  let process = 0;
-
-  if (subtasks == "") subtasks = [];
-  for (let i = 0; i < subtasks.length; i++) {
-    if (subtasks[i]["checked"] == true) {
-      process++;
-    }
-  }
   if (subtasks.length == 0) {
     const container = progressBar.closest(".board-progress-bar-container");
     container.classList.add("d-none");
@@ -282,6 +288,4 @@ function getProgressBar(subtasks, id) {
     progressBarLabel.textContent = `${process}/${subtasks.length} Subtasks`;
     progressBar.value = +(process / subtasks.length) * 100;
   }
-
-  const subtaskList = document.querySelectorAll(".full-size-subtask-li");
 }
