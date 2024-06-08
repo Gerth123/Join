@@ -2,7 +2,7 @@
  * Initializes contact click events after the DOM is fully loaded.
  * Author: Elias
  */
-document.addEventListener("DOMContentLoaded", setupContactClickEvents);
+document.addEventListener("DOMContentLoaded", setupContactClickEvents(getData("contacts")));
 
 /**
  * Sets up event listeners for the contact management interface.
@@ -120,13 +120,14 @@ let dataId;
 
 /**
  * Initializes contact click events.
+ * @param {Array<Object>} contacts - The contacts to be displayed.
  * Author: Elias
  */
-async function setupContactClickEvents() {
+async function setupContactClickEvents(contacts) {
     const contactCards = document.querySelectorAll(".contactCard");
     contactCards.forEach((card) => {
         card.onclick = () => {
-            handleCardClick(card);
+            handleCardClick(card, contacts);
             dataId = card.getAttribute("data-id");
         };
     });
@@ -134,15 +135,28 @@ async function setupContactClickEvents() {
 
 /**
  * Sets up edit and delete buttons.
+ * 
+ * @param {HTMLElement} card - The contact card element.
+ * @param {Object} contactDetailsDiv - The contact details div element.
+ * @param {string} name - The name of the contact.
+ * @param {string} email - The email of the contact.
+ * @param {string} phone - The phone number of the contact.
+ * @param {string} randomColor - The random color of the contact.
+ * @param {string} initials - The initials of the contact.
+ * @param {HTMLElement} contentRight - The content right section element.
+ * @param {Array<Object>} contacts - The contacts array.
+ * 
  * Author: Elias
  */
 function setupEditAndDeleteButtons(contactDetailsDiv, card, name, email, phone, randomColor, initials, contentRight) {
+    
     let contactDetails = contactDetailsDiv.querySelectorAll(".edit-div");
     contactDetails.forEach((contactDetail) => {
         contactDetail.onclick = () => openEditContactOverlay(name, email, phone, randomColor, initials);
     });
     contactDetailsDiv.querySelector(".delete-div").onclick = async () => {
-        await deleteContactOnclick(card, email, contentRight, contactDetailsDiv);
+        let contacts = await getData("contacts");
+        await deleteContactOnclick(card, email, contentRight, contactDetailsDiv, contacts);
     };
 }
 
@@ -152,13 +166,15 @@ function setupEditAndDeleteButtons(contactDetailsDiv, card, name, email, phone, 
  * @param {string} card - The card element.
  * @param {string} email - The email of the contact.
  * @param {string} contentRight - The content right section element.
+ * @param {Object} contactDetailsDiv - The contact details div element.
+ * @param {Array<Object>} contacts - The contacts array.
  * 
  * @author Elias
  */
-async function deleteContactOnclick(card, email, contentRight, contactDetailsDiv) {
+async function deleteContactOnclick(card, email, contentRight, contactDetailsDiv, contacts) {
     try {
         card.remove();
-        await deleteContactFromFirebase(email); 
+        await deleteContactFromFirebase(email, contacts); 
         removeEmptyLetterHeaders();
         contactDetailsDiv.innerHTML = "";
         if (window.innerWidth < 1100) contentRight.style.display = "none";
@@ -169,6 +185,9 @@ async function deleteContactOnclick(card, email, contentRight, contactDetailsDiv
 
 /**
 * Sets up the delete button event listener.
+* 
+* @param {string} email - The email of the contact. 
+*
 * Author: Elias
 */
 function setupDeleteButton(email) {
@@ -196,10 +215,11 @@ document.addEventListener('DOMContentLoaded', function() {
  * Initializes event listeners for contact cards.
  * Author: Elias
  */
-function initContactCardClickHandlers() {
+async function initContactCardClickHandlers() {
+    let contacts = await getData("contacts");
     const contactCards = document.querySelectorAll('.contactCard');
     contactCards.forEach(card => {
-      card.onclick = () => handleCardClick(card);
+      card.onclick = () => handleCardClick(card, contacts);
     });
   }
   
