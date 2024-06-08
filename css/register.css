@@ -394,13 +394,13 @@ footer {
 
 @media (max-width: 750px) {
     .logoContainer {
-        top: 30px;
-        left: 30px;
+        top: 10px;
+        left: 10px;
     }
 
     .signUpContainer {
-        height: 66vh;
-        height: 66svh;
+        height: 64vh;
+        height: 64svh;
     }
 }
 

@@ -97,13 +97,14 @@
     width: 100vw;
     top: 10vh;
     top: 10svh;
-    height: 80vh;
-    height: 80svh;
+    height: 76svh;
+    bottom: 10vh;
     z-index: 9;
     padding-left: unset;
     max-width: unset;
     align-items: center;
     justify-content: flex-start;
+    padding-bottom: 2vh;
   }
 
   .h1contact {
@@ -129,6 +130,9 @@
     height: 80svh;
     width: 90vw;
     flex-direction: column;
+    top: 10vh;
+    top: 10svh;
+    bottom: 10vh;
   }
 
   .contentleft {
@@ -198,6 +202,9 @@
     animation-name: slideIn2;
     animation-duration: 0.9s;
     animation-timing-function: ease-in-out;
+    top: 10vh;
+    top: 10svh;
+    bottom: 10vh;
   }
 
   @keyframes slideIn2 {
@@ -207,7 +214,7 @@
     }
 
     to {
-      top: 10vh;
+      /* top: 10vh; */
       top: 10svh;
     }
   }
@@ -219,7 +226,7 @@
     }
 
     to {
-      top: 10vh;
+      /* top: 10vh; */
       top: 10svh;
     }
   }
@@ -500,8 +507,17 @@
 
 @media (max-width: 650px) {
   .editDelete-div {
-    bottom: -21vh;
-    bottom: -21svh;
+    bottom: -15vh;
+    bottom: -15svh;
+    padding-left: 0;
+  }
+
+  .edit-div {
+    padding: 5px 30px;
+  }
+
+  .delete-div {
+    padding: 5px 30px;
   }
 
   .seperatorResponsive {
@@ -666,10 +682,6 @@
   .contact {
     gap: 15px;
   }
-
-  /* .seperator-contacts-list {
-    width: 90%;
-  } */
 
   .h1contact {
     width: 95vw;

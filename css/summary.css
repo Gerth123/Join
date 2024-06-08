@@ -443,35 +443,35 @@
 
 @media (max-width: 700px) {
   .mainContainer {
-    height: 55svh;
-    height: 55vh;
+    height: 47svh;
+    height: 47vh;
     gap: 0;
     margin-top: 0;
   }
 
   .container1 {
-    height: 13vh;
-    height: 13svh;
+    height: 15vh;
+    height: 15svh;
   }
 
   .toDo {
-    height: 13vh;
-    height: 13svh;
+    height: 15vh;
+    height: 15svh;
   }
 
   .done {
-    height: 13vh;
-    height: 13svh;
+    height: 15vh;
+    height: 15svh;
   }
 
   .container2 {
-    height: 13vh;
-    height: 13svh;
+    height: 15vh;
+    height: 15svh;
   }
 
   .task-container {
-    height: 13vh;
-    height: 13svh;
+    height: 15vh;
+    height: 15svh;
   }
 }
 

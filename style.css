@@ -457,8 +457,6 @@ header {
     height: 10svh;
     height: 10vh;
     width: 100vw;
-    /* top: 90vh;
-    top: 90svh; */
     top: auto;
     bottom: 0;
     position: fixed;
@@ -467,8 +465,10 @@ header {
   .sideBarChooseSectionContainer {
     flex-direction: row;
     justify-content: space-evenly;
+    align-items: center;
     width: 100vw;
     gap: 0;
+    height: 10vh;
   }
 
   .sideBarLogoContainer {
@@ -476,12 +476,12 @@ header {
   }
 
   .openedDarkBackground {
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 5px;
     height: 10vh;
-    height: 10svh;
     width: 20vw;
     min-width: 75px;
     border-radius: 15px;
@@ -497,7 +497,6 @@ header {
     justify-content: center;
     gap: 5px;
     height: 10vh;
-    height: 10svh;
     width: 20vw;
     min-width: 70px;
     border-radius: 15px;
@@ -505,7 +504,6 @@ header {
 
   .summaryContainer:hover {
     height: 10vh;
-    height: 10svh;
   }
 
   .addTaskContainer {
@@ -514,7 +512,6 @@ header {
     justify-content: center;
     gap: 5px;
     height: 10vh;
-    height: 10svh;
     width: 20vw;
     min-width: 70px;
     border-radius: 15px;
@@ -522,7 +519,6 @@ header {
 
   .addTaskContainer:hover {
     height: 10vh;
-    height: 10svh;
   }
 
   .boardContainer {
@@ -531,7 +527,6 @@ header {
     justify-content: center;
     gap: 5px;
     height: 10vh;
-    height: 10svh;
     width: 20vw;
     min-width: 70px;
     border-radius: 15px;
@@ -539,7 +534,6 @@ header {
 
   .boardContainer:hover {
     height: 10vh;
-    height: 10svh;
   }
 
   .contactsContainer {
@@ -548,7 +542,6 @@ header {
     justify-content: center;
     gap: 5px;
     height: 10vh;
-    height: 10svh;
     width: 20vw;
     min-width: 70px;
     border-radius: 15px;
@@ -556,7 +549,6 @@ header {
 
   .contactsContainer:hover {
     height: 10vh;
-    height: 10svh;
   }
 
   .privacyPolicyAndLegalNoticeContainer {
