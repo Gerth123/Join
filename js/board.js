@@ -17,7 +17,7 @@ async function getExampleData() {
  * @returns icon data
  */
 async function getIcons() {
-  const response = await fetch("/assets/data/getIcons.json");
+  const response = await fetch("assets/data/getIcons.json");
   return await response.json();
 }
 
@@ -145,7 +145,7 @@ function getBoardContainer(id, header) {
         <div class="board-add-btn button" onclick="addTaskBtnSmall(${id})"></div>
       </div>
       <div id="board-card-direction" class="board-card-direction">
-        <img id="no-content-img" class="no-content-img d-none" src="/assets/icons/no-tasks-todo.svg">
+        <img id="no-content-img" class="no-content-img d-none" src="assets/icons/no-tasks-todo.svg">
         <div id="dropzone" ondragover="allowDrop(event)" ondrop="doDrop(event)" class="board-card-dropzone first-dropzone-mobile"></div>
       </div>
     </div>`;
