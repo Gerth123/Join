@@ -367,6 +367,14 @@ label {
     font-size: 32px;
   }
 
+  .full-size-add-task {
+    font-size: 40px;
+  }
+
+  .full-size-row {
+    height: 360px;
+  }
+
   @keyframes slideIn {
     from {
       left: 150vw;
