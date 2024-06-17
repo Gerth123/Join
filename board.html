@@ -145,54 +145,56 @@
               </div>
             </div>
             <form class="full-size-form" action="" onsubmit="saveEditData(); return false" method="post">
-              <label class="full-size-label" for="title-editCard">Title</label>
-              <input class="full-size-input" id="title-editCard" type="text" placeholder="Enter a title" />
-              <label class="full-size-label" for="description-editCard">Description</label>
-              <textarea class="full-size-textarea" id="description-editCard" type="text" placeholder="Enter a description"></textarea>
-              <label class="full-size-label" for="date-editCard">Due date</label>
-              <input class="full-size-input date-input" id="date-editCard" type="date" placeholder="Date" />
-              <label class="full-size-label" for="date-editCard">Priority</label>
-              <div class="full-size-priority-container">
-                <div class="priority-button-container">
-                  <input type="checkbox" class="priority-button" id="radio-btn-3" name="priority-button" />
-                  <label for="radio-btn-3" class="btn3"></label>
+              <div class="scrollable-form">
+                <label class="full-size-label" for="title-editCard">Title</label>
+                <input class="full-size-input" id="title-editCard" type="text" placeholder="Enter a title" />
+                <label class="full-size-label" for="description-editCard">Description</label>
+                <textarea class="full-size-textarea" id="description-editCard" type="text" placeholder="Enter a description"></textarea>
+                <label class="full-size-label" for="date-editCard">Due date</label>
+                <input class="full-size-input date-input" id="date-editCard" type="date" placeholder="Date" />
+                <label class="full-size-label" for="date-editCard">Priority</label>
+                <div class="full-size-priority-container">
+                  <div class="priority-button-container">
+                    <input type="checkbox" class="priority-button" id="radio-btn-3" name="priority-button" />
+                    <label for="radio-btn-3" class="btn3"></label>
+                  </div>
+                  <div class="priority-button-container">
+                    <input type="checkbox" class="priority-button" id="radio-btn-2" name="priority-button" />
+                    <label for="radio-btn-2" class="btn2"></label>
+                  </div>
+                  <div class="priority-button-container">
+                    <input type="checkbox" class="priority-button" id="radio-btn-1" name="priority-button" />
+                    <label for="radio-btn-1" class="btn1"></label>
+                  </div>
                 </div>
-                <div class="priority-button-container">
-                  <input type="checkbox" class="priority-button" id="radio-btn-2" name="priority-button" />
-                  <label for="radio-btn-2" class="btn2"></label>
+                <div class="full-size-label">Assigned to</div>
+                <div class="assigned-editCard">
+                  <div id="select-btn-editCard" class="select-btn">
+                    <span class="btn-text">Select contacts to assign</span>
+                    <div class="arrow-down"></div>
+                  </div>
+                  <ul id="assigned-list-items" class="assigned-list-items"></ul>
                 </div>
-                <div class="priority-button-container">
-                  <input type="checkbox" class="priority-button" id="radio-btn-1" name="priority-button" />
-                  <label for="radio-btn-1" class="btn1"></label>
+                <div id="assigned-users-editCard" class="assigned-users-editCard"></div>
+                <div class="full-size-label mt-32" for="subtasks">Subtasks</div>
+                <div class="full-size-input-container mb-0">
+                  <input class="subtasks-input" id="subtasks-input" type="text" placeholder="Add new subtask" />
+                  <img class="subtasks-btn" id="subtasks-add" src="./assets/icons/board/edit/add_button.svg" alt="" />
+                  <div class="subtasks-btn-container d-none" id="subtasks-btn-container">
+                    <img class="subtasks-btn" id="subtasks-del" src="./assets/icons/board/edit/x_button.svg" alt="" />
+                    <div class="subtasks-line"></div>
+                    <img
+                      class="subtasks-btn"
+                      onclick="checkEditSubtasks()"
+                      id="subtasks-check"
+                      src="./assets/icons/board/edit/check_button.svg"
+                      alt=""
+                    />
+                  </div>
                 </div>
-              </div>
-              <div class="full-size-label">Assigned to</div>
-              <div class="assigned-editCard">
-                <div id="select-btn-editCard" class="select-btn">
-                  <span class="btn-text">Select contacts to assign</span>
-                  <div class="arrow-down"></div>
-                </div>
-                <ul id="assigned-list-items" class="assigned-list-items"></ul>
-              </div>
-              <div id="assigned-users-editCard" class="assigned-users-editCard"></div>
-              <div class="full-size-label mt-32" for="subtasks">Subtasks</div>
-              <div class="full-size-input-container mb-0">
-                <input class="subtasks-input" id="subtasks-input" type="text" placeholder="Add new subtask" />
-                <img class="subtasks-btn" id="subtasks-add" src="./assets/icons/board/edit/add_button.svg" alt="" />
-                <div class="subtasks-btn-container d-none" id="subtasks-btn-container">
-                  <img class="subtasks-btn" id="subtasks-del" src="./assets/icons/board/edit/x_button.svg" alt="" />
-                  <div class="subtasks-line"></div>
-                  <img
-                    class="subtasks-btn"
-                    onclick="checkEditSubtasks()"
-                    id="subtasks-check"
-                    src="./assets/icons/board/edit/check_button.svg"
-                    alt=""
-                  />
-                </div>
+                <ul id="subtasks-list"></ul>
               </div>
 
-              <ul id="subtasks-list"></ul>
               <div class="full-size-footer">
                 <button type="submit" class="button ok-button">Ok <img src="/assets/icons/board/fullsize/check.svg" alt="" /></button>
               </div>

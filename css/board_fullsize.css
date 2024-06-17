@@ -280,6 +280,10 @@ label {
   height: 100%;
   display: flex;
   flex-direction: column;
+  /* overflow-y: scroll; */
+}
+
+.scrollable-form {
   overflow-y: scroll;
 }
 
