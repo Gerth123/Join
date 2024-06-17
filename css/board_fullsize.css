@@ -268,7 +268,6 @@ label {
 .full-size-add-task {
   font-size: 61px;
   font-weight: bold;
-  /* margin-bottom: 32px; */
 }
 
 .full-size-line {
@@ -286,9 +285,7 @@ label {
 
 .board-container {
   padding: 48px 40px 48px 40px;
-  /* width: 30vw; */
   height: 60vh;
-  /* overflow-y: scroll; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -296,9 +293,7 @@ label {
 
 .board-container-fullsize {
   padding: 48px 40px 48px 40px;
-  /* width: 30vw; */
   height: 60vh;
-  overflow-y: scroll;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
