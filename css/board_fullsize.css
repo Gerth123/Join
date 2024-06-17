@@ -137,7 +137,7 @@
   min-height: 550px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   padding-top: 2vw;
 }
 
@@ -277,13 +277,21 @@ label {
 }
 
 .full-size-form {
-  height: 100%;
+  height: 95%;
   display: flex;
   flex-direction: column;
   /* overflow-y: scroll; */
 }
 
+.full-size-row {
+  height: 360px;
+  overflow-y: scroll;
+}
+
 .scrollable-form {
+  /* height: 100%; */
+  display: flex;
+  flex-direction: column;
   overflow-y: scroll;
 }
 
