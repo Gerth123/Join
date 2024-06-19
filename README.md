@@ -5,9 +5,9 @@
 ### Features
 
 * **Kanban Board:**
-    * Visualize tasks with four columns: To Do, In Progress, Awaiting Feedback, and Done.
-    * Drag and drop tasks between columns to update their status.
-    * Filter tasks by various criteria like status, assignee, or due date. 
+    * Join visualizes the tasks with four columns: To Do, In Progress, Awaiting Feedback, and Done.
+    * Drag and drop function for the board to add the boards in any columns.
+    * Search the board by criteria as the title or the description. 
 * **Task Management:**
     * Create, edit, and delete tasks.
     * Assign tasks to specific users.
