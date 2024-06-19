@@ -90,14 +90,8 @@
   position: absolute;
   transform: translate(0, 0);
   width: 60vw;
-  /* max-width: 890px; */
-  /* min-height: 620px; */
-  /* padding-top: 48px;
-  padding-bottom: 48px; */
-  /* padding-left: min(40px, 5%);
-  padding-right: min(40px, 5%); */
+  /* height: 80vh; */
   overflow: hidden;
-  /* height: 790px; */
   border-radius: 30px;
   background-color: #fff;
   box-shadow: 0px 0px 4px 0px #00000029;
@@ -134,7 +128,7 @@
 }
 
 .full-size-add-form {
-  min-height: 550px;
+  /* min-height: 550px; */
   display: flex;
   flex-direction: column;
   /* justify-content: space-between; */
@@ -213,6 +207,7 @@ label {
 }
 
 .full-size-footer-add-board {
+  margin-top: 10px;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -303,6 +298,13 @@ label {
   justify-content: space-between;
 }
 
+.board-container-add-board {
+  padding: 48px 40px 48px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .board-container-fullsize {
   padding: 48px 40px 48px 40px;
   height: 60vh;
@@ -387,16 +389,27 @@ label {
 }
 
 @media screen and (max-width: 510px) {
+  .board-container-fullsize {
+    height: 90%;
+  }
+
   .full-size-board {
     width: 90vw;
+    height: 80vh;
   }
 
   .full-size-edit-board {
     width: 90vw;
+    height: 80vh;
   }
 
   .full-size-add-board {
     width: 90vw;
+    height: 80vh;
+  }
+
+  .full-size-form {
+    height: 70vh;
   }
 
   @keyframes slideIn {
