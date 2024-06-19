@@ -389,6 +389,9 @@ label {
 }
 
 @media screen and (max-width: 510px) {
+  .full-size-row {
+    height: 60vh;
+  }
   .board-container-fullsize {
     height: 90%;
   }
