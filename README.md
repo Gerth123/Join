@@ -28,16 +28,3 @@
 * **Hanbit Chang:** Developed the Kanban board with drag-and-drop functionality.
 * **Robin Gerth:** Developed the login and registration pages.
 * **Elias Schäfer:** Developed the contact page.
-
-### Additional Notes
-
-* Use realistic names for tasks, contacts, and users instead of placeholder text like "Lorem Ipsum."
-* Include legal notices and a privacy policy within the application.
-
-### To Do
-
-* Refer to the provided checklist and ensure all points are completed before project submission.
-* Conduct thorough testing of all functionalities before submission.
-* Encourage feedback and collaboration among team members.
-
-**Note:** This README provides a high-level overview. Refer to the project documentation for detailed information.
