@@ -19,6 +19,17 @@
     <link rel="stylesheet" href="fonts/PTSans-Regular.ttf" />
     <link rel="stylesheet" href="fonts/PTSans-Bold.ttf" />
     <link rel="stylesheet" href="fonts/PTSans-Italic.ttf" />
+    <script src="js/board.js"></script>
+    <script src="js/board_fullsize_listener.js"></script>
+    <script src="js/board_eventlisteners.js"></script>
+    <script src="js/board_drap_and_drops.js"></script>
+    <script src="js/add_task.js"></script>
+    <script src="js/board_fullsize.js"></script>
+    <script src="js/board_edit.js"></script>
+    <script src="js/board_add.js"></script>
+    <script src="js/initials.js"></script>
+
+    <script src="script.js"></script>
   </head>
   <body onload="initAddTask()">
     <div class="wholeJoinContainer">
@@ -87,15 +98,15 @@
                   <div class="full-size-label" for="subtasks">Subtasks</div>
                   <div class="full-size-input-container">
                     <input class="subtasks-input" id="subtasks-input-addCard" type="text" placeholder="Add new subtask" />
-                    <img class="subtasks-btn" id="subtasks-add-addCard" src="./assets/icons/board/edit/add_button.svg" alt="" />
+                    <img class="subtasks-btn" id="subtasks-add-addCard" src="assets/icons/board/edit/add_button.svg" alt="" />
                     <div class="subtasks-btn-container d-none" id="subtasks-btn-container-addCard">
-                      <img class="subtasks-btn" id="subtasks-del-addCard" src="./assets/icons/board/edit/x_button.svg" alt="" />
+                      <img class="subtasks-btn" id="subtasks-del-addCard" src="assets/icons/board/edit/x_button.svg" alt="" />
                       <div class="subtasks-line"></div>
                       <img
                         class="subtasks-btn-addCard"
                         onclick="checkAddSubtasks()"
                         id="subtasks-check"
-                        src="./assets/icons/board/edit/check_button.svg"
+                        src="assets/icons/board/edit/check_button.svg"
                         alt=""
                       />
                     </div>
@@ -112,7 +123,7 @@
                   </div>
                   <button type="submit" class="button ok-button">
                     Create Task
-                    <img src="/assets/icons/board/fullsize/check.svg" alt="" />
+                    <img src="assets/icons/board/fullsize/check.svg" alt="" />
                   </button>
                 </div>
               </div>
@@ -160,16 +171,5 @@
         </div>
       </section>
     </div>
-    <script src="/js/board.js"></script>
-    <script src="/js/board_fullsize_listener.js"></script>
-    <script src="/js/board_eventlisteners.js"></script>
-    <script src="/js/board_drap_and_drops.js"></script>
-    <script src="/js/add_task.js"></script>
-    <script src="/js/board_fullsize.js"></script>
-    <script src="/js/board_edit.js"></script>
-    <script src="/js/board_add.js"></script>
-    <script src="js/initials.js"></script>
-
-    <script src="script.js"></script>
   </body>
 </html>
