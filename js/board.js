@@ -8,7 +8,7 @@ let header = ["To do", "In progress", "Await feedback", "Done"];
  * @returns example data
  */
 async function getExampleData() {
-  const response = await fetch("/assets/data/example.json");
+  const response = await fetch("../assets/data/example.json");
   return await response.json();
 }
 

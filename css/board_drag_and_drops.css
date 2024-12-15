@@ -10,9 +10,8 @@
 .board-card-dropzone--active {
   height: 240px;
   width: 250px;
-  background-image: url("/assets/icons/dropzone.svg");
+  background-image: url("../assets/icons/dropzone.svg");
   background-repeat: no-repeat;
-  /* background-position-y: 10px; */
   background-size: contain;
 }
 

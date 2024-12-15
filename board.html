@@ -38,11 +38,7 @@
             <div class="board-header-top">
               <div class="header-row wd-100 mb-40">
                 <h1 class="board-header-title">Board</h1>
-                <div
-                  id="board-header-add-btn-small"
-                  onclick="changeHtmlPage('add_task.html')"
-                  class="button board-header-add-btn-small"
-                ></div>
+                <div id="board-header-add-btn-small" onclick="changeHtmlPage('add_task.html')" class="button board-header-add-btn-small"></div>
               </div>
               <div class="board-header-right">
                 <div class="wd-100">
@@ -101,8 +97,8 @@
           </a>
         </div>
       </section>
-      <div id="full-size-container" class="full-size-container d-none">
-        <div id="board" class="full-size-board d-none">
+      <div id="full-size-container" class="full-size-container d-none" onclick="closeMenus()">
+        <div id="board" class="full-size-board d-none" onclick="event.stopPropagation()">
           <div class="board-container-fullsize">
             <div class="full-size-header">
               <img id="full-size-category" src="assets/icons/board/fullsize/technical_task_big.svg" alt="" />
@@ -142,7 +138,7 @@
             </div>
           </div>
         </div>
-        <div id="edit-board" class="full-size-edit-board d-none">
+        <div id="edit-board" class="full-size-edit-board d-none" onclick="event.stopPropagation()">
           <div class="board-container">
             <div class="full-size-edit-header">
               <div id="close-btn-edit" class="close-btn">
@@ -156,7 +152,7 @@
                 <label class="full-size-label" for="description-editCard">Description</label>
                 <textarea class="full-size-textarea" id="description-editCard" type="text" placeholder="Enter a description"></textarea>
                 <label class="full-size-label" for="date-editCard">Due date</label>
-                <input class="full-size-input date-input" id="date-editCard" type="date" placeholder="Date" />
+                <input class="full-size-input date-input" id="date-editCard" type="date" placeholder="Date" max="9999-12-31" />
                 <label class="full-size-label" for="date-editCard">Priority</label>
                 <div class="full-size-priority-container">
                   <div class="priority-button-container">
@@ -188,13 +184,7 @@
                   <div class="subtasks-btn-container d-none" id="subtasks-btn-container">
                     <img class="subtasks-btn" id="subtasks-del" src="assets/icons/board/edit/x_button.svg" alt="" />
                     <div class="subtasks-line"></div>
-                    <img
-                      class="subtasks-btn"
-                      onclick="checkEditSubtasks()"
-                      id="subtasks-check"
-                      src="assets/icons/board/edit/check_button.svg"
-                      alt=""
-                    />
+                    <img class="subtasks-btn" onclick="checkEditSubtasks()" id="subtasks-check" src="assets/icons/board/edit/check_button.svg" alt="" />
                   </div>
                 </div>
                 <ul id="subtasks-list"></ul>
@@ -206,7 +196,7 @@
             </form>
           </div>
         </div>
-        <div id="add-board" class="full-size-add-board d-none">
+        <div id="add-board" class="full-size-add-board d-none" onclick="event.stopPropagation()">
           <div class="board-container-add-board">
             <div class="full-size-header">
               <div class="full-size-add-task">Add Task</div>
@@ -235,7 +225,7 @@
                   <div class="add-line"></div>
                   <div class="column wd-45 wd-100">
                     <label class="full-size-label due-date" for="date-addCard">Due date<span class="red-star">*</span></label>
-                    <input class="full-size-input" id="date-addCard" type="date" required />
+                    <input class="full-size-input" id="date-addCard" type="date" required max="9999-12-31" />
                     <div class="full-size-label">Priority</div>
                     <div class="full-size-priority-container">
                       <div class="priority-button-container">
@@ -264,13 +254,7 @@
                       <div class="subtasks-btn-container d-none" id="subtasks-btn-container-addCard">
                         <img class="subtasks-btn" id="subtasks-del-addCard" src="assets/icons/board/edit/x_button.svg" alt="" />
                         <div class="subtasks-line"></div>
-                        <img
-                          class="subtasks-btn-addCard"
-                          onclick="checkAddSubtasks()"
-                          id="subtasks-check"
-                          src="assets/icons/board/edit/check_button.svg"
-                          alt=""
-                        />
+                        <img class="subtasks-btn-addCard" onclick="checkAddSubtasks()" id="subtasks-check" src="assets/icons/board/edit/check_button.svg" alt="" />
                       </div>
                     </div>
                     <ul id="subtasks-list-addCard"></ul>

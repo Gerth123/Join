@@ -285,14 +285,14 @@ function getEditSubtasksList(task) {
     <div class="subtasks-li-container">
       <p class="subtasks-li-text" contenteditable=false>${task}</p>
       <div class="subtasks-row" id="subtask-first-btns">
-        <img class="subtasks-btn-none" id="subtasks-edit" src="/assets/icons/board/edit/edit_button.svg" alt="">
+        <img class="subtasks-btn-none" id="subtasks-edit" src="../assets/icons/board/edit/edit_button.svg" alt="">
         <div class="subtasks-line-none"></div>
-        <img class="subtasks-btn-none" id="subtasks-trash" src="/assets/icons/board/edit/trash_button.svg" alt="">  
+        <img class="subtasks-btn-none" id="subtasks-trash" src="../assets/icons/board/edit/trash_button.svg" alt="">  
       </div>
       <div class="subtasks-row d-none" id="subtask-second-btns">
-        <img class="subtasks-btn-none" id="subtasks-trash" src="/assets/icons/board/edit/trash_button.svg" alt="">
+        <img class="subtasks-btn-none" id="subtasks-trash" src="../assets/icons/board/edit/trash_button.svg" alt="">
         <div class="subtasks-line-none"></div>
-        <img class="subtasks-btn-none" id="subtasks-checker" src="./assets/icons/board/edit/check_button.svg" alt="" />
+        <img class="subtasks-btn-none" id="subtasks-checker" src="../assets/icons/board/edit/check_button.svg" alt="" />
       </div>  
     </div>
   </li>

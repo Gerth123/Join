@@ -79,7 +79,7 @@ input[type="checkbox"] {
 .board-header-add-btn {
   width: 142px;
   height: 52px;
-  background-image: url("/assets/icons/board/fullsize/add_task.svg");
+  background-image: url("../assets/icons/board/fullsize/add_task.svg");
   background-repeat: no-repeat;
   background-size: contain;
 }
@@ -87,7 +87,7 @@ input[type="checkbox"] {
 .board-header-add-btn:hover {
   width: 150px;
   height: 52px;
-  background-image: url("/assets/icons/board/fullsize/add_task_hover.svg");
+  background-image: url("../assets/icons/board/fullsize/add_task_hover.svg");
   background-size: cover;
 }
 
@@ -300,7 +300,7 @@ progress[value]::-moz-progress-bar {
 .cancel-button-img {
   width: 25px;
   height: 25px;
-  background-image: url("/assets/icons/board/fullsize/cancel_small.svg");
+  background-image: url("../assets/icons/board/fullsize/cancel_small.svg");
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -308,7 +308,7 @@ progress[value]::-moz-progress-bar {
 .clear-button-img {
   width: 25px;
   height: 25px;
-  background-image: url("/assets/icons/board/fullsize/cancel_small.svg");
+  background-image: url("../assets/icons/board/fullsize/cancel_small.svg");
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -316,7 +316,7 @@ progress[value]::-moz-progress-bar {
 .cancel-button:hover .cancel-button-img {
   width: 25px;
   height: 25px;
-  background-image: url("/assets/icons/board/fullsize/cancel_small_hover.svg");
+  background-image: url("../assets/icons/board/fullsize/cancel_small_hover.svg");
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -324,7 +324,7 @@ progress[value]::-moz-progress-bar {
 .clear-button:hover .clear-button-img {
   width: 25px;
   height: 25px;
-  background-image: url("/assets/icons/board/fullsize/cancel_small_hover.svg");
+  background-image: url("../assets/icons/board/fullsize/cancel_small_hover.svg");
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -332,13 +332,13 @@ progress[value]::-moz-progress-bar {
 .board-add-btn {
   width: 24px;
   height: 24px;
-  background-image: url("/assets/icons/board/plus_button.svg");
+  background-image: url("../assets/icons/board/plus_button.svg");
 }
 
 .board-add-btn:hover {
   width: 24px;
   height: 24px;
-  background-image: url("/assets/icons/board/plus_button_hover.svg");
+  background-image: url("../assets/icons/board/plus_button_hover.svg");
 }
 
 .ok-button:hover {
@@ -498,7 +498,7 @@ fieldset {
   .board-header-add-btn-small {
     width: 40px;
     height: 40px;
-    background-image: url("/assets/icons/board/board-header-btn-sml.svg");
+    background-image: url("../assets/icons/board/board-header-btn-sml.svg");
     background-repeat: no-repeat;
     background-size: contain;
   }
@@ -506,7 +506,7 @@ fieldset {
   .board-header-add-btn-small:hover {
     width: 40px;
     height: 40px;
-    background-image: url("/assets/icons/board/board-header-btn-sml-hover.svg");
+    background-image: url("../assets/icons/board/board-header-btn-sml-hover.svg");
     background-repeat: no-repeat;
     background-size: contain;
   }

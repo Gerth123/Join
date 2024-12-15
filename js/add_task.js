@@ -50,6 +50,9 @@ function onClickSelectBtn() {
   };
 }
 
+/**
+ * Sets the first checkbox with the id "radio-btn-5" as checked.
+ */
 function oneCheckBox() {
   const firstCheckedBox = document.querySelector('input[type="checkbox"][name="priority-button"][id="radio-btn-5"]');
   firstCheckedBox.checked = true;
@@ -65,6 +68,9 @@ function oneCheckBox() {
   });
 }
 
+/**
+ * Saves the data of the added task and changes the HTML page to "board.html".
+ */
 async function saveAddTaskData() {
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
@@ -78,3 +84,6 @@ async function saveAddTaskData() {
   await putData(`users/${actualUsersNumber}/tasks/`, data);
   changeHtmlPage("board.html");
 }
+
+
+
