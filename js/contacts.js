@@ -151,17 +151,12 @@ function createSeparatorDiv() {
  * @param {string} userId - The user ID under which the contact is saved.
  * @param {Object} contacts - The contacts object.
  */
-async function saveContact(name, email, phone, userId) {
-  const baseUrl = 'https://join-ca44d-default-rtdb.europe-west1.firebasedatabase.app/';
-  const contactData = createContactData(name, email, phone);
-  const newContactId = await findFirstMissingId(userId);
-  const response = await saveContactToFirebase(baseUrl, userId, newContactId, contactData);
-
-  if (!response.ok) {
-    throw new Error('Error saving contact: ' + response.statusText);
-  }
-
-  return await response.json();
+async function saveContact(name, email, phone, userId, contacts) {
+  const contactData = await createContactData(name, email, phone);
+  // const newContactId = await findMissingId(contacts);
+  let path = 'api/users/all-contacts/';
+  await putDataBackend(path, contactData);
+  return contactData;
 }
 
 /**
@@ -179,21 +174,19 @@ function generateRandomColor() {
 }
 
 /**
-* Creates a contact data object with a random color.
-* Author: Elias
-* @param {string} name - The name of the contact.
-* @param {string} email - The email of the contact.
-* @param {string} phone - The phone number of the contact.
-* @returns {Object} - The contact data object.
-*/
+ * Creates a contact data object with a random color.
+ * Author: Elias
+ * @param {string} name - The name of the contact.
+ * @param {string} email - The email of the contact.
+ * @param {string} phone - The phone number of the contact.
+ * @returns {Object} - The contact data object.
+ */
 function createContactData(name, email, phone) {
   return {
     color: generateRandomColor(), 
     email,
     name,
-    email,
-    phone,
-    color: generateRandomColor()
+    phone,    
   };
 }
 
@@ -235,18 +228,33 @@ async function getData(data) {
  */
 async function createContact(event) {
   event.preventDefault();
-  const name = document.getElementById('contactName').value;
-  const email = document.getElementById('contactEmail').value;
-  const phone = document.getElementById('contactPhone').value;
+  const name = document.getElementById("contactName").value;
+  const email = document.getElementById("contactEmail").value;
+  const phone = document.getElementById("contactPhone").value;
   let userId = await getUserIdFormUrl();
-  let contacts = await getData("contacts");
-  let alreadyExist = contacts.find(contact => contact && contact.email == email);
+  let contacts = await loadDataBackend("api/users/all-contacts/");
+  let alreadyExist = contacts.find((contact) => contact && contact.email == email);
+  await checkIfContactAlreadyExists(alreadyExist, userId, phone, name, email, contacts);
+}
 
+/**
+ * This function checks if a contact already exists.
+ * 
+ * @param {boolean} alreadyExist - If the contact already exists.
+ * @param {string} userId - The user ID.
+ * @param {string} phone - The phone number of the contact.
+ * @param {string} name - The name of the contact.
+ * @param {string} email - The email of the contact.
+ * @param {Object} contacts - The contacts object.
+ * 
+ * @author Robin 
+ */
+async function checkIfContactAlreadyExists(alreadyExist, userId, phone, name, email, contacts) {
   if (alreadyExist) {
     alert("The contact already exists!");
   } else {
     try {
-      const newContact = await saveContact(name, email, phone, userId);
+      let contactData = await saveContact(name, email, phone, userId, contacts);
       clearInputFields();
       closeAddContact();
       let contactId = await findMissingId(contacts);
@@ -367,14 +375,14 @@ async function refreshAndDisplayContacts(userId) {
  * @returns {Promise<string>} - A promise that resolves to a random color in hexadecimal format.
  * Author: Elias
  */
-async function findContactsRandomColor(email, contacts) {
-  for (let contactId in contacts) {
-    if (contacts[contactId] === null) {
-      continue;
-    }
-    if (contacts[contactId].email === email) {
-      return contacts[contactId].color;
-    }
-  }
-  return generateRandomColor();
-}
+// async function findContactsRandomColor(email, contacts) {
+//   for (let contactId in contacts) {
+//     if (contacts[contactId] === null) {
+//       continue;
+//     }
+//     if (contacts[contactId].email === email) {
+//       return contacts[contactId].color;
+//     }
+//   }
+//   return generateRandomColor();
+// }

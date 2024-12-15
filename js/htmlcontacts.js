@@ -13,8 +13,8 @@ function handleCardClick(card, contacts) {
   resetLastClickedCard();
   updateCardStyle(card);
   lastClickedCard = card;
-  const { contentRight, name, email, phone, initials } = getCardDetails(card);
-  updateContactDetails(contentRight, name, email, phone, initials, contacts);
+  const { contentRight, name, email, phone, initials, color } = getCardDetails(card);
+  updateContactDetails(contentRight, name, email, phone, initials, contacts, color);
 }
 
 /**
@@ -48,8 +48,11 @@ function getCardDetails(card) {
   const name = card.querySelector(".NameContact").textContent;
   const email = card.querySelector(".EmailContact").textContent;
   const phone = card.getAttribute("data-phone");
+  const profilePicture = card.querySelector(".profilePicture");
+  const color = window.getComputedStyle(profilePicture).backgroundColor;
   const initials = getInitials(name);
-  return { contentRight, name, email, phone, initials };
+
+  return { contentRight, name, email, phone, initials, color };
 }
 
   /**
@@ -61,13 +64,13 @@ function getCardDetails(card) {
  * @param {string} initials - The initials of the contact's name.
  * @param {Array<Object>} contacts - The contacts array.
  */
-function updateContactDetails(contentRight, name, email, phone, initials, contacts) {
-  findContactsRandomColor(email, contacts).then((actualRandomColor) => {
+function updateContactDetails(contentRight, name, email, phone, initials, contacts, color) {
+  // findContactsRandomColor(email, contacts).then((actualRandomColor) => {
     const contactDetailsDiv = document.querySelector(".contactdetails-right");
-    contactDetailsDiv.innerHTML = generateContactDetailsHTML(name, email, phone, actualRandomColor, initials);
+    contactDetailsDiv.innerHTML = generateContactDetailsHTML(name, email, phone, color, initials);
     if (window.innerWidth < 1100) contentRight.style.display = "flex";
-    setupEditAndDeleteButtons(contactDetailsDiv, lastClickedCard, name, email, phone, actualRandomColor, initials, contentRight, contacts);
-  });
+    setupEditAndDeleteButtons(contactDetailsDiv, lastClickedCard, name, email, phone, color, initials, contentRight, contacts);
+  // });
 }
 
 /**
@@ -123,22 +126,20 @@ function generateContactDetailsHTML(name, email, phone, randomColor, initials) {
  * @returns {string} - The user ID associated with the email address.
  * Author: Elias
  */
-async function findContactIdByEmail(email) {
-    try {
-        let userId = await getUserIdFormUrl();
-        let actualUsers = await loadData('users/' + userId + '/contacts');
-        for (let userId in actualUsers) {
-            if (actualUsers[userId] === null) {
-                continue;
-            }
-            if (actualUsers[userId].email === email) {
-                return userId;
-            }
-        }
-        throw new Error("Kein Benutzer gefunden für E-Mail: " + email);
-    } catch (error) {
-        throw error;
+async function findContactIdByEmail(email, actualUsers) {
+  try {
+    for (let userId in actualUsers) {
+      if (actualUsers[userId] === null) {
+        continue;
+      }
+      if (actualUsers[userId].email === email) {
+        return userId;
+      }
     }
+    throw new Error("Kein Benutzer gefunden für E-Mail: " + email);
+  } catch (error) {
+    throw error;
+  }
 }
 
 /**
@@ -150,10 +151,11 @@ async function findContactIdByEmail(email) {
  *
  * Author: Elias
  */
-async function generateContactHTML(contact) {
-    const initials = await getInitials(contact.name);
-    let userId = await findContactIdByEmail(contact.email);
-    return `
+async function generateContactHTML(contact, contacts) {
+  // const randomColor = await findContactsRandomColor(contact.email, contacts);
+  const initials = await getInitials(contact.name);
+  let userId = await findContactIdByEmail(contact.email, contacts);
+  return `
         <div class="contact contactCard" data-id="${userId}" data-phone="${contact.phone}">
             <div class="profilePicture" style="background-color: ${contact.color};">${initials}</div>
             <div class="name-mailDiv">
@@ -359,12 +361,13 @@ async function updateContact(event) {
   let name = document.getElementById("contactName" + globalEmail).value;
   let newEmail = document.getElementById("contactEmail" + globalEmail).value;
   let phone = document.getElementById("contactPhone" + globalEmail).value;
+  let color = document.getElementById("contactColor" + globalEmail).value;
   let userId = getUserIdFormUrl();
   let initials = getInitials(name);
   let contacts = await getData("contacts");
   let contactId = await findContactIdByEmail(globalEmail, contacts);
-  let randomColor = await findContactsRandomColor(globalEmail, contacts);
-  await controlAndUpdateTheDates(userId, contactId, name, newEmail, phone, initials, randomColor, contacts);
+  // let randomColor = await findContactsRandomColor(globalEmail, contacts);
+  await controlAndUpdateTheDates(userId, contactId, name, newEmail, phone, initials, color, contacts);
 }
 
 /**
@@ -395,51 +398,4 @@ async function controlAndUpdateTheDates(userId, contactId, name, newEmail, phone
   } catch (error) {
     console.error("Fehler beim Aktualisieren des Kontakts:", error);
   }
-}
-
-/**
- * Retrieves the input value by ID.
- * Author: Elias
- */
-function getInputValue(id) {
-    return document.getElementById(id).value;
-}
-
-/**
- * Creates an updated contact object.
- * Author: Elias
- */
-async function createUpdatedContact(userId, contactId, name, newEmail, phone) {
-    return {
-        email: newEmail,
-        name: name,
-        phone: phone,
-        color: await loadData(`users/${userId}/contacts/${contactId}/color`),
-    };
-}
-
-/**
- * Refreshes and displays sorted contacts.
- * Author: Elias
- */
-async function refreshAndDisplayContacts(userId) {
-    const actualUsers = await loadData(`users/${userId}/contacts`);
-    const sortedContacts = await sortContacts(actualUsers);
-    await displayContacts(sortedContacts);
-}
-
-
-/** 
- * Updates a contact's information in Firebase.
- * 
- * @param {string} contactId - The ID of the contact to update.
- * @param {Object} updatedContact - The updated contact object containing name, email, and phone.
- * 
- * Author: Elias
- */
-async function updateContactInFirebase(contactId, updatedContact, userId) {
-    let response = await putData(`users/` + userId + `/contacts/` + contactId, updatedContact);
-    if (!response.ok) {
-        throw new Error('Fehler beim Aktualisieren des Kontakts: ' + response.statusText);
-    }
 }

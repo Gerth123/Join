@@ -2,6 +2,7 @@
  * The base URL for the Firebase database.
  */
 let baseUrl = 'https://join-ca44d-default-rtdb.europe-west1.firebasedatabase.app/';
+let baseUrlBackend = 'http://127.0.0.1:8000/';
 
 /**
  * This function is used to fetch data from the Firebase database.
@@ -12,6 +13,11 @@ let baseUrl = 'https://join-ca44d-default-rtdb.europe-west1.firebasedatabase.app
  */
 async function loadData(path = '') {
     let response = await fetch(baseUrl + path + '.json');
+    return responseToJson = await response.json();
+}
+
+async function loadDataBackend(path = '') {
+    let response = await fetch(baseUrlBackend + path);
     return responseToJson = await response.json();
 }
 
@@ -60,6 +66,17 @@ async function putData(path = '', data = {}) {
     let response = await fetch(baseUrl + path + '.json', {
         method: 'PUT',
         header: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+    return responseToJson = await response.json();
+}
+
+async function putDataBackend(path = '', data = {}) {
+    let response = await fetch(baseUrlBackend + path, {
+        method: 'POST',
+        headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),

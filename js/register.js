@@ -24,6 +24,30 @@ function checkAcceptPrivacyPolicy() {
  * 
  * @author: Robin
  */
+// async function addUser() {
+//     let msgBox = document.getElementById('msgBox');
+//     let name = document.getElementById('name').value;
+//     let email = document.getElementById('email').value;
+//     let password = document.getElementById('password1');
+//     let confirmPassword = document.getElementById('password2');
+//     let userContact = [{
+//         'name': name,
+//         'email': email,
+//         'phone': 'none',
+//         'color': await generateRandomColor(),
+//     }];
+//     let testContactsAndUser = [...testContacts, ...userContact];
+//     let newArray = { 'email': email, 'name': name, 'password': password.value, 'contacts': testContactsAndUser, 'tasks': testTasks };
+//     let actualUsers = await loadData('users');
+//     let mailExists = await checkMail(msgBox, email, actualUsers);
+//     if (mailExists) {
+//         return;
+//     }
+//     let nameChecked = await checkName(msgBox, name);
+//     if (!nameChecked) return;
+//     await putNewUser(password, confirmPassword, msgBox, newArray);
+// }
+
 async function addUser() {
     let msgBox = document.getElementById('msgBox');
     let name = document.getElementById('name').value;
@@ -39,15 +63,13 @@ async function addUser() {
     let testContactsAndUser = [...testContacts, ...userContact];
     let newArray = { 'email': email, 'name': name, 'password': password.value, 'contacts': testContactsAndUser, 'tasks': testTasks };
     let actualUsers = await loadData('users');
-    let mailExists = await checkMail(msgBox, email, actualUsers);
-    if (mailExists) {
-        return;
-    }
-    let nameChecked = await checkName(msgBox, name);
-    if (!nameChecked) {
-        return;
-    }
-    await putNewUser(password, confirmPassword, msgBox, newArray);
+    // let mailExists = await checkMail(msgBox, email, actualUsers);
+    // if (mailExists) {
+    //     return;
+    // }
+    // let nameChecked = await checkName(msgBox, name);
+    // if (!nameChecked) return;
+    // await putNewUser(password, confirmPassword, msgBox, newArray);
 }
 
 /**
@@ -74,7 +96,7 @@ async function checkMail(msgBox, email, actualUsers) {
             return true;
         }
     }
-    return false;    
+    return false;
 }
 
 /**
