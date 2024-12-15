@@ -428,3 +428,8 @@ function cancelAddCard(fullsize) {
     setAssignedAddTask();
   };
 }
+
+function closeMenus() {
+  const fullSizeContainer = document.getElementById('full-size-container');
+  fullSizeContainer.classList.add('d-none');  
+}
