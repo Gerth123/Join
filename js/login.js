@@ -52,7 +52,7 @@ async function checkUser() {
     let actualMailSearchIndex;
     for (let mailSearchIndex in actualUsers) {
         let user = actualUsers[mailSearchIndex];
-        if (user && user.mail === email) {
+        if (user && user.email === email) {
             actualMailSearchIndex = mailSearchIndex;
             if (user.password === password) {
                 window.location.href = `summary.html?msg=Login erfolgreich&actualUsersNumber=${mailSearchIndex}`;
@@ -141,7 +141,7 @@ function loadUserData() {
 async function guestLogIn() {
     let users = await loadData('users');
     for (let [index, user] of Object.entries(users)) {
-        if (user && user.mail === 'test@testmail.com') {
+        if (user && user.email === 'test@testmail.com') {
             window.location.href = `summary.html?msg=Testlogin erfolgreich&actualUsersNumber=${index}`;
         }
     }

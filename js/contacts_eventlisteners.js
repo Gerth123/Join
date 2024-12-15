@@ -103,7 +103,8 @@ function setupContactsAListener() {
 document.addEventListener("DOMContentLoaded", async function () {
     try {
         let userId = await getUserIdFormUrl();
-        const actualUsers = await loadData(`users/${userId}/contacts`);
+        // const actualUsers = await loadData(`users/${userId}/contacts`);
+        const actualUsers = await loadDataBackend(`api/users/all-contacts/`);
         if (actualUsers) {
             const sortedContacts = sortContacts(actualUsers);
             displayContacts(sortedContacts);
