@@ -431,5 +431,7 @@ function cancelAddCard(fullsize) {
 
 function closeMenus() {
   const fullSizeContainer = document.getElementById('full-size-container');
+  const editBoard = document.getElementById('edit-board');
+  const addBoard = document.getElementById('add-board');
   fullSizeContainer.classList.add('d-none');  
 }
