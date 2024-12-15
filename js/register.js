@@ -37,7 +37,7 @@ async function addUser() {
         'color': await generateRandomColor(),
     }];
     let testContactsAndUser = [...testContacts, ...userContact];
-    let newArray = { 'mail': email, 'name': name, 'password': password.value, 'contacts': testContactsAndUser, 'tasks': testTasks };
+    let newArray = { 'email': email, 'name': name, 'password': password.value, 'contacts': testContactsAndUser, 'tasks': testTasks };
     let actualUsers = await loadData('users');
     let mailExists = await checkMail(msgBox, email, actualUsers);
     if (mailExists) {
