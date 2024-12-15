@@ -229,7 +229,7 @@ label {
   margin-right: 8px;
   width: 63px;
   height: 24px;
-  background-image: url("/assets/icons/board/fullsize/edit-button.svg");
+  background-image: url("../assets/icons/board/fullsize/edit-button.svg");
   background-size: cover;
 }
 
@@ -238,7 +238,7 @@ label {
   margin-right: 8px;
   width: 63px;
   height: 24px;
-  background-image: url("/assets/icons/board/fullsize/edit-button-hover.svg");
+  background-image: url("../assets/icons/board/fullsize/edit-button-hover.svg");
   background-size: cover;
 }
 
@@ -247,7 +247,7 @@ label {
   margin-right: 8px;
   width: 81px;
   height: 24px;
-  background-image: url("/assets/icons/board/fullsize/delete-button.svg");
+  background-image: url("../assets/icons/board/fullsize/delete-button.svg");
   background-size: cover;
 }
 
@@ -256,7 +256,7 @@ label {
   margin-right: 8px;
   width: 83px;
   height: 24px;
-  background-image: url("/assets/icons/board/fullsize/delete-button-hover.svg");
+  background-image: url("../assets/icons/board/fullsize/delete-button-hover.svg");
   background-size: cover;
 }
 
@@ -392,6 +392,7 @@ label {
   .full-size-row {
     height: 60vh;
   }
+
   .board-container-fullsize {
     height: 90%;
   }

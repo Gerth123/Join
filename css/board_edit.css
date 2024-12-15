@@ -125,15 +125,10 @@ p {
 #checkBoxes label:hover {
   background-color: #4f615e;
   color: white;
-  /* Added text color for better visibility */
 }
 
 .mb-0 {
   margin-bottom: 0;
-}
-
-input[type="date"] {
-  /* padding: 12px ; */
 }
 
 .assigned-users-editCard {

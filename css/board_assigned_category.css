@@ -50,14 +50,14 @@
 .arrow-down {
   width: 24px;
   height: 24px;
-  background-image: url("/assets/icons/board/assigned/arrow_drop_down.svg");
+  background-image: url("../assets/icons/board/assigned/arrow_drop_down.svg");
   background-size: cover;
 }
 
 .select-btn.open .arrow-down {
   width: 24px;
   height: 24px;
-  background-image: url("/assets/icons/board/assigned/arrow_drop_up.svg");
+  background-image: url("../assets/icons/board/assigned/arrow_drop_up.svg");
   background-size: cover;
 }
 
@@ -127,14 +127,14 @@
 .check-img {
   width: 24px;
   height: 24px;
-  background-image: url("/assets/icons/board/assigned/checkBtn.svg");
+  background-image: url("../assets/icons/board/assigned/checkBtn.svg");
   background-size: cover;
 }
 
 .assigned-item.checked .check-img {
   width: 24px;
   height: 24px;
-  background-image: url("/assets/icons/board/assigned/checkedBtn.svg");
+  background-image: url("../assets/icons/board/assigned/checkedBtn.svg");
   background-size: cover;
 }
 

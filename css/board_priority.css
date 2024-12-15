@@ -19,7 +19,7 @@
   max-width: 136px;
   height: 56px;
   display: inline-block;
-  background-image: url("/assets/icons/board/priority/low_button.svg");
+  background-image: url("../assets/icons/board/priority/low_button.svg");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -35,7 +35,7 @@
   max-width: 136px;
   height: 56px;
   display: inline-block;
-  background-image: url("/assets/icons/board/priority/medium_button.svg");
+  background-image: url("../assets/icons/board/priority/medium_button.svg");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -51,7 +51,7 @@
   max-width: 136px;
   height: 56px;
   display: inline-block;
-  background-image: url("/assets/icons/board/priority/urgent_button.svg");
+  background-image: url("../assets/icons/board/priority/urgent_button.svg");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -63,33 +63,33 @@
 }
 
 .priority-button + label.btn1:hover {
-  background-image: url("/assets/icons/board/priority/low_button_hover.svg");
+  background-image: url("../assets/icons/board/priority/low_button_hover.svg");
 }
 
 .priority-button + label.btn2:hover {
-  background-image: url("/assets/icons/board/priority/medium_button_hover.svg");
+  background-image: url("../assets/icons/board/priority/medium_button_hover.svg");
 }
 
 .priority-button + label.btn3:hover {
-  background-image: url("/assets/icons/board/priority/urgent_button_hover.svg");
+  background-image: url("../assets/icons/board/priority/urgent_button_hover.svg");
 }
 
 .priority-button:checked + label.btn1 {
-  background-image: url("/assets/icons/board/priority/low_button_clicked.svg");
+  background-image: url("../assets/icons/board/priority/low_button_clicked.svg");
   width: 100%;
   max-width: 136px;
   height: 50px;
 }
 
 .priority-button:checked + label.btn2 {
-  background-image: url("/assets/icons/board/priority/medium_button_clicked.svg");
+  background-image: url("../assets/icons/board/priority/medium_button_clicked.svg");
   width: 100%;
   max-width: 136px;
   height: 50px;
 }
 
 .priority-button:checked + label.btn3 {
-  background-image: url("/assets/icons/board/priority/urgent_button_clicked.svg");
+  background-image: url("../assets/icons/board/priority/urgent_button_clicked.svg");
   width: 100%;
   max-width: 136px;
   height: 50px;
