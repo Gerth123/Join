@@ -1,7 +1,7 @@
 /**
  * This function is called when the Add Contact button is clicked.
  * 
- * @param {Object} contact - The contact object containing name, mail, phone, etc.
+ * @param {Object} contact - The contact object containing name, email, phone, etc.
  * @param {Array} contacts - The list of old contacts.
  * @param {number} contactId - The ID of the contact.
  * 
@@ -15,7 +15,7 @@ async function addContactToDOM(contact, contacts, contactId) {
 /**
 * Inserts a new contact card into the contacts container at the correct position.
 *
-* @param {Object} contact - The contact object containing name, mail, phone, etc.
+* @param {Object} contact - The contact object containing name, email, phone, etc.
 * @param {Array} oldContacts - The list of old contacts.
 * @param {number} contactId - The ID of the contact.
 * @returns {Promise<void>}
