@@ -26,5 +26,5 @@
 ### Developers
 
 * **Hanbit Chang:** Developed the Kanban board with drag-and-drop functionality.
-* **Robin Gerth:** Developed the login and registration pages.
+* **Robin Gerth:** Developed the login, registration page and summary.
 * **Elias Schäfer:** Developed the contact page.
