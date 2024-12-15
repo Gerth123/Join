@@ -15,11 +15,25 @@ async function getEditBoard(id, contentId) {
   description.value = `${itemData["description"]}`;
   date.value = `${itemData["date"]}`;
   toggleSelectBtn();
+  oneCheckBoxEdit();
   getEditPriority(itemData["priority"]);
   getEditSubtasks(itemData["subtasks"]);
   await getEditAssigned();
   getSubtasksEventListeners();
   getEditDate(itemData["date"]);
+}
+
+function oneCheckBoxEdit() {
+  const checkboxes = document.querySelectorAll('input[type="checkbox"][name="priority-button"]');
+  checkboxes.forEach((checkbox) => {
+    checkbox.onchange = function () {
+      if (this.checked) {
+        checkboxes.forEach((box) => {
+          if (box !== this) box.checked = false;
+        });
+      }
+    };
+  });
 }
 
 /**
@@ -30,10 +44,17 @@ async function getEditBoard(id, contentId) {
 function toggleSelectBtn() {
   const selectBtns = document.querySelectorAll("#select-btn-editCard");
   selectBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
+    btn.onclick = function () {
       btn.classList.toggle("open");
-    });
+    };
   });
+  document.onclick = function (event) {
+    if (!event.target.closest("#select-btn-editCard") && !event.target.closest(".assigned-item")) {
+      selectBtns.forEach((btn) => {
+        btn.classList.remove("open");
+      });
+    }
+  };
 }
 
 /**
@@ -79,12 +100,22 @@ function getCheckedUsers(assignedUsers, contactName) {
  * @author Hanbit Chang
  */
 async function getEditAssigned() {
-  let contacts = await getData("contacts");
-  let contactsData = []
-  for(let i = 0; i < contacts.length; i++) {
-    if(contacts[i] != null)  contactsData.push(contacts[i])
+  let contactsData = [];
+  for (let i = 0; i < contacts.length; i++) {
+    if (contacts[i] != null) contactsData.push(contacts[i]);
   }
-  let data = await getData("tasks");
+  let assignedUsers = getAssignedUserElements();
+  getAssignedUserElements();
+  getEditContacts(assignedUsers, contactsData);
+  toggleCheckUsers(contactsData);
+}
+
+/**
+ * Retrieves the assigned user names for a specific task from the data array.
+ *
+ * @return {Array} An array of user names that are currently assigned to the task.
+ */
+function getAssignedUserElements() {
   let assignedUsers = [];
   for (let column of data) {
     if (column.id == contentId) {
@@ -97,8 +128,7 @@ async function getEditAssigned() {
       }
     }
   }
-  getEditContacts(assignedUsers, contactsData);
-  toggleCheckUsers(contactsData);
+  return assignedUsers;
 }
 
 /**
@@ -111,8 +141,6 @@ async function getEditAssigned() {
 function getEditContacts(assignedUsers, contacts) {
   const contactList = document.getElementById("assigned-list-items");
   contactList.innerHTML = "";
-
-  console.log(contacts)
   contacts.forEach((contact) => {
     let name = getInitials(contact["name"]);
     contactList.innerHTML += /*html*/ `
@@ -123,10 +151,7 @@ function getEditContacts(assignedUsers, contacts) {
         </div>
         <div class="check-img"></div>
       </li>`;
-  })
-
-  // contacts.forEach((contact) => {
-  // });
+  });
 }
 
 /**
@@ -139,10 +164,10 @@ function toggleCheckUsers(contacts) {
   const assignedItems = document.querySelectorAll(".assigned-item");
   assignedItems.forEach((item) => {
     checkUsers(contacts);
-    item.addEventListener("click", () => {
+    item.onclick = () => {
       item.classList.toggle("checked");
       checkUsers(contacts);
-    });
+    };
   });
 }
 
@@ -156,20 +181,48 @@ function checkUsers(contacts) {
   const checked = document.querySelectorAll(".checked");
   const btnText = document.querySelector(".btn-text");
   const checkedUsers = document.getElementById("assigned-users-editCard");
-  const userNames = document.querySelectorAll(".checked .item-text");
   if (checked && checked.length > 0) {
     btnText.innerText = `${checked.length} Selected`;
     checkedUsers.innerHTML = "";
+    const userNames = document.querySelectorAll(".checked .item-text");
+    let i = 0;
     userNames.forEach((userName) => {
       const personWithName = contacts.find((person) => person.name == userName.innerHTML);
       if (personWithName) {
         let name = getInitials(personWithName["name"]);
-        checkedUsers.innerHTML += getEditAssignedUser(personWithName["color"], name);
+        if (i < 3) checkedUsers.innerHTML += getEditAssignedUser(personWithName["color"], name);
+        i++;
       }
     });
-  } else {
-    btnText.innerText = "Select contacts to assign";
-    checkedUsers.innerHTML = "";
+    checkedUsersConditionOverFlowed(i, checkedUsers);
+  } else emptyCheckedUsers();
+}
+
+/**
+ * Empties the checked users list and updates the button text.
+ *
+ * @return {void}
+ */
+function emptyCheckedUsers() {
+  const btnText = document.querySelector(".btn-text");
+  const checkedUsers = document.getElementById("assigned-users-editCard");
+  btnText.innerText = "Select contacts to assign";
+  checkedUsers.innerHTML = "";
+}
+
+/**
+ * Checks if the number of checked users exceeds a certain limit and adds a new user to the checkedUsers element.
+ *
+ * @param {number} i - The number of checked users.
+ * @param {HTMLElement} checkedUsers - The element where the checked users are displayed.
+ * @return {void} This function does not return a value.
+ */
+function checkedUsersConditionOverFlowed(i, checkedUsers) {
+  if (i > 3) {
+    checkedUsers.innerHTML += /*html*/ `
+      <div class="assigned-user">
+        <div id="board-user" class="board-user-editCard" style="background-color: #2A3647">+${i - 3}</div>
+      </div>`;
   }
 }
 
@@ -185,8 +238,7 @@ function getEditAssignedUser(color, name) {
   return /*html*/ `
   <div class="assigned-user">
     <div id="board-user" class="board-user-editCard" style="background-color: ${color}">${name}</div>
-  </div>
-  `;
+  </div>`;
 }
 
 /**
@@ -229,18 +281,18 @@ function getEditSubtasks(subtasks) {
  */
 function getEditSubtasksList(task) {
   return /*html*/ `
-  <li id="subtasks-li">
+  <li id="subtasks-li" class="subtasks-li-content">
     <div class="subtasks-li-container">
       <p class="subtasks-li-text" contenteditable=false>${task}</p>
-      <div class="row" id="subtask-first-btns">
-        <img class="subtasks-btn-none" id="subtasks-edit" src="/assets/icons/board/edit/edit_button.svg" alt="">
+      <div class="subtasks-row" id="subtask-first-btns">
+        <img class="subtasks-btn-none" id="subtasks-edit" src="../assets/icons/board/edit/edit_button.svg" alt="">
         <div class="subtasks-line-none"></div>
-        <img class="subtasks-btn-none" id="subtasks-trash" src="/assets/icons/board/edit/trash_button.svg" alt="">  
+        <img class="subtasks-btn-none" id="subtasks-trash" src="../assets/icons/board/edit/trash_button.svg" alt="">  
       </div>
-      <div class="row d-none" id="subtask-second-btns">
-        <img class="subtasks-btn-none" id="subtasks-trash" src="/assets/icons/board/edit/trash_button.svg" alt="">
+      <div class="subtasks-row d-none" id="subtask-second-btns">
+        <img class="subtasks-btn-none" id="subtasks-trash" src="../assets/icons/board/edit/trash_button.svg" alt="">
         <div class="subtasks-line-none"></div>
-        <img class="subtasks-btn-none" id="subtasks-checker" src="./assets/icons/board/edit/check_button.svg" alt="" />
+        <img class="subtasks-btn-none" id="subtasks-checker" src="../assets/icons/board/edit/check_button.svg" alt="" />
       </div>  
     </div>
   </li>
@@ -258,12 +310,10 @@ function getEditSubtasksList(task) {
 function onClickTrash() {
   const trashes = document.querySelectorAll("#subtasks-trash");
   trashes.forEach((trash) => {
-    trash.addEventListener("click", () => {
+    trash.onclick = () => {
       let parentLi = trash.closest("#subtasks-li");
-      if (parentLi) {
-        parentLi.remove();
-      }
-    });
+      if (parentLi) parentLi.remove();
+    };
   });
 }
 
@@ -281,7 +331,7 @@ function onClickTrash() {
 function onClickEditing() {
   const edits = document.querySelectorAll("#subtasks-edit");
   edits.forEach((edit) => {
-    edit.addEventListener("click", () => {
+    edit.onclick = () => {
       const parentContent = edit.closest(".subtasks-li-container");
       const subtaskElement = parentContent.querySelector(".subtasks-li-text");
       const subtaskFirstBtns = parentContent.querySelector("#subtask-first-btns");
@@ -289,7 +339,7 @@ function onClickEditing() {
       subtaskFirstBtns.classList.add("d-none");
       subtaskSecondBtns.classList.remove("d-none");
       subtaskElement.contentEditable = true;
-    });
+    };
   });
 }
 
@@ -307,7 +357,7 @@ function onClickEditing() {
 function onClickChecker() {
   const checkers = document.querySelectorAll("#subtasks-checker");
   checkers.forEach((checker) => {
-    checker.addEventListener("click", () => {
+    checker.onclick = () => {
       const parentContent = checker.closest(".subtasks-li-container");
       const subtaskElement = parentContent.querySelector(".subtasks-li-text");
       const subtaskFirstBtns = parentContent.querySelector("#subtask-first-btns");
@@ -315,7 +365,7 @@ function onClickChecker() {
       subtaskFirstBtns.classList.remove("d-none");
       subtaskSecondBtns.classList.add("d-none");
       subtaskElement.contentEditable = false;
-    });
+    };
   });
 }
 
@@ -378,6 +428,5 @@ async function getData(data) {
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
   let fulldata = await loadData("users");
-  // console.log(fulldata);
   return fulldata[actualUsersNumber][data];
 }

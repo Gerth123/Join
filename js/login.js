@@ -1,17 +1,24 @@
 /**
- * This function is used to set a timeout and show the Login Container with changed CSS when the animation is finished.
+ * This function is used to show an animation with the join logo, to set a timeout and show the Login Container with changed CSS when the animation is finished.
  * 
  * @author: Robin
  */
-function init() {
+document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('logoContainerSlide').classList.remove('logoContainerSlide');
     document.getElementById('logoContainerSlide').classList.add('logoContainerSlideLoaded');
     setTimeout(function () {
         document.getElementById('wholeLoginContainer').classList.remove('d-none');
         document.getElementById('logoContainerSlideImg').style.height = '12vh';
-    }, 850);
+    }, 900);
     loadUserData();
-}
+});
+
+/**
+ * This event listener is used to load the user data from local storage and check the checkbox, if the checkboxBoolean is true.
+ * 
+ * @author: Robin
+ */
+window.addEventListener('load', loadUserData);
 
 /**
  * This function is used to toggle the visibility of the password input field, if the mouse moves over the lock image.
@@ -55,7 +62,7 @@ async function checkUser() {
         }
     }
     await userNotFound(found, actualUsers, actualMailSearchIndex);
-    await saveUserData(email, password);
+    // await saveUserData(email, password);
 }
 
 /** 
@@ -72,7 +79,6 @@ async function userNotFound(found, actualUsers, actualMailSearchIndex) {
         let msgBox = document.getElementById('msgBox');
         msgBox.classList.remove('d-none');
         let msgBoxText = document.getElementById('msgBoxText');
-        console.log(actualUsers);
         if (actualMailSearchIndex !== undefined) {
             msgBoxText.innerHTML = 'Wrong password. Please try again!';
         } else {
@@ -84,34 +90,38 @@ async function userNotFound(found, actualUsers, actualMailSearchIndex) {
 }
 
 /**
+ * This variable is used to save the checkbox state.
+ */
+let checkboxBoolean = false;
+
+/**
  * This function is used to save the user data in local storage, if the checkbox is checked.
- * 
- * @param {string} email - The email of the user.
- * @param {string} password - The password of the user.
  * 
  * @author: Robin
  */
-function saveUserData(email, password) {
-    let rememberMe = document.getElementById('checkbox').checked;
-    if (rememberMe) {
+function saveUserData() {
+    let email = document.getElementById('email').value;
+    let password = document.getElementById('password').value;
+    if (!checkboxBoolean) {
+        checkboxBoolean === true;
         localStorage.setItem('email', email);
         localStorage.setItem('password', password);
     } else {
         localStorage.removeItem('email');
         localStorage.removeItem('password');
+        checkboxBoolean = false;
     }
 }
 
 /**
- * This function is used to load the user data from local storage, if the checkbox is checked and 
- * clear the Input Fields if the checkbox is not checked if the checkbox is not checked.
+ * This function is used to load the user data from local storage and check the checkbox, if the checkboxBoolean is true.
  * 
  * @author: Robin
  */
 function loadUserData() {
     let storedEmail = localStorage.getItem('email');
     let storedPassword = localStorage.getItem('password');
-    if (storedEmail && storedPassword) {
+    if (checkboxBoolean = true && storedEmail && storedPassword) {
         document.getElementById('email').value = storedEmail;
         document.getElementById('password').value = storedPassword;
         document.getElementById('checkbox').checked = true;

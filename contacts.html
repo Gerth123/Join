@@ -9,7 +9,8 @@
     <script src="js/contacts.js"></script>
     <script src="js/initials.js"></script>
     <script src="js/htmlcontacts.js"></script>
-    <!-- <script src="js/delete.json"></script> -->
+    <script src="js/contacts_edit.js"></script>
+    <script src="js/contacts_eventlisteners.js"></script> 
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="css/contacts.css" />
     <link rel="stylesheet" href="css/contacts_responsive.css" />
@@ -129,19 +130,29 @@
           </div>
         </div>
         <div class="overlay-contentright">
-          <img class="imgcloseOverlay" src="assets/img/Close.svg" id="closeOverlay"/>
           <img src="assets/img/Group 13.svg" class="imgAddContact" />
           <form class="inputSection" id="contactForm" onsubmit="createContact(event)">
+            <div class="imgCloseOverlayContainer">
+              <img class="imgcloseOverlay" src="assets/img/Close.svg" id="closeOverlay" />
+            </div>
             <div class="input-divs">
-              <input required id="contactName" placeholder="Name" />
+              <input required id="contactName" placeholder="Name" minlength="5" maxlength="20" />
               <img src="assets/img/person.svg" class="imgsinput" />
             </div>
             <div class="input-divs">
-              <input required id="contactEmail" placeholder="Email" pattern=".*@.*\..*" type="email" title="An @ is required" />
+              <input
+                required
+                id="contactEmail"
+                placeholder="Email"
+                pattern=".*@.*\..*"
+                type="email"
+                title="An @ is required"
+                maxlength="25"
+              />
               <img src="assets/img/mail.svg" class="imgsinput1" />
             </div>
             <div class="input-divs">
-              <input required id="contactPhone" placeholder="Phone" type="tel" title="Only numbers allowed" />
+              <input required id="contactPhone" placeholder="Phone" type="tel" pattern="^[+0][\d]{0,15}$" maxlength="15" />
               <img src="assets/img/call.svg" class="imgsinput2" />
             </div>
             <div class="overlayButtons">

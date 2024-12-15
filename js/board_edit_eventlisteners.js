@@ -8,30 +8,7 @@
  * @author Hanbit Chang
  */
 function getEditEventListeners(board, editBoard, addBoard) {
-  onClickEditCategory();
-  onClickEditBoard(board, editBoard, addBoard)
-}
-
-/**
- * Attaches a click event listener to each category item. When a category item is clicked,
- * it selects the corresponding select button and updates its text content with the clicked
- * item's text content.
- *
- * @return {void} This function does not return anything.
- * @author Hanbit Chang
- */
-function onClickEditCategory() {
-  const categoryItems = document.querySelectorAll(".category-item");
-  categoryItems.forEach((item) => {
-    item.addEventListener("click", () => {
-      const selectButton = document.querySelector("#select-btn-editCard");
-      const btnText = document.querySelector(".btn-text-category");
-      if (selectButton) {
-        selectButton.classList.remove("open");
-        btnText.textContent = item.textContent;
-      }
-    });
-  });
+  onClickEditBoard(board, editBoard, addBoard);
 }
 
 /**
@@ -43,16 +20,15 @@ function onClickEditCategory() {
  */
 function onClickEditBoard(board, editBoard, addBoard) {
   const editBtn = document.getElementById("edit-btn");
-
-  editBtn.addEventListener("click", async () => {
+  editBtn.onclick = async () => {
     board.classList.add("d-none");
     editBoard.classList.remove("d-none");
     addBoard.classList.add("d-none");
+
     await getEditBoard(id, contentId);
     onClickEditSubtasks();
-  });
+  };
 }
-
 
 /**
  * Onclick subtasks are modified
@@ -63,15 +39,13 @@ function onClickEditSubtasks() {
   const subtaskContainer = document.getElementById("subtasks-btn-container");
   const subtaskDelBtn = document.getElementById("subtasks-del");
   const subtaskInput = document.getElementById("subtasks-input");
-
-  subtaskAddBtn.addEventListener("click", () => {
+  subtaskAddBtn.onclick = () => {
     subtaskAddBtn.classList.add("d-none");
     subtaskContainer.classList.remove("d-none");
-  });
-
-  subtaskDelBtn.addEventListener("click", () => {
+  };
+  subtaskDelBtn.onclick = () => {
     subtaskInput.value = "";
-  });
+  };
 }
 
 /**
@@ -100,14 +74,39 @@ function checkEditSubtasks() {
  * @author Hanbit Chang
  */
 async function saveEditData() {
+  saveTheActualUser();
+  let fullsize = document.getElementById("full-size-container");
+  fullsize.classList.add("d-none");
+  renderBoards(data);
+  getEventListeners();
+  getDropZones();
+  setAssignedAddTask();
+}
+
+/**
+ * Returns an array of contacts data by filtering out any null values from the contacts array.
+ *
+ * @return {Array} An array of contact objects with no null values.
+ */
+function getContactsData() {
+  let contactsData = [];
+  for (let i = 0; i < contacts.length; i++) {
+    if (contacts[i] != null) contactsData.push(contacts[i]);
+  }
+  return contactsData;
+}
+
+/**
+ * Saves the actual user by retrieving the contacts data and the actual user number from the URL parameters.
+ * Then, iterates over the data array to find the item with the specified contentId.
+ * For each item, it sets the edited values using the setEditItems function and sends the updated data back to the server.
+ *
+ * @return {Promise<void>} A Promise that resolves when the data is saved and sent back to the server.
+ */
+async function saveTheActualUser() {
+  let contactsData = getContactsData();
   let urlParams = new URLSearchParams(window.location.search);
   let actualUsersNumber = urlParams.get("actualUsersNumber");
-  let data = await getData("tasks");
-  let contacts = await getData("contacts");
-  let contactsData = []
-  for(let i = 0; i < contacts.length; i++) {
-    if(contacts[i] != null)  contactsData.push(contacts[i])
-  }
   for (let listItem of data) {
     if (listItem.id == contentId) {
       for (let item of listItem.items) {
@@ -116,7 +115,6 @@ async function saveEditData() {
       }
     }
   }
-  location.reload();
 }
 
 /**
@@ -132,7 +130,6 @@ function setEditItems(item, contacts) {
   const description = document.getElementById("description-editCard");
   const date = document.getElementById("date-editCard");
   if (item.id == id) {
-    item.category = editCategory(item.category);
     item.title = title.value;
     item.description = description.value;
     item.date = date.value;
@@ -165,19 +162,6 @@ function editAssignedValue(contacts) {
   });
   if (assigned.length == 0) return "";
   return assigned;
-}
-
-/**
- * Returns category in edit card
- * @param {string} category
- * @returns string
- * @author Hanbit Chang
- */
-function editCategory(category) {
-  const newCategory = document.querySelector(".btn-text-category");
-  const stripped = newCategory.textContent.replace(/\s+/g, " ").trim();
-  if (newCategory.textContent == "Select task category") return category;
-  if (newCategory.textContent != "Select task category") return stripped;
 }
 
 /**
@@ -236,4 +220,16 @@ function updateChecked(temp, Oldtask) {
     return matchingTask ? { ...item, checked: matchingTask.checked } : item;
   });
   return updatedTemp;
+}
+
+function setAssignedEditTask() {
+  const assignedUsers = document.getElementById("assigned-users-editCard");
+  const assignedItems = document.querySelectorAll(".assigned-item");
+  const assignedBtnText = document.querySelector(".btn-text");
+
+  assignedItems.forEach((item) => {
+    item.classList.remove("checked");
+  });
+  assignedUsers.innerHTML = "";
+  assignedBtnText.innerHTML = "Select contacts to assign";
 }

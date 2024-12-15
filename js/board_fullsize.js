@@ -44,17 +44,44 @@ function getFullSizeAssigned(assigned) {
   const fullSizeAssigned = document.querySelector("#full-size-assigned-users");
   fullSizeAssigned.innerHTML = "";
   if (assigned != "") {
+    let i = 0;
     assigned.forEach((user) => {
       let name = getInitials(user["name"]);
-      fullSizeAssigned.innerHTML += /*html*/ `
-      <li class="full-size-assign-user">
-        <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}</div>
-        <div class="board-username">
-          ${user["name"]}
-        </div>
-      </li>`;
+      if (i < 3) fullSizeAssigned.innerHTML += assignedFullsize(user, name);
+      i++;
     });
+    if (i > 3) fullSizeAssigned.innerHTML += assignedFullSizeOverFlowed(i);
   }
+}
+
+/**
+ * Generates the HTML for a full-size assigned user.
+ *
+ * @param {Object} user - The user object containing the user's color.
+ * @param {string} name - The name of the user.
+ * @return {string} The HTML string for the full-size assigned user.
+ */
+function assignedFullsize(user, name) {
+  return /*html*/ `
+  <li class="full-size-assign-user">
+    <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}</div>
+    <div class="board-username">
+      ${user["name"]}
+    </div>
+  </li>`;
+}
+
+/**
+ * Generates the HTML for a full-size assigned user with an overflow count.
+ *
+ * @param {number} i - The number of assigned users.
+ * @return {string} The HTML string for the full-size assigned user with an overflow count.
+ */
+function assignedFullSizeOverFlowed(i) {
+  return /*html*/ `
+  <li class="full-size-assign-user">
+    <div id="board-user" class="board-user" style="background-color:#2A3647">+${i - 3}</div>
+  </li>`;
 }
 
 /**
@@ -68,21 +95,11 @@ function getFullSizeSubtask(subtasks) {
     fullSizeSubtasks.innerHTML += /*html*/ `
     <li class="full-size-subtask-li">
       <input type="checkbox" id="subtask-${i}">
-      <label for="subtask-${i}">${subtasks[i]["task"]}</label>
+      <label class="full-size-p" for="subtask-${i}">${subtasks[i]["task"]}</label>
     </li>`;
   }
   for (let i = 0; i < subtasks.length; i++) {
     const check = document.getElementById(`subtask-${i}`);
     if (subtasks[i]["checked"]) check.checked = true;
   }
-
-  const subtaskList = document.querySelectorAll(".full-size-subtask-li");
-  // console.log("subtaskList", subtaskList);
-  // console.log("id", id);
-  const idElement = document.getElementById(`${id}`);
-  // console.log("idElement", idElement);
-  const progressBar = idElement.querySelector("#progress-bar");
-  const label = idElement.getElementsByTagName("LABEL");
-  // console.log("progressBar", progressBar);
-  // console.log("label", label);
 }

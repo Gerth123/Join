@@ -1,5 +1,6 @@
 let icons;
 let data;
+let contacts;
 let header = ["To do", "In progress", "Await feedback", "Done"];
 
 /**
@@ -7,7 +8,7 @@ let header = ["To do", "In progress", "Await feedback", "Done"];
  * @returns example data
  */
 async function getExampleData() {
-  const response = await fetch("/assets/data/example.json");
+  const response = await fetch("../assets/data/example.json");
   return await response.json();
 }
 
@@ -16,7 +17,7 @@ async function getExampleData() {
  * @returns icon data
  */
 async function getIcons() {
-  const response = await fetch("/assets/data/getIcons.json");
+  const response = await fetch("assets/data/getIcons.json");
   return await response.json();
 }
 
@@ -25,9 +26,9 @@ async function getIcons() {
  */
 async function initBoard() {
   data = await getData("tasks");
-  let contacts = await getData("contacts");
-  for(let i = 0; i < data.length; i++) {
-   data[i] = await getAssignedKeyByName(data[i], contacts)
+  contacts = await getData("contacts");
+  for (let i = 0; i < data.length; i++) {
+    data[i] = await getAssignedKeyByName(data[i], contacts);
   }
   icons = await getIcons();
   renderBoards(data);
@@ -45,24 +46,40 @@ async function initBoard() {
  */
 function getAssignedKeyByName(data, contacts) {
   for (const item of data.items) {
-    let i = 0
-    for(i = 0; i< item.assigned.length; i++) {
+    let i = 0;
+    for (i = 0; i < item.assigned.length; i++) {
       let assigned = item.assigned[i];
-      const contactExists = contacts.some(contact => contact && contact.name == assigned.name);
-      if(!contactExists) {
-          const index = item.assigned.findIndex(assign => assign.name == item.assigned[i].name )
-          item.assigned.splice(index, 1)
-          i = -1
+      const contactExists = contactExist(contacts, assigned.name);
+      if (!contactExists) {
+        const index = item.assigned.findIndex((assign) => assign.name == item.assigned[i].name);
+        item.assigned.splice(index, 1);
+        i = -1;
       }
     }
+    if (item.assigned.length == 0) item.assigned = "";
   }
   return data;
 }
 
 /**
+ * Checks if a contact with the given name exists in the contacts array.
+ *
+ * @param {Object} contacts - The array of contacts.
+ * @param {string} name - The name of the contact to check.
+ * @return {boolean} - Returns true if a contact with the given name exists, otherwise false.
+ */
+function contactExist(contacts, name) {
+  for (let key in contacts) {
+    if (contacts[key] == null) continue;
+    if (contacts[key].name == name) return true;
+  }
+  return false;
+}
+
+/**
  * Renders the board
  */
-function renderBoards(data) {
+async function renderBoards(data) {
   getBoardSection(data);
   getBoardContentsAll(data);
 }
@@ -74,7 +91,6 @@ function renderBoards(data) {
  * @returns item data
  */
 async function getItemById(id, contentId) {
-  // let data = await getData("tasks");
   let itemList = data.find((items) => items["id"] == contentId);
   let item = itemList["items"].find((items) => items["id"] == id);
   return item;
@@ -87,17 +103,26 @@ async function getItemById(id, contentId) {
 function getBoardSection(data) {
   const boardSection = document.getElementById("board-card-section");
   boardSection.innerHTML = "";
+  boardSection.innerHTML = '<div id="no-search-results" class="no-search-results d-none"><h1>No search results</h1></div>';
   for (let i = 0; i < data.length; i++) {
     const id = data[i]["id"];
     const items = data[i]["items"];
     boardSection.innerHTML += getBoardContainer(id, header[i]);
-    if (items == "") {
-      let containerElement = document.getElementById(`${id}`);
-      let container = containerElement.querySelector("#no-content-img");
-      container.classList.remove("d-none");
-    }
-    // getBoardContents(data[i]["items"], id);
+    if (items == "") getEmptyBoard(id);
   }
+}
+
+/**
+ * Retrieves the empty board container element and displays it by removing the "d-none" class from the container element.
+ *
+ * @return {void} This function does not return anything.
+ */
+function getEmptyBoard(id) {
+  const containerElement = document.getElementById(`${id}`);
+  const container = containerElement.querySelector("#no-content-img");
+  const dropzone = containerElement.querySelector("#dropzone");
+  dropzone.classList.add("big-zone");
+  container.classList.remove("d-none");
 }
 
 function getBoardContentsAll(data) {
@@ -115,12 +140,14 @@ function getBoardContentsAll(data) {
 function getBoardContainer(id, header) {
   return /*html*/ ` 
     <div id="${id}" class="board-card-content">
-    <div class="board-header-task">
-                <div class="board-text">${header}</div>
-                <div class="board-add-btn button" onclick="addTaskBtnSmall(1)"></div>
-              </div>
-      <img id="no-content-img" class="no-content-img d-none" src="/assets/icons/no-tasks-todo.svg">
-      <div id="dropzone" ondragover="allowDrop(event)" ondrop="doDrop(event)" class="board-card-dropzone"></div>
+      <div class="board-header-task">
+        <div class="board-text">${header}</div>
+        <div class="board-add-btn button" onclick="addTaskBtnSmall(${id})"></div>
+      </div>
+      <div id="board-card-direction" class="board-card-direction">
+        <img id="no-content-img" class="no-content-img d-none" src="assets/icons/no-tasks-todo.svg">
+        <div id="dropzone" ondragover="allowDrop(event)" ondrop="doDrop(event)" class="board-card-dropzone first-dropzone-mobile"></div>
+      </div>
     </div>`;
 }
 
@@ -130,17 +157,31 @@ function getBoardContainer(id, header) {
  * @param {number} id
  */
 function getBoardContents(contents, id) {
-  let content = document.getElementById(`${id}`);
-
+  const contentDirection = document.getElementById(`${id}`);
+  const content = contentDirection.querySelector("#board-card-direction");
   if (contents != "") {
+    let i = 0;
     contents.forEach(function (card) {
-      content.innerHTML += getBoardCard(card);
-      getCategory(card["category"], card["id"]);
-      getPriority(card["priority"], card["id"]);
-      getAssigned(card["assigned"], card["id"]);
-      getProgressBar(card["subtasks"], card["id"]);
+      if (i < contents.length - 1) {
+        content.innerHTML += getBoardCard(card);
+        i++;
+      } else content.innerHTML += getBoardCard(card, "big-zone");
+      getBoardCardValues(card);
     });
   }
+}
+
+/**
+ * Retrieves the values for the board card.
+ *
+ * @param {Object} card - The card object containing the category, priority, assigned, and subtasks.
+ * @return {void} This function does not return a value.
+ */
+function getBoardCardValues(card) {
+  getCategory(card["category"], card["id"]);
+  getPriority(card["priority"], card["id"]);
+  getAssigned(card["assigned"], card["id"]);
+  getProgressBar(card["subtasks"], card["id"]);
 }
 
 /**
@@ -148,7 +189,7 @@ function getBoardContents(contents, id) {
  * @param {Object} card
  * @returns html code
  */
-function getBoardCard(card) {
+function getBoardCard(card, zoneSize) {
   return /*html*/ `
   <div id='${card["id"]}' class="board-card" draggable="true" ondragstart='doSetData(event, ${card["id"]})'>
     <img id="board-category" class="board-category">
@@ -164,7 +205,7 @@ function getBoardCard(card) {
       <img id='board-priority' alt="">
     </div>
   </div> 
-  <div  id="dropzone" ondragover="allowDrop(event)" ondrop="doDrop(event)" class="board-card-dropzone"></div>`;
+  <div  id="dropzone" ondragover="allowDrop(event)" ondrop="doDrop(event)" class="board-card-dropzone ${zoneSize}"></div>`;
 }
 
 /**
@@ -199,13 +240,15 @@ function getPriority(priority, id) {
 function getAssigned(assigned, id) {
   const content = document.getElementById(`${id}`);
   const boardUser = content.querySelector("#board-users");
-
   if (assigned != "") {
+    let i = 0;
     assigned.forEach((user) => {
       let name = getInitials(user["name"]);
-      boardUser.innerHTML += /*html*/ `
-      <div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}</div>`;
+      if (i < 3)
+        boardUser.innerHTML += /*html*/ `<div id="board-user" class="board-user" style="background-color:${user["color"]}">${name}</div>`;
+      i++;
     });
+    if (i > 3) boardUser.innerHTML += /*html*/ `<div id="board-user" class="board-user" style="background-color:#2A3647">+${i - 3}</div>`;
   }
 }
 
@@ -215,17 +258,26 @@ function getAssigned(assigned, id) {
  * @param {number} id
  */
 function getProgressBar(subtasks, id) {
+  let process = 0;
+  if (subtasks == "") subtasks = [];
+  for (let i = 0; i < subtasks.length; i++) {
+    if (subtasks[i]["checked"] == true) process++;
+  }
+  setProgressBar(subtasks, process, id);
+}
+
+/**
+ * Sets the progress bar based on the given subtasks, process, and id.
+ *
+ * @param {Array} subtasks - An array of subtasks.
+ * @param {number} process - The number of completed subtasks.
+ * @param {string} id - The id of the element to update the progress bar for.
+ * @return {void} This function does not return a value.
+ */
+function setProgressBar(subtasks, process, id) {
   const content = document.getElementById(`${id}`);
   const progressBar = content.querySelector("#progress-bar");
   const progressBarLabel = content.querySelector('label[for="progress-bar"]');
-  let process = 0;
-
-  if (subtasks == "") subtasks = [];
-  for (let i = 0; i < subtasks.length; i++) {
-    if (subtasks[i]["checked"] == true) {
-      process++;
-    }
-  }
   if (subtasks.length == 0) {
     const container = progressBar.closest(".board-progress-bar-container");
     container.classList.add("d-none");
@@ -233,6 +285,4 @@ function getProgressBar(subtasks, id) {
     progressBarLabel.textContent = `${process}/${subtasks.length} Subtasks`;
     progressBar.value = +(process / subtasks.length) * 100;
   }
-
-  const subtaskList = document.querySelectorAll(".full-size-subtask-li");
 }

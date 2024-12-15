@@ -1,11 +1,48 @@
 .board-card-dropzone {
-  height: 10px;
-  transition: background 0.15s, height 0.15s;
+  height: 16px;
+  transition: height 0.25s;
+}
+
+.big-zone {
+  height: 240px;
 }
 
 .board-card-dropzone--active {
   height: 240px;
-  background-image: url("/assets/icons/dropzone.svg");
+  width: 250px;
+  background-image: url("../assets/icons/dropzone.svg");
   background-repeat: no-repeat;
-  background-size:contain
+  /* background-position-y: 10px; */
+  background-size: contain;
+}
+
+.dragging {
+  opacity: 0;
+}
+
+.roatateCard {
+  transform: rotate(5deg);
+}
+
+@media screen and (max-width: 480px) {
+  .board-card-dropzone {
+    width: 16px;
+    height: 240px;
+    transition: height 0.25s;
+  }
+
+  .first-dropzone-mobile {
+    position: absolute;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .board-card-dropzone--active {
+    background-color: rgba(216, 216, 216, 0.554);
+    height: 100%;
+    width: 100%;
+    background-image: none;
+    border-radius: 10px;
+  }
 }

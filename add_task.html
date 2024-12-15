@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <title>Join Add Task</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="css/board.css" />
@@ -14,11 +14,21 @@
     <link rel="stylesheet" href="css/board_priority.css" />
     <link rel="stylesheet" href="css/board_edit.css" />
     <link rel="stylesheet" href="css/add_task.css" />
-    <link rel="stylesheet" href="css/board_fullsize.css">
+    <link rel="stylesheet" href="css/board_fullsize.css" />
     <link rel="icon" href="assets/img/logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="fonts/PTSans-Regular.ttf" />
     <link rel="stylesheet" href="fonts/PTSans-Bold.ttf" />
     <link rel="stylesheet" href="fonts/PTSans-Italic.ttf" />
+    <script src="js/board.js"></script>
+    <script src="js/board_fullsize_listener.js"></script>
+    <script src="js/board_eventlisteners.js"></script>
+    <script src="js/board_drap_and_drops.js"></script>
+    <script src="js/board_fullsize.js"></script>
+    <script src="js/board_edit.js"></script>
+    <script src="js/board_add.js"></script>
+    <script src="js/initials.js"></script>
+
+    <script src="script.js"></script>
   </head>
   <body onload="initAddTask()">
     <div class="wholeJoinContainer">
@@ -41,14 +51,14 @@
         </header>
         <section class="addTaskOpenedContainer">
           <div class="addTaskContent">
-            <div class="board-header-title pb-40">Add Task</div>
-            <form class="full-size-add-form" action="" onsubmit="saveAddData(); return false">
+            <h1 class="board-header-title">Add Task</h1>
+            <form class="add-form" action="" onsubmit="saveAddTaskData(); return false">
               <div class="row">
                 <div class="column wd-45 wd-100">
-                  <label class="full-size-label" for="title-addCard">Title</label>
-                  <input class="full-size-input" id="title-addCard" type="text" placeholder="Enter a title" required/>
+                  <label class="full-size-label" for="title-addCard">Title<span class="red-star">*</span></label>
+                  <input class="full-size-input" id="title-addCard" type="text" placeholder="Enter a title" required />
                   <label class="full-size-label" for="description-addCard">Description</label>
-                  <textarea class="full-size-input h-120" id="description-addCard" type="text" placeholder="Enter a description" required></textarea>
+                  <textarea class="full-size-textarea" id="description-addCard" type="text" placeholder="Enter a description"></textarea>
                   <div class="full-size-label">Assigned to</div>
                   <div class="assigned-addCard">
                     <div id="select-btn-addCard" class="select-btn">
@@ -57,70 +67,58 @@
                     </div>
                     <ul id="assigned-list-items-addCard" class="assigned-list-items"></ul>
                   </div>
-                  <div id="assigned-users-addCard" class="assigned-users-editPage"></div>
+                  <div id="assigned-users-addCard" class="assigned-users-addCard"></div>
                 </div>
                 <div class="add-line"></div>
                 <div class="column wd-45 wd-100">
-                  <label class="full-size-label due-date" for="date-addCard">Due date</label>
-                  <input class="full-size-input" id="date-addCard" type="date" required/>
+                  <label class="full-size-label due-date" for="date-addCard"> Due date<span class="red-star">*</span> </label>
+                  <input class="full-size-input date-input" id="date-addCard" type="date" required max="9999-12-31"/>
                   <div class="full-size-label">Priority</div>
                   <div class="full-size-priority-container">
                     <div class="priority-button-container">
-                      <input type="radio" id="radio-btn-6" name="radio-btnss" />
+                      <input type="checkbox" class="priority-button" id="radio-btn-6" name="priority-button" />
                       <label for="radio-btn-6" class="btn3"></label>
                     </div>
                     <div class="priority-button-container">
-                      <input type="radio" id="radio-btn-5" name="radio-btnss" />
+                      <input type="checkbox" class="priority-button" id="radio-btn-5" name="priority-button" />
                       <label for="radio-btn-5" class="btn2"></label>
                     </div>
                     <div class="priority-button-container">
-                      <input type="radio" id="radio-btn-4" name="radio-btnss" />
+                      <input type="checkbox" class="priority-button" id="radio-btn-4" name="priority-button" />
                       <label for="radio-btn-4" class="btn1"></label>
                     </div>
                   </div>
-                  <div class="full-size-label" for="category-addCard">Category</div>
-                  <div id="category-addCard" class="category-addCard">
-                    <div id="select-btn-addCard" class="select-btn">
-                      <span class="btn-text-category">Select task category</span>
-                      <div class="arrow-down"></div>
-                    </div>
-                    <ul class="category-list-items">
-                      <li class="category-item">
-                        <span class="item-text-category">user story</span>
-                      </li>
-                      <li class="category-item">
-                        <span class="item-text-category">technical task</span>
-                      </li>
-                    </ul>
-                  </div>
+                  <label class="full-size-label" for="add-task-categories">Category<span class="red-star">*</span></label>
+                  <select name="add-task-categories" id="add-task-categories" required>
+                    <option disabled selected value="">Select task category</option>
+                    <option value="user story">user story</option>
+                    <option value="technical task">technical task</option>
+                  </select>
                   <div class="full-size-label" for="subtasks">Subtasks</div>
                   <div class="full-size-input-container">
                     <input class="subtasks-input" id="subtasks-input-addCard" type="text" placeholder="Add new subtask" />
-                    <img class="subtasks-btn" id="subtasks-add-addCard" src="./assets/icons/board/edit/add_button.svg" alt="" />
+                    <img class="subtasks-btn" id="subtasks-add-addCard" src="assets/icons/board/edit/add_button.svg" alt="" />
                     <div class="subtasks-btn-container d-none" id="subtasks-btn-container-addCard">
-                      <img class="subtasks-btn" id="subtasks-del-addCard" src="./assets/icons/board/edit/x_button.svg" alt="" />
+                      <img class="subtasks-btn" id="subtasks-del-addCard" src="assets/icons/board/edit/x_button.svg" alt="" />
                       <div class="subtasks-line"></div>
-                      <img
-                        class="subtasks-btn-addCard"
-                        onclick="checkAddSubtasks()"
-                        id="subtasks-check"
-                        src="./assets/icons/board/edit/check_button.svg"
-                        alt=""
-                      />
+                      <img class="subtasks-btn-addCard" onclick="checkAddSubtasks()" id="subtasks-check" src="assets/icons/board/edit/check_button.svg" alt="" />
                     </div>
                   </div>
                   <ul id="subtasks-list-addCard"></ul>
                 </div>
               </div>
-              <div class="full-size-footer">
-                <div class="button cancel-button">
-                  Cancel
-                  <div class="cancel-button-img"></div>
+              <div class="full-size-footer-addCard">
+                <div><span class="red-star">*</span><span>This fields are required</span></div>
+                <div class="btn-row">
+                  <div class="button clear-button" id="clear-button">
+                    Clear
+                    <div class="clear-button-img"></div>
+                  </div>
+                  <button type="submit" class="button ok-button">
+                    Create Task
+                    <img src="assets/icons/board/fullsize/check.svg" alt="" />
+                  </button>
                 </div>
-                <button type="submit" class="button ok-button">
-                  Create Task
-                  <img src="/assets/icons/board/fullsize/check.svg" alt="" />
-                </button>
               </div>
             </form>
           </div>
@@ -166,15 +164,6 @@
         </div>
       </section>
     </div>
-    <script src="/js/board.js"></script>
-    <script src="/js/board_eventlisteners.js"></script>
-    <script src="/js/board_drap_and_drops.js"></script>
-    <script src="/js/add_task.js"></script>
-    <script src="/js/board_fullsize.js"></script>
-    <script src="/js/board_edit.js"></script>
-    <script src="/js/board_add.js"></script>
-    <script src="js/initials.js"></script>
-
-    <script src="script.js"></script>
+    <script src="js/add_task.js"></script>
   </body>
 </html>

@@ -27,6 +27,24 @@ function getDropZones() {
     doDragOver(task);
     doDragLeave(task);
   });
+  setDragBoard();
+}
+
+/**
+ * Sets the drag and drop functionality for elements with the class "board-card".
+ *
+ * @return {void}
+ */
+function setDragBoard() {
+  const elements = document.querySelectorAll(".board-card");
+  elements.forEach((element) => {
+    element.ondrag = function (e) {
+      e.target.classList.add("dragging");
+    };
+    element.ondragend = function (e) {
+      e.target.classList.remove("dragging");
+    };
+  });
 }
 
 /**
@@ -37,9 +55,9 @@ function getDropZones() {
  * @author Hanbit Chang
  */
 function doDragOver(task) {
-  task.addEventListener("dragover", () => {
+  task.ondragenter = () => {
     task.classList.add("board-card-dropzone--active");
-  });
+  };
 }
 
 /**
@@ -50,9 +68,9 @@ function doDragOver(task) {
  * @author Hanbit Chang
  */
 function doDragLeave(task) {
-  task.addEventListener("dragleave", () => {
+  task.ondragleave = () => {
     task.classList.remove("board-card-dropzone--active");
-  });
+  };
 }
 
 /**
@@ -76,30 +94,47 @@ function doSetData(e, id) {
  */
 async function doDrop(e) {
   e.preventDefault();
-  let urlParams = new URLSearchParams(window.location.search);
-  let actualUsersNumber = urlParams.get("actualUsersNumber");
-  let draggableId = e.dataTransfer.getData("text/plain");
-  let [closestClickedContentID, itemsIndex] = getClosestContent(draggableId);
   let task = e.target;
   task.classList.remove("board-card-dropzone--active");
+  let draggableId = e.dataTransfer.getData("text/plain");
+  let [closestClickedContentID, itemsIndex] = getClosestContent(draggableId);
   const closestTask = task.closest(".board-card-content");
   let closestDroppedContentID = closestTask.id;
   let contentId = Number(closestTask.id);
   let dropZonesInColumn = Array.from(closestTask.querySelectorAll(".board-card-dropzone"));
   let droppedIndex = dropZonesInColumn.indexOf(task);
   let itemId = Number(e.dataTransfer.getData("text/plain"));
-  const droppedItemElement = document.querySelector(`[id="${itemId}"]`);
   let insertAfter = task.parentElement.classList.contains("board-card") ? task.parentElement : task;
-
+  let removeCard = document.getElementById(`${itemId}`);
+  removeCard.classList.add("d-none");
+  const droppedItemElement = document.querySelector(`[id="${itemId}"]`);
   if (droppedItemElement.contains(task)) return;
   if (itemsIndex < droppedIndex && closestClickedContentID == closestDroppedContentID) droppedIndex--;
+  doDropContents(droppedItemElement, insertAfter, itemId, contentId, droppedIndex);
+}
 
+/**
+ * Asynchronously handles the drop event for contents and performs necessary operations.
+ *
+ * @param {HTMLElement} droppedItemElement - The element being dropped.
+ * @param {HTMLElement} insertAfter - The element to insert the dropped element after.
+ * @param {number} itemId - The ID of the dropped item.
+ * @param {number} contentId - The ID of the content.
+ * @param {number} droppedIndex - The index of the dropped item.
+ * @return {Promise<void>} A promise that resolves when all operations are complete.
+ */
+async function doDropContents(droppedItemElement, insertAfter, itemId, contentId, droppedIndex) {
   insertAfter.after(droppedItemElement);
-  await updateItem(`users/${actualUsersNumber}/tasks/`, itemId, {
+  let urlParams = new URLSearchParams(window.location.search);
+  let actualUsersNumber = urlParams.get("actualUsersNumber");
+  updateItem(itemId, {
     contentId,
     position: droppedIndex,
   });
-  initBoard();
+  renderBoards(data);
+  getEventListeners();
+  getDropZones();
+  await putData(`users/${actualUsersNumber}/tasks/`, data);
 }
 
 /**
@@ -126,8 +161,7 @@ function getClosestContent(draggableId) {
  * @param {*} newProps
  * @author Hanbit Chang
  */
-async function updateItem(path = "", itemId, newProps) {
-  let data = await getData("tasks");
+async function updateItem(itemId, newProps) {
   let [item, currentColumn] = (() => {
     for (let column of data) {
       if (column.items == "") column.items = [];
@@ -138,17 +172,19 @@ async function updateItem(path = "", itemId, newProps) {
   })();
 
   item.content = newProps.content === undefined ? item.content : newProps.content;
+  updateItemPosition(item, currentColumn, newProps);
+}
+
+function updateItemPosition(item, currentColumn, newProps) {
   if (newProps.contentId !== undefined && newProps.position !== undefined) {
     let targetColumn = data.find((column) => column.id == newProps.contentId);
 
-    if (currentColumn.items == "") currentColumn.items = [];
+    if (currentColumn.items === "") currentColumn.items = [];
     currentColumn.items.splice(currentColumn.items.indexOf(item), 1);
-    if (currentColumn.items.length == 0) currentColumn.items = "";
+    if (currentColumn.items.length === 0) currentColumn.items = "";
 
-    if (targetColumn.items == "") targetColumn.items = [];
+    if (targetColumn.items === "") targetColumn.items = [];
     targetColumn.items.splice(newProps.position, 0, item);
-    if (targetColumn.items.length == 0) targetColumn.items = "";
+    if (targetColumn.items.length === 0) targetColumn.items = "";
   }
-
-  await putData(path, data);
 }

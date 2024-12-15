@@ -2,30 +2,22 @@ body {
   background-color: #f6f7f8;
 }
 
-::-webkit-scrollbar {
-  width: 8px;
-  padding: 4px;
-}
-
-::-webkit-scrollbar-track {
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #a8a8a8;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;
-}
-
 label {
   font-size: 12px;
 }
 
+input[type="checkbox"] {
+  cursor: pointer;
+}
+
+.no-search-results {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
 .headerAndOpenedContainer {
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   background-color: #f6f7f8;
 }
 
@@ -39,8 +31,8 @@ label {
   flex-direction: column;
   justify-content: space-between;
   height: 70px;
-  padding-top: 80px;
-  padding-left: min(5%, 64px);
+  padding-top: 6vw;
+  padding-left: 6vw;
 }
 
 .board-header-top {
@@ -52,7 +44,7 @@ label {
 }
 
 .board-header-title {
-  font-size: 61px;
+  /* font-size: 61px; */
   font-weight: bold;
 }
 
@@ -74,8 +66,6 @@ label {
   padding-right: 4px;
   display: flex;
   justify-content: space-between;
-  margin-top: 48px;
-  margin-bottom: 8px;
 }
 
 .add-btn-container {
@@ -89,7 +79,7 @@ label {
 .board-header-add-btn {
   width: 142px;
   height: 52px;
-  background-image: url("/assets/icons/board/fullsize/add_task.svg");
+  background-image: url("../assets/icons/board/fullsize/add_task.svg");
   background-repeat: no-repeat;
   background-size: contain;
 }
@@ -97,7 +87,7 @@ label {
 .board-header-add-btn:hover {
   width: 150px;
   height: 52px;
-  background-image: url("/assets/icons/board/fullsize/add_task_hover.svg");
+  background-image: url("../assets/icons/board/fullsize/add_task_hover.svg");
   background-size: cover;
 }
 
@@ -149,7 +139,8 @@ input:focus {
   flex-wrap: wrap;
   /* width: 100%; */
   max-width: 1200px;
-  padding-left: min(5%, 64px);
+  padding-left: 6vw;
+  margin-top: 48px;
 }
 
 .board-card-content {
@@ -161,7 +152,6 @@ input:focus {
   width: 220px;
   min-height: 145px;
   padding: 16px;
-  margin-bottom: 16px;
   border-radius: 24px;
   background-color: #ffffff;
   box-shadow: 0px 0px 10px 3px #00000014;
@@ -262,38 +252,6 @@ progress[value]::-moz-progress-bar {
   border-radius: 10px;
 }
 
-[type="checkbox"] {
-  display: none;
-}
-
-[type="checkbox"] + label {
-  position: relative;
-  padding-left: 30px;
-  cursor: pointer;
-  display: inline-block;
-  line-height: 25px;
-}
-
-[type="checkbox"] + label::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 18px;
-  height: 18px;
-  background: url("/assets/icons/board/fullsize/checkbox.svg") no-repeat;
-}
-
-[type="checkbox"]:checked + label::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 18px;
-  height: 18px;
-  background: url("/assets/icons/board/fullsize/checkbox_checked.svg") no-repeat;
-}
-
 .button {
   cursor: pointer;
 }
@@ -312,7 +270,8 @@ progress[value]::-moz-progress-bar {
   font-weight: bold;
 }
 
-.cancel-button {
+.cancel-button,
+.clear-button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -333,10 +292,23 @@ progress[value]::-moz-progress-bar {
   color: #29abe2;
 }
 
+.clear-button:hover {
+  border: 2px solid #29abe2;
+  color: #29abe2;
+}
+
 .cancel-button-img {
   width: 25px;
   height: 25px;
-  background-image: url("/assets/icons/board/fullsize/cancel_small.svg");
+  background-image: url("../assets/icons/board/fullsize/cancel_small.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.clear-button-img {
+  width: 25px;
+  height: 25px;
+  background-image: url("../assets/icons/board/fullsize/cancel_small.svg");
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -344,7 +316,15 @@ progress[value]::-moz-progress-bar {
 .cancel-button:hover .cancel-button-img {
   width: 25px;
   height: 25px;
-  background-image: url("/assets/icons/board/fullsize/cancel_small_hover.svg");
+  background-image: url("../assets/icons/board/fullsize/cancel_small_hover.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.clear-button:hover .clear-button-img {
+  width: 25px;
+  height: 25px;
+  background-image: url("../assets/icons/board/fullsize/cancel_small_hover.svg");
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -352,13 +332,13 @@ progress[value]::-moz-progress-bar {
 .board-add-btn {
   width: 24px;
   height: 24px;
-  background-image: url("/assets/icons/board/plus_button.svg");
+  background-image: url("../assets/icons/board/plus_button.svg");
 }
 
 .board-add-btn:hover {
   width: 24px;
   height: 24px;
-  background-image: url("/assets/icons/board/plus_button_hover.svg");
+  background-image: url("../assets/icons/board/plus_button_hover.svg");
 }
 
 .ok-button:hover {
@@ -378,10 +358,6 @@ progress[value]::-moz-progress-bar {
   display: none;
 }
 
-.h-120 {
-  min-height: 120px;
-}
-
 .jc-fe {
   justify-content: flex-end;
 }
@@ -391,7 +367,7 @@ progress[value]::-moz-progress-bar {
 }
 
 .column {
-  position:relative;
+  position: relative;
   display: flex;
   flex-direction: column;
 }
@@ -415,12 +391,17 @@ fieldset {
 
 .no-content-img {
   width: 255px;
+  margin-top: 12px;
 }
 
 .header-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.mt-32 {
+  margin-top: 32px;
 }
 
 @media screen and (max-width: 768px) {
@@ -451,9 +432,45 @@ fieldset {
   .due-date {
     margin-top: 32px;
   }
+
+  .cancel-button,
+  .clear-button {
+    height: 25px;
+    padding: 8px;
+    margin-right: 16px;
+    gap: 2px;
+    font-size: 16px;
+  }
+
+  .ok-button {
+    padding: 8px;
+    margin-right: 16px;
+    gap: 2px;
+    font-size: 16px;
+  }
 }
 
 @media screen and (max-width: 510px) {
+  ul {
+    padding: 0;
+  }
+
+  .board-card {
+    box-shadow: none;
+    margin: 8px;
+    z-index: 0;
+  }
+
+  .board-card-content {
+    width: 100%;
+    margin-bottom: 10px;
+    margin-right: 0;
+  }
+
+  .board-header-task {
+    width: 100%;
+  }
+
   .board-header-title {
     font-size: 47px;
   }
@@ -465,6 +482,7 @@ fieldset {
   }
 
   .board-header-search {
+    width: 95%;
     max-width: 470px;
     padding: 4px 0px 4px 8px;
     margin-right: 0;
@@ -480,7 +498,7 @@ fieldset {
   .board-header-add-btn-small {
     width: 40px;
     height: 40px;
-    background-image: url("/assets/icons/board/board-header-btn-sml.svg");
+    background-image: url("../assets/icons/board/board-header-btn-sml.svg");
     background-repeat: no-repeat;
     background-size: contain;
   }
@@ -488,9 +506,46 @@ fieldset {
   .board-header-add-btn-small:hover {
     width: 40px;
     height: 40px;
-    background-image: url("/assets/icons/board/board-header-btn-sml-hover.svg");
+    background-image: url("../assets/icons/board/board-header-btn-sml-hover.svg");
     background-repeat: no-repeat;
     background-size: contain;
+  }
+
+  .board-card-section {
+    overflow-y: scroll;
+    padding-right: 6vw;
+    padding-bottom: 10vh;
+  }
+
+  .board-card-direction {
+    position: relative;
+    /* width: 90vw; */
+    display: flex;
+    overflow-x: scroll;
+    align-items: flex-start;
+  }
+
+  .board-card-direction::-webkit-scrollbar {
+    display: none;
+  }
+
+  .board-card-direction {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .ok-button {
+    padding: min(16px, 5%);
+    gap: 4px;
+    border-radius: 10px;
+    background: #2a3647;
+    color: #fff;
+    font-size: 21px;
+    font-weight: bold;
+  }
+
+  .no-content-img {
+    width: 100%;
   }
 
   .wd-100 {

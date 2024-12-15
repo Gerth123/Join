@@ -40,25 +40,9 @@
   border: 1px solid #d1d1d1;
 }
 
-select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background: transparent;
-  background-image: url("/assets/icons/board/assigned/arrow_drop_down.svg");
-  background-repeat: no-repeat;
-  background-position-x: 96%;
-  background-position-y: 14px;
-  border: 1px solid #dfdfdf;
-  border-radius: 10px;
-  font-size: 16px;
-  padding: 1rem;
-  padding-right: 2rem;
-  cursor: pointer;
-}
-
 .btn-text,
 .btn-text-category {
-  font-size: 17px;
+  font-size: 20px;
   font-weight: 400;
   color: #333;
 }
@@ -66,14 +50,14 @@ select {
 .arrow-down {
   width: 24px;
   height: 24px;
-  background-image: url("/assets/icons/board/assigned/arrow_drop_down.svg");
+  background-image: url("../assets/icons/board/assigned/arrow_drop_down.svg");
   background-size: cover;
 }
 
 .select-btn.open .arrow-down {
   width: 24px;
   height: 24px;
-  background-image: url("/assets/icons/board/assigned/arrow_drop_up.svg");
+  background-image: url("../assets/icons/board/assigned/arrow_drop_up.svg");
   background-size: cover;
 }
 
@@ -143,14 +127,14 @@ select {
 .check-img {
   width: 24px;
   height: 24px;
-  background-image: url("/assets/icons/board/assigned/checkBtn.svg");
+  background-image: url("../assets/icons/board/assigned/checkBtn.svg");
   background-size: cover;
 }
 
 .assigned-item.checked .check-img {
   width: 24px;
   height: 24px;
-  background-image: url("/assets/icons/board/assigned/checkedBtn.svg");
+  background-image: url("../assets/icons/board/assigned/checkedBtn.svg");
   background-size: cover;
 }
 
@@ -165,4 +149,5 @@ select {
 .assigned-user {
   display: flex;
   align-items: center;
+  position: relative;
 }

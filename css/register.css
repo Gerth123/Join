@@ -34,16 +34,19 @@ a:hover {
 
 .logoImg {
     height: 12vh;
+    height: 12svh;
 }
 
 .wholeSignUpContainer {
     display: flex;
     height: 100vh;
+    height: 100svh;
     width: 100vw;
     align-items: center;
     flex-direction: column;
     position: relative;
     z-index: 1;
+    justify-content: center;
 }
 
 .signUpContainer {
@@ -54,11 +57,12 @@ a:hover {
     background-color: rgb(255, 255, 255);
     border-radius: 15px;
     height: 72vh;
+    height:  72svh;
+    max-height: 530px;
+    max-width: 500px;
     width: 33vw;
     min-width: 400px;
     box-shadow: 0px 0px 5px 0px rgb(0, 0, 0, 0.1);
-    margin-top: 14vh;
-    margin-bottom: 4vh;
 }
 
 .headlineAndArrowContainer {
@@ -110,16 +114,17 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
     height: 45vh;
-    gap: 15px;
+    height: 45svh;
+    max-height: 300px;
 }
 
 .signUpInputFields {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 15px;
+    gap: 20px;
 }
 
 .signUpInputEmail {
@@ -151,7 +156,7 @@ h1 {
 .signUpForm img {
     height: 20px;
     width: 20px;
-    margin-left: -5vh;
+    margin-left: -30px;
 }
 
 .acceptPrivacyPolicyContainer {
@@ -312,8 +317,10 @@ footer {
     justify-content: center;
     gap: 30px;
     align-items: center;
-    font-size: 0.8em;
-    height: 10vh;
+    font-size: 0.9em;
+    position: absolute;
+    bottom: 3vh;
+    bottom: 3svh;
 }
 
 .legalNoticeText {
@@ -357,6 +364,7 @@ footer {
     background-color: rgb(42, 54, 71);
     color: white;
     margin-top: 10vh;
+    margin-top: 10svh;
 }
 
 
@@ -364,6 +372,7 @@ footer {
     position: absolute;
     background-color: rgb(246, 247, 248, 0.45);
     height: 100vh;
+    height: 100svh;
     width: 100vw;
     z-index: 999;
     top: 0;
@@ -385,13 +394,13 @@ footer {
 
 @media (max-width: 750px) {
     .logoContainer {
-        top: 30px;
-        left: 30px;
+        top: 10px;
+        left: 10px;
     }
 
     .signUpContainer {
-        height: 66vh;
-        margin-top: 22vh;
+        height: 64vh;
+        height: 64svh;
     }
 }
 
