@@ -23,7 +23,6 @@
     <script src="js/board_fullsize_listener.js"></script>
     <script src="js/board_eventlisteners.js"></script>
     <script src="js/board_drap_and_drops.js"></script>
-    <script src="js/add_task.js"></script>
     <script src="js/board_fullsize.js"></script>
     <script src="js/board_edit.js"></script>
     <script src="js/board_add.js"></script>
@@ -72,8 +71,8 @@
                 </div>
                 <div class="add-line"></div>
                 <div class="column wd-45 wd-100">
-                  <label class="full-size-label due-date" for="date-addCard">Due date<span class="red-star">*</span></label>
-                  <input class="full-size-input date-input" id="date-addCard" type="date" required />
+                  <label class="full-size-label due-date" for="date-addCard"> Due date<span class="red-star">*</span> </label>
+                  <input class="full-size-input date-input" id="date-addCard" type="date" required max="9999-12-31"/>
                   <div class="full-size-label">Priority</div>
                   <div class="full-size-priority-container">
                     <div class="priority-button-container">
@@ -102,13 +101,7 @@
                     <div class="subtasks-btn-container d-none" id="subtasks-btn-container-addCard">
                       <img class="subtasks-btn" id="subtasks-del-addCard" src="assets/icons/board/edit/x_button.svg" alt="" />
                       <div class="subtasks-line"></div>
-                      <img
-                        class="subtasks-btn-addCard"
-                        onclick="checkAddSubtasks()"
-                        id="subtasks-check"
-                        src="assets/icons/board/edit/check_button.svg"
-                        alt=""
-                      />
+                      <img class="subtasks-btn-addCard" onclick="checkAddSubtasks()" id="subtasks-check" src="assets/icons/board/edit/check_button.svg" alt="" />
                     </div>
                   </div>
                   <ul id="subtasks-list-addCard"></ul>
@@ -171,5 +164,6 @@
         </div>
       </section>
     </div>
+    <script src="js/add_task.js"></script>
   </body>
 </html>
