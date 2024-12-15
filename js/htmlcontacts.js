@@ -117,7 +117,7 @@ async function findContactIdByEmail(email) {
             if (actualUsers[userId] === null) {
                 continue;
             }
-            if (actualUsers[userId].mail === email) {
+            if (actualUsers[userId].email === email) {
                 return userId;
             }
         }
@@ -138,13 +138,13 @@ async function findContactIdByEmail(email) {
 async function generateContactHTML(contact) {
     const randomColor = await generateRandomColor(contact.name);
     const initials = await getInitials(contact.name);
-    let userId = await findContactIdByEmail(contact.mail);
+    let userId = await findContactIdByEmail(contact.email);
     return `
         <div class="contact contactCard" data-id="${userId}" data-phone="${contact.phone}">
             <div class="profilePicture" style="background-color: ${randomColor};">${initials}</div>
             <div class="name-mailDiv">
                 <div class="NameContact">${contact.name}</div>
-                <div class="EmailContact">${contact.mail}</div>
+                <div class="EmailContact">${contact.email}</div>
             </div>
         </div>
     `;
@@ -419,7 +419,7 @@ function getInputValue(id) {
  */
 async function createUpdatedContact(userId, contactId, name, newEmail, phone) {
     return {
-        mail: newEmail,
+        email: newEmail,
         name: name,
         phone: phone,
         color: await loadData(`users/${userId}/contacts/${contactId}/color`),

@@ -32,13 +32,13 @@ async function addUser() {
     let confirmPassword = document.getElementById('password2');
     let userContact = [{
         'name': name,
-        'mail': email,
+        'email': email,
         'phone': 'none',
         'color': await generateRandomColor(),
     }];
     let testContactsAndUser = [...testContacts, ...userContact];
     console.log(testContactsAndUser);
-    let newArray = { 'mail': email, 'name': name, 'password': password.value, 'contacts': testContactsAndUser, 'tasks': testTasks };
+    let newArray = { 'email': email, 'name': name, 'password': password.value, 'contacts': testContactsAndUser, 'tasks': testTasks };
     let actualUsers = await loadData('users');
     let mailExists = await checkMail(msgBox, email, actualUsers);
     if (mailExists) {
@@ -52,9 +52,9 @@ async function addUser() {
 }
 
 /**
- * This function checks if the user mail already exists in the database.
+ * This function checks if the user email already exists in the database.
  * 
- * @param {Element} msgBox - The message box element to show if the mail already exists.
+ * @param {Element} msgBox - The message box element to show if the email already exists.
  * @param {string} email - The email to check.
  * @param {Array} actualUsers - The array of actual users.
  * 
@@ -64,7 +64,7 @@ async function addUser() {
 async function checkMail(msgBox, email, actualUsers) {
     for (let key in actualUsers) {
         let user = actualUsers[key];
-        if (user && user.mail === email) {
+        if (user && user.email === email) {
             let msgBoxText = document.getElementById('msgBoxText');
             msgBoxText.innerHTML = 'User already exists. Please use another Mail-Adress!';
             msgBox.classList.remove('d-none');

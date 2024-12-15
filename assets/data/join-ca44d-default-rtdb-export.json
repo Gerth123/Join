@@ -4,66 +4,66 @@
       "contacts": [
         {
           "color": "#604725",
-          "mail": "antom@gmail.com",
+          "email": "antom@gmail.com",
           "name": "Anton Mayer",
           "phone": "+491234567890"
         },
         {
           "color": "#F82A43",
-          "mail": "hans@gmail.com",
+          "email": "hans@gmail.com",
           "name": "Hans Mueller",
           "phone": "+491234567890"
         },
         {
           "color": "#8ACF79",
-          "mail": "benedikt@gmail.com",
+          "email": "benedikt@gmail.com",
           "name": "Benedikt Ziegler",
           "phone": "+491234567890"
         },
         {
           "color": "#F7F428",
-          "mail": "davidberg@gmail.com",
+          "email": "davidberg@gmail.com",
           "name": "David Eisenberg",
           "phone": "+491234567890"
         },
         {
           "color": "#8AFA40",
-          "mail": "eva@gmail.com",
+          "email": "eva@gmail.com",
           "name": "Eva Fischer",
           "phone": "+491234567890"
         },
         {
           "color": "#A37011",
-          "mail": "emmanuelma@gmail.com",
+          "email": "emmanuelma@gmail.com",
           "name": "Emmanuel Mauer",
           "phone": "+491234567890"
         },
         {
           "color": "#736ABB",
-          "mail": "bauer@gmail.com",
+          "email": "bauer@gmail.com",
           "name": "Marcel Bauer",
           "phone": "+491234567890"
         },
         {
           "color": "#C54A49",
-          "mail": "wolf@gmail.com",
+          "email": "wolf@gmail.com",
           "name": "Tatjana Wolf",
           "phone": "+491234567890"
         },
         {
           "color": "#A252F3",
-          "mail": "klausw@gmail.com",
+          "email": "klausw@gmail.com",
           "name": "Klaus Werner",
           "phone": "+491234567890"
         },
         {
           "color": "#C44E8A",
-          "mail": "peterhahn@gmail.com",
+          "email": "peterhahn@gmail.com",
           "name": "Peter Hahn",
           "phone": "+491234567890"
         }
       ],
-      "mail": "dfs@sdf",
+      "email": "dfs@sdf",
       "name": "Robin Gerth",
       "password": "dfgdfg",
       "tasks": [
@@ -224,66 +224,66 @@
       "contacts": [
         {
           "color": "#0BFD99",
-          "mail": "antom@gmail.com",
+          "email": "antom@gmail.com",
           "name": "Anton Mayer",
           "phone": "+491234567890"
         },
         {
           "color": "#5A4F9B",
-          "mail": "hans@gmail.com",
+          "email": "hans@gmail.com",
           "name": "Hans Mueller",
           "phone": "+491234567890"
         },
         {
           "color": "#00E126",
-          "mail": "benedikt@gmail.com",
+          "email": "benedikt@gmail.com",
           "name": "Benedikt Ziegler",
           "phone": "+491234567890"
         },
         {
           "color": "#2E7B9D",
-          "mail": "davidberg@gmail.com",
+          "email": "davidberg@gmail.com",
           "name": "David Eisenberg",
           "phone": "+491234567890"
         },
         {
           "color": "#493269",
-          "mail": "eva@gmail.com",
+          "email": "eva@gmail.com",
           "name": "Eva Fischer",
           "phone": "+491234567890"
         },
         {
           "color": "#692C30",
-          "mail": "emmanuelma@gmail.com",
+          "email": "emmanuelma@gmail.com",
           "name": "Emmanuel Mauer",
           "phone": "+491234567890"
         },
         {
           "color": "#46CB5F",
-          "mail": "bauer@gmail.com",
+          "email": "bauer@gmail.com",
           "name": "Marcel Bauer",
           "phone": "+491234567890"
         },
         {
           "color": "#1810C5",
-          "mail": "wolf@gmail.com",
+          "email": "wolf@gmail.com",
           "name": "Tatjana Wolf",
           "phone": "+491234567890"
         },
         {
           "color": "#BD8F9E",
-          "mail": "klausw@gmail.com",
+          "email": "klausw@gmail.com",
           "name": "Klaus Werner",
           "phone": "+491234567890"
         },
         {
           "color": "#DB4D2E",
-          "mail": "peterhahn@gmail.com",
+          "email": "peterhahn@gmail.com",
           "name": "Peter Hahn",
           "phone": "+491234567890"
         }
       ],
-      "mail": "robingert@gmail.com",
+      "email": "robingert@gmail.com",
       "name": "Robin",
       "password": "dfgdfg",
       "tasks": [
@@ -444,66 +444,66 @@
       "contacts": [
         {
           "color": "#F3EDBD",
-          "mail": "antom@gmail.com",
+          "email": "antom@gmail.com",
           "name": "Anton Mayer",
           "phone": "+491234567890"
         },
         {
           "color": "#FA5C4A",
-          "mail": "hans@gmail.com",
+          "email": "hans@gmail.com",
           "name": "Hans Mueller",
           "phone": "+491234567890"
         },
         {
           "color": "#4E8D44",
-          "mail": "benedikt@gmail.com",
+          "email": "benedikt@gmail.com",
           "name": "Benedikt Ziegler",
           "phone": "+491234567890"
         },
         {
           "color": "#5A0286",
-          "mail": "davidberg@gmail.com",
+          "email": "davidberg@gmail.com",
           "name": "David Eisenberg",
           "phone": "+491234567890"
         },
         {
           "color": "#3D5A61",
-          "mail": "eva@gmail.com",
+          "email": "eva@gmail.com",
           "name": "Eva Fischer",
           "phone": "+491234567890"
         },
         {
           "color": "#8A1FFB",
-          "mail": "emmanuelma@gmail.com",
+          "email": "emmanuelma@gmail.com",
           "name": "Emmanuel Mauer",
           "phone": "+491234567890"
         },
         {
           "color": "#EA8E1E",
-          "mail": "bauer@gmail.com",
+          "email": "bauer@gmail.com",
           "name": "Marcel Bauer",
           "phone": "+491234567890"
         },
         {
           "color": "#8DAAA2",
-          "mail": "wolf@gmail.com",
+          "email": "wolf@gmail.com",
           "name": "Tatjana Wolf",
           "phone": "+491234567890"
         },
         {
           "color": "#038C18",
-          "mail": "klausw@gmail.com",
+          "email": "klausw@gmail.com",
           "name": "Klaus Werner",
           "phone": "+491234567890"
         },
         {
           "color": "#CAD16D",
-          "mail": "peterhahn@gmail.com",
+          "email": "peterhahn@gmail.com",
           "name": "Peter Hahn",
           "phone": "+491234567890"
         }
       ],
-      "mail": "robingert11@web.de",
+      "email": "robingert11@web.de",
       "name": "Robin",
       "password": "dfgdfg",
       "tasks": [
@@ -664,66 +664,66 @@
       "contacts": [
         {
           "color": "#7A16B9",
-          "mail": "antom@gmail.com",
+          "email": "antom@gmail.com",
           "name": "Anton Mayer",
           "phone": "+491234567890"
         },
         {
           "color": "#1231C1",
-          "mail": "hans@gmail.com",
+          "email": "hans@gmail.com",
           "name": "Hans Mueller",
           "phone": "+491234567890"
         },
         {
           "color": "#B29A9A",
-          "mail": "benedikt@gmail.com",
+          "email": "benedikt@gmail.com",
           "name": "Benedikt Ziegler",
           "phone": "+491234567890"
         },
         {
           "color": "#0FCA7B",
-          "mail": "davidberg@gmail.com",
+          "email": "davidberg@gmail.com",
           "name": "David Eisenberg",
           "phone": "+491234567890"
         },
         {
           "color": "#D56869",
-          "mail": "eva@gmail.com",
+          "email": "eva@gmail.com",
           "name": "Eva Fischer",
           "phone": "+491234567890"
         },
         {
           "color": "#04D2ED",
-          "mail": "emmanuelma@gmail.com",
+          "email": "emmanuelma@gmail.com",
           "name": "Emmanuel Mauer",
           "phone": "+491234567890"
         },
         {
           "color": "#56381B",
-          "mail": "bauer@gmail.com",
+          "email": "bauer@gmail.com",
           "name": "Marcel Bauer",
           "phone": "+491234567890"
         },
         {
           "color": "#E2D2D1",
-          "mail": "wolf@gmail.com",
+          "email": "wolf@gmail.com",
           "name": "Tatjana Wolf",
           "phone": "+491234567890"
         },
         {
           "color": "#5CBA47",
-          "mail": "klausw@gmail.com",
+          "email": "klausw@gmail.com",
           "name": "Klaus Werner",
           "phone": "+491234567890"
         },
         {
           "color": "#D1519C",
-          "mail": "peterhahn@gmail.com",
+          "email": "peterhahn@gmail.com",
           "name": "Peter Hahn",
           "phone": "+491234567890"
         }
       ],
-      "mail": "robingerth11@web.de",
+      "email": "robingerth11@web.de",
       "name": "Robin",
       "password": "dfgdfg",
       "tasks": [

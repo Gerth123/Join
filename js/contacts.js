@@ -269,13 +269,13 @@ function createSeparatorDiv() {
  * Saves a contact in Firebase under a sequential ID and adds a randomly generated color.
  * Author: Elias
  * @param {string} name - The name of the contact.
- * @param {string} mail - The email of the contact.
+ * @param {string} email - The email of the contact.
  * @param {string} phone - The phone number of the contact.
  * @param {string} userId - The user ID under which the contact is saved.
  */
-async function saveContact(name, mail, phone, userId) {
+async function saveContact(name, email, phone, userId) {
   const baseUrl = 'https://join-ca44d-default-rtdb.europe-west1.firebasedatabase.app/';
-  const contactData = createContactData(name, mail, phone);
+  const contactData = createContactData(name, email, phone);
   const newContactId = await findFirstMissingId(userId);
   const response = await saveContactToFirebase(baseUrl, userId, newContactId, contactData);
 
@@ -304,14 +304,14 @@ function generateRandomColor() {
 * Creates a contact data object with a random color.
 * Author: Elias
 * @param {string} name - The name of the contact.
-* @param {string} mail - The email of the contact.
+* @param {string} email - The email of the contact.
 * @param {string} phone - The phone number of the contact.
 * @returns {Object} - The contact data object.
 */
-function createContactData(name, mail, phone) {
+function createContactData(name, email, phone) {
   return {
     name,
-    mail,
+    email,
     phone,
     color: generateRandomColor()
   };
@@ -432,17 +432,17 @@ async function getData(data) {
 async function createContact(event) {
   event.preventDefault();
   const name = document.getElementById('contactName').value;
-  const mail = document.getElementById('contactEmail').value;
+  const email = document.getElementById('contactEmail').value;
   const phone = document.getElementById('contactPhone').value;
   let userId = await getUserIdFormUrl();
   let contacts = await getData("contacts");
-  let alreadyExist = contacts.find(contact => contact && contact.mail == mail);
+  let alreadyExist = contacts.find(contact => contact && contact.email == email);
 
   if (alreadyExist) {
     alert("The contact already exists!");
   } else {
     try {
-      const newContact = await saveContact(name, mail, phone, userId);
+      const newContact = await saveContact(name, email, phone, userId);
       clearInputFields();
       updatePageUrl(userId);
       await handleLoadedContacts(userId);
