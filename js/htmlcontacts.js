@@ -151,7 +151,6 @@ async function findContactIdByEmail(email) {
  * Author: Elias
  */
 async function generateContactHTML(contact) {
-    const randomColor = await generateRandomColor(contact.name);
     const initials = await getInitials(contact.name);
     let userId = await findContactIdByEmail(contact.email);
     return `
