@@ -156,7 +156,7 @@ async function generateContactHTML(contact) {
     let userId = await findContactIdByEmail(contact.email);
     return `
         <div class="contact contactCard" data-id="${userId}" data-phone="${contact.phone}">
-            <div class="profilePicture" style="background-color: ${randomColor};">${initials}</div>
+            <div class="profilePicture" style="background-color: ${contact.color};">${initials}</div>
             <div class="name-mailDiv">
                 <div class="NameContact">${contact.name}</div>
                 <div class="EmailContact">${contact.email}</div>
