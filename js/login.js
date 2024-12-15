@@ -79,6 +79,7 @@ async function userNotFound(found, actualUsers, actualMailSearchIndex) {
         let msgBox = document.getElementById('msgBox');
         msgBox.classList.remove('d-none');
         let msgBoxText = document.getElementById('msgBoxText');
+        console.log(actualUsers);
         if (actualMailSearchIndex !== undefined) {
             msgBoxText.innerHTML = 'Wrong password. Please try again!';
         } else {
