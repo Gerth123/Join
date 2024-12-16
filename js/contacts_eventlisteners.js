@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     try {
         let userId = await getUserIdFormUrl();
         // const actualUsers = await loadData(`users/${userId}/contacts`);
-        const actualUsers = await loadDataBackend(`api/users/all-contacts/`);
+        const actualUsers = await loadDataBackend(`api/contacts/all-contacts/`);
         if (actualUsers) {
             const sortedContacts = sortContacts(actualUsers);
             displayContacts(sortedContacts);
@@ -175,7 +175,8 @@ function setupEditAndDeleteButtons(contactDetailsDiv, card, name, email, phone, 
 async function deleteContactOnclick(card, email, contentRight, contactDetailsDiv, contacts) {
     try {
         card.remove();
-        await deleteContactFromFirebase(email, contacts); 
+        // await deleteContactFromFirebase(email, contacts); 
+        await deleteContactFromBackend(email);
         removeEmptyLetterHeaders();
         contactDetailsDiv.innerHTML = "";
         if (window.innerWidth < 1100) contentRight.style.display = "none";

@@ -40,6 +40,17 @@ async function postData(path = '', data = {}) {
     return responseToJson = await response.json();
 }
 
+postDataBackend = async function (path = '', data = {}) {
+    let response = await fetch(baseUrlBackend + path, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+    return responseToJson = await response.json();
+}
+
 /**
  * This function is used to delete data from the Firebase database.
  * 
@@ -49,6 +60,13 @@ async function postData(path = '', data = {}) {
  */
 async function deleteData(path = '') {
     let response = await fetch(baseUrl + path + '.json', {
+        method: 'DELETE',
+    });
+    return responseToJson = await response.json();
+}
+
+async function deleteDataBackend(path = '') {
+    let response = await fetch(baseUrlBackend + path, {
         method: 'DELETE',
     });
     return responseToJson = await response.json();
@@ -75,7 +93,7 @@ async function putData(path = '', data = {}) {
 
 async function putDataBackend(path = '', data = {}) {
     let response = await fetch(baseUrlBackend + path, {
-        method: 'POST',
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },

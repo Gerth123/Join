@@ -142,6 +142,23 @@ async function findContactIdByEmail(email, actualUsers) {
   }
 }
 
+async function findContactIdByEmailBackend(email) {
+  try {
+    let data = await loadDataBackend("api/contacts/all-contacts/");
+    for (let userId in data) {
+      if (data[userId] === null) {
+        continue;
+      }
+      if (data[userId].email === email) {
+        return data[userId].id;
+      }
+    }
+    throw new Error("Kein Benutzer gefunden für E-Mail: " + email);
+  } catch (error) {
+    throw error;
+  }
+}
+
 /**
  * Generates HTML for a contact.
  *
@@ -194,7 +211,14 @@ function getInitials(name) {
 async function deleteContactFromFirebase(email, contacts) {
   let userId = await getUserIdFormUrl();
   newContactId = await findContactIdByEmail(email, contacts);
-  await deleteData(`users/` + userId + `/contacts/` + newContactId);
+  await deleteDataBackend(`api/contacts/single-contact/${newContactId}/`);
+}
+
+async function deleteContactFromBackend(email) {
+  // let userId = await getUserIdFormUrl();
+  newContactId = await findContactIdByEmailBackend(email);
+  console.log(newContactId);
+  await deleteDataBackend(`api/contacts/single-contact-delete/${newContactId}/`);
 }
 
 /**
@@ -314,7 +338,8 @@ function createOverlayHTML(randomColor, initials, name, email, phone) {
 async function handleDeleteContact(email) {
   try {
     await removeContactCard(email);
-    await deleteContactFromFirebase(email);
+    // await deleteContactFromFirebase(email);
+    await deleteContactFromBackend(email);
     closeEditContact();
   } catch (error) {
     console.error("Fehler beim Löschen des Kontakts:", error);
@@ -361,12 +386,11 @@ async function updateContact(event) {
   let name = document.getElementById("contactName" + globalEmail).value;
   let newEmail = document.getElementById("contactEmail" + globalEmail).value;
   let phone = document.getElementById("contactPhone" + globalEmail).value;
-  let color = document.getElementById("contactColor" + globalEmail).value;
   let userId = getUserIdFormUrl();
   let initials = getInitials(name);
-  let contacts = await getData("contacts");
+  let contacts = await loadDataBackend("api/contacts/all-contacts/");
   let contactId = await findContactIdByEmail(globalEmail, contacts);
-  // let randomColor = await findContactsRandomColor(globalEmail, contacts);
+  let color = await findContactsRandomColor(globalEmail, contacts);
   await controlAndUpdateTheDates(userId, contactId, name, newEmail, phone, initials, color, contacts);
 }
 
@@ -389,6 +413,7 @@ async function controlAndUpdateTheDates(userId, contactId, name, newEmail, phone
     let updatedContact = await createUpdatedContact(name, newEmail, phone, randomColor);
     const contentRight = document.getElementById("contentright");
     await updateContactInFirebase(contactId, updatedContact, userId);
+    await putDataBackend(`api/contacts/single-contact/` + contactId + '/', updatedContact);
     await refreshAndDisplayContacts(userId);
     const contactDetailsDiv = document.querySelector(".contactdetails-right");
     contactDetailsDiv.innerHTML = generateContactDetailsHTML(name, newEmail, phone, randomColor, initials);
