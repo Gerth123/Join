@@ -152,7 +152,7 @@ function createSeparatorDiv() {
  * @param {Object} contacts - The contacts object.
  */
 async function saveContact(name, email, phone, userId, contacts) {
-  const contactData = await createContactData(name, email, phone);
+  const contactData = await createContactData(name, email, phone, userId);
   let path = 'api/contacts/all-contacts/';
   await postDataBackend(path, contactData);
   return contactData;
@@ -180,12 +180,13 @@ function generateRandomColor() {
  * @param {string} phone - The phone number of the contact.
  * @returns {Object} - The contact data object.
  */
-function createContactData(name, email, phone) {
+function createContactData(name, email, phone, user_id) {  
   return {
     color: generateRandomColor(), 
     email,
     name,
-    phone,    
+    phone,
+    user_id
   };
 }
 

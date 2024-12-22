@@ -4,19 +4,28 @@
 let baseUrlBackend = 'http://127.0.0.1:8000/';
 
 /**
- * This function is used to fetch data from the Backend.
+ * This function is used to fetch data from the Backend with a GET request and the authorization token.
  * 
  * @param {string} path - The path to fetch data from.
  * 
  * @author: Robin
  */
 async function loadDataBackend(path = '') {
-    let response = await fetch(baseUrlBackend + path);
+    const user = JSON.parse(localStorage.getItem('user'));
+    let token = user.token;
+
+    let response = await fetch(baseUrlBackend + path, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+    });
     return responseToJson = await response.json();
 }
 
 /**
- * This function is used to post data to the Firebase database.
+ * This function is used to post data to the Backend with a POST request and the authorization token.
  * 
  * @param {string} path - The path to post data to.
  * @param {object} data - The data to post.
@@ -24,10 +33,14 @@ async function loadDataBackend(path = '') {
  * @author: Robin
  */
 async function postDataBackend(path = '', data = {}) {
+    const user = JSON.parse(localStorage.getItem('user'));
+    let token = user.token;
+
     let response = await fetch(baseUrlBackend + path, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
         },
         body: JSON.stringify(data),
     });
@@ -35,21 +48,28 @@ async function postDataBackend(path = '', data = {}) {
 }
 
 /**
- * This function is used to delete data from the Backend.
+ * This function is used to delete data from the Backend with a DELETE request and the authorization token.
  * 
  * @param {string} path - The path to delete data from.
  * 
  * @author: Robin
  */
 async function deleteDataBackend(path = '') {
+    const user = JSON.parse(localStorage.getItem('user'));
+    let token = user.token;
+
     let response = await fetch(baseUrlBackend + path, {
         method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        }
     });
     return responseToJson = await response.json();
 }
 
 /**
- * This function is used to update data in the Backend.
+ * This function is used to update data in the Backend with a PUT request and the authorization token.
  * 
  * @param {string} path - The path to update data in.
  * @param {object} data - The data to update.
@@ -57,10 +77,14 @@ async function deleteDataBackend(path = '') {
  * @author: Robin
  */
 async function putDataBackend(path = '', data = {}) {
+    const user = JSON.parse(localStorage.getItem('user'));
+    let token = user.token;
+
     let response = await fetch(baseUrlBackend + path, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
         },
         body: JSON.stringify(data),
     });
@@ -95,9 +119,7 @@ function goBackToLastTab() {
  * @author: Robin
  */
 function changeHtmlPage(page) {
-    let urlParams = new URLSearchParams(window.location.search);
-    let actualUsersNumber = urlParams.get('actualUsersNumber');
-    window.location.href = page + `?msg=welcome&actualUsersNumber=${actualUsersNumber}`;
+    window.location.href = page;
 }
 
 /**
