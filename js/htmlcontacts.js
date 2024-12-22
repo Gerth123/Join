@@ -120,37 +120,21 @@ function generateContactDetailsHTML(name, email, phone, randomColor, initials) {
 }
 
 /**
- * Finds the user ID based on the email address.
- * @param {string} email - The email address to search for.
- * @param {Object} actualUsers - The actual users object.
- * @returns {string} - The user ID associated with the email address.
- * Author: Elias
- */
-async function findContactIdByEmail(email, actualUsers) {
-  try {
-    for (let userId in actualUsers) {
-      if (actualUsers[userId] === null) {
-        continue;
-      }
-      if (actualUsers[userId].email === email) {
-        return userId;
-      }
-    }
-    throw new Error("Kein Benutzer gefunden für E-Mail: " + email);
-  } catch (error) {
-    throw error;
-  }
-}
+ * Finds the ID of a contact by email.
+ *
+ * @param {string} email - The email address of the contact.
+ * @param {Array<Object>} contacts - The contacts array.
+ * @returns {string} - The ID of the contact.
 
-async function findContactIdByEmailBackend(email) {
+ */
+async function findContactIdByEmail(email, contacts) {
   try {
-    let data = await loadDataBackend("api/contacts/all-contacts/");
-    for (let userId in data) {
-      if (data[userId] === null) {
+    for (let contactId in contacts) {
+      if (contacts[contactId] === null) {
         continue;
       }
-      if (data[userId].email === email) {
-        return data[userId].id;
+      if (contacts[contactId].email === email) {
+        return contacts[contactId].id; 
       }
     }
     throw new Error("Kein Benutzer gefunden für E-Mail: " + email);
@@ -200,24 +184,11 @@ function getInitials(name) {
   return initials;
 }
 
-/**
- * Deletes a contact from Firebase.
- *
- * @param {string} contactId - The ID of the contact to delete.
- * @param {Array<Object>} contacts - The contacts array.
- * 
- * Author: Elias
- */
-async function deleteContactFromFirebase(email, contacts) {
-  let userId = await getUserIdFormUrl();
-  newContactId = await findContactIdByEmail(email, contacts);
-  await deleteDataBackend(`api/contacts/single-contact/${newContactId}/`);
-}
-
 async function deleteContactFromBackend(email) {
-  // let userId = await getUserIdFormUrl();
-  newContactId = await findContactIdByEmailBackend(email);
-  console.log(newContactId);
+  let userId = JSON.parse(localStorage.getItem('user')).user_id;
+  let userData = await loadDataBackend(`api/users/profiles/${userId}/`);
+  let contacts = userData.contacts;
+  newContactId = await findContactIdByEmail(email, contacts);
   await deleteDataBackend(`api/contacts/single-contact-delete/${newContactId}/`);
 }
 
@@ -386,9 +357,10 @@ async function updateContact(event) {
   let name = document.getElementById("contactName" + globalEmail).value;
   let newEmail = document.getElementById("contactEmail" + globalEmail).value;
   let phone = document.getElementById("contactPhone" + globalEmail).value;
-  let userId = getUserIdFormUrl();
   let initials = getInitials(name);
-  let contacts = await loadDataBackend("api/contacts/all-contacts/");
+  let userId = JSON.parse(localStorage.getItem('user')).user_id;
+  let userData = await loadDataBackend(`api/users/profiles/${userId}/`);
+  let contacts = userData.contacts;  
   let contactId = await findContactIdByEmail(globalEmail, contacts);
   let color = await findContactsRandomColor(globalEmail, contacts);
   await controlAndUpdateTheDates(userId, contactId, name, newEmail, phone, initials, color, contacts);
@@ -412,8 +384,7 @@ async function controlAndUpdateTheDates(userId, contactId, name, newEmail, phone
   try {
     let updatedContact = await createUpdatedContact(name, newEmail, phone, randomColor);
     const contentRight = document.getElementById("contentright");
-    await updateContactInFirebase(contactId, updatedContact, userId);
-    await putDataBackend(`api/contacts/single-contact/` + contactId + '/', updatedContact);
+    await putDataBackend(`api/contacts/single/` + contactId + '/', updatedContact);
     await refreshAndDisplayContacts();
     const contactDetailsDiv = document.querySelector(".contactdetails-right");
     contactDetailsDiv.innerHTML = generateContactDetailsHTML(name, newEmail, phone, randomColor, initials);

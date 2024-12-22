@@ -175,7 +175,6 @@ function setupEditAndDeleteButtons(contactDetailsDiv, card, name, email, phone, 
 async function deleteContactOnclick(card, email, contentRight, contactDetailsDiv, contacts) {
     try {
         card.remove();
-        // await deleteContactFromFirebase(email, contacts); 
         await deleteContactFromBackend(email);
         removeEmptyLetterHeaders();
         contactDetailsDiv.innerHTML = "";

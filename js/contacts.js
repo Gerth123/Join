@@ -153,7 +153,6 @@ function createSeparatorDiv() {
  */
 async function saveContact(name, email, phone, userId, contacts) {
   const contactData = await createContactData(name, email, phone);
-  // const newContactId = await findMissingId(contacts);
   let path = 'api/contacts/all-contacts/';
   await postDataBackend(path, contactData);
   return contactData;
@@ -231,7 +230,8 @@ async function createContact(event) {
   const email = document.getElementById("contactEmail").value;
   const phone = document.getElementById("contactPhone").value;
   let userId = JSON.parse(localStorage.getItem('user')).user_id;  
-  let contacts = await loadDataBackend(`api/users/profiles/${userId}/`);
+  let userData = await loadDataBackend(`api/users/profiles/${userId}/`);
+  let contacts = userData.contacts;
   let alreadyExist = contacts.find((contact) => contact && contact.email == email);
   await checkIfContactAlreadyExists(alreadyExist, userId, phone, name, email, contacts);
 }
@@ -324,20 +324,6 @@ function closeEditAndDeleteResponsive() {
       editDeleteDiv.style.display = "none";
     }, 650);
   }
-}
-
-/**
- * Updates a contact's information in Firebase.
- *
- * @param {string} contactId - The ID of the contact to update.
- * @param {Object} updatedContact - The updated contact object containing name, email, and phone.
- * @param {string} userId - The ID of the user who owns the contact.
- *
- * Author: Elias
- */
-async function updateContactInFirebase(contactId, updatedContact, userId) {
-  // await putData(`users/` + userId + `/contacts/` + contactId, updatedContact);
-  await putDataBackend(`api/contacts/single-contact/` + contactId, updatedContact);
 }
 
 /**
