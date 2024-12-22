@@ -414,7 +414,7 @@ async function controlAndUpdateTheDates(userId, contactId, name, newEmail, phone
     const contentRight = document.getElementById("contentright");
     await updateContactInFirebase(contactId, updatedContact, userId);
     await putDataBackend(`api/contacts/single-contact/` + contactId + '/', updatedContact);
-    await refreshAndDisplayContacts(userId);
+    await refreshAndDisplayContacts();
     const contactDetailsDiv = document.querySelector(".contactdetails-right");
     contactDetailsDiv.innerHTML = generateContactDetailsHTML(name, newEmail, phone, randomColor, initials);
     let card = document.querySelector(`.contactCard[data-id="${dataId}"]`);

@@ -10,7 +10,7 @@ function checkAcceptPrivacyPolicy() {
     let email = document.getElementById('email').value;
     let password = document.getElementById('password1').value;
     let confirmPassword = document.getElementById('password2').value;
-    if (checkbox.checked && name !== '' && email !== '' && password !== '' && confirmPassword !== '') {
+    if (checkbox.checked && name !== '' && email !== '' && password !== '' && confirmPassword !== '' && password === confirmPassword) {
         buttonId.classList.remove('signUpButtonFalse');
         buttonId.classList.add('signUpButtonTrue');
     } else {
@@ -19,58 +19,22 @@ function checkAcceptPrivacyPolicy() {
     }
 }
 
-/**
- * This function is used to add a new user to the database.
- * 
- * @author: Robin
- */
-// async function addUser() {
-//     let msgBox = document.getElementById('msgBox');
-//     let name = document.getElementById('name').value;
-//     let email = document.getElementById('email').value;
-//     let password = document.getElementById('password1');
-//     let confirmPassword = document.getElementById('password2');
-//     let userContact = [{
-//         'name': name,
-//         'email': email,
-//         'phone': 'none',
-//         'color': await generateRandomColor(),
-//     }];
-//     let testContactsAndUser = [...testContacts, ...userContact];
-//     let newArray = { 'email': email, 'name': name, 'password': password.value, 'contacts': testContactsAndUser, 'tasks': testTasks };
-//     let actualUsers = await loadData('users');
-//     let mailExists = await checkMail(msgBox, email, actualUsers);
-//     if (mailExists) {
-//         return;
-//     }
-//     let nameChecked = await checkName(msgBox, name);
-//     if (!nameChecked) return;
-//     await putNewUser(password, confirmPassword, msgBox, newArray);
-// }
-
 async function addUser() {
     let msgBox = document.getElementById('msgBox');
     let name = document.getElementById('name').value;
     let email = document.getElementById('email').value;
     let password = document.getElementById('password1');
     let confirmPassword = document.getElementById('password2');
-    let userContact = [{
-        'name': name,
-        'email': email,
-        'phone': 'none',
-        'color': await generateRandomColor(),
-    }];
-    let testContactsAndUser = [...testContacts, ...userContact];
-    let newArray = { 'email': email, 'name': name, 'password': password.value, 'contacts': testContactsAndUser, 'tasks': testTasks };
-    let actualUsers = await loadData('users');
-    // let mailExists = await checkMail(msgBox, email, actualUsers);
-    // if (mailExists) {
-    //     return;
-    // }
-    // let nameChecked = await checkName(msgBox, name);
-    // if (!nameChecked) return;
-    // await putNewUser(password, confirmPassword, msgBox, newArray);
+    let newArray = { 'email': email, 'username': name, 'password': password.value };
+    let actualUsers = await loadDataBackend('api/users/profiles/');
+    let mailExists = await checkMail(msgBox, email, actualUsers);
+    if (mailExists) return;
+    let nameChecked = await checkName(msgBox, name);
+    if (!nameChecked) return;
+    await putNewUser('api/users/registration/', newArray, msgBox, password.value, confirmPassword.value);
 }
+
+
 
 /**
  * This function checks if the user email already exists in the database.
@@ -134,9 +98,10 @@ async function checkName(msgBox, fullName) {
  * 
  * @author: Robin
  */
-async function putNewUser(password, confirmPassword, msgBox, newArray) {
+async function putNewUser(path, newArray, msgBox, password, confirmPassword) {
     if (password.value === confirmPassword.value) {
-        await postData('users', newArray);
+        let response = await postDataBackend(path, newArray);
+        localStorage.setItem('user', JSON.stringify(response));
         document.getElementById('registerContainer').classList.add('d-none');
         let msgBoxSignedUp = document.getElementById('msgBoxSignedUp');
         msgBoxSignedUp.classList.remove('d-none');

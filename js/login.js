@@ -3,7 +3,7 @@
  * 
  * @author: Robin
  */
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('logoContainerSlide').classList.remove('logoContainerSlide');
     document.getElementById('logoContainerSlide').classList.add('logoContainerSlideLoaded');
     setTimeout(function () {
@@ -65,6 +65,38 @@ async function checkUser() {
     // await saveUserData(email, password);
 }
 
+async function checkUser() {
+    let email = document.getElementById('email').value;
+    let rememberMe = document.getElementById('checkbox').checked;
+    let password = document.getElementById('password').value;
+    let user;
+    if (rememberMe && password==='') {
+        let actualUser = JSON.parse(localStorage.getItem('user'));
+        user = await postDataBackend('api/users/login/', { 'email': email, 'token': actualUser.token });
+    } else if (password !== '') {
+        user = await postDataBackend('api/users/login/', { 'email': email, 'password': password });
+    }
+    if (user && user.token) {
+        window.location.href = `summary.html`;
+        localStorage.setItem('user', JSON.stringify(user));
+    }
+    let found = false;
+    let actualMailSearchIndex;
+    // for (let mailSearchIndex in actualUsers) {
+    //     let user = actualUsers[mailSearchIndex];
+    //     if (user && user.email === email) {
+    //         actualMailSearchIndex = mailSearchIndex;
+    //         if (user.password === password) {
+    //             window.location.href = `summary.html?msg=Login erfolgreich&actualUsersNumber=${mailSearchIndex}`;
+    //             found = true;
+    //             break;
+    //         }
+    //     }
+    // }
+    // await userNotFound(found, actualUsers, actualMailSearchIndex);
+    await saveUserData(email, password);
+}
+
 /** 
  * This function is used to show an error message if the user is not found.
  * 
@@ -79,7 +111,6 @@ async function userNotFound(found, actualUsers, actualMailSearchIndex) {
         let msgBox = document.getElementById('msgBox');
         msgBox.classList.remove('d-none');
         let msgBoxText = document.getElementById('msgBoxText');
-        console.log(actualUsers);
         if (actualMailSearchIndex !== undefined) {
             msgBoxText.innerHTML = 'Wrong password. Please try again!';
         } else {
@@ -100,17 +131,21 @@ let checkboxBoolean = false;
  * 
  * @author: Robin
  */
-function saveUserData() {
+async function saveUserData() {
     let email = document.getElementById('email').value;
-    let password = document.getElementById('password').value;
-    if (!checkboxBoolean) {
-        checkboxBoolean === true;
-        localStorage.setItem('email', email);
-        localStorage.setItem('password', password);
-    } else {
-        localStorage.removeItem('email');
-        localStorage.removeItem('password');
-        checkboxBoolean = false;
+    let password = document.getElementById('password');
+    checkboxBoolean = document.getElementById('checkbox').checked;
+    let user;
+    if (checkboxBoolean && email && password) {
+        user = await postDataBackend('api/users/login/', { 'email': email, 'password': password.value });
+        console.log(user);
+        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('rememberMe', true);
+    } else if (!checkboxBoolean) {
+        localStorage.removeItem('user');
+        password.style.visibility = 'visible';
+        password.setAttribute('required', true);
+        localStorage.setItem('rememberMe', false);
     }
 }
 
@@ -119,17 +154,23 @@ function saveUserData() {
  * 
  * @author: Robin
  */
-function loadUserData() {
-    let storedEmail = localStorage.getItem('email');
-    let storedPassword = localStorage.getItem('password');
-    if (checkboxBoolean = true && storedEmail && storedPassword) {
-        document.getElementById('email').value = storedEmail;
-        document.getElementById('password').value = storedPassword;
-        document.getElementById('checkbox').checked = true;
+async function loadUserData() {
+    let storedUser = JSON.parse(localStorage.getItem('user'));
+    let checkboxBoolean = localStorage.getItem('rememberMe');
+    let password = document.getElementById('password');
+    let email = document.getElementById('email');
+    let checkbox = document.getElementById('checkbox');
+    if (checkboxBoolean && storedUser) {
+        password.style.visibility = 'hidden';
+        password.removeAttribute('required');
+        email.value = storedUser.email;
+        checkbox.checked = true;
     } else {
-        document.getElementById('email').value = '';
-        document.getElementById('password').value = '';
-        document.getElementById('checkbox').checked = false;
+        password.style.visibility = 'visible';
+        password.setAttribute('required', true);
+        email.value = '';
+        password.value = '';
+        checkbox.checked = false;
     }
 }
 

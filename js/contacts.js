@@ -215,10 +215,9 @@ async function findMissingId(contacts) {
  * @returns {Promise<any>} - The requested data.
  */
 async function getData(data) {
-  let urlParams = new URLSearchParams(window.location.search);
-  let actualUsersNumber = urlParams.get("actualUsersNumber");
-  let fulldata = await loadData("users");
-  return fulldata[actualUsersNumber][data];
+  let userId = JSON.parse(localStorage.getItem('user')).user_id;  
+  let fulldata = await loadDataBackend(`api/users/profiles/${userId}/`);
+  return fulldata[data];
 }
 
 /**
@@ -231,8 +230,8 @@ async function createContact(event) {
   const name = document.getElementById("contactName").value;
   const email = document.getElementById("contactEmail").value;
   const phone = document.getElementById("contactPhone").value;
-  let userId = await getUserIdFormUrl();
-  let contacts = await loadDataBackend("api/contacts/all-contacts/");
+  let userId = JSON.parse(localStorage.getItem('user')).user_id;  
+  let contacts = await loadDataBackend(`api/users/profiles/${userId}/`);
   let alreadyExist = contacts.find((contact) => contact && contact.email == email);
   await checkIfContactAlreadyExists(alreadyExist, userId, phone, name, email, contacts);
 }
@@ -363,8 +362,9 @@ async function createUpdatedContact(name, newEmail, phone, randomColor) {
  * @param {string} userId - The ID of the user who owns the contacts.
  * Author: Elias
  */
-async function refreshAndDisplayContacts(userId) {
-  const actualUsers = await loadDataBackend(`api/contacts/all-contacts/`);
+async function refreshAndDisplayContacts() {
+  let userId = JSON.parse(localStorage.getItem('user')).user_id;
+  const actualUsers = await loadDataBackend(`api/users/profiles/${userId}/`);
   const sortedContacts = await sortContacts(actualUsers);
   await displayContacts(sortedContacts);
 }

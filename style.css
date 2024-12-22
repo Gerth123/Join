@@ -88,6 +88,10 @@ h2 {
   display: none !important;
 }
 
+.hidden {
+  visibility: hidden !important;
+}
+
 .menu {
   display: none;
   opacity: 0;

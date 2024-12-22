@@ -1,21 +1,15 @@
 /**
- * The base URL for the Firebase database.
+ * The base URL for the Backend.
  */
-let baseUrl = 'https://join-ca44d-default-rtdb.europe-west1.firebasedatabase.app/';
 let baseUrlBackend = 'http://127.0.0.1:8000/';
 
 /**
- * This function is used to fetch data from the Firebase database.
+ * This function is used to fetch data from the Backend.
  * 
  * @param {string} path - The path to fetch data from.
  * 
  * @author: Robin
  */
-async function loadData(path = '') {
-    let response = await fetch(baseUrl + path + '.json');
-    return responseToJson = await response.json();
-}
-
 async function loadDataBackend(path = '') {
     let response = await fetch(baseUrlBackend + path);
     return responseToJson = await response.json();
@@ -29,18 +23,7 @@ async function loadDataBackend(path = '') {
  * 
  * @author: Robin
  */
-async function postData(path = '', data = {}) {
-    let response = await fetch(baseUrl + path + '.json', {
-        method: 'POST',
-        header: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    });
-    return responseToJson = await response.json();
-}
-
-postDataBackend = async function (path = '', data = {}) {
+async function postDataBackend(path = '', data = {}) {
     let response = await fetch(baseUrlBackend + path, {
         method: 'POST',
         headers: {
@@ -52,19 +35,12 @@ postDataBackend = async function (path = '', data = {}) {
 }
 
 /**
- * This function is used to delete data from the Firebase database.
+ * This function is used to delete data from the Backend.
  * 
  * @param {string} path - The path to delete data from.
  * 
  * @author: Robin
  */
-async function deleteData(path = '') {
-    let response = await fetch(baseUrl + path + '.json', {
-        method: 'DELETE',
-    });
-    return responseToJson = await response.json();
-}
-
 async function deleteDataBackend(path = '') {
     let response = await fetch(baseUrlBackend + path, {
         method: 'DELETE',
@@ -73,24 +49,13 @@ async function deleteDataBackend(path = '') {
 }
 
 /**
- * This function is used to update data in the Firebase database.
+ * This function is used to update data in the Backend.
  * 
  * @param {string} path - The path to update data in.
  * @param {object} data - The data to update.
  * 
  * @author: Robin
  */
-async function putData(path = '', data = {}) {
-    let response = await fetch(baseUrl + path + '.json', {
-        method: 'PUT',
-        header: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    });
-    return responseToJson = await response.json();
-}
-
 async function putDataBackend(path = '', data = {}) {
     let response = await fetch(baseUrlBackend + path, {
         method: 'PUT',
@@ -151,8 +116,8 @@ function goBackToLastTabWithoutClosing() {
  */
 
 async function fillHeaderInitials() {
-    let userId = await getUserIdFormUrl();
-    let actualUsersName = await loadData('users/' + userId + '/name');
+    let user = JSON.parse(localStorage.getItem('user'));
+    let actualUsersName = user.username;
     document.getElementById('headerInitials').innerHTML = getInitialsUniversal(actualUsersName);
 }
 

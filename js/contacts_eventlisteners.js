@@ -102,11 +102,11 @@ function setupContactsAListener() {
  */
 document.addEventListener("DOMContentLoaded", async function () {
     try {
-        let userId = await getUserIdFormUrl();
-        // const actualUsers = await loadData(`users/${userId}/contacts`);
-        const actualUsers = await loadDataBackend(`api/contacts/all-contacts/`);
-        if (actualUsers) {
-            const sortedContacts = sortContacts(actualUsers);
+        let user = JSON.parse(localStorage.getItem('user'));
+        const userId = user.user_id;
+        const actualUser = await loadDataBackend(`api/users/profiles/${userId}/`);
+        if (actualUser) {
+            const sortedContacts = sortContacts(actualUser.contacts);
             displayContacts(sortedContacts);
         } else {
             console.error("Keine Kontakte im geladenen Benutzer gefunden.");

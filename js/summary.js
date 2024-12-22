@@ -5,10 +5,8 @@
  * @author: Robin
  */
 async function initSummary() {
-  let urlParams = new URLSearchParams(window.location.search);
-  let actualUsersNumber = urlParams.get("actualUsersNumber");
-  let actualUsers = await loadData("users");
-  await fillDates(actualUsersNumber, actualUsers);
+  let actualUser = JSON.parse(localStorage.getItem("user"));
+  await fillDates(actualUser);
   await checkConditions();
   await fillHeaderInitials();
 }
@@ -79,18 +77,18 @@ function showGreetingThenMain() {
  *
  * @author: Robin
  */
-function fillDates(actualUsersNumber, actualUsers) {
-  let actualUser = actualUsers[actualUsersNumber];
-  getElementById("tasksToDo").innerHTML = `${actualUser["tasks"][0]["items"].length}`;
-  getElementById("tasksDone").innerHTML = `${actualUser["tasks"][3]["items"].length}`;
-  let tasksInBoard = actualTasksInBoard(actualUser);
-  getElementById("tasksInBoard").innerHTML = `${tasksInBoard}`;
-  getElementById("tasksInProgress").innerHTML = `${actualUser["tasks"][1]["items"].length}`;
-  getElementById("tasksAwaitingFeedback").innerHTML = `${actualUser["tasks"][2]["items"].length}`;
-  let urgentDates = [];
-  fillUrgentTask(actualUser, urgentDates);
-  fillUrgentDate(urgentDates);
-  getElementById("greetingName").innerHTML = `${actualUsers[actualUsersNumber]["name"]}`;
+function fillDates(actualUser) {
+  // let actualUser = actualUsers[actualUsersNumber];
+  getElementById("greetingName").innerHTML = `${actualUser.username}`;
+  // getElementById("tasksToDo").innerHTML = `${actualUser["tasks"][0]["items"].length}`;
+  // getElementById("tasksDone").innerHTML = `${actualUser["tasks"][3]["items"].length}`;
+  // let tasksInBoard = actualTasksInBoard(actualUser);
+  // getElementById("tasksInBoard").innerHTML = `${tasksInBoard}`;
+  // getElementById("tasksInProgress").innerHTML = `${actualUser["tasks"][1]["items"].length}`;
+  // getElementById("tasksAwaitingFeedback").innerHTML = `${actualUser["tasks"][2]["items"].length}`;
+  // let urgentDates = [];
+  // fillUrgentTask(actualUser, urgentDates);
+  // fillUrgentDate(urgentDates);
 }
 
 /**
