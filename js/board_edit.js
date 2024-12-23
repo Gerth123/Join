@@ -106,7 +106,7 @@ async function getEditAssigned() {
   let user = JSON.parse(localStorage.getItem("user"));
   let userData = await loadDataBackend(`api/users/profiles/${user.user_id}/`);
   let contactsData = userData.contacts;
-  let assignedUsers = getAssignedUserElements();
+  let assignedUsers = await getAssignedUserElements();
   if (assignedUsers.length != 0) { getEditContacts(assignedUsers, contactsData); toggleCheckUsers(contactsData); }
 }
 
@@ -133,6 +133,7 @@ function getEditContacts(assignedUsers, contacts) {
   const contactList = document.getElementById("assigned-list-items");
   contactList.innerHTML = "";
   contacts.forEach((contact) => {
+    if(checkIfContactExist(assignedUsers, contact["name"])) return;
     let name = getInitials(contact["name"]);
     contactList.innerHTML += /*html*/ `
       <li class="assigned-item ${getCheckedUsers(assignedUsers, contact["name"])}">
@@ -143,6 +144,21 @@ function getEditContacts(assignedUsers, contacts) {
         <div class="check-img"></div>
       </li>`;
   });
+}
+
+/**
+ * Checks if a contact exists in the assignedUsers list based on the contact's name.
+ * @param {Array} assignedUsers - Array of objects representing assigned users.
+ * @param {string} contactName - The name of the contact to search for.
+ * @returns {boolean} - Returns true if the contact exists, false otherwise.
+ */
+function checkIfContactExist(assignedUsers, contactName) {
+  for (const user of assignedUsers) {
+    if (user.name === contactName) {
+      return true;
+    }
+  }
+  return false;
 }
 
 /**
@@ -259,7 +275,7 @@ function getEditSubtasks(subtasks) {
   const list = document.getElementById("subtasks-list");
   list.innerHTML = "";
   for (let i = 0; i < subtasks.length; i++) {
-    list.innerHTML += getEditSubtasksList(subtasks[i]["title"]);
+    list.innerHTML += getEditSubtasksList(subtasks[i]["title"], subtasks[i]["id"]);
   }
 }
 
@@ -270,11 +286,11 @@ function getEditSubtasks(subtasks) {
  * @return {string} The HTML code for the subtask list item.
  * @author Hanbit Chang
  */
-function getEditSubtasksList(task) {
+function getEditSubtasksList(task, id) {
   return /*html*/ `
   <li id="subtasks-li" class="subtasks-li-content">
     <div class="subtasks-li-container">
-      <p class="subtasks-li-text" contenteditable=false>${task}</p>
+      <p class="subtasks-li-text" contenteditable=false id="subtask-${id}">${task}</p>
       <div class="subtasks-row" id="subtask-first-btns">
         <img class="subtasks-btn-none" id="subtasks-edit" src="../assets/icons/board/edit/edit_button.svg" alt="">
         <div class="subtasks-line-none"></div>

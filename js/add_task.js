@@ -3,7 +3,7 @@
  *
  * This function calls the following functions in order:
  * - onClickAddSubTasks() - Event listener for adding subtasks.
- * - getAddAssgined() - Retrieves assigned tasks.
+ * - getAddAssigned() - Retrieves assigned tasks.
  * - fillHeaderInitials() - Fills the header with initials.
  * - oneCheckBox() - Handles single checkbox selection.
  * - selectBtnEventListener() - Event listener for select button.
@@ -13,7 +13,7 @@ function initAddTask() {
   onClickAddSubTasks();
   onClickSelectBtn();
   onClickClearBtn();
-  getAddAssgined();
+  getAddAssigned();
   fillHeaderInitials();
   oneCheckBox();
 }

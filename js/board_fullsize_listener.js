@@ -168,7 +168,7 @@ function onClickBoardHeaderAddBtn(fullsize, board, editBoard, addBoard) {
       addBoard.classList.remove("d-none");
       contentId = 1;
       onClickAddSubTasks();
-      getAddAssgined();
+      getAddAssigned();
       setCheckBoxes();
       oneCheckBox();
     };

@@ -103,20 +103,107 @@ async function getContactsData() {
  * @return {Promise<void>} A Promise that resolves when the data is saved and sent back to the server.
  */
 async function saveTheActualUser() {
-  let contactsData = getContactsData();
-  let user = JSON.parse(localStorage.getItem("user"));
-  let userData = await loadDataBackend(`api/users/profiles/${user.user_id}/`);
-  console.log(data);
-  let data = userData.tasks;
-  for (let listItem of data) {
-    if (listItem.id == contentId) {
-      for (let item of listItem.items) {
-        item = setEditItems(item, contactsData);
-        await putDataBackend(`api/tasks/${id}`, data);
-      }
+  let data = await getTaskContent();
+  await putDataBackend(`api/tasks/${id}/`, data);
+  initBoard();
+}
+
+/**
+ * Retrieves the content of the task to be edited, including title, description, date, priority, subtasks, and assigned contacts.
+ * 
+ * @return {Object} An object containing the content of the task to be edited.
+ */
+async function getTaskContent() {
+  const title = document.getElementById("title-editCard");
+  const description = document.getElementById("description-editCard");
+  const date = document.getElementById("date-editCard");
+  const priority = editPriorityValue();
+  await getEditSubTasksValue();
+  const assigned = assignedContacts;
+  let data = {
+    title: title.value,
+    description: description.value,
+    date: date.value,
+    priority: priority,
+    assigned_data: assigned,
+  };
+  return data;
+}
+
+/**
+ * Fetches and updates subtasks from the DOM and backend.
+ * @returns {Array} The updated subtasks list.
+ */
+async function getEditSubTasksValue() {
+  let task = await loadDataBackend(`api/tasks/${id}/`);
+  let actualSubtasks = task.subtasks;
+  let subtasks = [];
+  let subtasksList = document.getElementById("subtasks-list").children;
+  for (let i = 0; i < subtasksList.length; i++) {
+    let subtask = extractSubtaskData(subtasksList[i]);
+    let matchingSubtask = actualSubtasks.find(s => s.id == subtask.id);
+    if (matchingSubtask) matchingSubtask.title = subtask.title;
+    else subtasks.push(subtask);
+  }
+  await removeDeletedSubtasks(actualSubtasks, subtasksList);
+  await addNewSubtasks(subtasks);
+  return subtasks;
+}
+
+/**
+ * Extracts the subtask data from a DOM element.
+ * @param {HTMLElement} element The subtask DOM element.
+ * @returns {Object} The subtask data with id and title.
+ */
+function extractSubtaskData(element) {
+  let subtaskId = element.querySelector(".subtasks-li-text").id.replace('subtask-', '');
+  let subtaskTitle = element.querySelector(".subtasks-li-text").textContent.trim();
+  return { id: subtaskId, title: subtaskTitle, checked: false };
+}
+
+/**
+ * Removes subtasks from the backend if no longer present in the DOM.
+ * @param {Array} actualSubtasks The current subtasks from the backend.
+ * @param {HTMLCollection} subtasksList The current list of subtasks in the DOM.
+ */
+async function removeDeletedSubtasks(actualSubtasks, subtasksList) {
+  for (let subtask of actualSubtasks) {
+    let found = Array.from(subtasksList).some(li =>
+      li.querySelector(".subtasks-li-text").id === `subtask-${subtask.id}`);
+    if (!found) await deleteSubtaskFromBackend(subtask.id);
+  }
+}
+
+/**
+ * Fügt neue Unteraufgaben zum Backend hinzu und entfernt die ID, bevor sie gesendet wird.
+ * @param {Array} subtasks Die Liste der neuen Unteraufgaben.
+ */
+async function addNewSubtasks(subtasks) {
+  let obj = { subtasks_data: [] }; 
+  for (let subtask of subtasks) {
+    if (!subtask.id) {
+      let { id, ...subtaskWithoutId } = subtask;
+      obj.subtasks_data.push(subtaskWithoutId); 
+    }
+  }
+  if (obj.subtasks_data.length > 0) {
+    try {
+      await putDataBackend(`api/tasks/${id}/`, obj);
+    } catch (error) {
+      console.error("Fehler beim Hinzufügen der Unteraufgaben:", error);
     }
   }
 }
+
+
+/**
+ * Deletes a subtask from the backend by its ID.
+ * @param {string} subtaskId - The ID of the subtask to delete.
+ */
+async function deleteSubtaskFromBackend(subtaskId) {
+  await deleteDataBackend(`api/tasks/${id}/subtasks/${subtaskId}/`);
+}
+
 
 /**
  * Updates the properties of the given item with the values from the edit form.
@@ -155,6 +242,7 @@ function editAssignedValue(contacts) {
     for (const contact of contacts) {
       if (contact.name == assignedUser.textContent) {
         assigned.push({
+          id: contact["id"],
           color: contact["color"],
           name: contact["name"],
         });
@@ -183,23 +271,22 @@ function editPriorityValue() {
   }
 }
 
+
 /**
- * Returns Subtasks value
- * @param {Object} subtasks
- * @returns Object
- * @author Hanbit Chang
+ * Updates the subtasks based on the current values of the subtasks text (without checked state).
+ * @returns {Array} The updated subtasks list with only the title.
  */
 function editSubTasksValue(subtasks) {
   const newSubtasks = document.querySelectorAll(".subtasks-li-text");
   if (subtasks == "") subtasks = [];
   if (subtasks.length < newSubtasks.length) {
     for (let i = subtasks.length; i < newSubtasks.length; i++) {
-      subtasks.push({ checked: false, task: newSubtasks[i].innerHTML });
+      subtasks.push({ checked: false, title: newSubtasks[i].innerHTML });
     }
   } else if (subtasks.length >= newSubtasks.length) {
     let temp = [];
     newSubtasks.forEach((task) => {
-      temp.push({ checked: false, task: task.textContent });
+      temp.push({ checked: false, title: task.textContent });
     });
     let updatedSubtask = (updatedTemp = updateChecked(temp.slice(), subtasks));
     subtasks = updatedSubtask;
@@ -207,6 +294,8 @@ function editSubTasksValue(subtasks) {
   if (subtasks == "") return "";
   return subtasks;
 }
+
+
 
 /**
  * Update checked

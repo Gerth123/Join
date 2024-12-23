@@ -2,6 +2,7 @@ let icons;
 let data;
 let contacts;
 let header = ["To do", "In progress", "Await feedback", "Done"];
+let assignedContacts;
 
 /**
  * Gets example data from local
@@ -29,54 +30,11 @@ async function initBoard() {
   user = JSON.parse(localStorage.getItem("user"));
   userId = user.user_id;
   userData = await loadDataBackend(`api/users/profiles/${userId}/`);
-  // for (let i = 0; i < userData.tasks.length; i++) {
-  //   userData.tasks[i] = await getAssignedKeyByName(userData.tasks[i], contacts);
-  // }
-  userData.taskse = await getAssignedKeyByName(userData.tasks, userData.contacts);
   icons = await getIcons();
   renderBoards(userData.tasks);
   getEventListeners();
   getDropZones();
   await fillHeaderInitials();
-}
-
-/**
- * Retrieves the assigned key by name from the given data object using the contacts array.
- *
- * @param {Object} data - The data object containing items with assigned names.
- * @param {Array} contacts - The array of contacts.
- * @return {Object} The modified data object with any invalid assigned names removed.
- */
-function getAssignedKeyByName(tasks, contacts) {
-  for (const item of tasks) {
-    let i = 0;
-    for (i = 0; i < item.assigned.length; i++) {
-      let assigned = item.assigned[i];
-      const contactExists = contactExist(contacts, assigned.name);
-      if (!contactExists) {
-        const index = item.assigned.findIndex((assign) => assign.name == item.assigned[i].name);
-        item.assigned.splice(index, 1);
-        i = -1;
-      }
-    }
-    if (item.assigned.length == 0) item.assigned = "";
-  }
-  return data;
-}
-
-/**
- * Checks if a contact with the given name exists in the contacts array.
- *
- * @param {Object} contacts - The array of contacts.
- * @param {string} name - The name of the contact to check.
- * @return {boolean} - Returns true if a contact with the given name exists, otherwise false.
- */
-function contactExist(contacts, name) {
-  for (let key in contacts) {
-    if (contacts[key] == null) continue;
-    if (contacts[key].name == name) return true;
-  }
-  return false;
 }
 
 /**

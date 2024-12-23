@@ -44,7 +44,9 @@ function getFullSizeAssigned(assigned) {
   fullSizeAssigned.innerHTML = "";
   if (assigned != "") {
     let i = 0;
+    assignedContacts = [];
     assigned.forEach((user) => {
+      assignedContacts.push(user);
       let name = getInitials(user["name"]);
       if (i < 3) fullSizeAssigned.innerHTML += assignedFullsize(user, name);
       i++;
