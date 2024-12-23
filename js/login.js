@@ -46,27 +46,6 @@ function togglePasswordVisbility() {
  */
 async function checkUser() {
     let email = document.getElementById('email').value;
-    let password = document.getElementById('password').value;
-    let actualUsers = await loadData('users');
-    let found = false;
-    let actualMailSearchIndex;
-    for (let mailSearchIndex in actualUsers) {
-        let user = actualUsers[mailSearchIndex];
-        if (user && user.email === email) {
-            actualMailSearchIndex = mailSearchIndex;
-            if (user.password === password) {
-                window.location.href = `summary.html?msg=Login erfolgreich&actualUsersNumber=${mailSearchIndex}`;
-                found = true;
-                break;
-            }
-        }
-    }
-    await userNotFound(found, actualUsers, actualMailSearchIndex);
-    // await saveUserData(email, password);
-}
-
-async function checkUser() {
-    let email = document.getElementById('email').value;
     let rememberMe = document.getElementById('checkbox').checked;
     let password = document.getElementById('password').value;
     let user;
@@ -80,8 +59,8 @@ async function checkUser() {
         window.location.href = `summary.html`;
         localStorage.setItem('user', JSON.stringify(user));
     }
-    let found = false;
-    let actualMailSearchIndex;
+    // let found = false;
+    // let actualMailSearchIndex;
     // for (let mailSearchIndex in actualUsers) {
     //     let user = actualUsers[mailSearchIndex];
     //     if (user && user.email === email) {
@@ -137,8 +116,8 @@ async function saveUserData() {
     checkboxBoolean = document.getElementById('checkbox').checked;
     let user;
     if (checkboxBoolean && email && password) {
+        console.log('email', email, 'password', password.value);
         user = await postDataBackend('api/users/login/', { 'email': email, 'password': password.value });
-        console.log(user);
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('rememberMe', true);
     } else if (!checkboxBoolean) {
@@ -180,12 +159,9 @@ async function loadUserData() {
  * @author: Robin
  */
 async function guestLogIn() {
-    let users = await loadData('users');
-    for (let [index, user] of Object.entries(users)) {
-        if (user && user.email === 'test@testmail.com') {
-            window.location.href = `summary.html?msg=Testlogin erfolgreich&actualUsersNumber=${index}`;
-        }
-    }
+    user = await postDataBackend('api/users/login/', { 'email': 'test@testmail.com', 'password': '1234' });
+    localStorage.setItem('user', JSON.stringify(user));
+    window.location.href = `summary.html`;
 }
 
 /**

@@ -66,7 +66,7 @@ function onClickCloseBtnImg(fullsize) {
   closeBtns.forEach((closeBtn) => {
     closeBtn.onclick = async () => {
       fullsize.classList.add("d-none");
-      let itemData = await getItemById(id, contentId);
+      let itemData = await getItemById(id);
       let subtasks = itemData["subtasks"];
       for (let i = 0; i < subtasks.length; i++) {
         const check = document.getElementById(`subtask-${i}`);

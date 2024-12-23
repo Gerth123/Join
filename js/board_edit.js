@@ -10,7 +10,7 @@ async function getEditBoard(id, contentId) {
   const title = document.querySelector("input[id=title-editCard]");
   const description = document.querySelector("textarea[id=description-editCard]");
   const date = document.querySelector("input[id=date-editCard]");
-  let itemData = await getItemById(id, contentId);
+  let itemData = await getItemById(id);
   title.value = `${itemData["title"]}`;
   description.value = `${itemData["description"]}`;
   date.value = `${itemData["date"]}`;
@@ -425,8 +425,8 @@ function showCheckboxes() {
  * @author Hanbit Chang
  */
 async function getData(data) {
-  let urlParams = new URLSearchParams(window.location.search);
-  let actualUsersNumber = urlParams.get("actualUsersNumber");
-  let fulldata = await loadData("users");
-  return fulldata[actualUsersNumber][data];
+  let user = JSON.parse(localStorage.getItem('user'));
+  let userId = user.user_id;
+  let fulldata = await loadDataBackend(`api/users/profiles/${userId}/`);
+  return fulldata[data];
 }

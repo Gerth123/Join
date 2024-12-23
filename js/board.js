@@ -25,13 +25,15 @@ async function getIcons() {
  * On loading it inits the elements
  */
 async function initBoard() {
-  data = await getData("tasks");
-  contacts = await getData("contacts");
-  for (let i = 0; i < data.length; i++) {
-    data[i] = await getAssignedKeyByName(data[i], contacts);
-  }
+  user = JSON.parse(localStorage.getItem('user'));
+  userId = user.user_id;
+  userData = await loadDataBackend(`api/users/profiles/${userId}/`);
+  // for (let i = 0; i < userData.tasks.length; i++) {
+  //   userData.tasks[i] = await getAssignedKeyByName(userData.tasks[i], contacts);
+  // }
+  userData.taskse = await getAssignedKeyByName(userData.tasks, userData.contacts);
   icons = await getIcons();
-  renderBoards(data);
+  renderBoards(userData.tasks);
   getEventListeners();
   getDropZones();
   await fillHeaderInitials();
@@ -44,8 +46,8 @@ async function initBoard() {
  * @param {Array} contacts - The array of contacts.
  * @return {Object} The modified data object with any invalid assigned names removed.
  */
-function getAssignedKeyByName(data, contacts) {
-  for (const item of data.items) {
+function getAssignedKeyByName(tasks, contacts) {
+  for (const item of tasks) {
     let i = 0;
     for (i = 0; i < item.assigned.length; i++) {
       let assigned = item.assigned[i];
@@ -79,36 +81,33 @@ function contactExist(contacts, name) {
 /**
  * Renders the board
  */
-async function renderBoards(data) {
-  getBoardSection(data);
-  getBoardContentsAll(data);
+async function renderBoards(tasks) {
+  getBoardSection(tasks);
+  getBoardContentsAll(tasks);
 }
 
 /**
  * Gets the item by id
  * @param {number} id
- * @param {number} contentId
  * @returns item data
  */
-async function getItemById(id, contentId) {
-  let itemList = data.find((items) => items["id"] == contentId);
-  let item = itemList["items"].find((items) => items["id"] == id);
+async function getItemById(id) {
+  let item = loadDataBackend(`api/tasks/${id}/`);
   return item;
 }
 
 /**
  * Gets the board
- * @param {Object} data
+ * @param {Object} tasks
  */
-function getBoardSection(data) {
+function getBoardSection(tasks) {
   const boardSection = document.getElementById("board-card-section");
   boardSection.innerHTML = "";
   boardSection.innerHTML = '<div id="no-search-results" class="no-search-results d-none"><h1>No search results</h1></div>';
-  for (let i = 0; i < data.length; i++) {
-    const id = data[i]["id"];
-    const items = data[i]["items"];
-    boardSection.innerHTML += getBoardContainer(id, header[i]);
-    if (items == "") getEmptyBoard(id);
+  for (let i = 0; i < 4; i++) {
+    const items = tasks;
+    boardSection.innerHTML += getBoardContainer(i, header[i]);
+    if (items == "") getEmptyBoard(i);
   }
 }
 
@@ -126,9 +125,17 @@ function getEmptyBoard(id) {
 }
 
 function getBoardContentsAll(data) {
-  for (let i = 0; i < data.length; i++) {
-    const id = data[i]["id"];
-    getBoardContents(data[i]["items"], id);
+  for (let i = 0; i < 4; i++) {
+    let filled = false;
+    for (let j = 0; j < data.length; j++) {
+      if (data[j].status == i) {
+        filled = true;
+        getBoardContents(data[j], i);
+      }
+    }
+    if (!filled) {
+      getEmptyBoard(i);
+    }
   }
 }
 
@@ -156,19 +163,21 @@ function getBoardContainer(id, header) {
  * @param {Object} contents
  * @param {number} id
  */
-function getBoardContents(contents, id) {
+async function getBoardContents(task, id) {
   const contentDirection = document.getElementById(`${id}`);
   const content = contentDirection.querySelector("#board-card-direction");
-  if (contents != "") {
-    let i = 0;
-    contents.forEach(function (card) {
-      if (i < contents.length - 1) {
-        content.innerHTML += getBoardCard(card);
-        i++;
-      } else content.innerHTML += getBoardCard(card, "big-zone");
-      getBoardCardValues(card);
-    });
-  }
+  content.innerHTML += getBoardCard(task);
+  getBoardCardValues(task);
+  // if (contents != "") {
+  //   let i = 0;
+  //   contents.forEach(function (card) {
+  //     if (i < contents.length) {
+        
+  //       i++;
+  //     } else content.innerHTML += getBoardCard(card, "big-zone");
+     
+  //   });
+  // }
 }
 
 /**
@@ -216,8 +225,10 @@ function getBoardCard(card, zoneSize) {
 function getCategory(category, id) {
   const content = document.getElementById(`${id}`);
   const boardCategory = content.querySelector("#board-category");
-
-  boardCategory.src = icons["categoryIcons"][category] || "";
+  let categoryName;
+  if (category === 1) {categoryName = "user story"}
+  else if (category === 2) {categoryName = "technical task"};
+  boardCategory.src = icons["categoryIcons"][categoryName] || "";
 }
 
 /**
