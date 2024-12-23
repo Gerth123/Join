@@ -106,12 +106,7 @@ async function getEditAssigned() {
   let user = JSON.parse(localStorage.getItem("user"));
   let userData = await loadDataBackend(`api/users/profiles/${user.user_id}/`);
   let contactsData = userData.contacts;
-  // let contactsData = [];
-  // for (let i = 0; i < contacts.length; i++) {
-  //   if (contacts[i] != null) contactsData.push(contacts[i]);
-  // }
   let assignedUsers = getAssignedUserElements();
-  // getAssignedUserElements();
   if (assignedUsers.length != 0) { getEditContacts(assignedUsers, contactsData); toggleCheckUsers(contactsData); }
 }
 
@@ -124,17 +119,6 @@ async function getAssignedUserElements() {
   let assignedUsers = [];
   let data = await loadDataBackend(`api/tasks/${id}/`);
   assignedUsers = data["assigned"];
-  // for (let column of data) {
-  //   if (column.id == contentId) {
-  //     for (let item of column.items) {
-  //       if (item.id == id) {
-  //         for (i = 0; i < item["assigned"].length; i++) {
-  //           assignedUsers.push(item["assigned"][i]["name"]);
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
   return assignedUsers;
 }
 

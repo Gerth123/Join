@@ -83,11 +83,8 @@ async function saveAddTaskData() {
   let data = userData.tasks;
   let contacts = userData.contacts;
   if (contentId == undefined) contentId = 1;
-  const content = data.find((content) => content.id == contentId);
   const obj = getAddObj(contacts);
-  if (content.items == "") content.items = [];
-  content.items.push(obj);
-  await putDataBackend(`api/tasks/${id}`, data);
+  postDataBackend("api/tasks/", obj);
   changeHtmlPage("board.html");
 }
 

@@ -77,7 +77,8 @@ async function saveEditData() {
   saveTheActualUser();
   let fullsize = document.getElementById("full-size-container");
   fullsize.classList.add("d-none");
-  renderBoards(data);
+  let userData = await getUserData();
+  renderBoards(userData.tasks);
   getEventListeners();
   getDropZones();
   setAssignedAddTask();
@@ -88,11 +89,9 @@ async function saveEditData() {
  *
  * @return {Array} An array of contact objects with no null values.
  */
-function getContactsData() {
-  let contactsData = [];
-  for (let i = 0; i < contacts.length; i++) {
-    if (contacts[i] != null) contactsData.push(contacts[i]);
-  }
+async function getContactsData() {
+  let task = await loadDataBackend(`api/tasks/${id}/`);
+  let contactsData = task.assigned;
   return contactsData;
 }
 
@@ -105,6 +104,10 @@ function getContactsData() {
  */
 async function saveTheActualUser() {
   let contactsData = getContactsData();
+  let user = JSON.parse(localStorage.getItem("user"));
+  let userData = await loadDataBackend(`api/users/profiles/${user.user_id}/`);
+  console.log(data);
+  let data = userData.tasks;
   for (let listItem of data) {
     if (listItem.id == contentId) {
       for (let item of listItem.items) {

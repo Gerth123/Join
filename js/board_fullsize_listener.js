@@ -69,7 +69,8 @@ function onClickCloseBtnImg(fullsize) {
       let itemData = await getItemById(id);
       let subtasks = itemData["subtasks"];
       for (let i = 0; i < subtasks.length; i++) {
-        const check = document.getElementById(`subtask-${i}`);
+        let id = subtasks[i]["id"];
+        const check = document.getElementById(`subtask-${id}`);
         if (check.checked) subtasks[i]["checked"] = true;
         if (!check.checked) subtasks[i]["checked"] = false;
       }
@@ -90,7 +91,8 @@ async function closeBtnRender(subtasks) {
   resetPriority();
   setAssignedEditTask();
   setCheckBoxes();
-  renderBoards(data);
+  let userData = await getUserData();
+  renderBoards(userData.tasks);
   getEventListeners();
   getDropZones();
 }
@@ -216,7 +218,7 @@ function addTaskBtnSmall(contentIdAdd) {
   editBoard.classList.add("d-none");
   addBoard.classList.remove("d-none");
   onClickAddSubTasks();
-  getAddAssgined();
+  getAddAssigned();
   setAddCard();
 }
 
@@ -226,7 +228,7 @@ function addTaskBtnSmall(contentIdAdd) {
  * @return {Promise<void>} A Promise that resolves when the assigned users have been retrieved and the add card form has been updated.
  * @author Hanbit Chang
  */
-async function getAddAssgined() {
+async function getAddAssigned() {
   let user = JSON.parse(localStorage.getItem("user"));
   let userData = await loadDataBackend(`api/users/profiles/${user.user_id}/`);
   let data = userData.tasks;
@@ -273,17 +275,16 @@ function getAssignedUsersAddCard(assignedUsers, contacts) {
  */
 async function saveAddData() {
   if (contentId == undefined) contentId = 1;
-  const content = data.find((content) => content.id == contentId);
-  const obj = getAddObj(contacts);
-  if (content.items == "") content.items = [];
-  content.items.push(obj);
+  let userDataBefore = await getUserData();
+  const obj = getAddObj(userDataBefore.contacts);
+  await postDataBackend(`api/tasks/`, obj);
   const fullsize = document.getElementById("full-size-container");
   fullsize.classList.add("d-none");
-  renderBoards(data);
+  let userDataAfter = await getUserData();
+  renderBoards(userDataAfter.tasks);
   getEventListeners();
   getDropZones();
   setAddCard();
-  await putDataBackend(`api/tasks/${id}`, data);
 }
 
 /**

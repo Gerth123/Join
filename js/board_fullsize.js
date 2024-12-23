@@ -84,21 +84,47 @@ function assignedFullSizeOverFlowed(i) {
 }
 
 /**
- * Gets the full size subtasks
- * @param {Object} subtasks
+ * Clears the list of subtasks in the specified container.
+ * @param {HTMLElement} container The container to clear.
+ */
+function clearSubtaskList(container) {
+  container.innerHTML = "";
+}
+
+/**
+ * Creates a list item element for a subtask.
+ * @param {number} id The ID of the subtask.
+ * @param {string} title The title of the subtask.
+ * @param {boolean} checked The checked state of the subtask.
+ * @returns {HTMLElement} The created list item element.
+ */
+function createSubtaskItem(id, title, checked) {
+  const li = document.createElement("li");
+  li.className = "full-size-subtask-li";
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.id = `subtask-${id}`;
+  checkbox.checked = checked;
+  const label = document.createElement("label");
+  label.className = "full-size-p";
+  label.htmlFor = `subtask-${id}`;
+  label.textContent = title;
+  li.appendChild(checkbox);
+  li.appendChild(label);
+  return li;
+}
+
+/**
+ * Updates the full-size subtask list.
+ * @param {Array} subtasks The list of subtasks.
  */
 function getFullSizeSubtask(subtasks) {
   const fullSizeSubtasks = document.getElementById("full-size-subtasks-tasks");
-  fullSizeSubtasks.innerHTML = "";
-  for (let i = 0; i < subtasks.length; i++) {
-    fullSizeSubtasks.innerHTML += /*html*/ `
-    <li class="full-size-subtask-li">
-      <input type="checkbox" id="subtask-${i}">
-      <label class="full-size-p" for="subtask-${i}">${subtasks[i]["title"]}</label>
-    </li>`;
-  }
-  for (let i = 0; i < subtasks.length; i++) {
-    const check = document.getElementById(`subtask-${i}`);
-    if (subtasks[i]["checked"]) check.checked = true;
-  }
+  clearSubtaskList(fullSizeSubtasks);
+  subtasks.forEach(subtask => {
+    const { id, title, checked } = subtask;
+    const subtaskItem = createSubtaskItem(id, title, checked);
+    fullSizeSubtasks.appendChild(subtaskItem);
+  });
 }
+

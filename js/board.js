@@ -98,7 +98,7 @@ async function getItemById(id) {
 }
 
 /**
- * Gets the board
+ * Gets the board and checks if there are empty sections.
  * @param {Object} tasks
  */
 function getBoardSection(tasks) {
@@ -106,11 +106,19 @@ function getBoardSection(tasks) {
   boardSection.innerHTML = "";
   boardSection.innerHTML = '<div id="no-search-results" class="no-search-results d-none"><h1>No search results</h1></div>';
   for (let i = 0; i < 4; i++) {
-    const items = tasks;
     boardSection.innerHTML += getBoardContainer(i, header[i]);
-    if (items == "") getEmptyBoard(i);
+    let empty = true;
+    tasks.forEach(task => {
+      if (task.status == i) {
+        empty = false;
+      }
+    });
+    if (empty) {
+      getEmptyBoard(i);
+    }
   }
 }
+
 
 /**
  * Retrieves the empty board container element and displays it by removing the "d-none" class from the container element.
@@ -125,15 +133,15 @@ function getEmptyBoard(id) {
   container.classList.remove("d-none");
 }
 
-function getBoardContentsAll(data) {
+function getBoardContentsAll(tasks) {
+  let filled = false;
   for (let i = 0; i < 4; i++) {
-    let filled = false;
-    for (let j = 0; j < data.length; j++) {
-      if (data[j].status == i) {
+    tasks.forEach(task => {
+      if (task.status == i) {
         filled = true;
-        getBoardContents(data[j], i);
+        getBoardContents(task, i);
       }
-    }
+    });
     if (!filled) {
       getEmptyBoard(i);
     }

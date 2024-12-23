@@ -77,7 +77,7 @@ async function deleteDataBackend(path = '') {
         };
     }
     const response = await fetch(baseUrlBackend + path, { method: 'DELETE', headers, body: JSON.stringify(data) });
-    return responseToJson = await response.json();
+    return response.json();
 }
 
 /**
@@ -188,4 +188,10 @@ function checkUserLogin() {
     if (!user) {
         window.location.href = "login.html";
     }
+}
+
+function getUserData() {
+    let user = JSON.parse(localStorage.getItem('user'));
+    let userData = loadDataBackend(`api/users/profiles/${user.user_id}/`);
+    return userData;
 }
