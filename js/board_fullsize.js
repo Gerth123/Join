@@ -94,7 +94,7 @@ function getFullSizeSubtask(subtasks) {
     fullSizeSubtasks.innerHTML += /*html*/ `
     <li class="full-size-subtask-li">
       <input type="checkbox" id="subtask-${i}">
-      <label class="full-size-p" for="subtask-${i}">${subtasks[i]["task"]}</label>
+      <label class="full-size-p" for="subtask-${i}">${subtasks[i]["title"]}</label>
     </li>`;
   }
   for (let i = 0; i < subtasks.length; i++) {

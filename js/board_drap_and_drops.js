@@ -125,8 +125,6 @@ async function doDrop(e) {
  */
 async function doDropContents(droppedItemElement, insertAfter, itemId, contentId, droppedIndex) {
   insertAfter.after(droppedItemElement);
-  let urlParams = new URLSearchParams(window.location.search);
-  let actualUsersNumber = urlParams.get("actualUsersNumber");
   updateItem(itemId, {
     contentId,
     position: droppedIndex,
@@ -134,7 +132,7 @@ async function doDropContents(droppedItemElement, insertAfter, itemId, contentId
   renderBoards(data);
   getEventListeners();
   getDropZones();
-  await putData(`users/${actualUsersNumber}/tasks/`, data);
+  await putDataBackend(`api/tasks/${itemId}`, data);
 }
 
 /**

@@ -227,8 +227,10 @@ function addTaskBtnSmall(contentIdAdd) {
  * @author Hanbit Chang
  */
 async function getAddAssgined() {
-  let data = await getData("tasks");
-  let contacts = await getData("contacts");
+  let user = JSON.parse(localStorage.getItem("user"));
+  let userData = await loadDataBackend(`api/users/profiles/${user.user_id}/`);
+  let data = userData.tasks;
+  let contacts = userData.contacts;
   let contactsData = [];
   for (let i = 0; i < contacts.length; i++) {
     if (contacts[i] != null) contactsData.push(contacts[i]);
@@ -270,8 +272,6 @@ function getAssignedUsersAddCard(assignedUsers, contacts) {
  * @author Hanbit Chang
  */
 async function saveAddData() {
-  let urlParams = new URLSearchParams(window.location.search);
-  let actualUsersNumber = urlParams.get("actualUsersNumber");
   if (contentId == undefined) contentId = 1;
   const content = data.find((content) => content.id == contentId);
   const obj = getAddObj(contacts);
@@ -283,7 +283,7 @@ async function saveAddData() {
   getEventListeners();
   getDropZones();
   setAddCard();
-  await putData(`users/${actualUsersNumber}/tasks/`, data);
+  await putDataBackend(`api/tasks/${id}`, data);
 }
 
 /**

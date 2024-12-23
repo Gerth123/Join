@@ -49,7 +49,7 @@ async function checkUser() {
     let rememberMe = document.getElementById('checkbox').checked;
     let password = document.getElementById('password').value;
     let user;
-    if (rememberMe && password==='') {
+    if (rememberMe && password === '') {
         let actualUser = JSON.parse(localStorage.getItem('user'));
         user = await postDataBackend('api/users/login/', { 'email': email, 'token': actualUser.token });
     } else if (password !== '') {
@@ -116,7 +116,6 @@ async function saveUserData() {
     checkboxBoolean = document.getElementById('checkbox').checked;
     let user;
     if (checkboxBoolean && email && password) {
-        console.log('email', email, 'password', password.value);
         user = await postDataBackend('api/users/login/', { 'email': email, 'password': password.value });
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('rememberMe', true);

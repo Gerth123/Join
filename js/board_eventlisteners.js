@@ -46,8 +46,6 @@ function onClickSelectBtn() {
  * @author Hanbit Chang
  */
 async function updateSubtaskCheck(subtasks) {
-  let urlParams = new URLSearchParams(window.location.search);
-  let actualUsersNumber = urlParams.get("actualUsersNumber");
   for (let column of data) {
     if (column.id == contentId) {
       for (let item of column.items) {
@@ -55,7 +53,7 @@ async function updateSubtaskCheck(subtasks) {
       }
     }
   }
-  await putData(`users/${actualUsersNumber}/tasks/`, data);
+  // await putDataBackend(`api/tasks/${id}`, data);
 }
 
 /**
@@ -384,13 +382,13 @@ function deleteFullSizeBoard() {
   const delBtn = document.querySelector(".full-size-button-delete");
   delBtn.onclick = async () => {
     let user = JSON.parse(localStorage.getItem("user"));
-    // for (let column of data) {
-    //   if (column.items == "") column.items = [];
-    //   let item = column.items.find((item) => item.id == id);
-    //   if (item) column.items.splice(column.items.indexOf(item), 1);
-    //   if (column.items.length == 0) column.items = "";
-    // }
-    await deleteRender(user);
+    for (let column of data) {
+      if (column.items == "") column.items = [];
+      let item = column.items.find((item) => item.id == id);
+      if (item) column.items.splice(column.items.indexOf(item), 1);
+      if (column.items.length == 0) column.items = "";
+    }
+    await deleteRender();
   };
 }
 
@@ -402,7 +400,7 @@ function deleteFullSizeBoard() {
  * listeners, drop zones, and full-size container hiding are complete, and the
  * data is put to the server.
  */
-async function deleteRender(user) {
+async function deleteRender() {
   renderBoards(data);
   getEventListeners();
   getDropZones();

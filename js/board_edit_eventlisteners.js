@@ -105,13 +105,11 @@ function getContactsData() {
  */
 async function saveTheActualUser() {
   let contactsData = getContactsData();
-  let urlParams = new URLSearchParams(window.location.search);
-  let actualUsersNumber = urlParams.get("actualUsersNumber");
   for (let listItem of data) {
     if (listItem.id == contentId) {
       for (let item of listItem.items) {
         item = setEditItems(item, contactsData);
-        await putData(`users/${actualUsersNumber}/tasks/`, data);
+        await putDataBackend(`api/tasks/${id}`, data);
       }
     }
   }

@@ -9,6 +9,7 @@
  * - selectBtnEventListener() - Event listener for select button.
  */
 function initAddTask() {
+  checkUserLogin();
   onClickAddSubTasks();
   onClickSelectBtn();
   onClickClearBtn();
@@ -17,6 +18,11 @@ function initAddTask() {
   oneCheckBox();
 }
 
+/**
+ * Attaches a click event listener to the "clear-button" element and clears the input fields and sets the checkboxes to unchecked.
+ *
+ * @return {void} This function does not return anything.
+ */
 function onClickClearBtn() {
   const clearBtn = document.getElementById("clear-button");
   clearBtn.onclick = () => {
@@ -72,16 +78,16 @@ function oneCheckBox() {
  * Saves the data of the added task and changes the HTML page to "board.html".
  */
 async function saveAddTaskData() {
-  let urlParams = new URLSearchParams(window.location.search);
-  let actualUsersNumber = urlParams.get("actualUsersNumber");
-  let data = await getData("tasks");
-  let contacts = await getData("contacts");
+  let user = JSON.parse(localStorage.getItem("user"));
+  let userData = await loadDataBackend(`api/users/profiles/${user.user_id}/`);
+  let data = userData.tasks;
+  let contacts = userData.contacts;
   if (contentId == undefined) contentId = 1;
   const content = data.find((content) => content.id == contentId);
   const obj = getAddObj(contacts);
   if (content.items == "") content.items = [];
   content.items.push(obj);
-  await putData(`users/${actualUsersNumber}/tasks/`, data);
+  await putDataBackend(`api/tasks/${id}`, data);
   changeHtmlPage("board.html");
 }
 

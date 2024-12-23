@@ -87,12 +87,15 @@ function getEditPriority(priority) {
  * @author Hanbit Chang
  */
 function getCheckedUsers(assignedUsers, contactName) {
+  if (!Array.isArray(assignedUsers) || assignedUsers.length === 0) return "";
   for (const userName of assignedUsers) {
-    if (userName == contactName) {
+    if (userName === contactName) {
       return "checked";
     }
   }
+  return "";
 }
+
 
 /**
  * Retrieves the assigned users for a specific task and updates the edit form with their names.
@@ -100,14 +103,16 @@ function getCheckedUsers(assignedUsers, contactName) {
  * @author Hanbit Chang
  */
 async function getEditAssigned() {
-  let contactsData = [];
-  for (let i = 0; i < contacts.length; i++) {
-    if (contacts[i] != null) contactsData.push(contacts[i]);
-  }
+  let user = JSON.parse(localStorage.getItem("user"));
+  let userData = await loadDataBackend(`api/users/profiles/${user.user_id}/`);
+  let contactsData = userData.contacts;
+  // let contactsData = [];
+  // for (let i = 0; i < contacts.length; i++) {
+  //   if (contacts[i] != null) contactsData.push(contacts[i]);
+  // }
   let assignedUsers = getAssignedUserElements();
-  getAssignedUserElements();
-  getEditContacts(assignedUsers, contactsData);
-  toggleCheckUsers(contactsData);
+  // getAssignedUserElements();
+  if (assignedUsers.length != 0) { getEditContacts(assignedUsers, contactsData); toggleCheckUsers(contactsData); }
 }
 
 /**
@@ -115,19 +120,21 @@ async function getEditAssigned() {
  *
  * @return {Array} An array of user names that are currently assigned to the task.
  */
-function getAssignedUserElements() {
+async function getAssignedUserElements() {
   let assignedUsers = [];
-  for (let column of data) {
-    if (column.id == contentId) {
-      for (let item of column.items) {
-        if (item.id == id) {
-          for (i = 0; i < item["assigned"].length; i++) {
-            assignedUsers.push(item["assigned"][i]["name"]);
-          }
-        }
-      }
-    }
-  }
+  let data = await loadDataBackend(`api/tasks/${id}/`);
+  assignedUsers = data["assigned"];
+  // for (let column of data) {
+  //   if (column.id == contentId) {
+  //     for (let item of column.items) {
+  //       if (item.id == id) {
+  //         for (i = 0; i < item["assigned"].length; i++) {
+  //           assignedUsers.push(item["assigned"][i]["name"]);
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
   return assignedUsers;
 }
 
@@ -268,7 +275,7 @@ function getEditSubtasks(subtasks) {
   const list = document.getElementById("subtasks-list");
   list.innerHTML = "";
   for (let i = 0; i < subtasks.length; i++) {
-    list.innerHTML += getEditSubtasksList(subtasks[i]["task"]);
+    list.innerHTML += getEditSubtasksList(subtasks[i]["title"]);
   }
 }
 

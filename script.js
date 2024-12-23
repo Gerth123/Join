@@ -182,3 +182,10 @@ function getUserIdFormUrl() {
     let actualUsersNumber = urlParams.get('actualUsersNumber');
     return actualUsersNumber;
 }
+
+function checkUserLogin() {
+    let user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+        window.location.href = "login.html";
+    }
+}

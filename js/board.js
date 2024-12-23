@@ -25,7 +25,8 @@ async function getIcons() {
  * On loading it inits the elements
  */
 async function initBoard() {
-  user = JSON.parse(localStorage.getItem('user'));
+  checkUserLogin();
+  user = JSON.parse(localStorage.getItem("user"));
   userId = user.user_id;
   userData = await loadDataBackend(`api/users/profiles/${userId}/`);
   // for (let i = 0; i < userData.tasks.length; i++) {
@@ -92,7 +93,7 @@ async function renderBoards(tasks) {
  * @returns item data
  */
 async function getItemById(id) {
-  let item = loadDataBackend(`api/tasks/${id}/`);
+  let item = await loadDataBackend(`api/tasks/${id}/`);
   return item;
 }
 
@@ -172,10 +173,10 @@ async function getBoardContents(task, id) {
   //   let i = 0;
   //   contents.forEach(function (card) {
   //     if (i < contents.length) {
-        
+
   //       i++;
   //     } else content.innerHTML += getBoardCard(card, "big-zone");
-     
+
   //   });
   // }
 }
@@ -226,8 +227,8 @@ function getCategory(category, id) {
   const content = document.getElementById(`${id}`);
   const boardCategory = content.querySelector("#board-category");
   let categoryName;
-  if (category === 1) {categoryName = "user story"}
-  else if (category === 2) {categoryName = "technical task"};
+  if (category === 1) { categoryName = "user story" }
+  else if (category === 2) { categoryName = "technical task" };
   boardCategory.src = icons["categoryIcons"][categoryName] || "";
 }
 
