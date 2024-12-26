@@ -248,7 +248,6 @@ function setAssignedAddTask() {
   const assignedUsers = document.getElementById("assigned-users-addCard");
   const assignedItems = document.querySelectorAll(".assigned-item");
   const assignedBtnText = document.querySelector(".btn-text-addCard");
-
   assignedItems.forEach((item) => {
     item.classList.remove("checked");
   });

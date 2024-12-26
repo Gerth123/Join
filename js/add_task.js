@@ -80,7 +80,6 @@ function oneCheckBox() {
 async function saveAddTaskData() {
   let user = JSON.parse(localStorage.getItem("user"));
   let userData = await loadDataBackend(`api/users/profiles/${user.user_id}/`);
-  let data = userData.tasks;
   let contacts = userData.contacts;
   if (contentId == undefined) contentId = 1;
   const obj = getAddObj(contacts);

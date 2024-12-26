@@ -138,7 +138,7 @@ function getEditContacts(assignedUsers, contacts) {
     contactList.innerHTML += /*html*/ `
       <li class="assigned-item ${getCheckedUsers(assignedUsers, contact["name"])}">
         <div class="assigned-user">
-          <div id="board-user" class="board-user" style="background-color:${contact["color"]}">${name}</div>
+          <div id="board-user${contact["id"]}" class="board-user" style="background-color:${contact["color"]}">${name}</div>
           <span class="item-text">${contact["name"]}</span>
         </div>
         <div class="check-img"></div>

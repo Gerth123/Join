@@ -74,7 +74,8 @@ function checkEditSubtasks() {
  * @author Hanbit Chang
  */
 async function saveEditData() {
-  saveTheActualUser();
+  let assignedUsers = await updateAssigned();
+  saveTheActualUser(assignedUsers);
   let fullsize = document.getElementById("full-size-container");
   fullsize.classList.add("d-none");
   let userData = await getUserData();
@@ -83,6 +84,58 @@ async function saveEditData() {
   getDropZones();
   setAssignedAddTask();
 }
+
+/**
+ * Extracts the contact IDs of all checked assigned items.
+ * @returns {Array} An array of contact IDs as strings.
+ */
+function getCheckedContactIds() {
+  const assignedItems = document.querySelectorAll(".assigned-item");
+  const contactIds = [];
+
+  assignedItems.forEach((item) => {
+    const boardUser = item.querySelector(".board-user");
+    if (item.classList.contains("checked") && boardUser) {
+      const contactId = boardUser.id.match(/\d+$/)?.[0];
+      if (contactId) {
+        contactIds.push(contactId);
+      }
+    }
+    item.classList.remove("checked"); // Remove the "checked" class from all items
+  });
+
+  return contactIds;
+}
+
+/**
+ * Fetches the contact data for the given contact IDs.
+ * @param {Array} contactIds - An array of contact IDs as strings.
+ * @returns {Promise<Array>} A promise that resolves to an array of assigned user objects.
+ */
+async function fetchAssignedContacts(contactIds) {
+  const assignedUsers = [];
+  for (const contactId of contactIds) {
+    try {
+      const actualContact = await loadDataBackend(`api/contacts/single/${contactId}/`);
+      assignedUsers.push(actualContact);
+    } catch (error) {
+      console.error("Error loading contact data for ID:", contactId, error);
+    }
+  }
+  return assignedUsers;
+}
+
+/**
+ * Updates the assigned users for the task.
+ * @returns {Promise<Array>} A promise that resolves to an array of assigned user objects.
+ */
+async function updateAssigned() {
+  const contactIds = getCheckedContactIds();
+  const assignedUsers = await fetchAssignedContacts(contactIds);
+  return assignedUsers;
+}
+
+
 
 /**
  * Returns an array of contacts data by filtering out any null values from the contacts array.
@@ -102,8 +155,8 @@ async function getContactsData() {
  *
  * @return {Promise<void>} A Promise that resolves when the data is saved and sent back to the server.
  */
-async function saveTheActualUser() {
-  let data = await getTaskContent();
+async function saveTheActualUser(assignedUsers) {
+  let data = await getTaskContent(assignedUsers);
   await putDataBackend(`api/tasks/${id}/`, data);
   initBoard();
 }
@@ -113,13 +166,13 @@ async function saveTheActualUser() {
  * 
  * @return {Object} An object containing the content of the task to be edited.
  */
-async function getTaskContent() {
+async function getTaskContent(assignedUsers) {
   const title = document.getElementById("title-editCard");
   const description = document.getElementById("description-editCard");
   const date = document.getElementById("date-editCard");
   const priority = editPriorityValue();
   await getEditSubTasksValue();
-  const assigned = assignedContacts;
+  const assigned = assignedUsers;
   let data = {
     title: title.value,
     description: description.value,
@@ -179,11 +232,11 @@ async function removeDeletedSubtasks(actualSubtasks, subtasksList) {
  * @param {Array} subtasks Die Liste der neuen Unteraufgaben.
  */
 async function addNewSubtasks(subtasks) {
-  let obj = { subtasks_data: [] }; 
+  let obj = { subtasks_data: [] };
   for (let subtask of subtasks) {
     if (!subtask.id) {
       let { id, ...subtaskWithoutId } = subtask;
-      obj.subtasks_data.push(subtaskWithoutId); 
+      obj.subtasks_data.push(subtaskWithoutId);
     }
   }
   if (obj.subtasks_data.length > 0) {
