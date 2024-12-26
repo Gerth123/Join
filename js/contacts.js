@@ -264,6 +264,8 @@ async function checkIfContactAlreadyExists(alreadyExist, userId, phone, name, em
       console.error("Error saving contact:", error);
     }
   }
+  await refreshAndDisplayContacts();
+
 }
 
 /**
