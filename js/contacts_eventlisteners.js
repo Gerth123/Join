@@ -5,17 +5,23 @@
 document.addEventListener("DOMContentLoaded", setupContactClickEvents(getData("contacts")));
 
 /**
- * Sets up event listeners for the contact management interface.
- * Author: Elias
+ * Initializes the contact management interface after the DOM is fully loaded.
  */
 document.addEventListener("DOMContentLoaded", function () {
+    initContacts();
+});
+
+/**
+ * Sets up event listeners for the contact management interface.
+ */
+function initContacts() {
     checkUserLogin();
     setupAddContactButton();
     setupDocumentClickListener();
     setupCloseImageListener();
     setupCancelButtonListener();
     setupContactsAListener();
-});
+}
 
 /**
 * Sets up the event listener for the add contact button.
@@ -102,6 +108,10 @@ function setupContactsAListener() {
  * Author: Elias
  */
 document.addEventListener("DOMContentLoaded", async function () {
+    loadAllContacts();
+});
+
+async function loadAllContacts() {
     try {
         let user = JSON.parse(localStorage.getItem('user'));
         const userId = user.user_id;
@@ -115,7 +125,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     } catch (error) {
         console.error("Fehler beim Laden der Daten:", error);
     }
-});
+}
 
 
 let dataId;
@@ -151,7 +161,7 @@ async function setupContactClickEvents(contacts) {
  * Author: Elias
  */
 function setupEditAndDeleteButtons(contactDetailsDiv, card, name, email, phone, randomColor, initials, contentRight) {
-    
+
     let contactDetails = contactDetailsDiv.querySelectorAll(".edit-div");
     contactDetails.forEach((contactDetail) => {
         contactDetail.onclick = () => openEditContactOverlay(name, email, phone, randomColor, initials);
@@ -204,25 +214,25 @@ function setupDeleteButton(email) {
 * 
 * Author: Elias
 */
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const contacts = document.querySelectorAll('.contact');
     contacts.forEach(contact => {
-        contact.onclick = function() {
+        contact.onclick = function () {
             this.classList.toggle('clicked');
         };
     });
-  });
+});
 
-  /**
- * Initializes event listeners for contact cards.
- * Author: Elias
- */
+/**
+* Initializes event listeners for contact cards.
+* Author: Elias
+*/
 async function initContactCardClickHandlers() {
     let contacts = await getData("contacts");
     const contactCards = document.querySelectorAll('.contactCard');
     contactCards.forEach(card => {
-      card.onclick = () => handleCardClick(card, contacts);
+        card.onclick = () => handleCardClick(card, contacts);
     });
-  }
-  
-  initContactCardClickHandlers();
+}
+
+initContactCardClickHandlers();

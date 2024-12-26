@@ -275,12 +275,12 @@ label {
   height: 95%;
   display: flex;
   flex-direction: column;
-  /* overflow-y: scroll; */
 }
 
 .full-size-row {
-  height: 360px;
-  overflow-y: scroll;
+  /* height: 360px; */
+  /* overflow-y: scroll; */
+  height: 100%;
 }
 
 .scrollable-form {
