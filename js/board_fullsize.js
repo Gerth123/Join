@@ -1,13 +1,12 @@
 /**
  * Gets the full size board
  * @param {number} id
- * @param {number} contentId
  */
-async function getFullSizeBoard(id, contentId) {
+async function getFullSizeBoard(id) {
   const title = document.querySelector(".full-size-title");
   const description = document.querySelector(".full-size-description");
   const date = document.querySelector("#full-size-due-date");
-  let itemData = await getItemById(id, contentId);
+  let itemData = await getItemById(id);
   title.textContent = `${itemData["title"]}`;
   description.textContent = `${itemData["description"]}`;
   date.textContent = "";
@@ -45,7 +44,9 @@ function getFullSizeAssigned(assigned) {
   fullSizeAssigned.innerHTML = "";
   if (assigned != "") {
     let i = 0;
+    assignedContacts = [];
     assigned.forEach((user) => {
+      assignedContacts.push(user);
       let name = getInitials(user["name"]);
       if (i < 3) fullSizeAssigned.innerHTML += assignedFullsize(user, name);
       i++;
@@ -85,21 +86,47 @@ function assignedFullSizeOverFlowed(i) {
 }
 
 /**
- * Gets the full size subtasks
- * @param {Object} subtasks
+ * Clears the list of subtasks in the specified container.
+ * @param {HTMLElement} container The container to clear.
+ */
+function clearSubtaskList(container) {
+  container.innerHTML = "";
+}
+
+/**
+ * Creates a list item element for a subtask.
+ * @param {number} id The ID of the subtask.
+ * @param {string} title The title of the subtask.
+ * @param {boolean} checked The checked state of the subtask.
+ * @returns {HTMLElement} The created list item element.
+ */
+function createSubtaskItem(id, title, checked) {
+  const li = document.createElement("li");
+  li.className = "full-size-subtask-li";
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.id = `subtask-${id}`;
+  checkbox.checked = checked;
+  const label = document.createElement("label");
+  label.className = "full-size-p";
+  label.htmlFor = `subtask-${id}`;
+  label.textContent = title;
+  li.appendChild(checkbox);
+  li.appendChild(label);
+  return li;
+}
+
+/**
+ * Updates the full-size subtask list.
+ * @param {Array} subtasks The list of subtasks.
  */
 function getFullSizeSubtask(subtasks) {
   const fullSizeSubtasks = document.getElementById("full-size-subtasks-tasks");
-  fullSizeSubtasks.innerHTML = "";
-  for (let i = 0; i < subtasks.length; i++) {
-    fullSizeSubtasks.innerHTML += /*html*/ `
-    <li class="full-size-subtask-li">
-      <input type="checkbox" id="subtask-${i}">
-      <label class="full-size-p" for="subtask-${i}">${subtasks[i]["task"]}</label>
-    </li>`;
-  }
-  for (let i = 0; i < subtasks.length; i++) {
-    const check = document.getElementById(`subtask-${i}`);
-    if (subtasks[i]["checked"]) check.checked = true;
-  }
+  clearSubtaskList(fullSizeSubtasks);
+  subtasks.forEach(subtask => {
+    const { id, title, checked } = subtask;
+    const subtaskItem = createSubtaskItem(id, title, checked);
+    fullSizeSubtasks.appendChild(subtaskItem);
+  });
 }
+

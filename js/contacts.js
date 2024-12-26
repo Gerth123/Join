@@ -209,7 +209,7 @@ async function findMissingId(contacts) {
 }
 
 /**
- * Retrieves specific data for a user from the Firebase database based on the user's number in the URL parameter.
+ * Retrieves specific data for a user from the Backend based on the user's number in the URL parameter.
  * Author: Elias
  * @param {string} data - The data key to retrieve from Firebase.
  * @returns {Promise<any>} - The requested data.

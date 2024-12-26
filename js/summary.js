@@ -1,10 +1,11 @@
 /**
  * This function is used onload of the body of the summary HTML page. It gets the number of the user from the link and shares it with the fillDates functions. 
- * The function also uses the function loadData to load the data from the remoteStorage (Firebase).
+ * The function also uses the function loadData to load the data from the Backend.
  * 
  * @author: Robin
  */
 async function initSummary() {
+  checkUserLogin();
   let actualUser = JSON.parse(localStorage.getItem("user"));
   await fillDates(actualUser);
   await checkConditions();
@@ -77,33 +78,33 @@ function showGreetingThenMain() {
  *
  * @author: Robin
  */
-function fillDates(actualUser) {
-  // let actualUser = actualUsers[actualUsersNumber];
+async function fillDates(user) {
+  let actualUser = await loadDataBackend(`api/users/profiles/${user.user_id}/`);
   getElementById("greetingName").innerHTML = `${actualUser.username}`;
-  // getElementById("tasksToDo").innerHTML = `${actualUser["tasks"][0]["items"].length}`;
-  // getElementById("tasksDone").innerHTML = `${actualUser["tasks"][3]["items"].length}`;
-  // let tasksInBoard = actualTasksInBoard(actualUser);
-  // getElementById("tasksInBoard").innerHTML = `${tasksInBoard}`;
-  // getElementById("tasksInProgress").innerHTML = `${actualUser["tasks"][1]["items"].length}`;
-  // getElementById("tasksAwaitingFeedback").innerHTML = `${actualUser["tasks"][2]["items"].length}`;
-  // let urgentDates = [];
-  // fillUrgentTask(actualUser, urgentDates);
-  // fillUrgentDate(urgentDates);
+  getElementById("tasksToDo").innerHTML = `${checkTasksCount(actualUser.tasks, 0)}`;
+  getElementById("tasksDone").innerHTML = `${checkTasksCount(actualUser.tasks, 3)}`;
+  getElementById("tasksInBoard").innerHTML = `${actualUser.tasks.length}`;
+  getElementById("tasksInProgress").innerHTML = `${checkTasksCount(actualUser.tasks, 1)}`;
+  getElementById("tasksAwaitingFeedback").innerHTML = `${checkTasksCount(actualUser.tasks, 2)}`;
+  let urgentDates = [];
+  fillUrgentTask(actualUser.tasks, urgentDates);
+  fillUrgentDate(urgentDates);
 }
 
 /**
- * This function is used to get the number of the urgent tasks.
+ * This function is used to get the number of the tasks to do.
  * 
- * @param {object} actualUser - The object of the user.
- * 
- * @author: Robin
+ * @param {array} tasks - The array of the tasks.
+ * @return {number} - The number of the tasks to do.
  */
-function actualTasksInBoard(actualUser) {
-  let tasksInBoard = 0;
-  for (let actualTasksStatusIndex = 0; actualTasksStatusIndex < actualUser["tasks"].length; actualTasksStatusIndex++) {
-    tasksInBoard += actualUser["tasks"][actualTasksStatusIndex]["items"].length;
-  }
-  return tasksInBoard;
+function checkTasksCount(tasks, status) {
+  let tasksToDo = 0;
+  tasks.forEach(task => {
+    if (task.status === status) {
+      tasksToDo++;
+    }
+  });
+  return tasksToDo;
 }
 
 /**
@@ -125,19 +126,20 @@ function getElementById(id) {
  *
  * @author: Robin
  */
-function fillUrgentTask(actualUser, urgentDates) {
+function fillUrgentTask(tasks, urgentDates) {
   let urgentTasksNumber = 0;
-  for (let actualTasksStatusIndex = 0; actualTasksStatusIndex < actualUser["tasks"].length; actualTasksStatusIndex++) {
-    let actualTasksStatusNumber = actualUser["tasks"][actualTasksStatusIndex];
-    for (let actualTaskIndex = 0; actualTaskIndex < actualTasksStatusNumber["items"].length; actualTaskIndex++) {
-      let actualTaskPriority = actualTasksStatusNumber["items"][actualTaskIndex]["priority"];
-      if (actualTaskPriority === "urgent") {
-        urgentDates.push(actualTasksStatusNumber["items"][actualTaskIndex]["date"]);
-        urgentTasksNumber++;
-      }
+  tasks.forEach(task => {
+    if (task.priority === "urgent") {
+      urgentDates.push(task.date);
+      urgentTasksNumber++;
     }
+  });
+  const urgentTasksElement = document.getElementById("urgentTasks");
+  if (urgentTasksElement) {
+    urgentTasksElement.innerHTML = `${urgentTasksNumber}`;
+  } else {
+    console.error("Element with ID 'urgentTasks' not found.");
   }
-  getElementById("urgentTasks").innerHTML = `${urgentTasksNumber}`;
 }
 
 /**

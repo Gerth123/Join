@@ -10,7 +10,7 @@ async function getEditBoard(id, contentId) {
   const title = document.querySelector("input[id=title-editCard]");
   const description = document.querySelector("textarea[id=description-editCard]");
   const date = document.querySelector("input[id=date-editCard]");
-  let itemData = await getItemById(id, contentId);
+  let itemData = await getItemById(id);
   title.value = `${itemData["title"]}`;
   description.value = `${itemData["description"]}`;
   date.value = `${itemData["date"]}`;
@@ -87,12 +87,15 @@ function getEditPriority(priority) {
  * @author Hanbit Chang
  */
 function getCheckedUsers(assignedUsers, contactName) {
+  if (!Array.isArray(assignedUsers) || assignedUsers.length === 0) return "";
   for (const userName of assignedUsers) {
-    if (userName == contactName) {
+    if (userName === contactName) {
       return "checked";
     }
   }
+  return "";
 }
+
 
 /**
  * Retrieves the assigned users for a specific task and updates the edit form with their names.
@@ -100,14 +103,11 @@ function getCheckedUsers(assignedUsers, contactName) {
  * @author Hanbit Chang
  */
 async function getEditAssigned() {
-  let contactsData = [];
-  for (let i = 0; i < contacts.length; i++) {
-    if (contacts[i] != null) contactsData.push(contacts[i]);
-  }
-  let assignedUsers = getAssignedUserElements();
-  getAssignedUserElements();
-  getEditContacts(assignedUsers, contactsData);
-  toggleCheckUsers(contactsData);
+  let user = JSON.parse(localStorage.getItem("user"));
+  let userData = await loadDataBackend(`api/users/profiles/${user.user_id}/`);
+  let contactsData = userData.contacts;
+  let assignedUsers = await getAssignedUserElements();
+  if (assignedUsers.length != 0) { getEditContacts(assignedUsers, contactsData); toggleCheckUsers(contactsData); }
 }
 
 /**
@@ -115,19 +115,10 @@ async function getEditAssigned() {
  *
  * @return {Array} An array of user names that are currently assigned to the task.
  */
-function getAssignedUserElements() {
+async function getAssignedUserElements() {
   let assignedUsers = [];
-  for (let column of data) {
-    if (column.id == contentId) {
-      for (let item of column.items) {
-        if (item.id == id) {
-          for (i = 0; i < item["assigned"].length; i++) {
-            assignedUsers.push(item["assigned"][i]["name"]);
-          }
-        }
-      }
-    }
-  }
+  let data = await loadDataBackend(`api/tasks/${id}/`);
+  assignedUsers = data["assigned"];
   return assignedUsers;
 }
 
@@ -142,16 +133,32 @@ function getEditContacts(assignedUsers, contacts) {
   const contactList = document.getElementById("assigned-list-items");
   contactList.innerHTML = "";
   contacts.forEach((contact) => {
+    if(checkIfContactExist(assignedUsers, contact["name"])) return;
     let name = getInitials(contact["name"]);
     contactList.innerHTML += /*html*/ `
       <li class="assigned-item ${getCheckedUsers(assignedUsers, contact["name"])}">
         <div class="assigned-user">
-          <div id="board-user" class="board-user" style="background-color:${contact["color"]}">${name}</div>
+          <div id="board-user${contact["id"]}" class="board-user" style="background-color:${contact["color"]}">${name}</div>
           <span class="item-text">${contact["name"]}</span>
         </div>
         <div class="check-img"></div>
       </li>`;
   });
+}
+
+/**
+ * Checks if a contact exists in the assignedUsers list based on the contact's name.
+ * @param {Array} assignedUsers - Array of objects representing assigned users.
+ * @param {string} contactName - The name of the contact to search for.
+ * @returns {boolean} - Returns true if the contact exists, false otherwise.
+ */
+function checkIfContactExist(assignedUsers, contactName) {
+  for (const user of assignedUsers) {
+    if (user.name === contactName) {
+      return true;
+    }
+  }
+  return false;
 }
 
 /**
@@ -268,7 +275,7 @@ function getEditSubtasks(subtasks) {
   const list = document.getElementById("subtasks-list");
   list.innerHTML = "";
   for (let i = 0; i < subtasks.length; i++) {
-    list.innerHTML += getEditSubtasksList(subtasks[i]["task"]);
+    list.innerHTML += getEditSubtasksList(subtasks[i]["title"], subtasks[i]["id"]);
   }
 }
 
@@ -279,11 +286,11 @@ function getEditSubtasks(subtasks) {
  * @return {string} The HTML code for the subtask list item.
  * @author Hanbit Chang
  */
-function getEditSubtasksList(task) {
+function getEditSubtasksList(task, id) {
   return /*html*/ `
   <li id="subtasks-li" class="subtasks-li-content">
     <div class="subtasks-li-container">
-      <p class="subtasks-li-text" contenteditable=false>${task}</p>
+      <p class="subtasks-li-text" contenteditable=false id="subtask-${id}">${task}</p>
       <div class="subtasks-row" id="subtask-first-btns">
         <img class="subtasks-btn-none" id="subtasks-edit" src="../assets/icons/board/edit/edit_button.svg" alt="">
         <div class="subtasks-line-none"></div>
@@ -425,8 +432,8 @@ function showCheckboxes() {
  * @author Hanbit Chang
  */
 async function getData(data) {
-  let urlParams = new URLSearchParams(window.location.search);
-  let actualUsersNumber = urlParams.get("actualUsersNumber");
-  let fulldata = await loadData("users");
-  return fulldata[actualUsersNumber][data];
+  let user = JSON.parse(localStorage.getItem('user'));
+  let userId = user.user_id;
+  let fulldata = await loadDataBackend(`api/users/profiles/${userId}/`);
+  return fulldata[data];
 }

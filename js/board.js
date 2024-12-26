@@ -2,6 +2,7 @@ let icons;
 let data;
 let contacts;
 let header = ["To do", "In progress", "Await feedback", "Done"];
+let assignedContacts;
 
 /**
  * Gets example data from local
@@ -25,92 +26,57 @@ async function getIcons() {
  * On loading it inits the elements
  */
 async function initBoard() {
-  data = await getData("tasks");
-  contacts = await getData("contacts");
-  for (let i = 0; i < data.length; i++) {
-    data[i] = await getAssignedKeyByName(data[i], contacts);
-  }
+  checkUserLogin();
+  user = JSON.parse(localStorage.getItem("user"));
+  userId = user.user_id;
+  userData = await loadDataBackend(`api/users/profiles/${userId}/`);
   icons = await getIcons();
-  renderBoards(data);
+  renderBoards(userData.tasks);
   getEventListeners();
   getDropZones();
   await fillHeaderInitials();
 }
 
 /**
- * Retrieves the assigned key by name from the given data object using the contacts array.
- *
- * @param {Object} data - The data object containing items with assigned names.
- * @param {Array} contacts - The array of contacts.
- * @return {Object} The modified data object with any invalid assigned names removed.
- */
-function getAssignedKeyByName(data, contacts) {
-  for (const item of data.items) {
-    let i = 0;
-    for (i = 0; i < item.assigned.length; i++) {
-      let assigned = item.assigned[i];
-      const contactExists = contactExist(contacts, assigned.name);
-      if (!contactExists) {
-        const index = item.assigned.findIndex((assign) => assign.name == item.assigned[i].name);
-        item.assigned.splice(index, 1);
-        i = -1;
-      }
-    }
-    if (item.assigned.length == 0) item.assigned = "";
-  }
-  return data;
-}
-
-/**
- * Checks if a contact with the given name exists in the contacts array.
- *
- * @param {Object} contacts - The array of contacts.
- * @param {string} name - The name of the contact to check.
- * @return {boolean} - Returns true if a contact with the given name exists, otherwise false.
- */
-function contactExist(contacts, name) {
-  for (let key in contacts) {
-    if (contacts[key] == null) continue;
-    if (contacts[key].name == name) return true;
-  }
-  return false;
-}
-
-/**
  * Renders the board
  */
-async function renderBoards(data) {
-  getBoardSection(data);
-  getBoardContentsAll(data);
+async function renderBoards(tasks) {
+  getBoardSection(tasks);
+  getBoardContentsAll(tasks);
 }
 
 /**
  * Gets the item by id
  * @param {number} id
- * @param {number} contentId
  * @returns item data
  */
-async function getItemById(id, contentId) {
-  let itemList = data.find((items) => items["id"] == contentId);
-  let item = itemList["items"].find((items) => items["id"] == id);
+async function getItemById(id) {
+  let item = await loadDataBackend(`api/tasks/${id}/`);
   return item;
 }
 
 /**
- * Gets the board
- * @param {Object} data
+ * Gets the board and checks if there are empty sections.
+ * @param {Object} tasks
  */
-function getBoardSection(data) {
+function getBoardSection(tasks) {
   const boardSection = document.getElementById("board-card-section");
   boardSection.innerHTML = "";
   boardSection.innerHTML = '<div id="no-search-results" class="no-search-results d-none"><h1>No search results</h1></div>';
-  for (let i = 0; i < data.length; i++) {
-    const id = data[i]["id"];
-    const items = data[i]["items"];
-    boardSection.innerHTML += getBoardContainer(id, header[i]);
-    if (items == "") getEmptyBoard(id);
+  for (let i = 0; i < 4; i++) {
+    boardSection.innerHTML += getBoardContainer(i, header[i]);
+    let empty = true;
+    tasks.forEach(task => {
+      if (task.status == i) {
+        empty = false;
+      }
+    });
+    if (empty) {
+      getEmptyBoard(i);
+    }
   }
 }
+
 
 /**
  * Retrieves the empty board container element and displays it by removing the "d-none" class from the container element.
@@ -125,10 +91,18 @@ function getEmptyBoard(id) {
   container.classList.remove("d-none");
 }
 
-function getBoardContentsAll(data) {
-  for (let i = 0; i < data.length; i++) {
-    const id = data[i]["id"];
-    getBoardContents(data[i]["items"], id);
+function getBoardContentsAll(tasks) {
+  let filled = false;
+  for (let i = 0; i < 4; i++) {
+    tasks.forEach(task => {
+      if (task.status == i) {
+        filled = true;
+        getBoardContents(task, i);
+      }
+    });
+    if (!filled) {
+      getEmptyBoard(i);
+    }
   }
 }
 
@@ -156,19 +130,11 @@ function getBoardContainer(id, header) {
  * @param {Object} contents
  * @param {number} id
  */
-function getBoardContents(contents, id) {
+async function getBoardContents(task, id) {
   const contentDirection = document.getElementById(`${id}`);
   const content = contentDirection.querySelector("#board-card-direction");
-  if (contents != "") {
-    let i = 0;
-    contents.forEach(function (card) {
-      if (i < contents.length - 1) {
-        content.innerHTML += getBoardCard(card);
-        i++;
-      } else content.innerHTML += getBoardCard(card, "big-zone");
-      getBoardCardValues(card);
-    });
-  }
+  content.innerHTML += getBoardCard(task);
+  getBoardCardValues(task);
 }
 
 /**
@@ -216,8 +182,10 @@ function getBoardCard(card, zoneSize) {
 function getCategory(category, id) {
   const content = document.getElementById(`${id}`);
   const boardCategory = content.querySelector("#board-category");
-
-  boardCategory.src = icons["categoryIcons"][category] || "";
+  let categoryName;
+  if (category === 1) { categoryName = "user story" }
+  else if (category === 2) { categoryName = "technical task" };
+  boardCategory.src = icons["categoryIcons"][categoryName] || "";
 }
 
 /**

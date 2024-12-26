@@ -3,20 +3,26 @@
  *
  * This function calls the following functions in order:
  * - onClickAddSubTasks() - Event listener for adding subtasks.
- * - getAddAssgined() - Retrieves assigned tasks.
+ * - getAddAssigned() - Retrieves assigned tasks.
  * - fillHeaderInitials() - Fills the header with initials.
  * - oneCheckBox() - Handles single checkbox selection.
  * - selectBtnEventListener() - Event listener for select button.
  */
 function initAddTask() {
+  checkUserLogin();
   onClickAddSubTasks();
   onClickSelectBtn();
   onClickClearBtn();
-  getAddAssgined();
+  getAddAssigned();
   fillHeaderInitials();
   oneCheckBox();
 }
 
+/**
+ * Attaches a click event listener to the "clear-button" element and clears the input fields and sets the checkboxes to unchecked.
+ *
+ * @return {void} This function does not return anything.
+ */
 function onClickClearBtn() {
   const clearBtn = document.getElementById("clear-button");
   clearBtn.onclick = () => {
@@ -72,16 +78,12 @@ function oneCheckBox() {
  * Saves the data of the added task and changes the HTML page to "board.html".
  */
 async function saveAddTaskData() {
-  let urlParams = new URLSearchParams(window.location.search);
-  let actualUsersNumber = urlParams.get("actualUsersNumber");
-  let data = await getData("tasks");
-  let contacts = await getData("contacts");
+  let user = JSON.parse(localStorage.getItem("user"));
+  let userData = await loadDataBackend(`api/users/profiles/${user.user_id}/`);
+  let contacts = userData.contacts;
   if (contentId == undefined) contentId = 1;
-  const content = data.find((content) => content.id == contentId);
   const obj = getAddObj(contacts);
-  if (content.items == "") content.items = [];
-  content.items.push(obj);
-  await putData(`users/${actualUsersNumber}/tasks/`, data);
+  postDataBackend("api/tasks/", obj);
   changeHtmlPage("board.html");
 }
 

@@ -65,12 +65,10 @@ function getCardDetails(card) {
  * @param {Array<Object>} contacts - The contacts array.
  */
 function updateContactDetails(contentRight, name, email, phone, initials, contacts, color) {
-  // findContactsRandomColor(email, contacts).then((actualRandomColor) => {
     const contactDetailsDiv = document.querySelector(".contactdetails-right");
     contactDetailsDiv.innerHTML = generateContactDetailsHTML(name, email, phone, color, initials);
     if (window.innerWidth < 1100) contentRight.style.display = "flex";
     setupEditAndDeleteButtons(contactDetailsDiv, lastClickedCard, name, email, phone, color, initials, contentRight, contacts);
-  // });
 }
 
 /**
@@ -153,7 +151,6 @@ async function findContactIdByEmail(email, contacts) {
  * Author: Elias
  */
 async function generateContactHTML(contact, contacts) {
-  // const randomColor = await findContactsRandomColor(contact.email, contacts);
   const initials = await getInitials(contact.name);
   let userId = await findContactIdByEmail(contact.email, contacts);
   return `
@@ -184,6 +181,12 @@ function getInitials(name) {
   return initials;
 }
 
+/**
+ * Deletes a contact from the backend.
+ *
+ * @param {string} email - The email of the contact to be deleted.
+ * @author Robin
+ */
 async function deleteContactFromBackend(email) {
   let userId = JSON.parse(localStorage.getItem('user')).user_id;
   let userData = await loadDataBackend(`api/users/profiles/${userId}/`);
@@ -309,7 +312,6 @@ function createOverlayHTML(randomColor, initials, name, email, phone) {
 async function handleDeleteContact(email) {
   try {
     await removeContactCard(email);
-    // await deleteContactFromFirebase(email);
     await deleteContactFromBackend(email);
     closeEditContact();
   } catch (error) {

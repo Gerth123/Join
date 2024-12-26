@@ -12,17 +12,22 @@ let baseUrlBackend = 'http://127.0.0.1:8000/';
  */
 async function loadDataBackend(path = '') {
     const user = JSON.parse(localStorage.getItem('user'));
-    let token = user.token;
-
-    let response = await fetch(baseUrlBackend + path, {
-        method: 'GET',
-        headers: {
+    let headers;
+    if (user && user.token) {
+        const token = user.token;
+        headers = {
             'Content-Type': 'application/json',
-            'Authorization': `Token ${token}`,
-        },
-    });
-    return responseToJson = await response.json();
+            'Authorization': `Token ${token}`
+        };
+    } else {
+        headers = {
+            'Content-Type': 'application/json'
+        };
+    }
+    const response = await fetch(baseUrlBackend + path, { method: 'GET', headers });
+    return await response.json();
 }
+
 
 /**
  * This function is used to post data to the Backend with a POST request and the authorization token.
@@ -34,17 +39,20 @@ async function loadDataBackend(path = '') {
  */
 async function postDataBackend(path = '', data = {}) {
     const user = JSON.parse(localStorage.getItem('user'));
-    let token = user.token;
-
-    let response = await fetch(baseUrlBackend + path, {
-        method: 'POST',
-        headers: {
+    let headers;
+    if (user && user.token) {
+        const token = user.token;
+        headers = {
             'Content-Type': 'application/json',
-            'Authorization': `Token ${token}`,
-        },
-        body: JSON.stringify(data),
-    });
-    return responseToJson = await response.json();
+            'Authorization': `Token ${token}`
+        };
+    } else {
+        headers = {
+            'Content-Type': 'application/json'
+        };
+    }
+    const response = await fetch(baseUrlBackend + path, { method: 'POST', headers, body: JSON.stringify(data) });
+    return await response.json();
 }
 
 /**
@@ -56,16 +64,20 @@ async function postDataBackend(path = '', data = {}) {
  */
 async function deleteDataBackend(path = '') {
     const user = JSON.parse(localStorage.getItem('user'));
-    let token = user.token;
-
-    let response = await fetch(baseUrlBackend + path, {
-        method: 'DELETE',
-        headers: {
+    let headers;
+    if (user) {
+        const token = user.token;
+        headers = {
             'Content-Type': 'application/json',
-            'Authorization': `Token ${token}`,
-        }
-    });
-    return responseToJson = await response.json();
+            'Authorization': `Token ${token}`
+        };
+    } else {
+        headers = {
+            'Content-Type': 'application/json'
+        };
+    }
+    const response = await fetch(baseUrlBackend + path, { method: 'DELETE', headers });
+    return response.json();
 }
 
 /**
@@ -78,16 +90,19 @@ async function deleteDataBackend(path = '') {
  */
 async function putDataBackend(path = '', data = {}) {
     const user = JSON.parse(localStorage.getItem('user'));
-    let token = user.token;
-
-    let response = await fetch(baseUrlBackend + path, {
-        method: 'PUT',
-        headers: {
+    let headers;
+    if (user) {
+        const token = user.token;
+        headers = {
             'Content-Type': 'application/json',
-            'Authorization': `Token ${token}`,
-        },
-        body: JSON.stringify(data),
-    });
+            'Authorization': `Token ${token}`
+        };
+    } else {
+        headers = {
+            'Content-Type': 'application/json'
+        };
+    }
+    const response = await fetch(baseUrlBackend + path, { method: 'PUT', headers, body: JSON.stringify(data) });
     return responseToJson = await response.json();
 }
 
@@ -166,4 +181,27 @@ function getUserIdFormUrl() {
     let urlParams = new URLSearchParams(window.location.search);
     let actualUsersNumber = urlParams.get('actualUsersNumber');
     return actualUsersNumber;
+}
+
+/**
+ * This function is used to check if the user is logged in.
+ * 
+ * @author: Robin
+ */
+function checkUserLogin() {
+    let user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+        window.location.href = "login.html";
+    }
+}
+
+/**
+ * This function is used to get the user data from the Backend.
+ * 
+ * @author: Robin
+ */
+function getUserData() {
+    let user = JSON.parse(localStorage.getItem('user'));
+    let userData = loadDataBackend(`api/users/profiles/${user.user_id}/`);
+    return userData;
 }

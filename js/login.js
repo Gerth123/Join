@@ -46,54 +46,23 @@ function togglePasswordVisbility() {
  */
 async function checkUser() {
     let email = document.getElementById('email').value;
-    let password = document.getElementById('password').value;
-    let actualUsers = await loadData('users');
-    let found = false;
-    let actualMailSearchIndex;
-    for (let mailSearchIndex in actualUsers) {
-        let user = actualUsers[mailSearchIndex];
-        if (user && user.email === email) {
-            actualMailSearchIndex = mailSearchIndex;
-            if (user.password === password) {
-                window.location.href = `summary.html?msg=Login erfolgreich&actualUsersNumber=${mailSearchIndex}`;
-                found = true;
-                break;
-            }
-        }
-    }
-    await userNotFound(found, actualUsers, actualMailSearchIndex);
-    // await saveUserData(email, password);
-}
-
-async function checkUser() {
-    let email = document.getElementById('email').value;
     let rememberMe = document.getElementById('checkbox').checked;
     let password = document.getElementById('password').value;
     let user;
-    if (rememberMe && password==='') {
+    if (rememberMe && password === '') {
         let actualUser = JSON.parse(localStorage.getItem('user'));
         user = await postDataBackend('api/users/login/', { 'email': email, 'token': actualUser.token });
     } else if (password !== '') {
         user = await postDataBackend('api/users/login/', { 'email': email, 'password': password });
+        
     }
     if (user && user.token) {
         window.location.href = `summary.html`;
         localStorage.setItem('user', JSON.stringify(user));
     }
-    let found = false;
-    let actualMailSearchIndex;
-    // for (let mailSearchIndex in actualUsers) {
-    //     let user = actualUsers[mailSearchIndex];
-    //     if (user && user.email === email) {
-    //         actualMailSearchIndex = mailSearchIndex;
-    //         if (user.password === password) {
-    //             window.location.href = `summary.html?msg=Login erfolgreich&actualUsersNumber=${mailSearchIndex}`;
-    //             found = true;
-    //             break;
-    //         }
-    //     }
-    // }
-    // await userNotFound(found, actualUsers, actualMailSearchIndex);
+    if (!rememberMe) {
+        localStorage.setItem('rememberMe', false);
+    }
     await saveUserData(email, password);
 }
 
@@ -134,20 +103,35 @@ let checkboxBoolean = false;
 async function saveUserData() {
     let email = document.getElementById('email').value;
     let password = document.getElementById('password');
-    checkboxBoolean = document.getElementById('checkbox').checked;
+    let checkboxBoolean = document.getElementById('checkbox').checked;
     let user;
-    if (checkboxBoolean && email && password) {
+    if (checkboxBoolean && email && password.value) {
         user = await postDataBackend('api/users/login/', { 'email': email, 'password': password.value });
-        console.log(user);
         localStorage.setItem('user', JSON.stringify(user));
-        localStorage.setItem('rememberMe', true);
+        localStorage.setItem('rememberMe', true); 
     } else if (!checkboxBoolean) {
-        localStorage.removeItem('user');
-        password.style.visibility = 'visible';
+        localStorage.setItem('rememberMe', false); 
+        password.style.visibility = 'visible'; 
         password.setAttribute('required', true);
-        localStorage.setItem('rememberMe', false);
     }
 }
+
+/**
+ * This function is used to remove the user data from local storage, if the checkbox is unchecked.
+ */
+function removeUserData() {
+    if (localStorage.getItem('rememberMe') === 'false') {
+        localStorage.removeItem('user');
+        localStorage.removeItem('rememberMe');
+    }
+}
+
+/**
+ * This function is used to remove the user data from local storage, if the checkbox is unchecked.
+ */
+window.addEventListener('beforeunload', () => {
+    removeUserData();
+});
 
 /**
  * This function is used to load the user data from local storage and check the checkbox, if the checkboxBoolean is true.
@@ -160,7 +144,7 @@ async function loadUserData() {
     let password = document.getElementById('password');
     let email = document.getElementById('email');
     let checkbox = document.getElementById('checkbox');
-    if (checkboxBoolean && storedUser) {
+    if (checkboxBoolean === 'true' && storedUser) {
         password.style.visibility = 'hidden';
         password.removeAttribute('required');
         email.value = storedUser.email;
@@ -180,12 +164,9 @@ async function loadUserData() {
  * @author: Robin
  */
 async function guestLogIn() {
-    let users = await loadData('users');
-    for (let [index, user] of Object.entries(users)) {
-        if (user && user.email === 'test@testmail.com') {
-            window.location.href = `summary.html?msg=Testlogin erfolgreich&actualUsersNumber=${index}`;
-        }
-    }
+    user = await postDataBackend('api/users/login/', { 'email': 'test@testmail.com', 'password': '1234' });
+    localStorage.setItem('user', JSON.stringify(user));
+    window.location.href = `summary.html`;
 }
 
 /**

@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", setupContactClickEvents(getData("c
  * Author: Elias
  */
 document.addEventListener("DOMContentLoaded", function () {
+    checkUserLogin();
     setupAddContactButton();
     setupDocumentClickListener();
     setupCloseImageListener();

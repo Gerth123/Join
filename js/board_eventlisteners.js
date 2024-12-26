@@ -46,16 +46,14 @@ function onClickSelectBtn() {
  * @author Hanbit Chang
  */
 async function updateSubtaskCheck(subtasks) {
-  let urlParams = new URLSearchParams(window.location.search);
-  let actualUsersNumber = urlParams.get("actualUsersNumber");
-  for (let column of data) {
-    if (column.id == contentId) {
-      for (let item of column.items) {
-        if (item.id == id) item["subtasks"] = subtasks;
-      }
-    }
-  }
-  await putData(`users/${actualUsersNumber}/tasks/`, data);
+  let subtasksToPut = [];
+  subtasks.forEach((subtask) => {
+    subtasksToPut.push({id: subtask["id"], title: subtask["title"], checked: subtask["checked"] });
+  })
+  const obj = {
+    subtasks_data: subtasksToPut,
+  };
+  await putDataBackend(`api/tasks/${id}/`, obj);
 }
 
 /**
@@ -250,7 +248,6 @@ function setAssignedAddTask() {
   const assignedUsers = document.getElementById("assigned-users-addCard");
   const assignedItems = document.querySelectorAll(".assigned-item");
   const assignedBtnText = document.querySelector(".btn-text-addCard");
-
   assignedItems.forEach((item) => {
     item.classList.remove("checked");
   });
@@ -287,16 +284,15 @@ function getAddObj(contacts) {
   const title = document.getElementById("title-addCard");
   const description = document.getElementById("description-addCard");
   const date = document.getElementById("date-addCard");
-  const newId = Math.floor(Math.random() * 100000);
   const obj = {
-    id: newId,
-    category: addCategory(),
     title: title.value,
     description: description.value,
-    assigned: addAssignedValue(contacts),
+    status: 0,
     date: date.value,
     priority: addPriorityValue(),
-    subtasks: addSubTasks(),
+    subtasks_data: addSubTasks(),
+    category: addCategory(),
+    assigned_data: addAssignedValue(contacts),
   };
   return obj;
 }
@@ -333,7 +329,8 @@ function addAssignedValue(contacts) {
  */
 function addCategory() {
   const newCategory = document.getElementById("add-task-categories");
-  return newCategory.value;
+  if (newCategory.value == 'user story') return 2;
+  else if (newCategory.value == 'technical task') return 1;
 }
 
 /**
@@ -368,7 +365,7 @@ function addSubTasks() {
   const newSubtasks = document.querySelectorAll(".subtasks-li-text");
   let temp = [];
   newSubtasks.forEach((task) => {
-    temp.push({ checked: false, task: task.textContent });
+    temp.push({ checked: false, title: task.textContent });
   });
   if (temp.length == 0) return "";
   return temp;
@@ -383,15 +380,7 @@ function addSubTasks() {
 function deleteFullSizeBoard() {
   const delBtn = document.querySelector(".full-size-button-delete");
   delBtn.onclick = async () => {
-    let urlParams = new URLSearchParams(window.location.search);
-    let actualUsersNumber = urlParams.get("actualUsersNumber");
-    for (let column of data) {
-      if (column.items == "") column.items = [];
-      let item = column.items.find((item) => item.id == id);
-      if (item) column.items.splice(column.items.indexOf(item), 1);
-      if (column.items.length == 0) column.items = "";
-    }
-    await deleteRender(actualUsersNumber);
+    await deleteRender();
   };
 }
 
@@ -403,13 +392,15 @@ function deleteFullSizeBoard() {
  * listeners, drop zones, and full-size container hiding are complete, and the
  * data is put to the server.
  */
-async function deleteRender(actualUsersNumber) {
-  renderBoards(data);
+async function deleteRender() {
+  let user = JSON.parse(localStorage.getItem("user"));
+  await deleteDataBackend(`api/tasks/${id}/`);
+  let userData = await loadDataBackend(`api/users/profiles/${user.user_id}/`);
+  renderBoards(userData.tasks);
   getEventListeners();
   getDropZones();
   const fullSize = document.getElementById("full-size-container");
   fullSize.classList.add("d-none");
-  await putData(`users/${actualUsersNumber}/tasks/`, data);
 }
 
 /**
@@ -429,9 +420,10 @@ function cancelAddCard(fullsize) {
   };
 }
 
+/**
+ * Hides the fullsize element.
+ */
 function closeMenus() {
   const fullSizeContainer = document.getElementById('full-size-container');
-  const editBoard = document.getElementById('edit-board');
-  const addBoard = document.getElementById('add-board');
-  fullSizeContainer.classList.add('d-none');  
+  fullSizeContainer.classList.add('d-none');
 }
