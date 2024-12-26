@@ -135,16 +135,6 @@ async function getBoardContents(task, id) {
   const content = contentDirection.querySelector("#board-card-direction");
   content.innerHTML += getBoardCard(task);
   getBoardCardValues(task);
-  // if (contents != "") {
-  //   let i = 0;
-  //   contents.forEach(function (card) {
-  //     if (i < contents.length) {
-
-  //       i++;
-  //     } else content.innerHTML += getBoardCard(card, "big-zone");
-
-  //   });
-  // }
 }
 
 /**

@@ -183,6 +183,11 @@ function getUserIdFormUrl() {
     return actualUsersNumber;
 }
 
+/**
+ * This function is used to check if the user is logged in.
+ * 
+ * @author: Robin
+ */
 function checkUserLogin() {
     let user = JSON.parse(localStorage.getItem('user'));
     if (!user) {
@@ -190,6 +195,11 @@ function checkUserLogin() {
     }
 }
 
+/**
+ * This function is used to get the user data from the Backend.
+ * 
+ * @author: Robin
+ */
 function getUserData() {
     let user = JSON.parse(localStorage.getItem('user'));
     let userData = loadDataBackend(`api/users/profiles/${user.user_id}/`);
