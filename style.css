@@ -62,7 +62,7 @@ select {
   -moz-appearance: none;
   appearance: none;
   background: transparent;
-  background-image: url("../assets/icons/board/assigned/arrow_drop_down.svg");
+  background-image: url("assets/icons/board/assigned/arrow_drop_down.svg");
   background-repeat: no-repeat;
   background-position: right 15px top 50%;
   background-color: #fff;
