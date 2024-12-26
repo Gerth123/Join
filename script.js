@@ -13,7 +13,7 @@ let baseUrlBackend = 'http://127.0.0.1:8000/';
 async function loadDataBackend(path = '') {
     const user = JSON.parse(localStorage.getItem('user'));
     let headers;
-    if (user) {
+    if (user && user.token) {
         const token = user.token;
         headers = {
             'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ async function loadDataBackend(path = '') {
 async function postDataBackend(path = '', data = {}) {
     const user = JSON.parse(localStorage.getItem('user'));
     let headers;
-    if (user) {
+    if (user && user.token) {
         const token = user.token;
         headers = {
             'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ async function deleteDataBackend(path = '') {
             'Content-Type': 'application/json'
         };
     }
-    const response = await fetch(baseUrlBackend + path, { method: 'DELETE', headers, body: JSON.stringify(data) });
+    const response = await fetch(baseUrlBackend + path, { method: 'DELETE', headers });
     return response.json();
 }
 
