@@ -264,6 +264,8 @@ async function checkIfContactAlreadyExists(alreadyExist, userId, phone, name, em
       console.error("Error saving contact:", error);
     }
   }
+  await refreshAndDisplayContacts();
+
 }
 
 /**
@@ -352,7 +354,7 @@ async function createUpdatedContact(name, newEmail, phone, randomColor) {
 async function refreshAndDisplayContacts() {
   let userId = JSON.parse(localStorage.getItem('user')).user_id;
   const actualUsers = await loadDataBackend(`api/users/profiles/${userId}/`);
-  const sortedContacts = await sortContacts(actualUsers);
+  const sortedContacts = await sortContacts(actualUsers.contacts);
   await displayContacts(sortedContacts);
 }
 
